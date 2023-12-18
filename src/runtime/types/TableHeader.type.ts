@@ -1,11 +1,11 @@
 import {type RouteLocationRaw} from 'vue-router';
 
 export enum ROW_TYPES {
-  TEXT,
-  IMAGE,
-  HTML,
-  TEXT_WITH_LINKS,
-  SLOT,
+  TEXT= "TEXT",
+  IMAGE= "IMAGE",
+  HTML= "HTML",
+  TEXT_WITH_LINKS= "TEXT_WITH_LINKS",
+  SLOT= "SLOT",
 }
 
 export type TableHeader = {

@@ -11,6 +11,9 @@ import {
 const moduleName = 'ui-module';
 
 export default defineNuxtModule({
+  modules: [
+    '@nuxtjs/eslint-module',
+  ],
   meta: {
     name: moduleName,
     configKey: 'uiModule'
@@ -20,7 +23,7 @@ export default defineNuxtModule({
     const runtimeDir = resolve('./runtime');
 
     nuxt.options.build.transpile.push(runtimeDir);
-    nuxt.options.alias['#uiModule'] = runtimeDir;
+    // nuxt.options.alias['#uiModule'] = runtimeDir;
 
     addPlugin(resolve(runtimeDir, 'plugins/ui-module'));
 
