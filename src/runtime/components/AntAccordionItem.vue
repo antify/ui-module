@@ -1,0 +1,104 @@
+<script lang="ts" setup>
+import {faAngleDown, faAngleUp} from '@fortawesome/free-solid-svg-icons';
+import AntIcon from './AntIcon.vue';
+import AntTransitionCollapseHeight from './transitions/AntTransitionCollapseHeight.vue';
+
+const props = withDefaults(defineProps<{
+  isOpen: boolean;
+  label?: string;
+  collapseTransition?: string;
+}>(), {
+  collapseTransition: 'slide'
+});
+const emit = defineEmits(['close', 'open']);
+
+// TODO:: Stehengeblieben: delays machen
+function onClick() {
+  if (props.isOpen) {
+    emit('close');
+  } else {
+    emit('open');
+  }
+}
+</script>
+
+<template>
+  <div
+      class="p-2.5 select-none cursor-pointer transition-colors"
+      :class="{'bg-primary text-primary-font': isOpen, 'bg-neutral-lightest text-neutral-lightest-font': !isOpen}"
+      @click="onClick"
+  >
+    <slot name="label" v-bind="{ isOpen: isOpen }">
+      <div
+          class="hover:text-gray-800 flex justify-between items-center"
+      >
+        <span class="text-sm font-semibold">
+          {{ label }}
+        </span>
+
+        <AntIcon
+            :icon="isOpen ? faAngleUp : faAngleDown"
+            :class="{'text-primary-font': isOpen}"
+        />
+      </div>
+    </slot>
+  </div>
+
+  <AntTransitionCollapseHeight>
+    <div
+        v-show="isOpen"
+        class="bg-white overflow-hidden -mt-px"
+    >
+      <transition name="bounce">
+        <div
+            v-show="isOpen"
+            class="p-2.5 bg-neutral-lightest"
+        >
+          <slot/>
+        </div>
+      </transition>
+    </div>
+  </AntTransitionCollapseHeight>
+</template>
+
+<style scoped>
+.bounce-enter-active {
+  animation: bounce .6s;
+}
+
+.bounce-leave-active {
+  animation: bounce .6s reverse;
+}
+
+@keyframes bounce {
+  0% {
+    transform: translateY(-100%);
+    opacity: 0;
+  }
+  50% {
+    transform: translateY(5%);
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(0%);
+    opacity: 1;
+  }
+}
+
+.slide-enter-active {
+  animation: slide 1s;
+}
+
+.slide-leave-active {
+  animation: slide 1s reverse;
+}
+
+@keyframes slide {
+  0% {
+  //transform: translateY(-100%); max-height: 0; opacity: 0;
+  }
+  100% {
+  //transform: translateY(0%); max-height: 100%; opacity: 1;
+  }
+}
+</style>
