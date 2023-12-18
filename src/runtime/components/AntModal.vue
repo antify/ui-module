@@ -66,7 +66,7 @@ function closeModal() {
             />
           </div>
 
-          <div class="bg-neutral-lightest p-2.5 grow">
+          <div class="bg-neutral-lightest p-2.5 grow overflow-y-auto">
             <slot/>
           </div>
 
