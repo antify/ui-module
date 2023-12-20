@@ -1,5 +1,5 @@
 import defaultColors from 'tailwindcss/colors';
-import {Config} from "tailwindcss";
+// import {type Config} from "tailwindcss";
 
 const colors = {
   'neutral-lightest': defaultColors.white,
@@ -100,12 +100,19 @@ const fontColors = {
 /** @type {import('tailwindcss').Config} */
 export default {
   content: [
-    // For dev
-    './src/**/*.{vue,js,ts,jsx,tsx}',
-    './src/**/*.stories.ts',
+    // For module dev
+    './src/runtime/**/*.{vue,js,ts,jsx,tsx}',
+    './src/runtime/**/*.stories.ts',
+    './playground/**/*.{vue,js,ts,jsx,tsx}',
+
+    // For project dev
+    './app.vue',
+    './components.{vue,js,ts,jsx,tsx}',
+    './pages.{vue,js,ts,jsx,tsx}',
 
     // If this config is used in a project
-    './node_modules/@antify/*/dist/**/*.{js,vue,ts}'
+    './node_modules/@antify/*/dist/**/*.{js,vue,ts}',
+    './node_modules/@antify/*/src/**/*.{js,vue,ts}',
   ],
   theme: {
     colors: {
@@ -124,4 +131,5 @@ export default {
       }
     }
   }
-} as Config;
+}
+// as Config;

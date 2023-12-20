@@ -10,6 +10,10 @@
       "types": "./dist/types.d.ts"
     }
   },
+  "files": [
+    "dist",
+    "src/runtime/components/**/*.vue"
+  ],
   "main": "./dist/module.cjs",
   "types": "./dist/types.d.ts",
   "scripts": {
@@ -36,13 +40,15 @@
     "@vuepic/vue-datepicker": "^6.0.2",
     "@vueuse/components": "^10.5.0",
     "@vueuse/core": "^10.6.1",
-    "tailwindcss": "^3.3.6",
+    "autoprefixer": "^10.4.16",
+    "postcss": "^8.4.32",
+    "tailwindcss": "^3.4.0",
     "vue": "^3.3.11",
     "vue-router": "^4.2.5"
   },
   "devDependencies": {
+    "@nuxt/eslint-config": "^0.2.0",
     "@nuxt/module-builder": "latest",
-    "@nuxtjs/eslint-module": "^4.1.0",
     "@storybook/addon-docs": "^7.5.3",
     "@storybook/addon-essentials": "^7.5.3",
     "@storybook/addon-interactions": "^7.5.3",
@@ -59,7 +65,6 @@
     "eslint-plugin-storybook": "^0.6.15",
     "eslint-plugin-vue": "^9.19.2",
     "nuxt": "^3.8.2",
-    "postcss": "^8.4.32",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "storybook": "7.5.3",

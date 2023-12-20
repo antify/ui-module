@@ -3,7 +3,6 @@ import {
   defineNuxtModule,
   createResolver,
   addPlugin,
-  installModule,
   addComponentsDir,
   addImportsDir,
 } from '@nuxt/kit';
@@ -37,10 +36,8 @@ export default defineNuxtModule({
       global: false
     });
 
-    await installModule('@nuxtjs/tailwindcss', {
-      viewer: false,
-      config: tailwindcss
-    });
+    nuxt.options.postcss.plugins.tailwindcss = tailwindcss;
+    nuxt.options.css.push(resolve(runtimeDir, 'assets/tailwind.css'));
   }
 });
 
