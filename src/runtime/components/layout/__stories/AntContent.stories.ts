@@ -2,7 +2,6 @@ import AntContent from '../AntContent.vue';
 import AntTabs from '../../navigation/tabs/AntTabsDeprecated.vue';
 import AntTable from '../../table/AntTable.vue';
 import AntButton from '../../form/AntButton.vue';
-import { WithImage } from '../../table/__stories/AntTable.stories';
 
 export default {
   title: 'Components/Layout/Ant Content',
@@ -45,7 +44,7 @@ export const Simple = Template.bind({});
 // @ts-ignore
 Simple.args = {
   head: '<h1 class="px-4 text-xl py-3">Dashboard</h1>',
-  body: `<div class="m-4 border-4 border-dashed border-gray-200 rounded-lg h-screen"/>`,
+  body: '<div class="m-4 border-4 border-dashed border-gray-200 rounded-lg h-screen"/>',
 };
 
 export const Table = (args: any) => ({
@@ -59,7 +58,6 @@ export const Table = (args: any) => ({
         { name: 'Team Members', href: '#', current: true },
         { name: 'Billing', href: '#', current: false },
       ],
-      ...WithImage,
     };
   },
   template: `

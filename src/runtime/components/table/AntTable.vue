@@ -5,243 +5,172 @@ export default {
 </script>
 
 <script lang="ts" setup>
-import AntSkeleton from '../../components/AntSkeleton.vue';
-import { ROW_TYPES, type TableHeader } from '../../types/TableHeader.type';
+import { AntTableSortDirection, type TableHeader } from './__types/TableHeader.type';
+import { type Ref, ref, watch } from 'vue';
+import { useVModel } from '@vueuse/core';
+import { ColorType } from '../../enums';
+import AntTh from './AntTh.vue';
+import AntTd from './AntTd.vue';
 
-defineProps<{
-  headers: TableHeader[];
-  data: any[];
-  rowHover: boolean;
-  loading: boolean;
-}>();
+const emits = defineEmits([ 'update:modelValue', 'update:skeleton', 'rowClick' ]);
+// TODO:: add pagination prop and pagination to table
+const props = withDefaults(
+  defineProps<{
+    modelValue?: Record<string, unknown> | undefined,
+    headers: TableHeader[];
+    data: Record<string, unknown>[];
+    rowKey?: string;
+    loading?: boolean;
+    selectableRows?: boolean;
+  }>(), {
+    rowKey: 'id',
+    loading: false,
+    selectableRows: false,
+  });
+
+const selected: Ref<Record<string, unknown> | undefined> = useVModel(props, 'modelValue', emits);
+const _loading: Ref<boolean> = useVModel(props, 'loading', emits);
+const internalRows: Ref<Record<string, unknown>[]> = ref([]);
+
+watch(() => props.data, () => {
+  internalRows.value = [ ...props.data ];
+
+  // TODO after update current sort should be reapplied
+}, {
+  deep: true,
+  immediate: true
+});
+
+function sortTable(header: TableHeader, newDirection: AntTableSortDirection) {
+  // TODO:: Sorting is always done externally, here should only be a emit sort with header and direction.
+  // TODO:: Save current sort in some kind of prop (maybe same as pagination?)
+  // TODO:: Multi column sort?
+  if (newDirection !== AntTableSortDirection.neutral) {
+    if (header.sort) {
+      const sortFn = header.sort;
+      internalRows.value.sort((a, b) => sortFn(a, b, newDirection));
+    } else {
+      internalRows.value.sort((a: Record<string, unknown>, b: Record<string, unknown>) => {
+        if (newDirection === AntTableSortDirection.asc) {
+          return (a[header.identifier] as string) < (b[header.identifier] as string) ? -1 : 1
+        } else {
+          return (a[header.identifier] as string) > (b[header.identifier] as string) ? -1 : 1
+        }
+      });
+    }
+  } else {
+    // Reset sort to default
+    internalRows.value = [ ...props.data ];
+  }
+}
+
+function rowClick(elem: Record<string, unknown>): void {
+  selected.value = elem;
+
+  emits('rowClick', elem);
+}
 </script>
 
 <template>
-  <div class="h-full">
-    <div class="flex flex-col h-full">
-      <div class="h-full">
-        <div class="inline-block min-w-full align-middle h-full">
-          <div
-            class="
-              overflow-hidden
-              shadow
-              ring-1 ring-black ring-opacity-5
-              h-full
-              overflow-x-auto overflow-y-auto
-            "
+  <div class="relative inline-block min-w-full align-middle h-full">
+    <div class="overflow-hidden h-full overflow-x-auto overflow-y-auto">
+      <table
+        v-bind="$attrs"
+        class="min-w-full max-h-full h-full relative"
+        :class="{'overflow-hidden': data.length > 0 && _loading}"
+      >
+        <thead class="bg-neutral-lighter sticky top-0">
+        <tr class="">
+          <slot name="headerFirstCell"></slot>
+
+          <AntTh
+            v-for="(header, index) in headers"
+            :key="`table-header-${header.identifier}-${index}`"
+            :header="header"
+            @sort="sortTable"
           >
-            <table
-              v-bind="$attrs"
-              class="min-w-full divide-y divide-gray-300 max-h-full"
-            >
-              <thead class="bg-gray-50 sticky top-0 border-b">
-              <tr class="">
-                <th
-                  v-for="(header, index) in headers"
-                  :key="`table-header-${header.identifier}-${index}`"
-                  scope="col"
-                  class="
-                      py-3
-                      pl-4
-                      pr-3
-                      text-left text-sm text-gray-900
-                      uppercase
-                      font-medium
-                      sm:pl-6
-                    "
-                  :class="header.headerClassList"
-                >
-                  <slot name="headerContent" v-bind="header">
-                    {{ header.title }}
-                  </slot>
-                </th>
-
-                <slot name="headerLastCell"></slot>
-              </tr>
-              </thead>
-
-              <tbody v-if="!loading" class="divide-y divide-gray-200 bg-white">
-              <tr
-                v-for="(elem, index) in data"
-                :key="`table-row-${elem.id}-${index}`"
-                :id="elem.id"
-                class="target:bg-gray-200 transition-all"
-                :class="{ 'bg-gray-200': elem.active, 'hover:bg-gray-300 cursor:pointer' : rowHover }"
-              >
-                <td
-                  v-for="(header, index) in headers"
-                  :key="`table-cell-${header.identifier}-${index}`"
-                  class="
-                      whitespace-nowrap
-                      py-2
-                      pl-4
-                      pr-3
-                      text-sm
-                      font-medium
-                      text-gray-900
-                      sm:pl-6
-                    "
-                >
-                  <slot
-                    name="beforeRowContent"
-                    v-bind="{ elem: elem, header: header }"
-                  />
-
-                  <div
-                    v-if="header.type === ROW_TYPES.TEXT"
-                    :class="header.rowClassList"
-                  >
-                    {{ elem[header.identifier] }}
-                  </div>
-
-                  <div
-                    v-else-if="header.type === ROW_TYPES.IMAGE"
-                    :class="header.rowClassList"
-                  >
-                    <img
-                      :src="elem[header.identifier]"
-                      :alt="elem[header.identifier]"
-                    />
-                  </div>
-
-                  <div
-                    v-else-if="header.type === ROW_TYPES.HTML"
-                    :class="header.rowClassList"
-                    v-html="elem[header.identifier]"
-                  />
-
-                  <div
-                    v-else-if="header.type === ROW_TYPES.TEXT_WITH_LINKS"
-                    :class="header.rowClassList"
-                  >
-                    <div>{{ elem[header.identifier] }}</div>
-
-                    <div
-                      v-for="(link, index) in header.links"
-                      :key="`links-${header.identifier}-${index}`"
-                      class="text-xs inline-block"
-                    >
-                      <span v-if="index !== 0">&nbsp;|&nbsp;</span>
-
-                      <router-link
-                        :to="link.to"
-                        class="text-blue-600 hover:text-blue-800"
-                      >
-                        {{ link.label }}
-                      </router-link>
-                    </div>
-                  </div>
-
-                  <div v-else-if="header.type === ROW_TYPES.SLOT">
-                    <slot name="cellContent" v-bind="{ elem, header }"></slot>
-                  </div>
-
-                  <slot
-                    name="afterRowContent"
-                    v-bind="{ elem: elem, header: header }"
-                  />
-                </td>
-
-                <slot name="rowLastCell" v-bind="{ elem }"/>
-              </tr>
-
-              <tr v-if="data.length <= 0">
-                <slot name="emptyState">
-                  <td
-                    colspan="100"
-                    class="
-                        w-full
-                        py-2
-                        text-center text-gray-500 text-2xl
-                        italic
-                      "
-                  >
-                    Nothing to see here jet!
-                  </td>
-                </slot>
-              </tr>
-              </tbody>
-
-              <tbody v-else class="divide-y divide-gray-200 bg-white">
-              <slot name="loadingRow">
-                <tr>
-                  <td colspan="99">
-                    <AntSkeleton
-                      :model-value="loading"
-                      class="bg-gray-200 animate-pulse m-1 h-6"
-                    />
-                  </td>
-                </tr>
-                <tr>
-                  <td colspan="99">
-                    <AntSkeleton
-                      :model-value="loading"
-                      class="bg-gray-200 animate-pulse m-1 h-6"
-                    />
-                  </td>
-                </tr>
-                <tr>
-                  <td colspan="99">
-                    <AntSkeleton
-                      :model-value="loading"
-                      class="bg-gray-200 animate-pulse m-1 h-6"
-                    />
-                  </td>
-                </tr>
-                <tr>
-                  <td colspan="99">
-                    <AntSkeleton
-                      :model-value="loading"
-                      class="bg-gray-200 animate-pulse m-1 h-6"
-                    />
-                  </td>
-                </tr>
-                <tr>
-                  <td colspan="99">
-                    <AntSkeleton
-                      :model-value="loading"
-                      class="bg-gray-200 animate-pulse m-1 h-6"
-                    />
-                  </td>
-                </tr>
-                <tr>
-                  <td colspan="99">
-                    <AntSkeleton
-                      :model-value="loading"
-                      class="bg-gray-200 animate-pulse m-1 h-6"
-                    />
-                  </td>
-                </tr>
-                <tr>
-                  <td colspan="99">
-                    <AntSkeleton
-                      :model-value="loading"
-                      class="bg-gray-200 animate-pulse m-1 h-6"
-                    />
-                  </td>
-                </tr>
-                <tr>
-                  <td colspan="99">
-                    <AntSkeleton
-                      :model-value="loading"
-                      class="bg-gray-200 animate-pulse m-1 h-6"
-                    />
-                  </td>
-                </tr>
-                <tr>
-                  <td colspan="99">
-                    <AntSkeleton
-                      :model-value="loading"
-                      class="bg-gray-200 animate-pulse m-1 h-6"
-                    />
-                  </td>
-                </tr>
+            <template #headerContent>
+              <slot name="headerContent" v-bind="header">
               </slot>
-              </tbody>
-            </table>
-          </div>
-        </div>
-      </div>
+            </template>
+          </AntTh>
+
+          <slot name="headerLastCell"></slot>
+        </tr>
+        </thead>
+
+        <tbody class="bg-white">
+        <!-- TODO:: Add some kind of virtual list for very large tree data (or required pagination??) -->
+        <tr
+          v-for="(elem, index) in internalRows"
+          :key="`table-row-${elem[rowKey]}-${index}`"
+          :id="elem[rowKey] as string"
+          class="transition-all"
+          :class="{
+            'bg-primary-light text-primary-light-font': elem === selected,
+            'bg-neutral-lightest text-neutral-lightest-font': elem !== selected && index % 2 === 0,
+            'bg-neutral-lighter text-neutral-lighter-font': elem !== selected && index % 2 !== 0,
+            'cursor-pointer': selectableRows
+          }"
+        >
+          <slot name="rowFirstCell" v-bind="{ elem }"/>
+
+          <AntTd
+            v-for="(header, index) in headers"
+            :key="`table-cell-${header.identifier}-${index}`"
+            :header="header"
+            :element="elem"
+            :align="header.align"
+            @click="rowClick(elem)"
+          >
+            <template #beforeCellContent="props">
+              <slot name="beforeCellContent" v-bind="props"/>
+            </template>
+
+            <template #cellContent="props">
+              <slot name="cellContent" v-bind="props"/>
+            </template>
+
+            <template #afterCellContent="props">
+              <slot name="afterCellContent" v-bind="props"/>
+            </template>
+          </AntTd>
+
+          <slot name="rowLastCell" v-bind="{ elem }"/>
+        </tr>
+
+        <tr v-if="data.length <= 0 && !_loading">
+          <td
+            colspan="100"
+            class="w-full h-full py-2 text-center text-neutral-lightest-font text-lg"
+          >
+            <slot name="emptyState">
+              <div class="flex items-center flex-col">
+                <span class="font-semibold">We couldn't find any entry</span>
+              </div>
+            </slot>
+          </td>
+        </tr>
+
+        <tr v-if="!data || data.length <= 0 && _loading">
+          <slot name="emptyState">
+            <td
+              colspan="100"
+              class="w-full h-full py-2 text-center text-gray-500 text-2xl italic relative"
+            >
+              <AntSkeleton v-model="_loading" absolute/>
+            </td>
+          </slot>
+        </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div
+      v-if="data.length > 0 && _loading"
+      class="absolute bg-opacity-50 w-full top-0 bottom-0 bg-neutral-light flex items-center justify-center"
+    >
+      <AntSpinner class="!w-24 !h-24" :color-type="ColorType.primary"/>
     </div>
   </div>
 </template>

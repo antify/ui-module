@@ -3,7 +3,6 @@ import AntInput from '../../form/AntInput.vue';
 import AntTabsDeprecated from '../../navigation/tabs/AntTabsDeprecated.vue';
 import AntTable from '../../table/AntTable.vue';
 import AntButton from '../../form/AntButton.vue';
-import { SingleHeader } from '../../table/__stories/AntTable.stories';
 
 export default {
   title: 'Components/Layout/Ant Dual Content',
@@ -74,7 +73,6 @@ export const Complex = (args: any) => ({
         { name: 'Team Members', href: '#', current: true },
         { name: 'Billing', href: '#', current: false },
       ],
-      ...SingleHeader,
     };
   },
   template: `

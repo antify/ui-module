@@ -1,7 +1,7 @@
-import AntDragDropTable from '../AntDragDropTable.vue';
-import { TableHeader, ROW_TYPES } from '../../../types/TableHeader.type';
 
+import AntDragDropTable from '../AntDragDropTable.vue';
 import { ref } from 'vue';
+import { AntTableRowTypes, TableHeader } from "../__types/TableHeader.type";
 export default {
   title: 'Components/Table/Ant DragDrop Table',
   component: AntDragDropTable,
@@ -131,23 +131,23 @@ export const Simple = (args: any) => ({
       {
         identifier: 'duration',
         title: 'Dauer',
-        type: ROW_TYPES.TEXT,
+        type: AntTableRowTypes.text,
       },
       {
         identifier: 'timeFrom',
         title: 'Uhrzeit',
-        type: ROW_TYPES.TEXT,
+        type: AntTableRowTypes.text,
       },
       {
         identifier: 'timeTo',
         title: 'Uhrzeit',
         headerClassList: 'sr-only',
-        type: ROW_TYPES.TEXT,
+        type: AntTableRowTypes.text,
       },
       {
         identifier: 'theme',
         title: 'Thema',
-        type: ROW_TYPES.TEXT,
+        type: AntTableRowTypes.text,
       },
     ]);
 

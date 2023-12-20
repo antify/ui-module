@@ -1,15 +1,13 @@
 import AntTable from '../AntTable.vue';
-import {ROW_TYPES} from '../../../types/TableHeader.type';
+import { AntTableAlign, AntTableRowTypes } from '../__types/TableHeader.type';
+import { type Meta, type StoryObj } from '@storybook/vue3';
+import { ref } from 'vue';
 
-export default {
+const meta: Meta<typeof AntTable> = {
   title: 'Components/Table/Ant Table',
   component: AntTable,
-  parameters: {controls: {sort: 'requiredFirst'}},
+  parameters: { controls: { sort: 'requiredFirst' } },
   argTypes: {
-    args: {
-      description:
-        'Additional attributes will be forwarded to the table element.',
-    },
     headers: {
       description: 'List of header definitions',
       table: {
@@ -21,7 +19,7 @@ export default {
               headerClassList?: string;
               rowClassList?: string;
               title: string;
-              type: ROW_TYPES;
+              type: AntTableRowTypes;
               links?: {
                 to: string;
                 label: string;
@@ -34,75 +32,71 @@ export default {
       description:
         'List of rows to be displayed in the table. The properties of the elements need to be equal to the identifier of a table row for it to be displayed<br>They will be updated as they are beeing moved inside the table.',
     },
-    rowHover: {
-      description: 'If true will enable hover effects for each row.'
+    modelValue: {
+      description: 'Reactive value that contains the selected row.'
+    },
+    rowKey: {
+      description: 'Prop name of a unique identifier in your data structure.'
     },
     loading: {
-      description: 'If true will display skeleton rows instead of an empty table.'
+      description: 'If true will display skeleton rows instead of an empty table if there is no data provided, otherwise it will display an overlay.'
     },
-    afterRowContent: {
+    // Slots
+    afterCellContent: {
       description:
         'Slot to add custom elements to all cells. Gets {elem, header} as property.',
-      table: {type: {summary: 'HTML'}},
+      table: { type: { summary: 'HTML' } },
     },
-    beforeRowContent: {
+    beforeCellContent: {
       description:
         'Slot to add custom elements to all cells. Gets {elem, header} as property.',
-      table: {type: {summary: 'HTML'}},
+      table: { type: { summary: 'HTML' } },
     },
     emptyState: {
       description: 'Place for custom empty states.',
-      table: {type: {summary: 'HTML'}},
+      table: { type: { summary: 'HTML' } },
     },
     headerContent: {
       description:
         'Overwrite for the default header items. Gets header as property.',
-      table: {type: {summary: 'HTML'}},
+      table: { type: { summary: 'HTML' } },
+    },
+    headerFirstCell: {
+      description: 'Space to add cells to the header.',
+      table: { type: { summary: 'HTML' } },
     },
     headerLastCell: {
       description: 'Space to add cells to the header.',
-      table: {type: {summary: 'HTML'}},
+      table: { type: { summary: 'HTML' } },
+    },
+    rowFirstCell: {
+      description: 'Space to add cells to the beginning of a row. Be aware that you have to add headerFirstCells as well otherwise the headers will not match up to your cells.'
     },
     rowLastCell: {
       description:
         'Space to add cells to all rows. Gets the current element as property.',
-      table: {type: {summary: 'HTML'}},
+      table: { type: { summary: 'HTML' } },
     },
     cellContent: {
       description: 'Is used if the ROW_TYPE = "SLOT". Gets the current element and the header element to identifier witch cell is currently displayed.',
       table: {
-        type: {summary: 'HTML'}
+        type: { summary: 'HTML' }
       }
     },
-    loadingRow: {
-      description: 'Slot to overwrite the default loading skeleton.',
-      table: {
-        type: {summary: 'HTML'}
-      }
-    }
   },
 };
 
-const Template = (args: any) => ({
-  components: {AntTable},
-  setup() {
-    return {args};
-  },
-  template: `
-    <div class="h-96">
-    <AntTable v-bind="args">
-      <template #emptyState>
-      </template>
-    </AntTable>
-    </div>
-  `,
-});
+export default meta;
+
+type Story = StoryObj<typeof AntTable>;
 
 const testData = [
   {
     name: 'Lindsay Walton',
     title: 'Front-end Developer',
     email: 'lindsay.walton@example.com',
+    linkLabel: 'Link here',
+    link: '/#',
     picture:
       'https://images.unsplash.com/photo-1517841905240-472988babdf9?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80',
   },
@@ -110,197 +104,196 @@ const testData = [
     name: 'Courtney Henry',
     title: 'Designer',
     email: 'courtney.henry@example.com',
+    linkLabel: 'Link here',
+    link: '/#',
+    picture:
+      'https://images.unsplash.com/photo-1517841905240-472988babdf9?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80',
+  },
+  {
+    name: 'Anderson a. First?',
+    title: 'Designer',
+    email: 'courtney.henry@example.com',
+    linkLabel: 'Link here',
+    link: '/#',
     picture:
       'https://images.unsplash.com/photo-1517841905240-472988babdf9?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80',
   },
 ];
 
-/**
- * Primary use of Table.
- */
-export const Primary = Template.bind({});
-// @ts-ignore
-Primary.args = {
-  headers: [
-    {
-      title: 'Name',
-      identifier: 'name',
-      headerClassList: 'font-bold',
-      rowClassList: '',
-      type: ROW_TYPES.TEXT,
-    },
-    {
-      title: 'Title',
-      identifier: 'title',
-      headerClassList: '',
-      rowClassList: '',
-      type: ROW_TYPES.TEXT,
-    },
-    {
-      title: 'E-Mail',
-      identifier: 'email',
-      rowClassList: '',
-      type: ROW_TYPES.TEXT,
-    },
-  ],
-  data: testData,
-  rowHover: true,
-};
+// TODO:: add some kind of mixed test data, maybe faker?
+for (let i = 0; i < 10; i++) {
+  testData.push({
+    name: 'Courtney Henry',
+    title: 'Designer',
+    email: 'courtney.henry@example.com',
+    linkLabel: 'Link here',
+    link: '/#',
+    picture:
+      'https://images.unsplash.com/photo-1517841905240-472988babdf9?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80',
+  })
+}
 
-/**
- * Posibility to add images and style them
- */
-export const WithImage = Template.bind({});
-// @ts-ignore
-WithImage.args = {
-  headers: [
-    {
-      title: 'Profilbild',
-      identifier: 'picture',
-      headerClassList: 'sr-only',
-      rowClassList: 'w-12 rounded-full block overflow-hidden',
-      type: ROW_TYPES.IMAGE,
-    },
-    {
-      title: 'Name',
-      identifier: 'name',
-      headerClassList: 'font-bold',
-      rowClassList: '',
-      type: ROW_TYPES.TEXT,
-    },
-    {
-      title: 'Title',
-      identifier: 'title',
-      headerClassList: '',
-      rowClassList: '',
-      type: ROW_TYPES.TEXT,
-    },
-    {
-      title: 'E-Mail',
-      identifier: 'email',
-      rowClassList: '',
-      type: ROW_TYPES.TEXT,
-    },
-  ],
-  data: testData,
-};
+export const Docs: Story = {
+  render: (args) => ({
+    components: { AntTable },
+    setup() {
+      const selected = ref();
 
-export const Links = Template.bind({});
-// @ts-ignore
-Links.args = {
-  headers: [
-    {
-      title: 'Name',
-      identifier: 'name',
-      headerClassList: 'font-bold',
-      rowClassList: '',
-      type: ROW_TYPES.TEXT_WITH_LINKS,
-      links: [
-        {
-          to: '#',
-          label: 'Meetings',
-        },
-        {
-          to: '#',
-          label: 'Stammdaten',
-        },
-      ],
+      return { args, selected };
     },
-    {
-      title: 'Title',
-      identifier: 'title',
-      headerClassList: '',
-      rowClassList: '',
-      type: ROW_TYPES.TEXT,
-    },
-    {
-      title: 'E-Mail',
-      identifier: 'email',
-      rowClassList: '',
-      type: ROW_TYPES.TEXT,
-    },
-  ],
-  data: testData,
-};
+    template: `
+      <div class="h-96">
+        <AntTable v-bind="args" v-model="selected">
+          <template #emptyState>
+          </template>
+        </AntTable>
+      </div>
+    `,
+  }),
+  args: {
+    headers: [
+      {
+        title: 'Name',
+        identifier: 'name',
+        headerClassList: 'font-bold',
+        rowClassList: '',
+        type: AntTableRowTypes.text,
+        align: AntTableAlign.center,
+        sortable: true,
+      },
+      {
+        title: 'Title',
+        identifier: 'title',
+        headerClassList: '',
+        rowClassList: '',
+        type: AntTableRowTypes.text,
+      },
+      {
+        title: 'E-Mail',
+        identifier: 'email',
+        rowClassList: '',
+        type: AntTableRowTypes.text,
+      },
+      {
+        title: 'Link',
+        identifier: 'linkLabel',
+        toProp: 'link',
+        type: AntTableRowTypes.link,
+      }
+    ],
+    data: testData
+  }
+}
 
-export const SingleHeader = Template.bind({});
-// @ts-ignore
-SingleHeader.args = {
-  headers: [
-    {
-      title: 'Name',
-      identifier: 'name',
-      headerClassList: 'font-bold',
-      rowClassList: '',
-      type: ROW_TYPES.TEXT_WITH_LINKS,
-      links: [
-        {
-          to: '#',
-          label: 'Meetings',
-        },
-        {
-          to: '#',
-          label: 'Stammdaten',
-        },
-      ],
-    },
-  ],
-  data: testData,
-};
+// TODO:: Stories for loading/custom/...
+export const Empty: Story = {
+  render: Docs.render,
+  args: {
+    headers: [
+      {
+        title: 'Name',
+        identifier: 'name',
+        headerClassList: 'font-bold',
+        rowClassList: '',
+        type: AntTableRowTypes.text,
+        align: AntTableAlign.center,
+        sortable: true,
+      },
+      {
+        title: 'Title',
+        identifier: 'title',
+        headerClassList: '',
+        rowClassList: '',
+        type: AntTableRowTypes.text,
+      },
+      {
+        title: 'E-Mail',
+        identifier: 'email',
+        rowClassList: '',
+        type: AntTableRowTypes.text,
+      },
+      {
+        title: 'Link',
+        identifier: 'linkLabel',
+        toProp: 'link',
+        type: AntTableRowTypes.link,
+      }
+    ],
+    data: []
+  }
+}
+export const Skeleton: Story = {
+  render: Docs.render,
+  args: {
+    loading: true,
+    headers: [
+      {
+        title: 'Name',
+        identifier: 'name',
+        headerClassList: 'font-bold',
+        rowClassList: '',
+        type: AntTableRowTypes.text,
+        align: AntTableAlign.center,
+        sortable: true,
+      },
+      {
+        title: 'Title',
+        identifier: 'title',
+        headerClassList: '',
+        rowClassList: '',
+        type: AntTableRowTypes.text,
+      },
+      {
+        title: 'E-Mail',
+        identifier: 'email',
+        rowClassList: '',
+        type: AntTableRowTypes.text,
+      },
+      {
+        title: 'Link',
+        identifier: 'linkLabel',
+        toProp: 'link',
+        type: AntTableRowTypes.link,
+      }
+    ],
+    data: []
+  }
+}
 
-export const EmptyState = Template.bind({});
-// @ts-ignore
-EmptyState.args = {
-  headers: [
-    {
-      title: 'Name',
-      identifier: 'name',
-      headerClassList: 'font-bold',
-      rowClassList: '',
-      type: ROW_TYPES.TEXT,
-    },
-    {
-      title: 'Title',
-      identifier: 'title',
-      headerClassList: '',
-      rowClassList: '',
-      type: ROW_TYPES.TEXT,
-    },
-    {
-      title: 'E-Mail',
-      identifier: 'email',
-      rowClassList: '',
-      type: ROW_TYPES.TEXT,
-    },
-  ],
-  data: [],
-};
-
-export const LoadingState = Template.bind({});
-// @ts-ignore
-LoadingState.args = {
-  headers: [
-    {
-      title: 'Name',
-      identifier: 'name',
-      headerClassList: 'font-bold',
-      rowClassList: '',
-      type: ROW_TYPES.TEXT,
-    },
-    {
-      title: 'Title',
-      identifier: 'title',
-      headerClassList: '',
-      rowClassList: '',
-      type: ROW_TYPES.TEXT,
-    },
-    {
-      title: 'E-Mail',
-      identifier: 'email',
-      rowClassList: '',
-      type: ROW_TYPES.TEXT,
-    },
-  ],
-  data: [],
-  loading: true
-};
+export const Loading: Story = {
+  render: Docs.render,
+  args: {
+    loading: true,
+    headers: [
+      {
+        title: 'Name',
+        identifier: 'name',
+        headerClassList: 'font-bold',
+        rowClassList: '',
+        type: AntTableRowTypes.text,
+        align: AntTableAlign.center,
+        sortable: true,
+      },
+      {
+        title: 'Title',
+        identifier: 'title',
+        headerClassList: '',
+        rowClassList: '',
+        type: AntTableRowTypes.text,
+      },
+      {
+        title: 'E-Mail',
+        identifier: 'email',
+        rowClassList: '',
+        type: AntTableRowTypes.text,
+      },
+      {
+        title: 'Link',
+        identifier: 'linkLabel',
+        toProp: 'link',
+        type: AntTableRowTypes.link,
+      }
+    ],
+    data: testData
+  }
+}

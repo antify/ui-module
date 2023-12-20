@@ -6,7 +6,7 @@ export default {
 
 <script lang="ts" setup>
 import { ref, computed } from 'vue';
-import { ROW_TYPES, TableHeader } from '../../types/TableHeader.type';
+import { ROW_TYPES, TableHeader } from './__types/TableHeader.type';
 import {
   faEllipsisVertical,
   type IconDefinition,
