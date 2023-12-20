@@ -10,13 +10,11 @@ import {
 const moduleName = 'ui-module';
 
 export default defineNuxtModule({
-  modules: [
-    '@nuxtjs/eslint-module',
-  ],
   meta: {
     name: moduleName,
     configKey: 'uiModule'
   },
+  defaults: {},
   async setup(options, nuxt) {
     const {resolve} = createResolver(import.meta.url);
     const runtimeDir = resolve('./runtime');
