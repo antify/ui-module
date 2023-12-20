@@ -10,14 +10,12 @@ const props = withDefaults(defineProps<{
   rounded?: boolean;
   roundedFull?: boolean;
   absolute?: boolean;
-  delayShowBy?: number;
   minShowTime?: number;
 }>(), {
   grouped: Grouped.none,
   rounded: false,
   roundedFull: false,
   absolute: false,
-  delayShowBy: 0,
   minShowTime: 1000
 });
 
@@ -41,20 +39,18 @@ const classList = computed(() => ({
 
 watch(value, (val) => {
   if (val) {
-    setTimeout(() => {
-      if (value.value) {
-        show.value = true;
-        blockUnShow.value = true;
+    if (value.value) {
+      show.value = true;
+      blockUnShow.value = true;
 
-        setTimeout(() => {
-          blockUnShow.value = false;
+      setTimeout(() => {
+        blockUnShow.value = false;
 
-          if (!value.value) {
-            show.value = false;
-          }
-        }, props.minShowTime);
-      }
-    }, props.delayShowBy)
+        if (!value.value) {
+          show.value = false;
+        }
+      }, props.minShowTime);
+    }
   } else if (!blockUnShow.value) {
     show.value = false;
   }
