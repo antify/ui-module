@@ -1,8 +1,8 @@
 import AntTooltip from '../AntTooltip.vue';
 import AntButton from '../form/AntButton.vue';
-import { type Meta, type StoryObj} from "@storybook/vue3";
-import {Position} from "../../enums/PositionType.enum";
-import {InputColorType} from "../../enums";
+import { type Meta, type StoryObj} from '@storybook/vue3';
+import {Position} from '../../enums/Position.enum';
+import {InputColorType} from '../../enums';
 
 const meta: Meta<typeof AntTooltip> = {
     title: 'Components/Tooltip',

@@ -3,9 +3,8 @@ import {
   InputColorType
 } from '../enums/ColorType.enum';
 import {Grouped} from '../enums/Grouped.enum';
-import {Position} from '../enums/PositionType.enum';
+import {Position, CornerPosition} from '../enums/Position.enum';
 import {Size} from '../enums/Size.enum';
-import {POSITION, TOASTER_TYPE} from '../types/Toaster.type';
 import {ROW_TYPES} from '../types/TableHeader.type';
 
 export const useUi = () => {
@@ -14,9 +13,8 @@ export const useUi = () => {
     InputColorType,
     Grouped,
     Position,
+    CornerPosition,
     Size,
-    POSITION,
-    TOASTER_TYPE,
     ROW_TYPES
   }
 }

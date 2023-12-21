@@ -1,7 +1,7 @@
 <script lang="ts" setup>
 import {computed, onMounted} from 'vue';
 import {handleEnumValidation} from '../handler';
-import {Position} from '../enums/PositionType.enum';
+import {Position} from '../enums/Position.enum';
 import {classesToObjectSyntax} from '../utils';
 
 const props = withDefaults(defineProps<{

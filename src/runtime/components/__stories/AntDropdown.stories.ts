@@ -1,8 +1,8 @@
 import AntDropdown from '../AntDropdown.vue';
 import AntButton from '../form/AntButton.vue';
-import { type Meta, type StoryObj} from "@storybook/vue3";
-import {Position} from "../../enums/PositionType.enum";
-import {computed} from "vue";
+import { type Meta, type StoryObj} from '@storybook/vue3';
+import {Position} from '../../enums/Position.enum';
+import {computed} from 'vue';
 
 const meta: Meta<typeof AntDropdown> = {
     title: 'Components/Dropdown',
