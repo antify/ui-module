@@ -32,7 +32,7 @@ const meta: Meta<typeof AntTable> = {
       description:
         'List of rows to be displayed in the table. The properties of the elements need to be equal to the identifier of a table row for it to be displayed<br>They will be updated as they are beeing moved inside the table.',
     },
-    modelValue: {
+    selectedRow: {
       description: 'Reactive value that contains the selected row.'
     },
     rowKey: {
@@ -121,7 +121,7 @@ const testData = [
 ];
 
 // TODO:: add some kind of mixed test data, maybe faker?
-for (let i = 0; i < 10; i++) {
+for (let i = 0; i < 100; i++) {
   testData.push({
     name: 'Courtney Henry',
     title: 'Designer',

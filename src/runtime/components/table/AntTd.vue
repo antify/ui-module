@@ -15,7 +15,7 @@ const props =
     });
 
 const cellClasses = computed(() => ({
-  'whitespace-nowrap px-2.5 py-0 h-[40px] text-sm font-medium': true,
+  'whitespace-nowrap px-2.5 py-0 h-[40px] text-sm font-medium relative': true,
   'text-right': props.align === AntTableAlign.right,
   'text-center': props.align === AntTableAlign.center
 }))
@@ -40,9 +40,9 @@ const cellClasses = computed(() => ({
     <div
       v-else-if="header.type === AntTableRowTypes.link && header.toProp"
     >
-      <router-link :to="element[header.toProp] as RouteLocationRaw">
-        {{ element[header.identifier] }}
+      <router-link :to="element[header.toProp] as RouteLocationRaw" class="absolute inset-0">
       </router-link>
+      {{ element[header.identifier] }}
     </div>
 
     <div

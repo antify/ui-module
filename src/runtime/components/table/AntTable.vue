@@ -6,17 +6,19 @@ export default {
 
 <script lang="ts" setup>
 import { AntTableSortDirection, type TableHeader } from './__types/TableHeader.type';
-import { type Ref, ref, watch } from 'vue';
+import { type Ref } from 'vue';
 import { useVModel } from '@vueuse/core';
 import { ColorType } from '../../enums';
 import AntTh from './AntTh.vue';
 import AntTd from './AntTd.vue';
+import AntSpinner from '../AntSpinner.vue';
+import AntSkeleton from '../AntSkeleton.vue';
 
-const emits = defineEmits([ 'update:modelValue', 'update:skeleton', 'rowClick' ]);
+const emits = defineEmits([ 'update:modelValue', 'update:skeleton', 'rowClick', 'updateSort' ]);
 // TODO:: add pagination prop and pagination to table
 const props = withDefaults(
   defineProps<{
-    modelValue?: Record<string, unknown> | undefined,
+    selectedRow?: Record<string, unknown> | undefined,
     headers: TableHeader[];
     data: Record<string, unknown>[];
     rowKey?: string;
@@ -28,40 +30,32 @@ const props = withDefaults(
     selectableRows: false,
   });
 
-const selected: Ref<Record<string, unknown> | undefined> = useVModel(props, 'modelValue', emits);
+const selected: Ref<Record<string, unknown> | undefined> = useVModel(props, 'selectedRow', emits);
 const _loading: Ref<boolean> = useVModel(props, 'loading', emits);
-const internalRows: Ref<Record<string, unknown>[]> = ref([]);
-
-watch(() => props.data, () => {
-  internalRows.value = [ ...props.data ];
-
-  // TODO after update current sort should be reapplied
-}, {
-  deep: true,
-  immediate: true
-});
 
 function sortTable(header: TableHeader, newDirection: AntTableSortDirection) {
   // TODO:: Sorting is always done externally, here should only be a emit sort with header and direction.
   // TODO:: Save current sort in some kind of prop (maybe same as pagination?)
   // TODO:: Multi column sort?
-  if (newDirection !== AntTableSortDirection.neutral) {
-    if (header.sort) {
-      const sortFn = header.sort;
-      internalRows.value.sort((a, b) => sortFn(a, b, newDirection));
-    } else {
-      internalRows.value.sort((a: Record<string, unknown>, b: Record<string, unknown>) => {
-        if (newDirection === AntTableSortDirection.asc) {
-          return (a[header.identifier] as string) < (b[header.identifier] as string) ? -1 : 1
-        } else {
-          return (a[header.identifier] as string) > (b[header.identifier] as string) ? -1 : 1
-        }
-      });
-    }
-  } else {
-    // Reset sort to default
-    internalRows.value = [ ...props.data ];
-  }
+  // if (newDirection !== AntTableSortDirection.neutral) {
+  //   if (header.sort) {
+  //     const sortFn = header.sort;
+  //     internalRows.value.sort((a, b) => sortFn(a, b, newDirection));
+  //   } else {
+  //     internalRows.value.sort((a: Record<string, unknown>, b: Record<string, unknown>) => {
+  //       if (newDirection === AntTableSortDirection.asc) {
+  //         return (a[header.identifier] as string) < (b[header.identifier] as string) ? -1 : 1
+  //       } else {
+  //         return (a[header.identifier] as string) > (b[header.identifier] as string) ? -1 : 1
+  //       }
+  //     });
+  //   }
+  // } else {
+  //   // Reset sort to default
+  //   internalRows.value = [ ...props.data ];
+  // }
+
+  emits('updateSort', header, newDirection);
 }
 
 function rowClick(elem: Record<string, unknown>): void {
@@ -76,8 +70,8 @@ function rowClick(elem: Record<string, unknown>): void {
     <div class="overflow-hidden h-full overflow-x-auto overflow-y-auto">
       <table
         v-bind="$attrs"
-        class="min-w-full max-h-full h-full relative"
-        :class="{'overflow-hidden': data.length > 0 && _loading}"
+        class="min-w-full max-h-full relative"
+        :class="{'h-full': data.length === 0 && !_loading}"
       >
         <thead class="bg-neutral-lighter sticky top-0">
         <tr class="">
@@ -99,10 +93,10 @@ function rowClick(elem: Record<string, unknown>): void {
         </tr>
         </thead>
 
-        <tbody class="bg-white">
+        <tbody class="bg-white relative">
         <!-- TODO:: Add some kind of virtual list for very large tree data (or required pagination??) -->
         <tr
-          v-for="(elem, index) in internalRows"
+          v-for="(elem, index) in data"
           :key="`table-row-${elem[rowKey]}-${index}`"
           :id="elem[rowKey] as string"
           class="transition-all"
@@ -152,16 +146,6 @@ function rowClick(elem: Record<string, unknown>): void {
           </td>
         </tr>
 
-        <tr v-if="!data || data.length <= 0 && _loading">
-          <slot name="emptyState">
-            <td
-              colspan="100"
-              class="w-full h-full py-2 text-center text-gray-500 text-2xl italic relative"
-            >
-              <AntSkeleton v-model="_loading" absolute/>
-            </td>
-          </slot>
-        </tr>
         </tbody>
       </table>
     </div>
@@ -171,6 +155,14 @@ function rowClick(elem: Record<string, unknown>): void {
       class="absolute bg-opacity-50 w-full top-0 bottom-0 bg-neutral-light flex items-center justify-center"
     >
       <AntSpinner class="!w-24 !h-24" :color-type="ColorType.primary"/>
+    </div>
+
+    <div
+      v-if="!data || data.length <= 0 && _loading"
+      class="absolute bg-opacity-50 w-full top-[40px] bottom-0 bg-neutral-light flex items-center justify-center"
+    >
+      <AntSkeleton
+        v-model="_loading" absolute/>
     </div>
   </div>
 </template>
