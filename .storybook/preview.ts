@@ -1,15 +1,15 @@
 import 'tailwindcss/tailwind.css';
-import {createWebHistory, createRouter} from 'vue-router';
-import {type Preview, setup} from '@storybook/vue3';
-import {FontAwesomeIcon} from '@fortawesome/vue-fontawesome';
+import { createWebHistory, createRouter } from 'vue-router';
+import { type Preview, setup } from '@storybook/vue3';
+import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
 
 const router = createRouter({
   history: createWebHistory(),
-  routes: [{
+  routes: [ {
     name: 'test',
     redirect: '/#',
     path: '/#',
-  }],
+  } ],
 });
 
 setup((app) => {
@@ -19,18 +19,27 @@ setup((app) => {
 
 const preview: Preview = {
   decorators: [
-    (story) => ({
-      components: {story},
-      template: '<div class="p-4"><story /></div>',
-    }),
+    (story, { parameters }) => {
+      if (!parameters.fullscreen) {
+        return {
+          components: { story },
+          template: '<div class="p-4"><story /></div>',
+        }
+      } else {
+        return {
+          components: { story },
+          template: '<div><story /></div>'
+        }
+      }
+    },
   ],
 };
 
 export default preview;
 
 export const parameters = {
-  chromatic: {disableSnapshot: true},
-  actions: {argTypesRegex: '^on[A-Z].*'},
+  chromatic: { disableSnapshot: true },
+  actions: { argTypesRegex: '^on[A-Z].*' },
   controls: {
     matchers: {
       color: /(background|color)$/i,

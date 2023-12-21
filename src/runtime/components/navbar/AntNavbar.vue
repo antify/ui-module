@@ -1,0 +1,25 @@
+<script setup lang="ts">
+
+import { computed } from 'vue';
+import type { NavbarItem } from './__types/NavbarItem';
+import AntNavbarItem from './AntNavbarItem.vue';
+
+defineProps<{
+  navbarItems: NavbarItem[]
+}>();
+
+const containerClasses = computed(() => ({
+  'w-full h-full bg-neutral-lightest flex flex-col gap-1 p-1.5': true,
+}))
+
+</script>
+
+<template>
+ <div :class="containerClasses">
+   <AntNavbarItem
+     v-for="(navbarItem, index) in navbarItems"
+     :key="`navbar-item-${index}`"
+     :navbar-item="navbarItem"
+   />
+ </div>
+</template>
