@@ -6,7 +6,7 @@ import {computed} from 'vue';
 
 const emits = defineEmits(['update:modelValue']);
 const props = withDefaults(defineProps<{
-  modelValue: string | undefined;
+  modelValue?: string;
   tabItems?: TabItem[];
   expanded?: boolean;
 }>(), {
@@ -14,14 +14,11 @@ const props = withDefaults(defineProps<{
 });
 
 const currentActive = useVModel(props, 'modelValue', emits);
-
-const containerClasses = computed(() => {
-  return {
-    'flex bg-neutral-light gap-px transition-all h-full': true,
-    'w-fit': !props.expanded,
-    'w-full': props.expanded,
-  };
-});
+const containerClasses = computed(() => ({
+  'flex bg-neutral-light gap-px transition-all h-full': true,
+  'w-fit': !props.expanded,
+  'w-full': props.expanded,
+}));
 
 function clickTab(tabItem: TabItem) {
   if (tabItem.clickHandler) {
@@ -48,7 +45,3 @@ function clickTab(tabItem: TabItem) {
     </slot>
   </div>
 </template>
-
-<style scoped>
-
-</style>
