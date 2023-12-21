@@ -17,3 +17,19 @@ export function classesToObjectSyntax(classes: string | undefined | Record<strin
         [classes]: true,
     };
 }
+
+/**
+ * Convert the given enum to a string for documentation.
+ *
+ * @param value
+ * @param className
+ */
+export function enumToPlainText(value: object, className: string) {
+  let text =  `enum ${className} {\n`;
+
+  Object.keys(value).forEach((key) => {
+    text += `    ${key} = '${value[key]}',\n`;
+  })
+
+  return text + '}';
+}

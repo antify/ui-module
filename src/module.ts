@@ -7,14 +7,20 @@ import {
   addImportsDir,
 } from '@nuxt/kit';
 
-const moduleName = 'ui-module';
+const moduleKey = 'uiModule';
 
-export default defineNuxtModule({
+type ModuleOptions = {
+  toasterMessageShowTime: number;
+};
+
+export default defineNuxtModule<ModuleOptions>({
   meta: {
-    name: moduleName,
-    configKey: 'uiModule'
+    name: 'ui-module',
+    configKey: moduleKey
   },
-  defaults: {},
+  defaults: {
+    toasterMessageShowTime: 5000
+  },
   async setup(options, nuxt) {
     const {resolve} = createResolver(import.meta.url);
     const runtimeDir = resolve('./runtime');
@@ -36,6 +42,8 @@ export default defineNuxtModule({
 
     nuxt.options.postcss.plugins.tailwindcss = tailwindcss;
     nuxt.options.css.push(resolve(runtimeDir, 'assets/tailwind.css'));
+
+    nuxt.options.runtimeConfig.public[moduleKey] = options;
   }
 });
 

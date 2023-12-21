@@ -13,7 +13,7 @@ import {ColorType, InputColorType} from '../enums';
 import {IconColorType} from './__types';
 
 const props = withDefaults(defineProps<{
-  title: string,
+  title?: string,
   colorType?: InputColorType,
   showUndo?: boolean,
   icon?: boolean
