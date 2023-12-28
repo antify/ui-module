@@ -5,16 +5,22 @@ export default {
 </script>
 
 <script lang="ts" setup>
-import { AntTableSortDirection, type TableHeader } from './__types/TableHeader.type';
-import { type Ref } from 'vue';
-import { useVModel } from '@vueuse/core';
-import { ColorType } from '../../enums';
+import {AntTableSortDirection, type TableHeader} from './__types/TableHeader.type';
+import {type Ref} from 'vue';
+import {useVModel} from '@vueuse/core';
+import {ColorType} from '../../enums';
 import AntTh from './AntTh.vue';
 import AntTd from './AntTd.vue';
 import AntSpinner from '../AntSpinner.vue';
 import AntSkeleton from '../AntSkeleton.vue';
 
-const emits = defineEmits([ 'update:modelValue', 'update:skeleton', 'rowClick', 'updateSort' ]);
+const emits = defineEmits([
+  'update:modelValue',
+  'update:skeleton',
+  'update:selectedRow',
+  'rowClick',
+  'updateSort'
+]);
 // TODO:: add pagination prop and pagination to table
 const props = withDefaults(
   defineProps<{
