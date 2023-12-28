@@ -6,7 +6,6 @@ import AntNumberInput from './AntNumberInput.vue';
 import AntRangeSlider from './AntRangeSlider.vue';
 import AntSwitcher from './AntSwitcher.vue';
 import AntSearch from './AntSearch.vue';
-import AntSearchField from './AntSearchField.vue';
 import AntSearchSelect from './AntSearchSelect.vue';
 import AntSelect from './AntSelect.vue';
 import AntSwitch from './AntSwitch.vue';
@@ -26,7 +25,6 @@ export {
   AntRangeSlider,
   AntSwitcher,
   AntSearch,
-  AntSearchField,
   AntSearchSelect,
   AntSelect,
   AntSwitch,

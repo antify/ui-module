@@ -13,7 +13,7 @@ import {
   faList,
   faTableCellsLarge,
 } from '@fortawesome/free-solid-svg-icons';
-import AntSearchField from '../../form/AntSearchField.vue';
+// import AntSearchField from '../../form/AntSearchField.vue';
 
 const emit = defineEmits(['search']);
 
@@ -78,11 +78,11 @@ const _search = computed<string>({
 
       <div>
         <slot name="searchField">
-          <AntSearchField
-            v-model:value="_search"
-            :leading-icon="faMagnifyingGlass"
-            :placeholder="searchPlaceholder || 'Search'"
-          />
+<!--          <AntSearchField-->
+<!--            v-model:value="_search"-->
+<!--            :leading-icon="faMagnifyingGlass"-->
+<!--            :placeholder="searchPlaceholder || 'Search'"-->
+<!--          />-->
         </slot>
       </div>
     </div>
