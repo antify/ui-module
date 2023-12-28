@@ -6,7 +6,7 @@ export default {
 
 <script lang="ts" setup>
 import {AntTableSortDirection, type TableHeader} from './__types/TableHeader.type';
-import {type Ref} from 'vue';
+import {ref, type Ref, watch} from 'vue';
 import {useVModel} from '@vueuse/core';
 import {ColorType} from '../../enums';
 import AntTh from './AntTh.vue';
@@ -33,11 +33,18 @@ const props = withDefaults(
   }>(), {
     rowKey: 'id',
     loading: false,
-    selectableRows: false,
+    selectableRows: false
   });
 
 const selected: Ref<Record<string, unknown> | undefined> = useVModel(props, 'selectedRow', emits);
 const _loading: Ref<boolean> = useVModel(props, 'loading', emits);
+const _headers = ref(props.headers);
+
+watch(() => props.headers, (val) => {
+  setTimeout(() => {
+    _headers.value = val
+  }, 350)
+});
 
 function sortTable(header: TableHeader, newDirection: AntTableSortDirection) {
   // TODO:: Sorting is always done externally, here should only be a emit sort with header and direction.
@@ -84,7 +91,7 @@ function rowClick(elem: Record<string, unknown>): void {
           <slot name="headerFirstCell"></slot>
 
           <AntTh
-            v-for="(header, index) in headers"
+            v-for="(header, index) in _headers"
             :key="`table-header-${header.identifier}-${index}`"
             :header="header"
             @sort="sortTable"
@@ -116,7 +123,7 @@ function rowClick(elem: Record<string, unknown>): void {
           <slot name="rowFirstCell" v-bind="{ elem }"/>
 
           <AntTd
-            v-for="(header, index) in headers"
+            v-for="(header, index) in _headers"
             :key="`table-cell-${header.identifier}-${index}`"
             :header="header"
             :element="elem"
