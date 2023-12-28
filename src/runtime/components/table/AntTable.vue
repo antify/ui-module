@@ -79,7 +79,7 @@ function rowClick(elem: Record<string, unknown>): void {
         class="min-w-full max-h-full relative"
         :class="{'h-full': data.length === 0 && !_loading}"
       >
-        <thead class="bg-neutral-lighter sticky top-0">
+        <thead class="bg-neutral-lighter sticky top-0 z-10">
         <tr class="">
           <slot name="headerFirstCell"></slot>
 
