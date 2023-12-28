@@ -6,7 +6,7 @@
 
 import {type IconDefinition} from '@fortawesome/free-solid-svg-icons';
 import {computed, onMounted} from 'vue';
-import {type LocationAsRelativeRaw} from 'vue-router';
+import {type RouteLocationRaw} from 'vue-router';
 import AntSkeleton from '../AntSkeleton.vue';
 import AntSpinner from '../AntSpinner.vue';
 import {Grouped} from '../../enums/Grouped.enum';
@@ -23,7 +23,7 @@ const props = withDefaults(defineProps<{
   colorType?: ColorType;
   iconLeft?: IconDefinition;
   iconRight?: IconDefinition;
-  to?: LocationAsRelativeRaw | string;
+  to?: RouteLocationRaw;
   disabled?: boolean;
   grouped?: Grouped;
   skeleton?: boolean;
@@ -122,10 +122,6 @@ const buttonContentClasses = computed(() => ({
   // Make sure, nothing shimmer through the skeleton
   'invisible': _skeleton.value
 }));
-const iconClasses = computed(() => ({
-  'h-4': props.size === Size.sm,
-  'h-5': props.size === Size.md,
-}));
 const type = computed(() => {
   if (props.to !== undefined) {
     return undefined;
@@ -172,7 +168,11 @@ onMounted(() => {
             v-if="!spinner"
             name="icon-left"
         >
-          <fa-icon v-if="iconLeft" :icon="iconLeft" :class="iconClasses"/>
+          <AntIcon
+            v-if="iconLeft"
+            :icon="iconLeft"
+            :size="size"
+          />
         </slot>
 
         <slot
@@ -183,7 +183,11 @@ onMounted(() => {
             v-if="!spinner"
             name="icon-right"
         >
-          <fa-icon v-if="iconRight" :icon="iconRight" :class="iconClasses"/>
+          <AntIcon
+            v-if="iconRight"
+            :icon="iconRight"
+            :size="size"
+          />
         </slot>
       </span>
     </component>
