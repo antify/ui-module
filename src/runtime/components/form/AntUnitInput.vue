@@ -5,7 +5,7 @@ export default {
 </script>
 
 <script lang="ts" setup>
-import {onMounted} from 'vue';
+import {computed, onMounted} from 'vue';
 import AntButton from './AntButton.vue'
 import AntField from './Elements/AntField.vue'
 import AntBaseInput from './Elements/AntBaseInput.vue'
@@ -16,6 +16,7 @@ import {ColorType, InputColorType} from '../../enums';
 import {Grouped} from '../../enums/Grouped.enum';
 import {BaseInputType} from './Elements/__types';
 import {handleEnumValidation} from '../../handler';
+import {type Validator} from '@antify/validate';
 
 // TODO:: implement missing validator
 const props = withDefaults(defineProps<{
@@ -24,6 +25,10 @@ const props = withDefaults(defineProps<{
   label?: string;
   placeholder?: string;
   description?: string;
+  limiter?: boolean;
+  min?: number;
+  max?: number;
+  validator?: Validator;
   size?: Size;
   colorType?: InputColorType;
   disabled?: boolean;
@@ -34,11 +39,11 @@ const props = withDefaults(defineProps<{
   disabled: false,
   skeleton: false,
   size: Size.md,
+  limiter: false
 });
-const emits = defineEmits(['update:modelValue', 'update:skeleton']);
-
-const _skeleton = useVModel(props, 'skeleton', emits);
+const emits = defineEmits(['update:modelValue']);
 const _modelValue = useVModel(props, 'modelValue', emits);
+const _colorType = computed(() => props.validator?.hasErrors() ? InputColorType.danger : props.colorType);
 
 onMounted(() => {
   handleEnumValidation(props.colorType, InputColorType, 'colorType');
@@ -48,37 +53,42 @@ onMounted(() => {
 
 <template>
   <AntField
-      :label="label"
-      :size="size"
-      :skeleton="_skeleton"
-      :description="description"
-      :colorType="colorType"
-      :class="wrapperClass"
+    :label="label"
+    :size="size"
+    :skeleton="skeleton"
+    :description="description"
+    :colorType="colorType"
+    :validator="validator"
+    :limiter-max-value="limiter && max !== undefined ? max : undefined"
+    :limiter-value="limiter && _modelValue !== undefined && _modelValue !== null ? _modelValue : undefined"
   >
     <div
-        class="flex relative"
+      class="flex relative"
     >
       <AntBaseInput
-          v-model:value="_modelValue"
-          :type="BaseInputType.number"
-          :grouped="Grouped.left"
-          wrapper-class="flex-grow"
-          :color-type="colorType"
-          :size="size"
-          :skeleton="_skeleton"
-          :disabled="disabled"
-          :placeholder="placeholder || label"
-          :show-icon="false"
-          v-bind="$attrs"
+        v-model:value="_modelValue"
+        :type="BaseInputType.number"
+        :grouped="Grouped.left"
+        wrapper-class="flex-grow"
+        :color-type="colorType"
+        :size="size"
+        :min="min"
+        :max="max"
+        :skeleton="skeleton"
+        :disabled="disabled"
+        :placeholder="placeholder || label"
+        :show-icon="false"
+        :validator="validator"
+        v-bind="$attrs"
       />
 
       <AntButton
-          :icon-left="typeof unit === 'object' ? unit : undefined"
-          :grouped="Grouped.right"
-          :color-type="colorType as unknown as ColorType"
-          :size="size"
-          :skeleton="_skeleton"
-          :readonly="true"
+        :icon-left="typeof unit === 'object' ? unit : undefined"
+        :grouped="Grouped.right"
+        :color-type="_colorType as unknown as ColorType"
+        :size="size"
+        :skeleton="skeleton"
+        :readonly="true"
       >
         <span v-if="typeof unit === 'string'">
           {{ unit }}
