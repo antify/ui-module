@@ -5,7 +5,8 @@ import {
   faCheckCircle,
   faExclamationCircle,
   faExclamationTriangle,
-  faInfoCircle, faXmark
+  faInfoCircle,
+  faXmark
 } from '@fortawesome/free-solid-svg-icons';
 import AntIcon from './AntIcon.vue';
 import AntButton from './form/AntButton.vue';
@@ -42,7 +43,7 @@ const classes = computed(() => {
   };
 
   return {
-    'inline-flex flex-col gap-2.5 rounded-md p-2.5 border transition-colors': true,
+    'inline-flex flex-col gap-2.5 rounded-md p-2.5 border transition-colors shadow-md': true,
     [variants[props.colorType]]: true,
   };
 });
@@ -63,7 +64,7 @@ onMounted(() => {
           :color-type="props.colorType as unknown as IconColorType"
         />
 
-        <div :class="{'font-semibold': hasDefaultSlot}">
+        <div class="whitespace-pre" :class="{'font-semibold': hasDefaultSlot}">
           <slot name="title">
             {{ title }}
           </slot>
