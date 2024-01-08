@@ -4,12 +4,12 @@ import { type Meta, type StoryObj } from '@storybook/vue3';
 import { ref } from 'vue';
 
 const meta: Meta<typeof AntTable> = {
-  title: 'Components/Table/Ant Table',
+  title: 'Components/Table',
   component: AntTable,
   parameters: { controls: { sort: 'requiredFirst' } },
   argTypes: {
     headers: {
-      description: 'List of header definitions',
+      description: 'List of header definitions. <br>If this value get changed from outside, because the table size should change, the change will take 350 ms to have a more smooth transition.',
       table: {
         type: {
           summary: 'TableHeader',
@@ -142,7 +142,7 @@ export const Docs: Story = {
       return { args, selected };
     },
     template: `
-      <div class="h-96">
+      <div class="h-96 border border-dashed border-neutral-light">
         <AntTable v-bind="args" v-model="selected">
           <template #emptyState>
           </template>

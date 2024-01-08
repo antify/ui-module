@@ -5,15 +5,15 @@
  * TODO:: Fix ts errors
  */
 import {useRouter, useRoute} from 'vue-router'
-import {computed} from 'vue';
+import {computed, ref, watch} from 'vue';
 import AntButton from './form/AntButton.vue';
 import {faChevronRight, faChevronLeft} from '@fortawesome/free-solid-svg-icons';
 import {Grouped} from '../enums/Grouped.enum';
 import AntSkeleton from './AntSkeleton.vue';
-import {useVModel} from '@vueuse/core';
 import {ColorType} from '../enums';
+import { useElementSize } from '@vueuse/core'
 
-const emit = defineEmits(['update:page'])
+const emit = defineEmits(['update:skeleton', 'input'])
 const props = withDefaults(
   defineProps<{
     pages: number,
@@ -28,7 +28,6 @@ const props = withDefaults(
 
 const router = useRouter()
 const route = useRoute()
-const _skeleton = useVModel(props, 'skeleton', emit);
 
 const page = computed({
   get() {
@@ -42,12 +41,16 @@ const page = computed({
   },
   set(val) {
     const query = {...route.query}
-    query[props.pageQuery] = val
+    query[props.pageQuery] = val;
 
-    router.push({
-      ...route,
-      query
-    })
+    (async () => {
+      await router.push({
+        ...route,
+        query
+      })
+
+      emit('input', val)
+    })()
   }
 })
 
@@ -106,12 +109,14 @@ const pagination = computed(() => {
 </script>
 
 <template>
-  <div class="inline-flex relative">
-    <AntSkeleton v-model="_skeleton" rounded absolute/>
+  <div
+    class="inline-flex relative"
+  >
+    <AntSkeleton v-if="skeleton" rounded absolute/>
 
     <div
       class="inline-flex gap-px"
-      :class="{'invisible': _skeleton}"
+      :class="{'invisible': skeleton}"
     >
       <AntButton
         :disabled="page === 1"

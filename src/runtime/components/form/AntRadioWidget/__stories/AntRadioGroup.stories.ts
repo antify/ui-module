@@ -1,9 +1,9 @@
 import AntRadioGroup from '../AntRadioGroup.vue';
 import { ref } from 'vue';
-import { InputColorType, Size } from "../../../../enums";
-import { type Meta, type StoryObj } from "@storybook/vue3";
-import { useValidator } from "@antify/validate";
-import { Direction } from "../../../../enums/Direction.enum";
+import { InputColorType, Size } from '../../../../enums';
+import { type Meta, type StoryObj } from '@storybook/vue3';
+import { useFieldValidator } from '@antify/validate';
+import { Direction } from '../../../../enums/Direction.enum';
 
 const meta: Meta<typeof AntRadioGroup> = {
   title: 'Components/Forms/Radio/Radio Group',
@@ -28,7 +28,7 @@ const meta: Meta<typeof AntRadioGroup> = {
   label?: string;
   disabled?: boolean;
   colorType?: InputColorType;
-  validator?: Validator;
+  validator?: FieldValidator;
 }
 `
         },
@@ -105,7 +105,7 @@ export const WithValidator: Story = {
     setup() {
       const value = ref(null);
 
-      const validator = ref(useValidator([
+      const validator = ref(useFieldValidator([
         (val: string) => val !== null || 'Value is required'
       ]));
 

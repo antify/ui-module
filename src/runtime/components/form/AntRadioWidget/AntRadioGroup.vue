@@ -10,7 +10,7 @@ import { useVModel } from '@vueuse/core';
 import { AntField } from '../Elements';
 import { type AntRadioType } from './__types/AntRadio.type';
 import { InputColorType, Size } from '../../../enums';
-import { Validator } from '@antify/validate';
+import { FieldValidator } from '@antify/validate';
 import { computed, type Ref, watch } from 'vue';
 import { Direction } from '../../../enums/Direction.enum';
 
@@ -19,7 +19,6 @@ const props = withDefaults(
   defineProps<{
     modelValue: string | null;
     radioButtons: AntRadioType[];
-
     label?: string;
     description?: string;
     direction?: Direction;
@@ -28,7 +27,7 @@ const props = withDefaults(
     skeleton?: boolean;
     disabled?: boolean;
     readonly?: boolean;
-    validator?: Validator;
+    validator?: FieldValidator;
   }>(), {
     direction: Direction.column,
     colorType: InputColorType.base,
@@ -39,10 +38,7 @@ const props = withDefaults(
   });
 
 const _value = useVModel(props, 'modelValue', emits);
-const _skeleton = useVModel(props, 'skeleton', emits);
-
 const _colorType: Ref<InputColorType | undefined> = computed(() => props.validator?.hasErrors() ? InputColorType.danger : undefined);
-
 const containerClasses = computed(() => {
   const classes = {
     'flex gap-2.5 justify-start': true,
@@ -65,7 +61,7 @@ watch(_value, () => {
     :label="label"
     :description="description"
     :color-type="colorType"
-    :skeleton="_skeleton"
+    :skeleton="skeleton"
     :validator="validator"
     :size="size"
     label-for="noop"
@@ -78,7 +74,7 @@ watch(_value, () => {
         v-for="(radio, index) in radioButtons"
         :key="`radio-button-widget_${radio.value}-${index}`"
         :value="radio"
-        :skeleton="_skeleton"
+        :skeleton="skeleton"
         :disabled="disabled || radio.disabled"
         :readonly="readonly || radio.readonly"
         :color-type="_colorType || radio.colorType || colorType"

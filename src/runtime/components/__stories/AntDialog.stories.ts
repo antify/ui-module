@@ -1,6 +1,5 @@
 import AntDialog from '../AntDialog.vue';
 import { type Meta, type StoryObj} from '@storybook/vue3';
-import {computed} from 'vue';
 import AntButton from '../form/AntButton.vue';
 import {InputColorType} from '../../enums';
 
@@ -14,7 +13,8 @@ const meta: Meta<typeof AntDialog> = {
       options: Object.values(InputColorType),
     },
     title: {
-      control: 'text'
+      control: 'text',
+      table: {type: {summary: 'string|null'}},
     }
   }
 }
@@ -27,29 +27,39 @@ export const Docs: Story = {
   render: (args) => ({
     components: {AntDialog, AntButton},
     setup() {
-      const open = computed({
-        // @ts-ignore
-        get: () => args.open,
-        // @ts-ignore
-        set: (val) => args.open = val
-      });
-
-      // @ts-ignore
-      args.buttonText = args.buttonText || 'Text';
-
-      return {args, open}
+      return {args}
     },
     template: `
       <div
         class="h-96 flex items-center justify-center relative"
       >
-        <AntButton @click="open = true" color-type="primary">Open Dialog</AntButton>
+        <div class="absolute inset-0">
+          Lorem ipsum dolor sit amet, consetetur sadipscing elitr, <br/>
+          sed diam nonumy eirmod tempor invidunt <br/>
+          ut labore et dolore magna aliquyam erat, <br/>
+          sed diam voluptua. At vero eos et accusam et <br/>
+          justo duo dolores et ea rebum. Stet clita kasd
+        </div>
 
-        <AntDialog v-bind="args" v-model:open="open">
+        <div class="absolute bottom-0 right-0">
+          Lorem ipsum dolor sit amet, consetetur sadipscing elitr, <br/>
+          sed diam nonumy eirmod tempor invidunt <br/>
+          ut labore et dolore magna aliquyam erat, <br/>
+          sed diam voluptua. At vero eos et accusam et <br/>
+          justo duo dolores et ea rebum. Stet clita kasd
+        </div>
+
+        <AntButton @click="args.open = true" color-type="primary">Open Dialog</AntButton>
+
+        <AntDialog v-bind="args" v-model:open="args.open">
           Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et
           dolore
         </AntDialog>
       </div>
-    `
+    `,
+    args: {
+      open: false,
+      title: 'Lorem ipsum dolor'
+    },
   })
 }

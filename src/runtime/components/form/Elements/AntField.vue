@@ -3,20 +3,19 @@ import {onMounted, computed} from 'vue';
 import {Size} from '../../../enums/Size.enum'
 import AntInputLabel from './AntInputLabel.vue';
 import AntInputDescription from './AntInputDescription.vue';
-import {Validator} from '@antify/validate';
+import {FieldValidator} from '@antify/validate';
 import {handleEnumValidation} from '../../../handler';
 import AntInputLimiter from './AntInputLimiter.vue';
-import {useVModel} from '@vueuse/core';
 import {InputColorType} from '../../../enums';
 
-const emits = defineEmits(['update:skeleton', 'clickLabel']);
+const emits = defineEmits(['clickLabel']);
 const props = withDefaults(defineProps<{
   label?: string;
   description?: string;
   size?: Size;
   colorType?: InputColorType;
   skeleton?: boolean;
-  validator?: Validator;
+  validator?: FieldValidator;
   limiterValue?: number;
   limiterMaxValue?: number;
   labelFor?: string;
@@ -29,8 +28,6 @@ const props = withDefaults(defineProps<{
   showMessageOnError: true,
   expanded: true
 });
-
-const _skeleton = useVModel(props, 'skeleton', emits);
 
 onMounted(() => {
   handleEnumValidation(props.size, Size, 'size');
@@ -49,7 +46,7 @@ const errors = computed(() => props.validator?.getErrors() || [])
     <AntInputLabel
         :label="label"
         :size="size"
-        :skeleton="_skeleton"
+        :skeleton="skeleton"
         :for="labelFor"
         @clickContent="$emit('clickLabel')"
     >
@@ -64,7 +61,7 @@ const errors = computed(() => props.validator?.getErrors() || [])
     >
       <AntInputDescription
           :size="size"
-          :skeleton="_skeleton"
+          :skeleton="skeleton"
           :color-type="_colorType"
       >
         <slot name="description">
@@ -96,7 +93,7 @@ const errors = computed(() => props.validator?.getErrors() || [])
           :max-value="limiterMaxValue"
           :color-type="_colorType"
           :size="size"
-          :skeleton="_skeleton"
+          :skeleton="skeleton"
       >
         {{ limiterValue }}/{{ limiterMaxValue }}
       </AntInputLimiter>

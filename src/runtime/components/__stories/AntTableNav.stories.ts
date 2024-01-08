@@ -1,5 +1,5 @@
 import AntTableNav from '../AntTableNav.vue';
-import { type Meta, type StoryObj} from "@storybook/vue3";
+import { type Meta, type StoryObj} from '@storybook/vue3';
 
 const meta: Meta<typeof AntTableNav> = {
     title: 'Components/Table Nav',
@@ -23,14 +23,12 @@ export const Docs: Story = {
             return {args};
         },
         template: `
-          <div class="p-4">
+          <div class="border border-dotted border-neutral-light">
             <AntTableNav v-bind="args"/>
           </div>
         `
     }),
     args: {
-        pages: 10,
-        page: 1,
         count: 100
     }
 };

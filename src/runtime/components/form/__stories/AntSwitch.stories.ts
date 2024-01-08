@@ -1,8 +1,8 @@
 import { type Meta, type StoryObj} from '@storybook/vue3';
 import {AntSwitch} from '../index';
 import { computed, ref } from 'vue';
-import { InputColorType, Size } from "../../../enums";
-import { useValidator } from "@antify/validate";
+import { InputColorType, Size } from '../../../enums';
+import { useFieldValidator } from '@antify/validate';
 
 const meta: Meta<typeof AntSwitch> = {
   title: 'Components/Forms/Switch',
@@ -46,7 +46,7 @@ export const withValidator: Story = {
   render: Docs.render,
   args: {
     ...Docs.args,
-    validator: useValidator([
+    validator: useFieldValidator([
       (val: boolean) => {
         return !val || 'Must be false'
       }

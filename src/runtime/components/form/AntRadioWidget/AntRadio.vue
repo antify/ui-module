@@ -41,9 +41,7 @@ const _value = computed({
     emits('update:modelValue',  val ? typeof val === 'string' ? val : val.value : null);
   }
 });
-const _skeleton = useVModel(props, 'skeleton', emits);
-
-const hasAction = computed(() => (!_skeleton.value && !props.readonly && !props.disabled))
+const hasAction = computed(() => (!props.skeleton && !props.readonly && !props.disabled))
 const isActive = computed(() => {
   return _value.value === props.value.value
 });
@@ -104,7 +102,7 @@ onMounted(() => {
     :description="description"
     :color-type="colorType"
     class="cursor-pointer"
-    :skeleton="_skeleton"
+    :skeleton="skeleton"
     :size="size"
     :expanded="false"
   >
@@ -120,7 +118,7 @@ onMounted(() => {
         />
 
         <AntSkeleton
-          v-model="_skeleton"
+          v-if="skeleton"
           absolute
           rounded-full
         />
@@ -132,7 +130,7 @@ onMounted(() => {
         </span>
 
         <AntSkeleton
-          v-model="_skeleton"
+          v-if="skeleton"
           absolute
           rounded
         />

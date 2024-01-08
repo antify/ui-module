@@ -3,7 +3,7 @@ import {Size} from '../../../enums/Size.enum';
 import AntUnitInput from '../AntUnitInput.vue';
 import {faEuroSign} from '@fortawesome/free-solid-svg-icons';
 import {InputColorType} from '../../../enums';
-import {useValidator} from '@antify/validate';
+import {useFieldValidator} from '@antify/validate';
 
 const meta: Meta<typeof AntUnitInput> = {
   title: 'Components/Forms/Unit Input',
@@ -67,7 +67,7 @@ export const Limited: Story = {
     modelValue: 50,
     limiter: true,
     max: 10,
-    validator: useValidator([
+    validator: useFieldValidator([
       (val: number) => val <= 10 || 'Value should not be bigger than 10',
       (val: number) => val <= 11 || 'It should be really not bigger than 10!!!!'
     ])

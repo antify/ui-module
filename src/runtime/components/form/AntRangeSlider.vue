@@ -6,7 +6,7 @@ export default {
 
 <script setup lang="ts">
 import AntField from './Elements/AntField.vue';
-import {Validator} from '@antify/validate';
+import {FieldValidator} from '@antify/validate';
 import {useVModel} from '@vueuse/core';
 import {computed, onMounted} from 'vue';
 import {InputColorType, Size} from '../../enums';
@@ -21,7 +21,7 @@ const props = withDefaults(defineProps<{
   size?: Size,
   disabled?: boolean;
   skeleton?: boolean;
-  validator?: Validator;
+  validator?: FieldValidator;
   min?: number;
   max?: number;
 }>(), {
@@ -33,8 +33,6 @@ const props = withDefaults(defineProps<{
 });
 
 const value = useVModel(props, 'modelValue', emits);
-const _skeleton = useVModel(props, 'skeleton', emits);
-
 const _colorType = computed(() => props.validator?.hasErrors() ? InputColorType.danger : props.colorType);
 const inputClasses = computed(() => {
   const variants: Record<InputColorType, string> = {
@@ -48,7 +46,7 @@ const inputClasses = computed(() => {
   return {
     'ant-range-slider transition-colors relative border-none w-full focus:z-10 h-2 bg-neutral-light rounded-md outline-none': true,
     'disabled:opacity-50 disabled:cursor-not-allowed': props.disabled,
-    'invisible': _skeleton.value,
+    'invisible': props.skeleton,
     [variants[_colorType.value]]: true
   };
 });
@@ -65,7 +63,7 @@ onMounted(() => {
   <AntField
     :label="label"
     :size="size"
-    :skeleton="_skeleton"
+    :skeleton="skeleton"
     :description="description"
     :color-type="colorType"
     :validator="validator"
@@ -74,7 +72,7 @@ onMounted(() => {
       v-model="value"
       :class="inputClasses"
       type="range"
-      :disabled="disabled || _skeleton"
+      :disabled="disabled || skeleton"
       :min="min"
       :max="max"
       v-bind="$attrs"

@@ -9,7 +9,7 @@ import { handleEnumValidation } from '../../../handler';
 import { faCheck } from '@fortawesome/free-solid-svg-icons';
 import AntIcon from '../../AntIcon.vue';
 import { IconSize } from '../../__types';
-import { Validator } from '@antify/validate';
+import { FieldValidator } from '@antify/validate';
 
 const emits = defineEmits([ 'update:modelValue', 'update:skeleton' ]);
 const props =
@@ -24,7 +24,7 @@ const props =
       skeleton?: boolean;
       disabled?: boolean;
       readonly?: boolean;
-      validator?: Validator;
+      validator?: FieldValidator;
     }>(), {
       colorType: InputColorType.base,
       size: Size.md,
@@ -34,16 +34,13 @@ const props =
     });
 
 const _value = useVModel(props, 'modelValue', emits);
-const _skeleton = useVModel(props, 'skeleton', emits);
-
-const hasAction = computed(() => (!_skeleton.value && !props.readonly && !props.disabled));
-
+const hasAction = computed(() => (!props.skeleton && !props.readonly && !props.disabled));
 const inputClasses = computed(() => {
   const classes: { [key: string]: boolean } = {
     'relative inline-flex flex-shrink-0 bg-neutral-lighter border-0': true,
     'outline outline-1 outline-offset-[-1px] outline-neutral-light rounded': true,
     'focus:ring-offset-0': true,
-    'invisible': _skeleton.value,
+    'invisible': props.skeleton,
     'cursor-pointer': hasAction.value,
     'focus:ring-2': props.size === Size.sm && hasAction.value,
     'focus:ring-4': props.size === Size.md && hasAction.value,
@@ -97,7 +94,7 @@ onMounted(() => {
   <AntField
     :label="label"
     :description="description"
-    :skeleton="_skeleton"
+    :skeleton="skeleton"
     :color-type="colorType"
     :validator="validator"
     :size="size"
@@ -121,7 +118,7 @@ onMounted(() => {
         />
 
         <AntSkeleton
-          v-model="_skeleton"
+          v-if="skeleton"
           absolute
           rounded
         />
@@ -133,7 +130,7 @@ onMounted(() => {
         </span>
 
         <AntSkeleton
-          v-model="_skeleton"
+          v-if="skeleton"
           absolute
           rounded
         />

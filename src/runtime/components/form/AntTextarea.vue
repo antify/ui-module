@@ -16,7 +16,7 @@ import {
   faCircleCheck,
   faCircleInfo
 } from '@fortawesome/free-solid-svg-icons';
-import {Validator} from '@antify/validate'
+import {FieldValidator} from '@antify/validate'
 import {handleEnumValidation} from '../../handler';
 import {classesToObjectSyntax} from '../../utils';
 import AntField from './Elements/AntField.vue';
@@ -24,7 +24,7 @@ import { useVModel } from '@vueuse/core';
 import {InputColorType} from '../../enums';
 import {IconColorType, IconSize} from '../__types';
 
-const emit = defineEmits(['update:modelValue', 'update:skeleton']);
+const emit = defineEmits(['update:modelValue']);
 const props = withDefaults(defineProps<{
   modelValue: string;
   size?: Size;
@@ -34,7 +34,7 @@ const props = withDefaults(defineProps<{
   grouped?: Grouped;
   wrapperClass?: string | Record<string, boolean>;
   showIcon?: boolean;
-  validator?: Validator;
+  validator?: FieldValidator;
   label?: string;
   placeholder?: string;
   description?: string;
@@ -50,7 +50,6 @@ const props = withDefaults(defineProps<{
   limiter: false
 });
 
-const _skeleton = useVModel(props, 'skeleton', emit);
 const _modelValue = useVModel(props, 'modelValue', emit);
 
 const icons = {
@@ -85,7 +84,7 @@ const inputClasses = computed(() => {
     'rounded-none': props.grouped === Grouped.center,
     'rounded-tl-none rounded-bl-none rounded-tr-md rounded-br-md': props.grouped === Grouped.right,
     'rounded-md': props.grouped === Grouped.none,
-    'invisible': _skeleton.value
+    'invisible': props.skeleton
   };
 });
 const _wrapperClass = computed(() => classesToObjectSyntax(props.wrapperClass));
@@ -108,7 +107,7 @@ onMounted(() => {
   <AntField
       :label="label"
       :size="size"
-      :skeleton="_skeleton"
+      :skeleton="skeleton"
       :description="description"
       :colorType="colorType"
       :validator="validator"
@@ -120,7 +119,7 @@ onMounted(() => {
           v-model="_modelValue"
           :class="inputClasses"
           :placeholder="placeholder !== undefined ? placeholder : label"
-          :disabled="disabled || _skeleton"
+          :disabled="disabled || skeleton"
           v-bind="$attrs"
       />
 
@@ -137,7 +136,7 @@ onMounted(() => {
       </div>
 
       <AntSkeleton
-          v-model="_skeleton"
+          v-if="skeleton"
           absolute
           :grouped="grouped"
           rounded

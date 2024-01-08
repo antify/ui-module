@@ -9,7 +9,7 @@ import AntListGroupItem from './AntListGroupItem.vue';
 import AntModal from './AntModal.vue';
 import AntPagination from './AntPagination.vue';
 import AntPopover from './AntPopover.vue';
-import AntSimpleTableFilter from './AntSimpleTableFilter.vue';
+import AntTableFilter from './AntTableFilter.vue';
 import AntSkeleton from './AntSkeleton.vue';
 import AntSpinner from './AntSpinner.vue';
 import AntTableNav from './AntTableNav.vue';
@@ -33,7 +33,7 @@ export {
   AntModal,
   AntPagination,
   AntPopover,
-  AntSimpleTableFilter,
+  AntTableFilter,
   AntSkeleton,
   AntSpinner,
   AntTableNav,

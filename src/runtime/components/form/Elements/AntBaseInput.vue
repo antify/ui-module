@@ -18,15 +18,14 @@ import {
   faCircleInfo,
   faXmark
 } from '@fortawesome/free-solid-svg-icons';
-import {Validator} from '@antify/validate'
+import {type FieldValidator} from '@antify/validate'
 import {handleEnumValidation} from '../../../handler';
 import {type IconDefinition} from '@fortawesome/free-solid-svg-icons';
 import {classesToObjectSyntax} from '../../../utils';
-import {useVModel} from '@vueuse/core';
 import {InputColorType} from '../../../enums';
 import {IconSize} from '../../__types';
 
-const emit = defineEmits(['update:value', 'update:skeleton']);
+const emit = defineEmits(['update:value', 'blur']);
 const props = withDefaults(defineProps<{
   value: string | number | null;
   size?: Size;
@@ -38,7 +37,7 @@ const props = withDefaults(defineProps<{
   grouped?: Grouped;
   wrapperClass?: string | Record<string, boolean>;
   showIcon?: boolean;
-  validator?: Validator;
+  validator?: FieldValidator;
   iconLeft?: IconDefinition;
   nullable?: boolean;
 }>(), {
@@ -52,7 +51,6 @@ const props = withDefaults(defineProps<{
   default: false,
   nullable: false
 });
-const _skeleton = useVModel(props, 'skeleton', emit);
 
 const icons = {
   [InputColorType.info]: faCircleInfo,
@@ -91,7 +89,7 @@ const inputClasses = computed(() => {
     'rounded-none': props.grouped === Grouped.center,
     'rounded-tl-none rounded-bl-none rounded-tr-md rounded-br-md': props.grouped === Grouped.right,
     'rounded-md': props.grouped === Grouped.none,
-    'invisible': _skeleton.value,
+    'invisible': props.skeleton,
   };
 });
 const iconClasses = computed(() => ({
@@ -126,7 +124,20 @@ const _value = computed<string | number | null>({
 });
 const _colorType = computed(() => props.validator?.hasErrors() ? InputColorType.danger : props.colorType);
 
-watch(_value, (val) => props.validator?.validate(val));
+watch(_value, (val) => {
+  if (props.validator?.hasErrors()) {
+    props.validator.validate(val)
+  }
+});
+
+/**
+ * Validate default value if given after delayed data fetching.
+ */
+watch(() => props.skeleton, (val) => {
+  if (!val && props.value !== null) {
+    props.validator?.validate(props.value);
+  }
+});
 
 onMounted(() => {
   handleEnumValidation(props.size, Size, 'size');
@@ -134,8 +145,19 @@ onMounted(() => {
   handleEnumValidation(props.type, BaseInputType, 'Type');
   handleEnumValidation(props.grouped, Grouped, 'grouped');
 
-  props.validator?.validate(props.value);
+  /**
+   * Validate default value without delayed data fetching.
+   */
+  if (!props.skeleton && props.value !== null) {
+    props.validator?.validate(props.value);
+  }
 });
+
+function onBlur(e) {
+  props.validator?.validate(props.value);
+
+  emit('blur', e);
+}
 </script>
 
 <template>
@@ -157,7 +179,8 @@ onMounted(() => {
         :class="inputClasses"
         :type="type"
         :placeholder="placeholder"
-        :disabled="disabled || _skeleton"
+        :disabled="disabled || skeleton"
+        @blur="onBlur"
         v-bind="$attrs"
     >
 
@@ -185,7 +208,7 @@ onMounted(() => {
     </div>
 
     <AntSkeleton
-        v-model="_skeleton"
+        v-if="skeleton"
         absolute
         :grouped="grouped"
         rounded

@@ -12,7 +12,7 @@ import AntBaseInput from './Elements/AntBaseInput.vue'
 import {Size} from '../../enums/Size.enum'
 import {faPlus, faMinus} from '@fortawesome/free-solid-svg-icons';
 import {ColorType, InputColorType} from '../../enums/ColorType.enum';
-import {Validator} from '@antify/validate'
+import {FieldValidator} from '@antify/validate'
 import {handleEnumValidation} from '../../handler';
 import {useVModel} from '@vueuse/core';
 import {Grouped} from '../../enums/Grouped.enum';
@@ -30,7 +30,7 @@ const props = withDefaults(defineProps<{
   steps?: number;
   min?: number;
   max?: number;
-  validator?: Validator;
+  validator?: FieldValidator;
   limiter?: boolean;
 }>(), {
   colorType: InputColorType.base,
@@ -40,9 +40,8 @@ const props = withDefaults(defineProps<{
   steps: 1,
   limiter: false
 });
-const emits = defineEmits(['update:modelValue', 'update:skeleton']);
+const emits = defineEmits(['update:modelValue']);
 
-const _skeleton = useVModel(props, 'skeleton', emits)
 const _modelValue = useVModel(props, 'modelValue', emits);
 const isPrevButtonDisabled = computed(() => {
   if (props.disabled) {
@@ -109,7 +108,7 @@ function add() {
   <AntField
       :label="label"
       :size="size"
-      :skeleton="_skeleton"
+      :skeleton="skeleton"
       :description="description"
       :color-type="colorType"
       :validator="validator"
@@ -124,7 +123,7 @@ function add() {
           :grouped="Grouped.left"
           :color-type="colorType as unknown as ColorType"
           :size="size"
-          :skeleton="_skeleton"
+          :skeleton="skeleton"
           :disabled="isPrevButtonDisabled"
           @click="subtract"
       />
@@ -136,7 +135,7 @@ function add() {
           wrapper-class="flex-grow"
           :color-type="colorType"
           :size="size"
-          :skeleton="_skeleton"
+          :skeleton="skeleton"
           :min="min"
           :max="max"
           :disabled="disabled"
@@ -151,7 +150,7 @@ function add() {
           :grouped="Grouped.right"
           :color-type="colorType as unknown as ColorType"
           :size="size"
-          :skeleton="_skeleton"
+          :skeleton="skeleton"
           :disabled="isNextButtonDisabled"
           @click="add"
       />

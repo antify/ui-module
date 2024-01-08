@@ -3,7 +3,7 @@ import {Size} from '../../../enums/Size.enum';
 import AntNumberInput from '../AntNumberInput.vue';
 import {computed} from 'vue';
 import {ColorType} from '../../../enums/ColorType.enum';
-import {useValidator} from '@antify/validate';
+import {useFieldValidator} from '@antify/validate';
 
 const meta: Meta<typeof AntNumberInput> = {
   title: 'Components/Forms/Number Input',
@@ -56,7 +56,7 @@ export const Docs: Story = {
   },
 };
 
-export const withoutValue: Story = {
+export const WithoutValue: Story = {
   render: Docs.render,
   args: {
     ...Docs.args,
@@ -64,25 +64,25 @@ export const withoutValue: Story = {
   },
 };
 
-export const withValidator: Story = {
+export const WithValidator: Story = {
   render: Docs.render,
   args: {
     ...Docs.args,
-    validator: useValidator([
+    validator: useFieldValidator([
       (val: number) => val < 4 || 'Value should not be bigger than 4',
       (val: number) => val < 5 || 'Value should really not be bigger than 4!'
     ])
   },
 };
 
-export const limited: Story = {
+export const Limited: Story = {
   render: Docs.render,
   args: {
     ...Docs.args,
     modelValue: 50,
     limiter: true,
     max: 10,
-    validator: useValidator([
+    validator: useFieldValidator([
       (val: number) => val <= 10 || 'Value should not be bigger than 10',
       (val: number) => val <= 11 || 'It should be really not bigger than 10!!!!'
     ])

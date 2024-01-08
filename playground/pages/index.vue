@@ -1,8 +1,8 @@
 <script lang='ts' setup>
 import {faXmark} from '@fortawesome/free-solid-svg-icons';
-import {InputColorType} from "../../src/runtime";
 import {ref} from "vue";
 import {useNuxtApp} from '#imports';
+import {InputColorType} from '#uiModule';
 
 const {$uiModule} = useNuxtApp();
 

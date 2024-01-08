@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import AntTabItem from './AntTabItem.vue';
-import {type TabItem} from './__types/AntTabs.types';
+import {type TabItem} from './__types/AntTabItem.types';
 import {useVModel} from '@vueuse/core';
 import {computed} from 'vue';
 

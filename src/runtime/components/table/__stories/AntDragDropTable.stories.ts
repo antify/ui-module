@@ -1,9 +1,10 @@
 
 import AntDragDropTable from '../AntDragDropTable.vue';
 import { ref } from 'vue';
-import { AntTableRowTypes, TableHeader } from "../__types/TableHeader.type";
+import { AntTableRowTypes, TableHeader } from '../__types/TableHeader.type';
+
 export default {
-  title: 'Components/Table/Ant DragDrop Table',
+  title: 'Components/Old Table/Ant DragDrop Table',
   component: AntDragDropTable,
   parameters: { controls: { sort: 'requiredFirst' } },
   argTypes: {

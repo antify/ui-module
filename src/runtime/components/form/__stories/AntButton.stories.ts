@@ -35,7 +35,7 @@ const meta: Meta<typeof AntButton> = {
                 'Will be displayed right to the label or the default slot.<br>Use Font-awesome Icons.',
         },
         to: {
-            control: {type: 'LocationAsRelativeRaw'},
+            control: {type: 'RouteLocationRaw'},
             description: 'If provided transforms the button into an a-tag with the provided link. Style is still the same as a button.',
             table: {type: {summary: 'string|object'}}
         },

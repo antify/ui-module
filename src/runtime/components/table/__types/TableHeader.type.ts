@@ -1,4 +1,4 @@
-
+// TODO:: this file exports more than table header stuff. Rename it.
 export enum AntTableRowTypes {
   text = 'text',
   html = 'html',
@@ -20,7 +20,7 @@ export enum AntTableSortDirection {
 
 export type TableHeader = {
   identifier: string;
-  title: string;
+  title?: string;
   type: AntTableRowTypes;
   sortable?: boolean;
   sort?: (a: unknown, b: unknown, direction: AntTableSortDirection) => number;

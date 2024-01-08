@@ -3,9 +3,9 @@ import {computed, onMounted} from 'vue';
 import {Size} from '../../../enums/Size.enum'
 import AntSkeleton from '../../AntSkeleton.vue';
 import {handleEnumValidation} from '../../../handler';
-import { useVModel } from '@vueuse/core';
 
-const emits = defineEmits(['update:skeleton', 'clickContent']);
+defineEmits(['clickContent']);
+
 const props = withDefaults(defineProps<{
   label?: string;
   size?: Size;
@@ -14,8 +14,6 @@ const props = withDefaults(defineProps<{
   skeleton: false,
   size: Size.md,
 });
-
-const _skeleton = useVModel(props, 'skeleton', emits);
 
 const classes = computed(() => ({
   'relative font-medium w-fit': true,
@@ -37,7 +35,7 @@ onMounted(() => {
         :class="classes"
     >
       <span
-          :class="{'invisible': _skeleton}"
+          :class="{'invisible': skeleton}"
           @click="$emit('clickContent')"
       >
         <slot name="label">
@@ -46,7 +44,7 @@ onMounted(() => {
       </span>
 
       <AntSkeleton
-          v-model="_skeleton"
+          v-if="skeleton"
           absolute
           rounded
       />

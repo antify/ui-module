@@ -3,7 +3,6 @@
  * TODO:: - summary height with border is not correct
  *  - not outlined version has no border
  */
-
 import {type IconDefinition} from '@fortawesome/free-solid-svg-icons';
 import {computed, onMounted} from 'vue';
 import {type RouteLocationRaw} from 'vue-router';
@@ -12,11 +11,12 @@ import AntSpinner from '../AntSpinner.vue';
 import {Grouped} from '../../enums/Grouped.enum';
 import {Size} from '../../enums/Size.enum';
 import {handleEnumValidation} from '../../handler';
-import {useVModel} from '@vueuse/core';
 import {ColorType} from '../../enums';
 import {ButtonType} from './__types';
+import AntIcon from '../AntIcon.vue';
+import {IconSize} from '../__types/AntIcon.types';
 
-const emits = defineEmits(['click', 'update:skeleton']);
+const emits = defineEmits(['click']);
 const props = withDefaults(defineProps<{
   outlined?: boolean;
   size?: Size;
@@ -48,9 +48,7 @@ const props = withDefaults(defineProps<{
   noFocus: false,
 });
 
-const _skeleton = useVModel(props, 'skeleton', emits);
-
-const hasAction = computed(() => (!_skeleton.value && !props.readonly && !props.disabled))
+const hasAction = computed(() => (!props.skeleton && !props.readonly && !props.disabled))
 const groupedClassList = computed(() => ({
   'rounded-tl-md rounded-bl-md rounded-tr-none rounded-br-none': props.grouped === Grouped.left,
   'rounded-none': props.grouped === Grouped.center,
@@ -97,12 +95,12 @@ const classes = computed(() => {
 
   return {
     'transition-colors inline-flex items-center relative focus:z-10 overflow-hidden': true,
-    'disabled:opacity-50 disabled:cursor-not-allowed': props.disabled && !_skeleton.value,
-    'cursor-default': _skeleton.value || props.readonly,
+    'disabled:opacity-50 disabled:cursor-not-allowed': props.disabled && !props.skeleton,
+    'cursor-default': props.skeleton || props.readonly,
     'focus:ring-2': props.size === Size.sm && hasAction.value && !props.noFocus,
     'focus:ring-4': props.size === Size.md && hasAction.value && !props.noFocus,
     'w-full': props.expanded,
-    'invisible': _skeleton.value,
+    'invisible': props.skeleton,
     'bg-neutral-lightest': props.outlined,
     ...groupedClassList.value,
     'border -m-px': props.outlined && props.bordered,
@@ -120,7 +118,7 @@ const buttonContentClasses = computed(() => ({
   'hover:bg-white/75': props.outlined && hasAction.value,
   'hover:bg-black/25': !props.outlined && hasAction.value,
   // Make sure, nothing shimmer through the skeleton
-  'invisible': _skeleton.value
+  'invisible': props.skeleton
 }));
 const type = computed(() => {
   if (props.to !== undefined) {
@@ -139,7 +137,7 @@ onMounted(() => {
 <template>
   <div class="relative inline-flex">
     <AntSkeleton
-        v-model="_skeleton"
+        v-if="skeleton"
         :grouped="grouped"
         rounded
         absolute
@@ -171,7 +169,7 @@ onMounted(() => {
           <AntIcon
             v-if="iconLeft"
             :icon="iconLeft"
-            :size="size"
+            :size="size as unknown as IconSize"
           />
         </slot>
 
@@ -186,7 +184,7 @@ onMounted(() => {
           <AntIcon
             v-if="iconRight"
             :icon="iconRight"
-            :size="size"
+            :size="size as unknown as IconSize"
           />
         </slot>
       </span>

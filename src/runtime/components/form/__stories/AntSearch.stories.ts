@@ -1,13 +1,16 @@
 import { type Meta, type StoryObj} from '@storybook/vue3';
 import {Size} from '../../../enums/Size.enum';
 import AntSearch from '../AntSearch.vue';
-import {computed} from 'vue';
 
 const meta: Meta<typeof AntSearch> = {
   title: 'Components/Forms/Search',
   component: AntSearch,
   parameters: {controls: {sort: 'requiredFirst'}},
   argTypes: {
+    modelValue: {
+      control: 'text',
+      table: {type: {summary: 'string|null'}},
+    },
     size: {
       control: {type: 'radio'},
       options: Object.values(Size),
@@ -34,18 +37,11 @@ export const Docs: Story = {
   render: (args) => ({
     components: {AntSearch},
     setup() {
-      const modelValue = computed({
-        // @ts-ignore
-        get: () => args.value,
-        // @ts-ignore
-        set: (val: string) => args.value = val
-      })
-
-      return {args, modelValue};
+      return {args};
     },
     template: `
-      <AntSearch v-bind="args" v-model="modelValue"/>
-      <div class="text-xs mt-4">Reactive value: {{ value }}</div>
+      <AntSearch v-bind="args" v-model="args.modelValue"/>
+      <div class="text-xs mt-4">Reactive value: {{ args.modelValue }}</div>
     `,
   }),
   args: {

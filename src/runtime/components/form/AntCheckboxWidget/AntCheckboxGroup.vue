@@ -1,5 +1,4 @@
 <script setup lang="ts">
-
 import { type AntCheckboxType } from './__types/AntCheckbox';
 import { AntField } from '../Elements';
 import { useVModel } from '@vueuse/core';
@@ -7,9 +6,9 @@ import AntCheckbox from './AntCheckbox.vue';
 import { computed, watch } from 'vue';
 import { Direction } from '../../../enums/Direction.enum';
 import { InputColorType, Size } from '../../../enums';
-import { Validator } from '@antify/validate';
+import { FieldValidator } from '@antify/validate';
 
-const emits = defineEmits(['update:modelValue', 'update:skeleton'])
+const emits = defineEmits(['update:modelValue'])
 const props = withDefaults(
   defineProps<{
     modelValue: string[];
@@ -22,7 +21,7 @@ const props = withDefaults(
     skeleton?: boolean;
     readonly?: boolean;
     disabled?: boolean;
-    validator?: Validator;
+    validator?: FieldValidator;
   }>(),
   {
     direction: Direction.column,
@@ -35,10 +34,7 @@ const props = withDefaults(
 )
 
 const _value = useVModel(props, 'modelValue', emits);
-const _skeleton = useVModel(props, 'skeleton', emits);
-
 const _colorType = computed(() => props.validator?.hasErrors() ? InputColorType.danger : props.colorType);
-
 const containerClasses = computed(() => {
   const classes = {
     'flex gap-2.5': true,
@@ -71,7 +67,7 @@ watch(_value, () => {
   <AntField
     :label="label"
     :description="description"
-    :skeleton="_skeleton"
+    :skeleton="skeleton"
     :validator="validator"
     :color-type="_colorType"
     :size="size"
@@ -85,7 +81,7 @@ watch(_value, () => {
         :value-label="checkbox.label"
         :size="size"
         :color-type="_colorType"
-        :skeleton="_skeleton"
+        :skeleton="skeleton"
         :disabled="disabled || checkbox.disabled"
         :readonly="readonly || checkbox.readonly"
         @update:model-value="updateValue(checkbox.value)"
@@ -93,7 +89,3 @@ watch(_value, () => {
     </div>
   </AntField>
 </template>
-
-<style scoped>
-
-</style>

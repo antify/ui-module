@@ -9,6 +9,8 @@ import {
 
 const moduleKey = 'uiModule';
 
+export * from './runtime/types';
+
 type ModuleOptions = {
   toasterMessageShowTime: number;
 };
@@ -26,7 +28,7 @@ export default defineNuxtModule<ModuleOptions>({
     const runtimeDir = resolve('./runtime');
 
     nuxt.options.build.transpile.push(runtimeDir);
-    // nuxt.options.alias['#uiModule'] = runtimeDir;
+    nuxt.options.alias['#uiModule'] = resolve(runtimeDir, 'types');
 
     addPlugin(resolve(runtimeDir, 'plugins/ui-module'));
 

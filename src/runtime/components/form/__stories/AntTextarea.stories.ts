@@ -2,7 +2,7 @@ import { type Meta, type StoryObj} from '@storybook/vue3';
 import {Size} from '../../../enums/Size.enum';
 import AntTextarea from '../AntTextarea.vue';
 import {Grouped as _Grouped} from '../../../enums/Grouped.enum';
-import {useValidator} from '@antify/validate';
+import {useFieldValidator} from '@antify/validate';
 import {InputColorType} from '../../../enums';
 import {computed} from 'vue';
 
@@ -73,7 +73,7 @@ export const withValidator: Story = {
   args: {
     ...Docs.args,
     modelValue: 'To long value',
-    validator: useValidator((val: string) => val.length <= 10 || 'Max. 10 characters allowed')
+    validator: useFieldValidator((val: string) => val.length <= 10 || 'Max. 10 characters allowed')
   },
 };
 
@@ -84,7 +84,7 @@ export const limited: Story = {
     modelValue: 'A to long value',
     max: 10,
     limiter: true,
-    validator: useValidator([
+    validator: useFieldValidator([
       (val: string) => val.length <= 10 || 'Max. 10 characters allowed'
     ])
   },

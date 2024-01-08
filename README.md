@@ -1,6 +1,14 @@
 # Ui module
 
-Tailwind based vue 3 component library
+The antify ui module is a nuxt component library for applications based on tailwindcss.
+
+Compared to other component libraries, antify ui ships a fixed defined ux.
+It also provides a set of helper functions to easly implement that ux.
+
+The predefined ux defines, for example, what should happen if a requested 
+entry is not found.
+
+The ux definitions you can find in the repo's wiki.
 
 # Development
 
@@ -27,6 +35,12 @@ pnpm chromatic
 
 - Chromatic docu: https://www.chromatic.com/docs/
 - Storybook docu: https://storybook.js.org/docs/vue/get-started/introduction
+
+# Additional
+
+## SSR
+SSR is not included in the UX definition, because applications does not require SSR.
+To keep the UX as simple as possible, we decided to not support SSR.
 
 # Known issues
 

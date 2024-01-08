@@ -9,16 +9,16 @@ import {onMounted} from 'vue';
 import AntField from './Elements/AntField.vue'
 import AntBaseInput from './Elements/AntBaseInput.vue'
 import {Size} from '../../enums/Size.enum'
-import {Validator} from '@antify/validate'
+import {FieldValidator} from '@antify/validate'
 import {TextInputType} from './__types/AntTextInput.type'
 import {handleEnumValidation} from '../../handler';
 import { useVModel } from '@vueuse/core';
 import {InputColorType} from '../../enums';
 import {BaseInputType} from './Elements/__types';
 
-const emit = defineEmits(['update:value', 'update:skeleton']);
+const emit = defineEmits(['update:modelValue', 'update:skeleton']);
 const props = withDefaults(defineProps<{
-  value: string;
+  modelValue: string | null;
   label?: string;
   placeholder?: string;
   description?: string;
@@ -26,7 +26,7 @@ const props = withDefaults(defineProps<{
   colorType?: InputColorType;
   disabled?: boolean;
   skeleton?: boolean;
-  validator?: Validator;
+  validator?: FieldValidator;
   type?: TextInputType;
   limiter?: boolean;
   max?: number;
@@ -39,8 +39,7 @@ const props = withDefaults(defineProps<{
   limiter: false
 });
 
-const _skeleton = useVModel(props, 'skeleton', emit);
-const _value = useVModel(props, 'value', emit);
+const _value = useVModel(props, 'modelValue', emit);
 
 onMounted(() => {
   handleEnumValidation(props.size, Size, 'size');
@@ -53,12 +52,12 @@ onMounted(() => {
   <AntField
       :label="label"
       :size="size"
-      :skeleton="_skeleton"
+      :skeleton="skeleton"
       :description="description"
       :colorType="colorType"
       :validator="validator"
       :limiter-max-value="limiter && max !== undefined ? max : undefined"
-      :limiter-value="limiter ? _value.length : undefined"
+      :limiter-value="limiter ? _value?.length : undefined"
   >
     <AntBaseInput
         v-model:value="_value"
@@ -66,7 +65,7 @@ onMounted(() => {
         wrapper-class="flex-grow"
         :colorType="colorType"
         :size="size"
-        :skeleton="_skeleton"
+        :skeleton="skeleton"
         :disabled="disabled"
         :placeholder="placeholder !== undefined ? placeholder : label"
         :show-icon="false"

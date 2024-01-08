@@ -11,11 +11,11 @@ import {
 import AntIcon from './AntIcon.vue';
 import AntTooltip from './AntTooltip.vue';
 import AntSkeleton from './AntSkeleton.vue';
-import {useVModel} from '@vueuse/core';
 import {InputColorType, Position} from '../enums';
 import {IconColorType} from './__types';
 
-const emit = defineEmits(['update:skeleton', 'close']);
+defineEmits(['close']);
+
 const props = withDefaults(defineProps<{
   title: string,
   colorType?: InputColorType,
@@ -30,7 +30,6 @@ const props = withDefaults(defineProps<{
   skeleton: false
 });
 
-const _skeleton = useVModel(props, 'skeleton', emit);
 const icons = {
   [InputColorType.base]: faInfoCircle,
   [InputColorType.info]: faInfoCircle,
@@ -65,11 +64,11 @@ onMounted(() => {
 
 <template>
   <div :class="classes">
-    <AntSkeleton v-model="_skeleton" absolute rounded/>
+    <AntSkeleton v-if="skeleton" absolute rounded/>
 
     <div
       class="inline-flex items-center justify-between w-content gap-2.5"
-      :class="{'invisible': _skeleton}"
+      :class="{'invisible': skeleton}"
     >
       <div class="inline-flex items-center gap-2.5">
         <AntIcon

@@ -2,7 +2,7 @@ import { type Meta, type StoryObj} from '@storybook/vue3';
 import {Size} from '../../../enums/Size.enum';
 import AntSelect from '../AntSelect.vue';
 import {computed} from 'vue';
-import {useValidator} from '@antify/validate';
+import {useFieldValidator} from '@antify/validate';
 import {type SelectOption} from '../__types/AntSelect.type';
 import {InputColorType} from '../../../enums';
 
@@ -89,7 +89,7 @@ export const withValidator: Story = {
   args: {
     ...Docs.args,
     nullable: true,
-    validator: useValidator([
+    validator: useFieldValidator([
       (val: string) => val !== null || 'This field should not be empty'
     ])
   },
@@ -132,15 +132,15 @@ export const ellipsisText: Story = {
     setup: Docs.render(args, ctx).setup,
     template: `
       <div class="px-4 pt-4 pb-72 flex gap-2.5">
-        <div class="w-1/6 flex flex-col gap-2.5 border border-info border-dotted">
+        <div class="w-1/6 flex flex-col gap-2.5 border border-info border-dashed">
           <AntSelect v-bind="args" v-model="modelValue"/>
           <AntSelect v-bind="args" value="5"/>
         </div>
-        <div class="w-2/6 flex flex-row gap-2.5 border border-info border-dotted">
+        <div class="w-2/6 flex flex-row gap-2.5 border border-info border-dashed">
           <AntSelect v-bind="args" v-model="modelValue"/>
           <AntSelect v-bind="args" value="5"/>
         </div>
-        <div class="flex flex-row gap-2.5 border border-info border-dotted">
+        <div class="flex flex-row gap-2.5 border border-info border-dashed">
           <AntSelect v-bind="args" wrapper-class="w-1/6" v-model="modelValue"/>
           <AntSelect v-bind="args" wrapper-class="w-1/6" value="5"/>
         </div>

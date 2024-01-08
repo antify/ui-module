@@ -1,7 +1,7 @@
 import AntPagination from '../AntPagination.vue';
 import {faAngleRight} from '@fortawesome/free-solid-svg-icons';
-import { type Meta, type StoryObj} from "@storybook/vue3";
-import AntButton from "../form/AntButton.vue";
+import { type Meta, type StoryObj} from '@storybook/vue3';
+import AntButton from '../form/AntButton.vue';
 
 const meta: Meta<typeof AntPagination> = {
     title: 'Components/Pagination',
@@ -22,14 +22,9 @@ export const Docs: Story = {
     render: (args) => ({
         components: {AntPagination},
         setup() {
-            console.log(args);
             return {args, faAngleRight};
         },
-        template: `
-          <div class="p-4">
-            <AntPagination v-bind="args"/>
-          </div>
-        `
+        template: '<AntPagination v-bind="args"/>'
     }),
     args: {
         pages: 20

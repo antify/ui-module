@@ -1,8 +1,8 @@
 import AntCheckbox from '../AntCheckbox.vue';
 import { computed, ref } from 'vue';
-import { type Meta, type StoryObj } from "@storybook/vue3";
-import { InputColorType, Size } from "../../../../enums";
-import { useValidator } from "@antify/validate";
+import { type Meta, type StoryObj } from '@storybook/vue3';
+import { InputColorType, Size } from '../../../../enums';
+import { useFieldValidator } from '@antify/validate';
 
 const meta: Meta<typeof AntCheckbox> = {
   title: 'Components/Forms/Checkbox/Checkbox',
@@ -62,7 +62,7 @@ export const WithValidator: Story = {
           args.modelValue = val;
         }
       });
-      const validator =  ref(useValidator((val: boolean) => val || 'Check this box!'));
+      const validator =  ref(useFieldValidator((val: boolean) => val || 'Check this box!'));
 
       validator.value.validate(value.value);
 

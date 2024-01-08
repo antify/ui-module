@@ -16,7 +16,7 @@ import {ColorType, InputColorType} from '../../enums';
 import {Grouped} from '../../enums/Grouped.enum';
 import {BaseInputType} from './Elements/__types';
 import {handleEnumValidation} from '../../handler';
-import {type Validator} from '@antify/validate';
+import {FieldValidator} from '@antify/validate';
 
 // TODO:: implement missing validator
 const props = withDefaults(defineProps<{
@@ -28,7 +28,7 @@ const props = withDefaults(defineProps<{
   limiter?: boolean;
   min?: number;
   max?: number;
-  validator?: Validator;
+  validator?: FieldValidator;
   size?: Size;
   colorType?: InputColorType;
   disabled?: boolean;

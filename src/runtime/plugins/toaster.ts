@@ -7,13 +7,22 @@ export default () => {
 
   return {
     getToasts() {
-      return toasts.value;
+      return [...toasts.value].reverse();
     },
     toast(toast: Toast) {
-      toasts.value.push(toast);
+      const id = `${Date.now()}`;
+
+      toasts.value.push({
+        ...toast,
+        id
+      });
 
       setTimeout(() => {
-        toasts.value.shift();
+        const index = toasts.value.findIndex(toast => toast.id === id);
+
+        if (index !== -1) {
+          toasts.value.splice(index, 1);
+        }
       }, useRuntimeConfig().public.uiModule.toasterMessageShowTime);
     },
     removeToast(toast: Toast) {

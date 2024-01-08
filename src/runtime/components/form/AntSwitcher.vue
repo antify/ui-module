@@ -2,15 +2,14 @@
 import AntField from './Elements/AntField.vue';
 import AntButton from './AntButton.vue';
 import { faChevronLeft, faChevronRight } from '@fortawesome/free-solid-svg-icons';
-import { useVModel } from '@vueuse/core';
 import AntSkeleton from '../AntSkeleton.vue';
-import { Validator } from '@antify/validate';
+import { FieldValidator } from '@antify/validate';
 import { type SwitcherOption } from './__types/AntSwitcher.type';
 import { ColorType, InputColorType } from '../../enums';
 import { Grouped, Size } from '../../enums';
 import { computed, onMounted, watch } from 'vue';
 
-const emits = defineEmits([ 'update:modelValue', 'update:skeleton' ]);
+const emits = defineEmits([ 'update:modelValue' ]);
 const props = withDefaults(defineProps<{
   modelValue: string;
   options: string[] | SwitcherOption[];
@@ -20,14 +19,13 @@ const props = withDefaults(defineProps<{
   readonly?: boolean;
   disabled?: boolean;
   colorType?: InputColorType;
-  validator?: Validator;
+  validator?: FieldValidator;
   size?: Size,
 }>(), {
   colorType: InputColorType.base,
   size: Size.md
 });
 
-const _skeleton = useVModel(props, 'skeleton', emits);
 const _value = computed({
   get() {
     const found = props.options.find((option: string | SwitcherOption) => typeof option === 'string' ? option === props.modelValue : option.value === props.modelValue);
@@ -43,7 +41,7 @@ const _value = computed({
   }
 });
 
-const hasAction = computed(() => (!_skeleton.value && !props.readonly && !props.disabled))
+const hasAction = computed(() => (!props.skeleton && !props.readonly && !props.disabled))
 const _colorType = computed(() => props.validator?.hasErrors() ? InputColorType.danger : props.colorType);
 
 watch(_value, () => props.validator?.validate(_value.value));
@@ -76,7 +74,7 @@ const itemClasses = computed(() => {
     'grow text-center': true,
     'p-2.5 text-sm ': (props.size as Size) === Size.md,
     'p-1.5 text-xs ': (props.size as Size) === Size.sm,
-    'invisible': _skeleton.value,
+    'invisible': props.skeleton,
     'opacity-50 cursor-not-allowed': props.disabled,
   };
 
@@ -126,7 +124,7 @@ function nextOption() {
   <AntField
     :label="label"
     :size="size"
-    :skeleton="_skeleton"
+    :skeleton="skeleton"
     :description="description"
     :colorType="colorType"
     :validator="validator"
@@ -145,7 +143,7 @@ function nextOption() {
         @click="prevOption"
         :color-type="_colorType as unknown as ColorType"
         :size="size"
-        :skeleton="_skeleton"
+        :skeleton="skeleton"
         :readonly="readonly"
         :disabled="disabled"
       />
@@ -159,7 +157,7 @@ function nextOption() {
         </div>
 
         <AntSkeleton
-          v-model="_skeleton"
+          v-if="skeleton"
           absolute
           :grouped="Grouped.center"
           rounded
@@ -173,7 +171,7 @@ function nextOption() {
         @click="nextOption"
         :color-type="_colorType as unknown as ColorType"
         :size="size"
-        :skeleton="_skeleton"
+        :skeleton="skeleton"
         :readonly="readonly"
         :disabled="disabled"
       />

@@ -4,7 +4,7 @@ import {BaseInputType} from '../__types/AntBaseInput.type';
 import AntBaseInput from '../AntBaseInput.vue';
 import AntButton from '../../AntButton.vue';
 import {Grouped as _Grouped} from '../../../../enums/Grouped.enum';
-import {useValidator} from '@antify/validate';
+import {useFieldValidator} from '@antify/validate';
 import {computed} from 'vue';
 import {faSearch} from '@fortawesome/free-solid-svg-icons';
 import {InputColorType} from '../../../../enums';
@@ -51,8 +51,7 @@ const meta: Meta<typeof AntBaseInput> = {
     showIcon: {
       control: 'boolean',
       description:
-        'Some InputColorTypes can has an icon. Control with this property if it get shown or not.',
-      table: {type: {summary: 'Type'}},
+        'Some InputColorTypes can have an icon. Control with this property if it gets shown or not.',
     },
     iconLeft: {
       control: {type: 'none'},
@@ -92,7 +91,7 @@ export const withValidator: Story = {
   args: {
     ...Docs.args,
     value: 'To long value',
-    validator: useValidator((val: string) => val.length <= 10 || 'Max. 10 characters allowed')
+    validator: useFieldValidator((val: string) => val.length <= 10 || 'Max. 10 characters allowed')
   },
 };
 

@@ -14,14 +14,19 @@ import {
 import {ColorType, InputColorType} from '../enums';
 import {IconColorType, IconSize} from './__types';
 
-const emit = defineEmits(['update:open', 'close']);
+const emit = defineEmits(['update:open', 'close', 'confirm']);
 const props = withDefaults(defineProps<{
   title?: string,
   open: boolean,
-  buttonText?: string,
+  confirmText?: string,
+  cancelText?: string,
+  showCancel?: boolean,
   colorType?: InputColorType
 }>(), {
-  colorType: InputColorType.base
+  colorType: InputColorType.base,
+  confirmText: 'Confirm',
+  cancelText: 'Cancel',
+  showCancel: true,
 });
 
 const openDialog = ref(props.open);
@@ -43,11 +48,11 @@ watch(() => props.open, (val) => {
 
   if (val) {
     openBackground.value = true;
-    setTimeout(() => openDialog.value = true, props.fullscreen ? 0 : 100)
+    setTimeout(() => openDialog.value = true, 100)
     document.addEventListener('keydown', onKeydown);
   } else {
     openDialog.value = false;
-    setTimeout(() => openBackground.value = false, props.fullscreen ? 0 : 100)
+    setTimeout(() => openBackground.value = false, 100)
     document.removeEventListener('keydown', onKeydown);
   }
 });
@@ -56,21 +61,23 @@ function closeDialog() {
   emit('update:open', false);
   emit('close');
 }
+function confirmDialog() {
+  emit('update:open', false);
+  emit('confirm');
+}
 </script>
 
 <template>
   <transition name="fade">
     <div
       v-if="openBackground"
-      class="absolute inset-0 flex items-center justify-center z-50 cursor-pointer overflow-hidden"
-      :class="{'bg-black/50 backdrop-blur-sm': !fullscreen}"
+      class="absolute inset-0 flex items-center justify-center z-50 cursor-pointer overflow-hidden bg-black/50 backdrop-blur-sm"
       @click.self="closeDialog"
     >
-      <transition :name="!fullscreen ? 'bounce' : 'bounce-slow'">
+      <transition :name="'bounce'">
         <div
           v-if="openDialog"
-          class="flex flex-col gap-px bg-neutral-light overflow-hidden cursor-auto w-96"
-          :class="{'w-full h-full': fullscreen, 'border border-neutral-light rounded-md shadow-md': !fullscreen}"
+          class="flex flex-col gap-px bg-neutral-light overflow-hidden cursor-auto w-96 border border-neutral-light rounded-md shadow-md"
         >
           <div
             v-if="title || $slots['title']"
@@ -96,14 +103,22 @@ function closeDialog() {
           </div>
 
           <div
-            class="bg-neutral-lighter p-2.5 text-neutral-lightest-font flex w-full justify-end"
+            class="bg-neutral-lighter p-2.5 gap-2.5 text-neutral-lightest-font flex w-full justify-end"
           >
-            <slot name="footer" v-bind="{close: closeDialog}">
+            <slot name="footer">
               <AntButton
-                :color-type="colorType as unknown as ColorType"
+                v-if="showCancel"
+                :color-type="ColorType.base"
                 @click="closeDialog()"
               >
-                {{ buttonText }}
+                {{ cancelText }}
+              </AntButton>
+
+              <AntButton
+                :color-type="colorType === ColorType.base ? ColorType.primary : colorType as unknown as ColorType"
+                @click="confirmDialog()"
+              >
+                {{ confirmText }}
               </AntButton>
             </slot>
           </div>
@@ -132,14 +147,6 @@ function closeDialog() {
 }
 
 .bounce-leave-active {
-  animation: bounce-in .4s reverse;
-}
-
-.bounce-slow-enter-active {
-  animation: bounce-in .6s;
-}
-
-.bounce-slow-leave-active {
   animation: bounce-in .4s reverse;
 }
 

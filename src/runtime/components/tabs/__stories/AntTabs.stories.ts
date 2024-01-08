@@ -1,13 +1,14 @@
 import { type Meta, type StoryObj} from '@storybook/vue3';
 import AntTabs from '../AntTabs.vue';
-import {computed, ref} from 'vue';
+import {ref} from 'vue';
 import {faUserCircle} from '@fortawesome/free-regular-svg-icons';
+import {ColorType} from '../__types/AntTabItem.types';
 
 const meta: Meta<typeof AntTabs> = {
   title: 'Components/Tabs',
   component: AntTabs,
   parameters: {controls: {sort: 'requiredFirst'}},
-  decorators: [() => ({template: '<div class="p-4 bg-neutral-light"><story /></div>'})],
+  decorators: [() => ({template: '<div class="border border-neutral-light border-dashed"><story /></div>'})],
   argTypes: {
     modelValue: {
       control: 'text',
@@ -28,17 +29,10 @@ export const Docs: Story = {
   render: (args) => ({
     components: {AntTabs},
     setup() {
-      const modelValue = computed({
-        // @ts-ignore
-        get: () => args.modelValue,
-        // @ts-ignore
-        set: (val) => args.modelValue = val
-      });
-
-      return {args, modelValue};
+      return {args};
     },
     template: `
-      <AntTabs v-bind="args" v-model="modelValue"/>
+      <AntTabs v-bind="args" v-model="args.modelValue"/>
     `
   }),
   args: {
@@ -58,6 +52,32 @@ export const Docs: Story = {
       {
         id: '4',
         label: 'Fourth tab',
+      },
+    ]
+  }
+}
+
+export const DifferentStates: Story = {
+  render: Docs.render,
+  args: {
+    tabItems: [
+      {
+        id: '1',
+        label: 'First tab',
+      },
+      {
+        id: '2',
+        label: 'Second tab',
+      },
+      {
+        id: '3',
+        label: 'Third tab',
+        colorType: ColorType.warning,
+      },
+      {
+        id: '4',
+        label: 'Fourth tab',
+        colorType: ColorType.danger,
       },
     ]
   }

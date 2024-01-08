@@ -2,14 +2,13 @@
 import {computed, onMounted, ref} from 'vue';
 import AntBaseInput from './Elements/AntBaseInput.vue'
 import {Size} from '../../enums/Size.enum'
-import {Validator} from '@antify/validate'
+import {FieldValidator} from '@antify/validate'
 import {handleEnumValidation} from '../../handler';
 import {faSearch} from '@fortawesome/free-solid-svg-icons';
-import {useVModel} from '@vueuse/core';
 import {BaseInputType} from './Elements/__types';
 import AntField from './Elements/AntField.vue';
 
-const emits = defineEmits(['update:modelValue', 'update:skeleton']);
+const emits = defineEmits(['update:modelValue']);
 const props = withDefaults(defineProps<{
   modelValue: string | null;
   label?: string;
@@ -18,7 +17,7 @@ const props = withDefaults(defineProps<{
   size?: Size;
   disabled?: boolean;
   skeleton?: boolean;
-  validator?: Validator;
+  validator?: FieldValidator;
   inputTimeout?: number;
   query?: string;
 }>(), {
@@ -29,7 +28,6 @@ const props = withDefaults(defineProps<{
   placeholder: 'Search'
 });
 
-const _skeleton = useVModel(props, 'skeleton', emits);
 const timeout = ref<ReturnType<typeof setTimeout> | null>(null);
 
 // TODO:: implement query prop. Find a way to use vue router in Storybook.
@@ -57,7 +55,7 @@ onMounted(() => handleEnumValidation(props.size, Size, 'size'));
   <AntField
       :label="label"
       :size="size"
-      :skeleton="_skeleton"
+      :skeleton="skeleton"
       :description="description"
       :validator="validator"
   >
@@ -65,7 +63,7 @@ onMounted(() => handleEnumValidation(props.size, Size, 'size'));
         v-model:value="_value"
         :type="BaseInputType.search"
         :size="size"
-        :skeleton="_skeleton"
+        :skeleton="skeleton"
         :disabled="disabled"
         :placeholder="placeholder"
         :validator="validator"

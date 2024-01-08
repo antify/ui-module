@@ -1,7 +1,7 @@
 import { type Meta, type StoryObj } from '@storybook/vue3';
 import { computed, ref } from 'vue';
 import { Size } from '../../../enums';
-import { useValidator } from '@antify/validate';
+import { useFieldValidator } from '@antify/validate';
 import { type SwitcherOption } from '../__types/AntSwitcher.type';
 import { InputColorType } from '../../../enums';
 import { AntSwitcher } from '../index';
@@ -86,7 +86,7 @@ export const withValidator: Story = {
   render: Docs.render,
   args: {
     ...Docs.args,
-    validator: useValidator([
+    validator: useFieldValidator([
       (val: SwitcherOption) => {
         return val.value !== 'entry-1' || 'Select something else'
       }
