@@ -6,8 +6,8 @@ settings:
 
 dependencies:
   '@antify/validate':
-    specifier: file:../validate
-    version: file:../validate
+    specifier: ^1.8.0
+    version: 1.8.0
   '@fortawesome/free-regular-svg-icons':
     specifier: ^6.4.2
     version: 6.5.1
@@ -169,6 +169,11 @@ packages:
   /@antfu/utils@0.7.7:
     resolution: {integrity: sha512-gFPqTG7otEJ8uP6wrhDv6mqwGWYZKNvAcCq6u9hOj0c+IKCEsY4L1oC9trPq2SaWIzAfHvqfBDxF591JkMf+kg==}
     dev: true
+
+  /@antify/validate@1.8.0:
+    resolution: {integrity: sha512-rzs8uRmGq/+9JAYJBET1LiStp5s/HJen7GT/49Sj9YoVbQtWhAkxxI87rlAf3KnUDY3XC02HE+QR1/6F+gD04w==}
+    engines: {node: '>=0.14'}
+    dev: false
 
   /@aw-web-design/x-default-browser@1.4.126:
     resolution: {integrity: sha512-Xk1sIhyNC/esHGGVjL/niHLowM0csl/kFO5uawBy4IrWwy0o1G8LGt3jP6nmWGz+USxeeqbihAmp/oVZju6wug==}
@@ -2024,7 +2029,7 @@ packages:
     dev: false
 
   /@fortawesome/fontawesome-svg-core@6.5.1:
-    resolution: {integrity: sha512-MfRCYlQPXoLlpem+egxjfkEuP9UQswTrlCOsknus/NcMoblTH2g0jPrapbcIb04KGA7E2GZxbAccGZfWoYgsrQ==}
+    resolution: {integrity: sha512-MfRCYlQPXoLlpem+egxjfkEuP9UQswTrlCOsknus/NcMoblTH2g0jPrapbcIb04KGA7E2GZxbAccGZfWoYgsrQ==, tarball: https://npm.fontawesome.com/@fortawesome/fontawesome-svg-core/-/6.5.1/fontawesome-svg-core-6.5.1.tgz}
     engines: {node: '>=6'}
     requiresBuild: true
     dependencies:
@@ -13739,9 +13744,3 @@ packages:
       compress-commons: 5.0.1
       readable-stream: 3.6.2
     dev: true
-
-  file:../validate:
-    resolution: {directory: ../validate, type: directory}
-    name: '@antify/validate'
-    engines: {node: '>=0.14'}
-    dev: false
