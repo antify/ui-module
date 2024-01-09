@@ -194,6 +194,13 @@ export const summary: Story = {
           <AntSelect v-bind="args" value="1" size="sm" color-type="danger"/>
         </div>
         <div class="flex gap-2.5">
+          <AntSelect v-bind="args" value="1" size="sm" color-type="base" disabled/>
+          <AntSelect v-bind="args" value="1" size="sm" color-type="info" disabled/>
+          <AntSelect v-bind="args" value="1" size="sm" color-type="success" disabled/>
+          <AntSelect v-bind="args" value="1" size="sm" color-type="warning" disabled/>
+          <AntSelect v-bind="args" value="1" size="sm" color-type="danger" disabled/>
+        </div>
+        <div class="flex gap-2.5">
           <AntSelect v-bind="args" :value="null" grouped="none"/>
           <AntSelect v-bind="args" :value="null" grouped="right"/>
           <AntSelect v-bind="args" :value="null" grouped="center"/>

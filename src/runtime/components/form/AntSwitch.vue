@@ -31,7 +31,7 @@ const buttonClasses = computed(() => {
   const classes: { [key: string]: boolean } = {
     'relative inline-flex flex-shrink-0': true,
     'focus:outline-none': true,
-    'rounded-full transition-colors ease-in-out duration-200 disabled:opacity-50 disabled:cursor-not-allowed': true,
+    'rounded-full transition-colors ease-in-out duration-200': true,
     'focus-within:ring-2': props.size === Size.sm && hasAction.value,
     'focus-within:ring-4': props.size === Size.md && hasAction.value,
     'h-4 w-[30px]': props.size === Size.sm,
@@ -39,8 +39,8 @@ const buttonClasses = computed(() => {
     'bg-neutral-light': !_value.value,
     'invisible': props.skeleton,
     // Disabled
-    'cursor-pointer': !props.disabled,
     'opacity-50 cursor-not-allowed': props.disabled,
+    'cursor-default': props.readonly
   };
 
   const colorVariant = {
@@ -112,6 +112,8 @@ function changeValue() {
           :aria-checked="_value"
           @click="changeValue"
           @blur="validator?.validate(_value)"
+          :disabled="disabled"
+          :tabindex="readonly ? -1 : 1"
         >
         <span
           aria-hidden="true"

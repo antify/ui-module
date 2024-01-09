@@ -72,12 +72,19 @@ const simpleButtons = [
     id: 'radio-2',
     label: 'Radio 2',
     value: 'radio-2',
+    description: 'I am disabled',
+    disabled: true,
   },
   {
     id: 'radio-3',
     label: 'Radio 3',
     value: 'radio-3',
   },
+  {
+    id: 'radio-4',
+    label: 'Radio 4',
+    value: 'radio-4',
+  }
 ];
 
 export const Docs: Story = {
@@ -122,22 +129,6 @@ export const WithValidator: Story = {
   }
 }
 
-export const WithDisabledRadioButton: Story = {
-  render: Docs.render,
-  args: {
-    ...Docs.args,
-    radioButtons: [
-      ...simpleButtons,
-      {
-        id: 'radio-4',
-        label: 'Radio 4',
-        description: 'I am disabled',
-        value: 'radio-4',
-        disabled: true,
-      },
-    ]
-  }
-};
 export const Skeleton: Story = {
   render: Docs.render,
   args: {
