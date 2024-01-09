@@ -6,7 +6,7 @@ settings:
 
 dependencies:
   '@antify/validate':
-    specifier: ^1.8.0
+    specifier: 1.8.0
     version: 1.8.0
   '@fortawesome/free-regular-svg-icons':
     specifier: ^6.4.2
