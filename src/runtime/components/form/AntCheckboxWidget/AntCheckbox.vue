@@ -50,11 +50,11 @@ const inputClasses = computed(() => {
   };
 
   const focusColorVariant = {
-    [InputColorType.base]: 'focus:ring-primary-lighter',
-    [InputColorType.danger]: 'focus:ring-danger-lighter',
-    [InputColorType.info]: 'focus:ring-info-lighter',
-    [InputColorType.success]: 'focus:ring-success-lighter',
-    [InputColorType.warning]: 'focus:ring-warning-lighter',
+    [InputColorType.base]: 'text-primary focus:ring-primary-lighter',
+    [InputColorType.danger]: 'text-danger focus:ring-danger-lighter',
+    [InputColorType.info]: 'text-info focus:ring-info-lighter',
+    [InputColorType.success]: 'text-success focus:ring-success-lighter',
+    [InputColorType.warning]: 'text-warning focus:ring-warning-lighter',
   };
 
   const activeColorVariant = {
