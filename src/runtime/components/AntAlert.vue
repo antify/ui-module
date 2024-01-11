@@ -1,18 +1,19 @@
 <script lang="ts" setup>
-import {computed, onMounted, useSlots} from 'vue';
-import {handleEnumValidation} from '../handler';
+import { computed, onMounted, useSlots } from 'vue';
+import { handleEnumValidation } from '../handler';
 import {
   faCheckCircle,
   faCircleQuestion,
   faExclamationCircle,
   faExclamationTriangle,
-  faInfoCircle, faXmark
+  faInfoCircle,
+  faXmark
 } from '@fortawesome/free-solid-svg-icons';
 import AntIcon from './AntIcon.vue';
 import AntTooltip from './AntTooltip.vue';
 import AntSkeleton from './AntSkeleton.vue';
-import {InputColorType, Position} from '../enums';
-import {IconColorType} from './__types';
+import { InputColorType, Position } from '../enums';
+import { IconColorType, IconSize } from './__types';
 
 defineEmits(['close']);
 
@@ -22,12 +23,14 @@ const props = withDefaults(defineProps<{
   icon?: boolean,
   expanded?: boolean,
   questionMarkText?: string,
-  skeleton?: boolean
+  skeleton?: boolean,
+  dismissBtn?: boolean,
 }>(), {
   colorType: InputColorType.base,
   icon: true,
   expanded: false,
-  skeleton: false
+  skeleton: false,
+  dismissBtn: true,
 });
 
 const icons = {
@@ -75,6 +78,7 @@ onMounted(() => {
           v-if="icon"
           :icon="_icon"
           :color-type="colorType as unknown as IconColorType"
+          :size="IconSize.sm"
         />
 
         <div :class="{'font-semibold': hasDefaultSlot}">
@@ -91,6 +95,7 @@ onMounted(() => {
               <AntIcon
                 :icon="faCircleQuestion"
                 :color-type="colorType as unknown as IconColorType"
+                :size="IconSize.sm"
               />
 
               <template #content>
@@ -101,9 +106,11 @@ onMounted(() => {
         </div>
 
         <AntIcon
+          v-if="dismissBtn"
           :icon="faXmark"
           class="cursor-pointer"
           :color-type="colorType as unknown as IconColorType"
+          :size="IconSize.sm"
           @click="() => $emit('close')"
         />
       </div>
