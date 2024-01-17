@@ -6,6 +6,7 @@ import {handleEnumValidation} from '../handler';
 import {type IconDefinition} from '@fortawesome/free-solid-svg-icons';
 import {faCircleXmark} from '@fortawesome/free-solid-svg-icons';
 
+defineEmits(['close']);
 const props = withDefaults(defineProps<{
   colorType?: TagColorType,
   size?: Size;

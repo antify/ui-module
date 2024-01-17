@@ -21,9 +21,11 @@ const props = withDefaults(defineProps<{
   colorType?: InputColorType;
   validator?: Validator;
   size?: Size;
-  inputRef?: HTMLElement | null
+  inputRef?: HTMLElement | null;
+  focusOnOpen?: boolean;
 }>(), {
   colorType: InputColorType.base,
+  focusOnOpen: true,
 });
 
 const _modelValue = useVModel(props, 'modelValue', emit);
@@ -70,7 +72,7 @@ const dropDownItemClasses = computed(() => {
 
 watch(isOpen, (val) => {
   nextTick(() => {
-    if (val) {
+    if (val && props.focusOnOpen) {
       dropDownRef.value?.focus();
       focusedDropDownItem.value = _modelValue.value || props.options[0].value;
     }
