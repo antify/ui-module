@@ -21,7 +21,7 @@ const _open = useVModel(props, 'open', emit);
     @close="() => $emit('close')"
   >
     <div>
-      Do you really want to delete <span class="font-semibold">{{entry}}</span> ?
+      Do you really want to delete <span class="font-semibold">{{entry}}</span>?
     </div>
   </AntDialog>
 </template>
