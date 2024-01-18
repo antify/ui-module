@@ -1,12 +1,13 @@
 import AntDialog from '../AntDialog.vue';
 import { type Meta, type StoryObj} from '@storybook/vue3';
-import AntButton from '../form/AntButton.vue';
-import {InputColorType} from '../../enums';
+import AntButton from '../../form/AntButton.vue';
+import {InputColorType} from '../../../enums';
 
 const meta: Meta<typeof AntDialog> = {
-  title: 'Components/Dialog',
+  title: 'Components/Dialog/Dialog',
   component: AntDialog,
   parameters: {controls: {sort: 'requiredFirst'}},
+  decorators: [() => ({template: '<div class="border border-dashed border-neutral-light"><story/></div>'})],
   argTypes: {
     colorType: {
       control: {type: 'select'},
@@ -56,10 +57,10 @@ export const Docs: Story = {
           dolore
         </AntDialog>
       </div>
-    `,
-    args: {
-      open: false,
-      title: 'Lorem ipsum dolor'
-    },
-  })
+    `
+  }),
+  args: {
+    open: false,
+    title: 'Lorem ipsum dolor'
+  },
 }

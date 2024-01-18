@@ -2,8 +2,8 @@
 // TODO:: remove ts ignore
 // @ts-nocheck
 import {ref, watch} from 'vue';
-import AntButton from './form/AntButton.vue';
-import AntIcon from './AntIcon.vue';
+import AntButton from '../form/AntButton.vue';
+import AntIcon from '../AntIcon.vue';
 import {
   faCheckCircle,
   faExclamationCircle,
@@ -11,8 +11,8 @@ import {
   faInfoCircle,
   type IconDefinition,
 } from '@fortawesome/free-solid-svg-icons';
-import {ColorType, InputColorType} from '../enums';
-import {IconColorType, IconSize} from './__types';
+import {ColorType, InputColorType} from '../../enums';
+import {IconColorType, IconSize} from '../__types';
 
 const emit = defineEmits(['update:open', 'close', 'confirm']);
 const props = withDefaults(defineProps<{
