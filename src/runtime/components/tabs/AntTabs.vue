@@ -15,7 +15,7 @@ const props = withDefaults(defineProps<{
 
 const currentActive = useVModel(props, 'modelValue', emits);
 const containerClasses = computed(() => ({
-  'flex bg-neutral-light gap-px transition-all h-full': true,
+  'flex items-stretch bg-neutral-light gap-px transition-all h-full': true,
   'w-fit': !props.expanded,
   'w-full': props.expanded,
 }));

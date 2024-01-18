@@ -57,6 +57,21 @@ export const Docs: Story = {
   }
 }
 
+export const FixedHeight: Story = {
+  render: (args) => ({
+    components: {AntTabs},
+    setup() {
+      return {args};
+    },
+    template: `
+      <div class="h-20">
+        <AntTabs v-bind="args" v-model="args.modelValue"/>
+      </div>
+    `
+  }),
+  args: Docs.args
+}
+
 export const DifferentStates: Story = {
   render: Docs.render,
   args: {
