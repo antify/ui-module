@@ -2,12 +2,13 @@ import { type Meta, type StoryObj} from '@storybook/vue3';
 import {Size} from '../../../../enums/Size.enum';
 import {BaseInputType} from '../__types/AntBaseInput.type';
 import AntBaseInput from '../AntBaseInput.vue';
-import AntButton from '../../AntButton.vue';
+import AntButton from '../../../buttons/AntButton.vue';
 import {Grouped as _Grouped} from '../../../../enums/Grouped.enum';
-import {useFieldValidator} from '@antify/validate';
-import {computed} from 'vue';
+import {isRequiredRule, notBlankRule, useFieldValidator} from '@antify/validate';
+import {computed, reactive} from 'vue';
 import {faSearch} from '@fortawesome/free-solid-svg-icons';
 import {InputColorType} from '../../../../enums';
+import AntTextInput from '../../AntTextInput.vue';
 
 const meta: Meta<typeof AntBaseInput> = {
   title: 'Components/Forms/Elements/Base Input',
@@ -69,29 +70,46 @@ export const Docs: Story = {
   render: (args) => ({
     components: {AntBaseInput},
     setup: () => {
-      const value = computed({
-        // @ts-ignore
-        get: () => args.value,
-        // @ts-ignore
-        set: (val) => args.value = val
-      })
+      const validator = reactive(useFieldValidator([isRequiredRule, notBlankRule]))
 
-      return {args, value}
+      return {args, validator}
     },
-    template: '<div class="p-4 pb-10"><AntBaseInput v-bind="args" v-model:value="value" /></div>',
+    template: `
+      <AntBaseInput
+        v-bind="args"
+        v-model:value="args.value"
+        :has-errors="typeof args.hasErrors === 'boolean' ? args.hasErrors : validator.hasErrors()"
+        @validate="(val) => validator.validate(val)"
+      />`,
   }),
   args: {
-    value: '',
+    value: null,
     placeholder: 'Placeholder'
   },
 };
 
 export const withValidator: Story = {
-  render: Docs.render,
+  render: (args) => ({
+    components: {AntBaseInput},
+    setup: () => {
+      setTimeout(() => { args.skeleton = false }, 1000);
+      const validator = reactive(useFieldValidator([isRequiredRule, notBlankRule]))
+
+      return {args, validator}
+    },
+    template: `
+      <AntBaseInput
+        v-bind="args"
+        v-model:value="args.value"
+        :has-errors="typeof args.hasErrors === 'boolean' ? args.hasErrors : validator.hasErrors()"
+        @validate="(val) => validator.validate(val)"
+      />`,
+  }),
   args: {
     ...Docs.args,
-    value: 'To long value',
-    validator: useFieldValidator((val: string) => val.length <= 10 || 'Max. 10 characters allowed')
+    value: null,
+    skeleton: true,
+    description: undefined,
   },
 };
 

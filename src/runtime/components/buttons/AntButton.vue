@@ -12,11 +12,11 @@ import {Grouped} from '../../enums/Grouped.enum';
 import {Size} from '../../enums/Size.enum';
 import {handleEnumValidation} from '../../handler';
 import {ColorType} from '../../enums';
-import {ButtonType} from './__types';
+import {ButtonType} from '../form/__types';
 import AntIcon from '../AntIcon.vue';
 import {IconSize} from '../__types/AntIcon.types';
 
-const emits = defineEmits(['click']);
+const emit = defineEmits(['click', 'blur']);
 const props = withDefaults(defineProps<{
   outlined?: boolean;
   size?: Size;
@@ -149,8 +149,9 @@ onMounted(() => {
         :type="type"
         :to="to"
         :disabled="disabled || undefined"
-        @click="() => !props.readonly ? $emit('click') : null"
         :tabindex="noFocus ? '-1' : '0'"
+        @click="() => !props.readonly ? $emit('click') : null"
+        @blur="() => $emit('blur')"
     >
       <span
           :class="buttonContentClasses"

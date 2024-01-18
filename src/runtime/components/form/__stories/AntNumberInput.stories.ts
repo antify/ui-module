@@ -1,9 +1,9 @@
 import { type Meta, type StoryObj} from '@storybook/vue3';
 import {Size} from '../../../enums/Size.enum';
 import AntNumberInput from '../AntNumberInput.vue';
-import {computed} from 'vue';
 import {ColorType} from '../../../enums/ColorType.enum';
-import {useFieldValidator} from '@antify/validate';
+import {isRequiredRule, notBlankRule, useFieldValidator} from '@antify/validate';
+import {reactive} from 'vue';
 
 const meta: Meta<typeof AntNumberInput> = {
   title: 'Components/Forms/Number Input',
@@ -37,41 +37,26 @@ export const Docs: Story = {
   render: (args) => ({
     components: {AntNumberInput},
     setup() {
-      const modelValue = computed({
-        // @ts-ignore
-        get: () => args.modelValue,
-        // @ts-ignore
-        set: (val) => args.modelValue = val
-      })
+      const validator = reactive(useFieldValidator([
+        isRequiredRule,
+        (val) => typeof val !== 'number' || val <= 8 || 'Value should not be bigger than 8'
+      ]))
 
-      return {args, modelValue};
+      return {args, validator};
     },
-    template: '<div class="p-4"><AntNumberInput v-bind="args" v-model="modelValue" /></div>',
+    template: `
+      <AntNumberInput
+        v-bind="args"
+        v-model="args.modelValue"
+        :errors="Array.isArray(args.errors) ? args.errors : validator.getErrors()"
+        @validate="(val) => validator.validate(val)"
+      />`
   }),
   args: {
-    modelValue: 0,
+    modelValue: null,
     steps: 1,
     label: 'Label',
     description: 'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod'
-  },
-};
-
-export const WithoutValue: Story = {
-  render: Docs.render,
-  args: {
-    ...Docs.args,
-    modelValue: null
-  },
-};
-
-export const WithValidator: Story = {
-  render: Docs.render,
-  args: {
-    ...Docs.args,
-    validator: useFieldValidator([
-      (val: number) => val < 4 || 'Value should not be bigger than 4',
-      (val: number) => val < 5 || 'Value should really not be bigger than 4!'
-    ])
   },
 };
 

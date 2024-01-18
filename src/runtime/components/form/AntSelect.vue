@@ -30,7 +30,7 @@ import AntIcon from '../AntIcon.vue';
 import {faChevronDown, faChevronUp, faMultiply} from '@fortawesome/free-solid-svg-icons';
 import AntSkeleton from '../AntSkeleton.vue';
 import {vOnClickOutside} from '@vueuse/components';
-import AntButton from './AntButton.vue';
+import AntButton from '../buttons/AntButton.vue';
 import {ColorType, InputColorType} from '../../enums';
 import {IconSize} from '../__types';
 

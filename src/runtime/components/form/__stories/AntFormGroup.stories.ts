@@ -2,7 +2,7 @@ import {type Meta, type StoryObj} from '@storybook/vue3';
 import AntFormGroup from '../AntFormGroup.vue';
 import AntFormGroupLabel from '../AntFormGroupLabel.vue';
 import AntTextInput from '../AntTextInput.vue';
-import AntButton from '../AntButton.vue';
+import AntButton from '../../buttons/AntButton.vue';
 import {Direction} from '../../../enums/Direction.enum';
 
 const meta: Meta<typeof AntFormGroup> = {

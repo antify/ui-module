@@ -3,7 +3,8 @@ import {Size} from '../../../enums/Size.enum';
 import AntUnitInput from '../AntUnitInput.vue';
 import {faEuroSign} from '@fortawesome/free-solid-svg-icons';
 import {InputColorType} from '../../../enums';
-import {useFieldValidator} from '@antify/validate';
+import {isRequiredRule, useFieldValidator} from '@antify/validate';
+import {reactive} from 'vue';
 
 const meta: Meta<typeof AntUnitInput> = {
   title: 'Components/Forms/Unit Input',
@@ -47,13 +48,24 @@ export const Docs: Story = {
   render: (args) => ({
     components: {AntUnitInput},
     setup() {
-      return {args};
+      const validator = reactive(useFieldValidator([
+        isRequiredRule,
+        (val) => typeof val !== 'number' || val <= 8 || 'Value should not be bigger than 8'
+      ]))
+
+      return {args, validator};
     },
     template: `
-      <AntUnitInput v-bind="args" v-model="args.modelValue" :unit="args.unit"/>`,
+      <AntUnitInput
+        v-bind="args"
+        v-model="args.modelValue"
+        :unit="args.unit"
+        :errors="Array.isArray(args.errors) ? args.errors : validator.getErrors()"
+        @validate="(val) => validator.validate(val)"
+      />`,
   }),
   args: {
-    modelValue: 0,
+    modelValue: null,
     unit: '€',
     label: 'Label',
     description: 'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod'

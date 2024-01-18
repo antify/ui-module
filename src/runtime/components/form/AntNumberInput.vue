@@ -5,14 +5,13 @@ export default {
 </script>
 
 <script lang="ts" setup>
-import {computed, onMounted} from 'vue';
-import AntButton from './AntButton.vue'
+import {computed, onMounted, watch} from 'vue';
+import AntButton from '../buttons/AntButton.vue'
 import AntField from './Elements/AntField.vue'
 import AntBaseInput from './Elements/AntBaseInput.vue'
 import {Size} from '../../enums/Size.enum'
 import {faPlus, faMinus} from '@fortawesome/free-solid-svg-icons';
 import {ColorType, InputColorType} from '../../enums/ColorType.enum';
-import {FieldValidator} from '@antify/validate'
 import {handleEnumValidation} from '../../handler';
 import {useVModel} from '@vueuse/core';
 import {Grouped} from '../../enums/Grouped.enum';
@@ -30,25 +29,21 @@ const props = withDefaults(defineProps<{
   steps?: number;
   min?: number;
   max?: number;
-  validator?: FieldValidator;
   limiter?: boolean;
+  errors?: string[];
 }>(), {
   colorType: InputColorType.base,
   disabled: false,
   skeleton: false,
   size: Size.md,
   steps: 1,
-  limiter: false
+  limiter: false,
+  errors: []
 });
-const emits = defineEmits(['update:modelValue']);
-
-const _modelValue = useVModel(props, 'modelValue', emits);
+const emit = defineEmits(['update:modelValue', 'validate']);
+const _modelValue = useVModel(props, 'modelValue', emit);
 const isPrevButtonDisabled = computed(() => {
   if (props.disabled) {
-    return true;
-  }
-
-  if (_modelValue.value === null) {
     return true;
   }
 
@@ -63,15 +58,19 @@ const isNextButtonDisabled = computed(() => {
     return true;
   }
 
-  if (_modelValue.value === null) {
-    return true;
-  }
-
   if (props.max !== undefined && props.max !== null) {
     return _modelValue.value >= props.max;
   }
 
   return false;
+});
+const hasErrors = computed(() => props.errors.length > 0);
+const buttonColorType = computed(() => {
+  if (hasErrors.value) {
+    return ColorType.danger;
+  }
+
+  return props.colorType;
 });
 
 onMounted(() => {
@@ -79,80 +78,96 @@ onMounted(() => {
   handleEnumValidation(props.colorType, InputColorType, 'colorType');
 });
 
+watch(_modelValue, (val) => {
+  if (hasErrors.value) {
+    emit('validate', val)
+  }
+});
+
 function subtract() {
   if (_modelValue.value === null) {
-    return _modelValue.value = props.max || 0;
+    _modelValue.value = props.max || 0;
+  } else if (props.max !== undefined && _modelValue.value - props.steps > props.max) {
+    _modelValue.value = props.max;
+  } else {
+    _modelValue.value -= props.steps;
   }
 
-  if (props.max !== undefined && _modelValue.value - props.steps > props.max) {
-    return _modelValue.value = props.max;
+  if (hasErrors.value) {
+    emit('validate', _modelValue.value)
   }
-
-  _modelValue.value -= props.steps;
 }
 
 function add() {
   if (_modelValue.value === null) {
     return _modelValue.value = props.min || 0;
-  }
-
-  if (props.min !== undefined && _modelValue.value + props.steps < props.min) {
+  } else if (props.min !== undefined && _modelValue.value + props.steps < props.min) {
     return _modelValue.value = props.min;
+  } else {
+    _modelValue.value += props.steps;
   }
 
-  _modelValue.value += props.steps;
+  if (hasErrors.value) {
+    emit('validate', _modelValue.value)
+  }
+}
+function onButtonBlur() {
+  emit('validate', _modelValue.value)
 }
 </script>
 
 <template>
   <AntField
-      :label="label"
-      :size="size"
-      :skeleton="skeleton"
-      :description="description"
-      :color-type="colorType"
-      :validator="validator"
-      :limiter-max-value="limiter && max !== undefined ? max : undefined"
-      :limiter-value="limiter && _modelValue !== undefined && _modelValue !== null ? _modelValue : undefined"
+    :label="label"
+    :size="size"
+    :skeleton="skeleton"
+    :description="description"
+    :color-type="colorType"
+    :limiter-max-value="limiter && max !== undefined ? max : undefined"
+    :limiter-value="limiter && _modelValue !== undefined && _modelValue !== null ? _modelValue : undefined"
+    :errors="errors"
   >
     <div
-        class="flex relative"
+      class="flex relative"
     >
       <AntButton
-          :icon-left="faMinus"
-          :grouped="Grouped.left"
-          :color-type="colorType as unknown as ColorType"
-          :size="size"
-          :skeleton="skeleton"
-          :disabled="isPrevButtonDisabled"
-          @click="subtract"
+        :icon-left="faMinus"
+        :grouped="Grouped.left"
+        :color-type="buttonColorType"
+        :size="size"
+        :skeleton="skeleton"
+        :disabled="isPrevButtonDisabled"
+        @click="subtract"
+        @blur="onButtonBlur"
       />
 
       <AntBaseInput
-          v-model:value.number="_modelValue"
-          :type="BaseInputType.number"
-          :grouped="Grouped.center"
-          wrapper-class="flex-grow"
-          :color-type="colorType"
-          :size="size"
-          :skeleton="skeleton"
-          :min="min"
-          :max="max"
-          :disabled="disabled"
-          :placeholder="placeholder || label"
-          :show-icon="false"
-          :validator="validator"
-          v-bind="$attrs"
+        v-model:value.number="_modelValue"
+        :type="BaseInputType.number"
+        :grouped="Grouped.center"
+        wrapper-class="flex-grow"
+        :color-type="colorType"
+        :size="size"
+        :skeleton="skeleton"
+        :min="min"
+        :max="max"
+        :disabled="disabled"
+        :placeholder="placeholder || label"
+        :show-icon="false"
+        :has-errors="hasErrors"
+        v-bind="$attrs"
+        @validate="val => $emit('validate', val)"
       />
 
       <AntButton
-          :icon-left="faPlus"
-          :grouped="Grouped.right"
-          :color-type="colorType as unknown as ColorType"
-          :size="size"
-          :skeleton="skeleton"
-          :disabled="isNextButtonDisabled"
-          @click="add"
+        :icon-left="faPlus"
+        :grouped="Grouped.right"
+        :color-type="buttonColorType"
+        :size="size"
+        :skeleton="skeleton"
+        :disabled="isNextButtonDisabled"
+        @click="add"
+        @blur="onButtonBlur"
       />
     </div>
   </AntField>

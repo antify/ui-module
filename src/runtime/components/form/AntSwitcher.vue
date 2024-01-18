@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import AntField from './Elements/AntField.vue';
-import AntButton from './AntButton.vue';
+import AntButton from '../buttons/AntButton.vue';
 import { faChevronLeft, faChevronRight } from '@fortawesome/free-solid-svg-icons';
 import AntSkeleton from '../AntSkeleton.vue';
 import { FieldValidator } from '@antify/validate';

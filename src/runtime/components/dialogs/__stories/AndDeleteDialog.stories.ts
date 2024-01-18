@@ -1,6 +1,6 @@
 import {type Meta, type StoryObj} from '@storybook/vue3';
 import AntDeleteDialog from '../AntDeleteDialog.vue';
-import AntButton from '../../form/AntButton.vue';
+import AntButton from '../../buttons/AntButton.vue';
 
 const meta: Meta<typeof AntDeleteDialog> = {
   title: 'Components/Dialogs/Delete Dialog',

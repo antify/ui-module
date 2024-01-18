@@ -1,7 +1,7 @@
 <script lang="ts" setup>
 import {ref, useSlots, watch} from 'vue';
 import {faXmark} from '@fortawesome/free-solid-svg-icons';
-import AntButton from './form/AntButton.vue';
+import AntButton from './buttons/AntButton.vue';
 
 const emit = defineEmits(['update:open', 'close']);
 const props = withDefaults(defineProps<{

@@ -9,7 +9,7 @@ import {
   faXmark
 } from '@fortawesome/free-solid-svg-icons';
 import AntIcon from './AntIcon.vue';
-import AntButton from './form/AntButton.vue';
+import AntButton from './buttons/AntButton.vue';
 import {ColorType, InputColorType} from '../enums';
 import {IconColorType} from './__types';
 

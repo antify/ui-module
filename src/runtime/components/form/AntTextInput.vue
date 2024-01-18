@@ -9,14 +9,13 @@ import {onMounted} from 'vue';
 import AntField from './Elements/AntField.vue'
 import AntBaseInput from './Elements/AntBaseInput.vue'
 import {Size} from '../../enums/Size.enum'
-import {FieldValidator} from '@antify/validate'
 import {TextInputType} from './__types/AntTextInput.type'
 import {handleEnumValidation} from '../../handler';
-import { useVModel } from '@vueuse/core';
+import {useVModel} from '@vueuse/core';
 import {InputColorType} from '../../enums';
 import {BaseInputType} from './Elements/__types';
 
-const emit = defineEmits(['update:modelValue', 'update:skeleton']);
+const emit = defineEmits(['update:modelValue', 'update:skeleton', 'validate']);
 const props = withDefaults(defineProps<{
   modelValue: string | null;
   label?: string;
@@ -26,17 +25,18 @@ const props = withDefaults(defineProps<{
   colorType?: InputColorType;
   disabled?: boolean;
   skeleton?: boolean;
-  validator?: FieldValidator;
   type?: TextInputType;
   limiter?: boolean;
   max?: number;
+  errors?: string[];
 }>(), {
   colorType: InputColorType.base,
   disabled: false,
   skeleton: false,
   size: Size.md,
   type: TextInputType.text,
-  limiter: false
+  limiter: false,
+  errors: []
 });
 
 const _value = useVModel(props, 'modelValue', emit);
@@ -55,9 +55,9 @@ onMounted(() => {
       :skeleton="skeleton"
       :description="description"
       :colorType="colorType"
-      :validator="validator"
       :limiter-max-value="limiter && max !== undefined ? max : undefined"
       :limiter-value="limiter ? _value?.length : undefined"
+      :errors="errors"
   >
     <AntBaseInput
         v-model:value="_value"
@@ -69,8 +69,9 @@ onMounted(() => {
         :disabled="disabled"
         :placeholder="placeholder !== undefined ? placeholder : label"
         :show-icon="false"
-        :validator="validator"
         v-bind="$attrs"
+        :has-errors="errors.length > 0"
+        @validate="val => $emit('validate', val)"
     />
   </AntField>
 </template>

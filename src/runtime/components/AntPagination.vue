@@ -6,7 +6,7 @@
  */
 import {useRouter, useRoute} from 'vue-router'
 import {computed, ref, watch} from 'vue';
-import AntButton from './form/AntButton.vue';
+import AntButton from './buttons/AntButton.vue';
 import {faChevronRight, faChevronLeft} from '@fortawesome/free-solid-svg-icons';
 import {Grouped} from '../enums/Grouped.enum';
 import AntSkeleton from './AntSkeleton.vue';

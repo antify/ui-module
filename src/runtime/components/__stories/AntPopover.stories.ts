@@ -1,5 +1,5 @@
 import AntPopover from '../AntPopover.vue';
-import AntButton from '../form/AntButton.vue';
+import AntButton from '../buttons/AntButton.vue';
 import { type Meta, type StoryObj} from '@storybook/vue3';
 import {Position} from '../../enums/Position.enum';
 import {computed} from 'vue';

@@ -2,7 +2,7 @@
 // TODO:: remove ts ignore
 // @ts-nocheck
 import {ref, watch} from 'vue';
-import AntButton from '../form/AntButton.vue';
+import AntButton from '../buttons/AntButton.vue';
 import AntIcon from '../AntIcon.vue';
 import {
   faCheckCircle,

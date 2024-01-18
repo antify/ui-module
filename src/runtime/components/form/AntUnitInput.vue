@@ -6,7 +6,7 @@ export default {
 
 <script lang="ts" setup>
 import {computed, onMounted} from 'vue';
-import AntButton from './AntButton.vue'
+import AntButton from '../buttons/AntButton.vue'
 import AntField from './Elements/AntField.vue'
 import AntBaseInput from './Elements/AntBaseInput.vue'
 import {Size} from '../../enums/Size.enum'
@@ -18,7 +18,6 @@ import {BaseInputType} from './Elements/__types';
 import {handleEnumValidation} from '../../handler';
 import {FieldValidator} from '@antify/validate';
 
-// TODO:: implement missing validator
 const props = withDefaults(defineProps<{
   modelValue: number | null;
   unit: string | IconDefinition;
@@ -34,16 +33,19 @@ const props = withDefaults(defineProps<{
   disabled?: boolean;
   skeleton?: boolean;
   wrapperClass?: string | Record<string, boolean>;
+  errors?: string[];
 }>(), {
   colorType: InputColorType.base,
   disabled: false,
   skeleton: false,
   size: Size.md,
-  limiter: false
+  limiter: false,
+  errors: []
 });
-const emits = defineEmits(['update:modelValue']);
-const _modelValue = useVModel(props, 'modelValue', emits);
-const _colorType = computed(() => props.validator?.hasErrors() ? InputColorType.danger : props.colorType);
+const emit = defineEmits(['update:modelValue', 'validate']);
+const _modelValue = useVModel(props, 'modelValue', emit);
+const _colorType = computed(() => hasErrors.value ? InputColorType.danger : props.colorType);
+const hasErrors = computed(() => props.errors.length > 0);
 
 onMounted(() => {
   handleEnumValidation(props.colorType, InputColorType, 'colorType');
@@ -61,6 +63,7 @@ onMounted(() => {
     :validator="validator"
     :limiter-max-value="limiter && max !== undefined ? max : undefined"
     :limiter-value="limiter && _modelValue !== undefined && _modelValue !== null ? _modelValue : undefined"
+    :errors="errors"
   >
     <div
       class="flex relative"
@@ -78,8 +81,9 @@ onMounted(() => {
         :disabled="disabled"
         :placeholder="placeholder || label"
         :show-icon="false"
-        :validator="validator"
+        :has-errors="hasErrors"
         v-bind="$attrs"
+        @validate="val => $emit('validate', val)"
       />
 
       <AntButton

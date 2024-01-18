@@ -1,4 +1,4 @@
-import AntButton from '../form/AntButton.vue';
+import AntButton from '../buttons/AntButton.vue';
 import {CornerPosition, InputColorType} from '../../enums';
 import {enumToPlainText} from '../../utils';
 

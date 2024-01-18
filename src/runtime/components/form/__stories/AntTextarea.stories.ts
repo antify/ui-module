@@ -1,10 +1,10 @@
-import { type Meta, type StoryObj} from '@storybook/vue3';
+import {isRequiredRule, notBlankRule, useFieldValidator} from '@antify/validate';
+import {Grouped as _Grouped} from '../../../enums/Grouped.enum';
+import {type Meta, type StoryObj} from '@storybook/vue3';
 import {Size} from '../../../enums/Size.enum';
 import AntTextarea from '../AntTextarea.vue';
-import {Grouped as _Grouped} from '../../../enums/Grouped.enum';
-import {useFieldValidator} from '@antify/validate';
 import {InputColorType} from '../../../enums';
-import {computed} from 'vue';
+import {reactive} from 'vue';
 
 const meta: Meta<typeof AntTextarea> = {
   title: 'Components/Forms/Textarea',
@@ -50,43 +50,49 @@ export const Docs: Story = {
   render: (args) => ({
     components: {AntTextarea},
     setup: () => {
-      const modelValue = computed({
-        // @ts-ignore
-        get: () => args.modelValue,
-        // @ts-ignore
-        set: (val) => args.modelValue = val
-      });
+      const validator = reactive(useFieldValidator([isRequiredRule, notBlankRule]));
 
-      return {args, modelValue}
+      return {args, validator};
     },
-    template: '<AntTextarea v-bind="args" v-model="modelValue" />',
+    template: `
+      <AntTextarea
+        v-bind="args"
+        v-model="args.modelValue"
+        :errors="Array.isArray(args.errors) ? args.errors : validator.getErrors()"
+        @validate="val => validator.validate(val)"
+      />
+    `,
   }),
   args: {
-    modelValue: '',
+    modelValue: null,
     label: 'Label',
     description: 'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod'
   },
 };
 
-export const withValidator: Story = {
-  render: Docs.render,
-  args: {
-    ...Docs.args,
-    modelValue: 'To long value',
-    validator: useFieldValidator((val: string) => val.length <= 10 || 'Max. 10 characters allowed')
-  },
-};
-
 export const limited: Story = {
-  render: Docs.render,
+  render: (args) => ({
+    components: {AntTextarea},
+    setup: () => {
+      const validator = reactive(useFieldValidator(
+        (val) => val?.length <= 10 || 'Max. 10 characters allowed'))
+
+      return {args, validator};
+    },
+    template: `
+      <AntTextarea
+        v-bind="args"
+        v-model="args.modelValue"
+        :errors="Array.isArray(args.errors) ? args.errors : validator.getErrors()"
+        @validate="(val) => validator.validate(val)"
+      />
+    `,
+  }),
   args: {
     ...Docs.args,
     modelValue: 'A to long value',
-    max: 10,
     limiter: true,
-    validator: useFieldValidator([
-      (val: string) => val.length <= 10 || 'Max. 10 characters allowed'
-    ])
+    max: 10
   },
 };
 

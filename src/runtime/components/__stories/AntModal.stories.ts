@@ -1,5 +1,5 @@
 import AntModal from '../AntModal.vue';
-import AntButton from '../form/AntButton.vue';
+import AntButton from '../buttons/AntButton.vue';
 import { type Meta, type StoryObj} from '@storybook/vue3';
 import {computed} from 'vue';
 import AntKeycap from '../AntKeycap.vue';

@@ -9,10 +9,10 @@ import AntListGroupItem from './AntListGroupItem.vue';
 import AntModal from './AntModal.vue';
 import AntPagination from './AntPagination.vue';
 import AntPopover from './AntPopover.vue';
-import AntTableFilter from './AntTableFilter.vue';
+import AntCrudTableFilter from './crud/AntCrudTableFilter.vue';
 import AntSkeleton from './AntSkeleton.vue';
 import AntSpinner from './AntSpinner.vue';
-import AntTableNav from './AntTableNav.vue';
+import AntTableNav from './crud/AntCrudTableNav.vue';
 import AntTag from './AntTag.vue';
 import AntToast from './AntToast.vue';
 import AntTooltip from './AntTooltip.vue';
@@ -33,7 +33,7 @@ export {
   AntModal,
   AntPagination,
   AntPopover,
-  AntTableFilter,
+  AntCrudTableFilter,
   AntSkeleton,
   AntSpinner,
   AntTableNav,

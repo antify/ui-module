@@ -18,14 +18,13 @@ import {
   faCircleInfo,
   faXmark
 } from '@fortawesome/free-solid-svg-icons';
-import {type FieldValidator} from '@antify/validate'
 import {handleEnumValidation} from '../../../handler';
 import {type IconDefinition} from '@fortawesome/free-solid-svg-icons';
 import {classesToObjectSyntax} from '../../../utils';
 import {InputColorType} from '../../../enums';
 import {IconSize} from '../../__types';
 
-const emit = defineEmits(['update:value', 'blur']);
+const emit = defineEmits(['update:value', 'blur', 'validate']);
 const props = withDefaults(defineProps<{
   value: string | number | null;
   size?: Size;
@@ -37,9 +36,9 @@ const props = withDefaults(defineProps<{
   grouped?: Grouped;
   wrapperClass?: string | Record<string, boolean>;
   showIcon?: boolean;
-  validator?: FieldValidator;
   iconLeft?: IconDefinition;
   nullable?: boolean;
+  hasErrors?: boolean;
 }>(), {
   colorType: InputColorType.base,
   disabled: false,
@@ -49,7 +48,8 @@ const props = withDefaults(defineProps<{
   grouped: Grouped.none,
   showIcon: true,
   default: false,
-  nullable: false
+  nullable: false,
+  hasErrors: false
 });
 
 const icons = {
@@ -122,11 +122,11 @@ const _value = computed<string | number | null>({
     emit('update:value', val);
   },
 });
-const _colorType = computed(() => props.validator?.hasErrors() ? InputColorType.danger : props.colorType);
+const _colorType = computed(() => props.hasErrors ? InputColorType.danger : props.colorType);
 
 watch(_value, (val) => {
-  if (props.validator?.hasErrors()) {
-    props.validator.validate(val)
+  if (props.hasErrors) {
+    emit('validate', val)
   }
 });
 
@@ -135,7 +135,7 @@ watch(_value, (val) => {
  */
 watch(() => props.skeleton, (val) => {
   if (!val && props.value !== null) {
-    props.validator?.validate(props.value);
+    emit('validate', props.value)
   }
 });
 
@@ -149,13 +149,12 @@ onMounted(() => {
    * Validate default value without delayed data fetching.
    */
   if (!props.skeleton && props.value !== null) {
-    props.validator?.validate(props.value);
+    emit('validate', props.value)
   }
 });
 
-function onBlur(e) {
-  props.validator?.validate(props.value);
-
+function onBlur(e: FocusEvent) {
+  emit('validate', props.value)
   emit('blur', e);
 }
 </script>
