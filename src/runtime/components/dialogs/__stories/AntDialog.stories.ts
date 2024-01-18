@@ -4,7 +4,7 @@ import AntButton from '../../form/AntButton.vue';
 import {InputColorType} from '../../../enums';
 
 const meta: Meta<typeof AntDialog> = {
-  title: 'Components/Dialog/Dialog',
+  title: 'Components/Dialogs/Dialog',
   component: AntDialog,
   parameters: {controls: {sort: 'requiredFirst'}},
   decorators: [() => ({template: '<div class="border border-dashed border-neutral-light"><story/></div>'})],

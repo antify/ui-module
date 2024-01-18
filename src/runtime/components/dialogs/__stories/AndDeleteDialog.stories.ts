@@ -3,7 +3,7 @@ import AntDeleteDialog from '../AntDeleteDialog.vue';
 import AntButton from '../../form/AntButton.vue';
 
 const meta: Meta<typeof AntDeleteDialog> = {
-  title: 'Components/Dialog/Delete Dialog',
+  title: 'Components/Dialogs/Delete Dialog',
   component: AntDeleteDialog,
   parameters: {controls: {sort: 'requiredFirst'}},
   argTypes: {},
