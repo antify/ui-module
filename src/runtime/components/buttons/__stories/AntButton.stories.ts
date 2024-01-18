@@ -6,7 +6,7 @@ import {Grouped as _Grouped} from '../../../enums/Grouped.enum';
 import {ColorType} from '../../../enums';
 
 const meta: Meta<typeof AntButton> = {
-    title: 'Components/Forms/Button',
+    title: 'Components/Buttons/Button',
     component: AntButton,
     parameters: {controls: {sort: 'requiredFirst'}},
     argTypes: {
