@@ -56,5 +56,9 @@ export default () => {
       // TODO:: translate
       this.toastSuccess('Saved');
     },
+    toastDuplicated() {
+      // TODO:: translate
+      this.toastSuccess('Duplicated');
+    },
   }
 };

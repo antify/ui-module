@@ -1,10 +1,11 @@
 import {useFetch} from "nuxt/app";
 import {computed, reactive, ref} from "vue";
 import {type Car, validator} from "../glue/plugins/car";
+import {useRoute} from "vue-router";
 
 export default defineNuxtPlugin((nuxtApp) => {
   const count = ref(0)
-  const query = computed(() => useRoute().query)
+  const queryRef = computed(() => useRoute().query)
   const router = useRouter();
   const route = useRoute();
   const uiClient = useUiClient()
@@ -35,7 +36,7 @@ export default defineNuxtPlugin((nuxtApp) => {
     {
       immediate: false,
       watch: false,
-      query,
+      query: queryRef,
       onResponse({response}) {
         if (response.status === 200) {
           count.value = response._data.count
@@ -172,15 +173,14 @@ export default defineNuxtPlugin((nuxtApp) => {
     // TODO:: on error
     nuxtApp.$uiModule.toaster.toastUpdated()
   }
-  const carId = computed(() => route.params.carId)
   const routing = {
-    goToListingPage: () => router.push(routing.getListingRoute()),
-    goToDetailPage: () => router.push(routing.getDetailRoute()),
-    getListingRoute: () => ({name: 'cars', query: query.value}),
-    getDetailRoute: (carId = 'create') => ({
+    goToListingPage: (query = queryRef.value) => router.push(routing.getListingRoute(query)),
+    goToDetailPage: (carId = 'create', query = queryRef.value) => router.push(routing.getDetailRoute(carId, query)),
+    getListingRoute: (query = queryRef.value) => ({name: 'cars', query}),
+    getDetailRoute: (carId = 'create', query = queryRef.value) => ({
       name: 'cars-carId',
       params: {carId},
-      query: route.query
+      query
     })
   }
 
@@ -208,13 +208,7 @@ export default defineNuxtPlugin((nuxtApp) => {
           saveAndNew: async () => {
             await save();
 
-            await router.push({
-              name: 'cars-carId',
-              params: {
-                carId: 'create'
-              },
-              query: route.query
-            })
+            await routing.goToDetailPage('create')
           },
           skeleton: computed(() => !isCreateContext.value ? pendingDetail.value : false),
           resetData: () => {
