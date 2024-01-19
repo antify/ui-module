@@ -21,7 +21,7 @@ export default {
  */
 import AntField from './Elements/AntField.vue';
 import {type SelectOption} from './__types/AntSelect.type';
-import {computed, onMounted, ref, watch, nextTick, type Ref} from 'vue';
+import {computed, onMounted, ref, watch, nextTick} from 'vue';
 import {Size} from '../../enums/Size.enum';
 import {FieldValidator} from '@antify/validate';
 import {handleEnumValidation} from '../../handler';
@@ -33,6 +33,7 @@ import {vOnClickOutside} from '@vueuse/components';
 import AntButton from '../buttons/AntButton.vue';
 import {ColorType, InputColorType} from '../../enums';
 import {IconSize} from '../__types';
+import AntDropDown from './Elements/AntDropDown.vue';
 
 const props = withDefaults(
     defineProps<{
@@ -106,41 +107,6 @@ const inputClasses = computed(() => {
     'opacity-50 cursor-not-allowed': props.disabled,
   };
 });
-const dropdownClasses = computed(() => {
-  const variants: Record<InputColorType, string> = {
-    [InputColorType.base]: 'bg-neutral-light border-neutral-light',
-    [InputColorType.success]: 'bg-success border-success',
-    [InputColorType.info]: 'bg-info border-info',
-    [InputColorType.warning]: 'bg-warning border-warning',
-    [InputColorType.danger]: 'bg-danger border-danger',
-  };
-
-  return {
-    'absolute w-full border flex flex-col gap-px outline-none -mt-px overflow-hidden shadow-md z-40': true,
-    'rounded-bl-md rounded-br-md': true,
-    [variants[_colorType.value]]: true,
-    // Size
-    'text-xs': props.size === Size.sm,
-    'text-sm': props.size === Size.md,
-  };
-});
-const dropDownItemClasses = computed(() => {
-  const variants: Record<InputColorType, string> = {
-    [InputColorType.base]: 'bg-neutral-lightest text-neutral-lightest-font',
-    [InputColorType.success]: 'bg-success-lighter border-success-lighter-font',
-    [InputColorType.info]: 'bg-info-lighter border-info-lighter-font',
-    [InputColorType.warning]: 'bg-warning-lighter border-warning-lighter-font',
-    [InputColorType.danger]: 'bg-danger-lighter border-danger-lighter-font',
-  };
-
-  return {
-    'select-none text-ellipsis overflow-hidden whitespace-nowrap': true,
-    [variants[_colorType.value]]: true,
-    // Size
-    'p-1.5': props.size === Size.sm,
-    'p-2.5': props.size === Size.md,
-  };
-});
 const placeholderClasses = computed(() => {
   const variants: Record<InputColorType, string> = {
     [InputColorType.base]: 'text-neutral',
@@ -212,18 +178,6 @@ watch(isOpen, (val) => {
   });
 });
 
-function getActiveDropDownItemClasses(option: SelectOption) {
-  const variants: Record<InputColorType, string> = {
-    [InputColorType.base]: 'bg-neutral-lightest/25',
-    [InputColorType.success]: 'bg-success-lighter/25',
-    [InputColorType.info]: 'bg-info-lighter/25',
-    [InputColorType.warning]: 'bg-warning-lighter/25',
-    [InputColorType.danger]: 'bg-danger-lighter/25',
-  };
-
-  return option.value === focusedDropDownItem.value ? {[variants[_colorType.value]]: true} : {};
-}
-
 function onClickOutside() {
   if (!isOpen.value) {
     return;
@@ -231,43 +185,6 @@ function onClickOutside() {
 
   isOpen.value = false;
   inputRef.value?.focus();
-}
-
-function onKeyDownDropDown(e: KeyboardEvent) {
-  if (e.key === 'Enter') {
-    isOpen.value = false;
-    _modelValue.value = focusedDropDownItem.value;
-    inputRef.value?.focus();
-  }
-
-  if (e.key === 'Escape') {
-    isOpen.value = false;
-    inputRef.value?.focus();
-  }
-
-  if (e.key === 'ArrowDown' || e.key === 'ArrowRight') {
-    const index = props.options.findIndex(option => option.value === focusedDropDownItem.value);
-    const option = props.options[index + 1];
-
-    if (index === -1) {
-      focusedDropDownItem.value = props.options[0].value
-    } else if (option !== undefined) {
-      focusedDropDownItem.value = option.value
-    }
-  }
-
-  if (e.key === 'ArrowUp' || e.key === 'ArrowLeft') {
-    const index = props.options.findIndex(option => option.value === focusedDropDownItem.value);
-    const option = props.options[index - 1];
-
-    if (option !== undefined) {
-      focusedDropDownItem.value = option.value
-    }
-  }
-
-  if (e.key === 'Tab') {
-    isOpen.value = false;
-  }
 }
 
 function onKeyDownInput(e: KeyboardEvent) {
@@ -323,14 +240,6 @@ function onClickSelectInput(e: MouseEvent) {
   }
 
   isOpen.value = !isOpen.value;
-}
-
-function onClickDropDownItem(e: MouseEvent, value: string | number | null) {
-  e.preventDefault();
-  inputRef.value?.focus();
-
-  isOpen.value = false;
-  _modelValue.value = value;
 }
 
 function onClickRemoveButton() {
@@ -417,22 +326,15 @@ function onClickRemoveButton() {
         </div>
 
         <!-- Dropdown -->
-        <div
-            v-if="isOpen"
-            :class="dropdownClasses"
-            ref="dropDownRef"
-            @keydown="onKeyDownDropDown"
-            tabindex="0"
-        >
-          <div
-              v-for="(option) in options"
-              :class="{...dropDownItemClasses, ...getActiveDropDownItemClasses(option)}"
-              @mousedown="(e) => onClickDropDownItem(e, option.value)"
-              @mouseover="() => focusedDropDownItem = option.value"
-          >
-            {{ option.label }}
-          </div>
-        </div>
+        <AntDropDown
+          v-model="_modelValue"
+          v-model:open="isOpen"
+          ref="dropDownRef"
+          :options="options"
+          :input-ref="inputRef"
+          :size="size"
+          :color-type="_colorType"
+        />
       </div>
 
       <AntButton
