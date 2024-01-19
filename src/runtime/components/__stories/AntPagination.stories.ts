@@ -31,6 +31,14 @@ export const Docs: Story = {
     }
 };
 
+export const LightVersion: Story = {
+    render: Docs.render,
+    args: {
+        ...Docs.args,
+        lightVersion: true
+    },
+};
+
 export const Skeleton: Story = {
     render: Docs.render,
     args: {

@@ -11,14 +11,34 @@ import {AntTableRowTypes} from '../../table/__types/TableHeader.type';
 const meta: Meta<typeof AntCrud> = {
   title: 'Crud/Crud',
   component: AntCrud,
-  parameters: {controls: {sort: 'requiredFirst'}},
-  decorators: [() => ({template: '<div class="border border-dashed border-neutral-light"><story/></div>'})],
+  parameters: {
+    controls: {sort: 'requiredFirst'},
+    fullscreen: true
+  },
+  decorators: [() => ({template: '<div class="h-screen"><story/></div>'})],
   argTypes: {},
 };
 
 export default meta;
 
 type Story = StoryObj<typeof AntCrud>;
+
+function generateTableData(amount: number) {
+  const tableData = [];
+
+  for (let i = 0; i < amount; i++) {
+    tableData.push({
+      name: 'Lindsay Walton',
+      title: 'Front-end Developer',
+      email: 'lindsay.walton@gmail.com',
+      streetAddress: '3670 New Road',
+      city: 'Birmingham',
+      country: 'United Kingdom',
+    });
+  }
+
+  return tableData;
+}
 
 export const Docs: Story = {
   render: (args) => ({
@@ -42,34 +62,8 @@ export const Docs: Story = {
 
       return {
         args,
-        selectedDataItem,
         fullWidth,
-        tableData: [
-          {
-            name: 'Lindsay Walton',
-            title: 'Front-end Developer',
-            email: 'lindsay.walton@example.com',
-            streetAddress: '3670 New Road',
-            city: 'Birmingham',
-            country: 'United Kingdom',
-          },
-          {
-            name: 'Courtney Henry',
-            title: 'Designer',
-            email: 'courtney.henry@example.com',
-            streetAddress: '3670 New Road',
-            city: 'Birmingham',
-            country: 'United Kingdom',
-          },
-          {
-            name: 'Anderson a. First?',
-            title: 'Designer',
-            email: 'courtney.henry@example.com',
-            streetAddress: '3670 New Road',
-            city: 'Birmingham',
-            country: 'United Kingdom',
-          },
-        ],
+        tableData: generateTableData(50),
         tableHeaders: [
           {
             title: 'Name',
@@ -104,20 +98,6 @@ export const Docs: Story = {
             type: AntTableRowTypes.text,
           }
         ],
-        tabItems: [
-          {
-            id: '1',
-            label: 'Main data',
-          },
-          {
-            id: '2',
-            label: 'Related data',
-          },
-          {
-            id: '3',
-            label: 'Related data',
-          },
-        ]
       };
     },
     template: `
@@ -130,7 +110,6 @@ export const Docs: Story = {
 
         <template #table-section>
           <AntTable
-            v-model:selected-row="selectedDataItem"
             :data="tableData"
             :headers="tableHeaders"
             :show-light-version="!fullWidth"
@@ -140,18 +119,13 @@ export const Docs: Story = {
 
         <template #table-nav-section>
           <AntCrudTableNav
-            :pages="(100 * 20)"
-            :count="100"
+            :pages="(1000000 * 20)"
+            :count="1000000"
             :full-width="fullWidth"
           />
         </template>
 
-        <AntCrudDetail
-          :tab-items="tabItems"
-          @back="() => selectedDataItem = null"
-          @save="() => selectedDataItem = null"
-          @saveAndNew="() => selectedDataItem = null"
-        >
+        <AntCrudDetail>
           <div class="m-2.5 slot">
             SLOT
           </div>

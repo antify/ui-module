@@ -5,30 +5,34 @@
  * TODO:: Fix ts errors
  */
 import {useRouter, useRoute} from 'vue-router'
-import {computed, ref, watch} from 'vue';
+import {computed} from 'vue';
 import AntButton from './buttons/AntButton.vue';
 import {faChevronRight, faChevronLeft} from '@fortawesome/free-solid-svg-icons';
 import {Grouped} from '../enums/Grouped.enum';
 import AntSkeleton from './AntSkeleton.vue';
 import {ColorType} from '../enums';
-import { useElementSize } from '@vueuse/core'
 
 const emit = defineEmits(['update:skeleton', 'input'])
 const props = withDefaults(
   defineProps<{
     pages: number,
     pageQuery?: string,
-    skeleton?: boolean
+    skeleton?: boolean,
+
+    /**
+     * Light version does not show the very previous and next page button.
+     * This makes the pagination smaller in space.
+     */
+    lightVersion?: boolean
   }>(),
   {
     pageQuery: 'p',
-    skeleton: false
+    skeleton: false,
+    lightVersion: false
   }
 )
-
 const router = useRouter()
 const route = useRoute()
-
 const page = computed({
   get() {
     const _page = route.query[props.pageQuery] >= 1 ? Number.parseInt(route.query[props.pageQuery]) : 1
@@ -56,13 +60,16 @@ const page = computed({
 
 /**
  * Build following constellations:
- * [1] 2 3 ...
- * 1 2 [3] 4... 10
+ * [1] 2 3 ... 10
+ * 1 [2] 3 4 ... 10
+ * 1 2 [3] 4 ... 10
+ * 1 ... 3 [4] 5 ... 10
  * 1 ... 4 [5] 6 ... 10
  * 1 ... 7 [8] 9 10
+ * 1 ... 8 [9] 10
  * 1 ... 8 9 [10]
  */
-const pagination = computed(() => {
+const defaultPagination = computed(() => {
   const pagination = []
 
   if (page.value > 2 && props.pages > 3) {
@@ -105,6 +112,48 @@ const pagination = computed(() => {
   }
 
   return pagination
+})
+
+/**
+ * Build following constellations:
+ * [1] ... 10
+ * 1 [2] ... 10
+ * 1 ... [3] ... 10
+ * 1 ... [5] ... 10
+ * 1 ... [8] ... 10
+ * 1 ... [9] 10
+ * 1 ... [10]
+ */
+const lightPagination = computed(() => {
+  const pagination = []
+
+  pagination.push(1)
+
+  if (page.value > 2) {
+    pagination.push('...')
+  }
+
+  if (page.value > 1) {
+    pagination.push(page.value)
+  }
+
+  if (page.value < props.pages - 1) {
+    pagination.push('...')
+  }
+
+  if (page.value < props.pages) {
+    pagination.push(props.pages)
+  }
+
+  return pagination
+})
+
+const pagination = computed(() => {
+  if (props.lightVersion) {
+    return lightPagination.value
+  }
+
+  return defaultPagination.value
 })
 </script>
 

@@ -113,6 +113,7 @@ watch(() => props.fullWidth, (val) => {
         :pages="pages"
         :page-query="pageQuery"
         :skeleton="skeleton"
+        :light-version="!_fullWidth"
         @input="(val) => emit('changePage', val)"
       />
     </div>

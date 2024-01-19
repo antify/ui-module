@@ -10,13 +10,13 @@ withDefaults(defineProps<{
   <div class="flex w-full h-full">
     <div
       class="left-content h-full flex flex-col bg-neutral-light gap-px overflow-hidden"
-      :class="{'w-96': showDetail, 'w-full': !showDetail}"
+      :class="{'w-[40rem]': showDetail, 'w-full': !showDetail}"
     >
       <div class="bg-neutral-lightest">
         <slot name="search-section"/>
       </div>
 
-      <div class="bg-neutral-lightest flex-grow h-full">
+      <div class="bg-neutral-lightest flex-grow h-full overflow-hidden">
         <slot name="table-section"/>
       </div>
 
