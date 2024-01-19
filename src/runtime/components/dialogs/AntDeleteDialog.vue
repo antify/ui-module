@@ -17,6 +17,7 @@ const _open = useVModel(props, 'open', emit);
     v-model:open="_open"
     :color-type="InputColorType.danger"
     title="Delete"
+    confirm-text="Delete"
     @confirm="() => $emit('confirm')"
     @close="() => $emit('close')"
   >

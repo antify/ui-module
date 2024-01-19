@@ -1,14 +1,15 @@
 <script lang="ts" setup>
 // TODO:: This component works only with vue-router. Make it work in storybook.
 // TODO:: add skeleton
-import AntSearch from './form/AntSearch.vue';
-import AntDropdown from './AntDropdown.vue';
-import AntIcon from './AntIcon.vue';
+import AntSearch from '../form/AntSearch.vue';
+import AntCreateButton from '../buttons/AntCreateButton.vue';
+import AntDropdown from '../AntDropdown.vue';
+import AntIcon from '../AntIcon.vue';
 import {computed, ref, watch} from 'vue';
-import AntButton from './form/AntButton.vue';
+import AntButton from '../buttons/AntButton.vue';
 import {faFilter} from '@fortawesome/free-solid-svg-icons';
-import {IconColorType} from './__types/AntIcon.types';
-import {ColorType, Position} from '../enums';
+import {IconColorType} from '../__types/AntIcon.types';
+import {Position} from '../../enums';
 import {useRouter, useRoute} from 'vue-router';
 
 const props = withDefaults(defineProps<{
@@ -52,7 +53,7 @@ const search = computed({
 watch(() => props.fullWidth, (val) => {
   setTimeout(() => {
     _fullWidth.value = val
-  }, 350)
+  }, val ? 250 : 300)
 })
 </script>
 
@@ -89,13 +90,10 @@ watch(() => props.fullWidth, (val) => {
 
     <div v-if="_fullWidth">
       <slot name="buttons">
-        <AntButton
-          :color-type="ColorType.primary"
+        <AntCreateButton
           outlined
           @click="() => emit('create')"
-        >
-          Create
-        </AntButton>
+        />
       </slot>
     </div>
   </div>

@@ -8,7 +8,6 @@ const {$uiModule} = useNuxtApp();
 
 const validator = ref(useValidator((val) => val === 'asdf' || 'Value must be "asdf"'));
 const outlined = ref(false);
-const inputValue = ref("");
 const modalOpen = ref(false);
 
 const addToast = (type: InputColorType) => {
@@ -33,12 +32,6 @@ const addToast = (type: InputColorType) => {
         Click me to change my style
       </AntButton>
     </AntField>
-
-    <AntTextInput
-      v-model:value="inputValue"
-      label="Input field"
-      :validator="validator"
-    />
 
     <AntField label="Icon example">
       <AntIcon :icon="faXmark"/>

@@ -6,7 +6,7 @@ export default {
 
 <script lang="ts" setup>
 import {AntTableSortDirection, type TableHeader} from './__types/TableHeader.type';
-import {ref, type Ref, watch} from 'vue';
+import {computed, ref, type Ref, watch} from 'vue';
 import {useVModel} from '@vueuse/core';
 import {ColorType} from '../../enums';
 import AntTh from './AntTh.vue';
@@ -30,20 +30,29 @@ const props = withDefaults(
     rowKey?: string;
     loading?: boolean;
     selectableRows?: boolean;
+    showLightVersion?: boolean;
   }>(), {
     rowKey: 'id',
     loading: false,
-    selectableRows: false
+    selectableRows: false,
+    showLightVersion: false,
   });
 
 const selected: Ref<Record<string, unknown> | undefined> = useVModel(props, 'selectedRow', emits);
 const _loading: Ref<boolean> = useVModel(props, 'loading', emits);
-const _headers = ref(props.headers);
+const _showLightVersion = ref(props.showLightVersion);
+const _headers = computed(() => {
+  // if (_showLightVersion.value) {
+  //   const lightHeaders = props.headers.filter(header => header.lightVersion);
+  //
+  //   return lightHeaders.length > 0 ? lightHeaders : [props.headers[0]];
+  // }
 
-watch(() => props.headers, (val) => {
-  setTimeout(() => {
-    _headers.value = val
-  }, 350)
+  return props.headers;
+})
+
+watch(() => props.showLightVersion, (val) => {
+  setTimeout(() => _showLightVersion.value = val, val ? 200 : 400)
 });
 
 function sortTable(header: TableHeader, newDirection: AntTableSortDirection) {
@@ -87,20 +96,21 @@ function rowClick(elem: Record<string, unknown>): void {
         :class="{'h-full': data.length === 0 && !_loading}"
       >
         <thead class="bg-neutral-lighter sticky top-0 z-10">
-        <tr class="">
-          <slot name="headerFirstCell"></slot>
+        <tr>
+          <slot name="headerFirstCell"/>
 
-          <AntTh
-            v-for="(header, index) in _headers"
-            :key="`table-header-${header.identifier}-${index}`"
-            :header="header"
-            @sort="sortTable"
-          >
-            <template #headerContent>
-              <slot name="headerContent" v-bind="header">
-              </slot>
-            </template>
-          </AntTh>
+          <template v-for="(header, index) in _headers">
+            <AntTh
+              v-if="!_showLightVersion || (_showLightVersion && header.lightVersion)"
+              :key="`table-header-${header.identifier}-${index}`"
+              :header="header"
+              @sort="sortTable"
+            >
+              <template  #headerContent>
+                <slot name="headerContent" v-bind="header"/>
+              </template>
+            </AntTh>
+          </template>
 
           <slot name="headerLastCell"></slot>
         </tr>
@@ -122,26 +132,28 @@ function rowClick(elem: Record<string, unknown>): void {
         >
           <slot name="rowFirstCell" v-bind="{ elem }"/>
 
-          <AntTd
-            v-for="(header, index) in _headers"
-            :key="`table-cell-${header.identifier}-${index}`"
-            :header="header"
-            :element="elem"
-            :align="header.align"
-            @click="rowClick(elem)"
-          >
-            <template #beforeCellContent="props">
-              <slot name="beforeCellContent" v-bind="props"/>
-            </template>
+          <template v-for="(header, index) in _headers">
+            <AntTd
+              v-if="!_showLightVersion || (_showLightVersion && header.lightVersion)"
+              :header="header"
+              :element="elem"
+              :align="header.align"
+              :key="`table-cell-${header.identifier}-${index}`"
+              @click="rowClick(elem)"
+            >
+              <template #beforeCellContent="props">
+                <slot name="beforeCellContent" v-bind="props"/>
+              </template>
 
-            <template #cellContent="props">
-              <slot name="cellContent" v-bind="props"/>
-            </template>
+              <template #cellContent="props">
+                <slot name="cellContent" v-bind="props"/>
+              </template>
 
-            <template #afterCellContent="props">
-              <slot name="afterCellContent" v-bind="props"/>
-            </template>
-          </AntTd>
+              <template #afterCellContent="props">
+                <slot name="afterCellContent" v-bind="props"/>
+              </template>
+            </AntTd>
+          </template>
 
           <slot name="rowLastCell" v-bind="{ elem }"/>
         </tr>

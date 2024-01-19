@@ -1,7 +1,7 @@
 import {type Car, validator} from "../../../../glue/plugins/car";
 
 export default defineEventHandler(async (event) => {
-  const body = validator.validate(await readBody(event));
+  const body = validator.validate(await readBody(event), 'server-put');
 
   if (validator.hasErrors()) {
     throw new Error(validator.getErrorsAsString());

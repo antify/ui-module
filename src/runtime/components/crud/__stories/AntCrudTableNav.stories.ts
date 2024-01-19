@@ -1,9 +1,9 @@
-import AntTableNav from '../AntTableNav.vue';
+import AntCrudTableNav from '../AntCrudTableNav.vue';
 import { type Meta, type StoryObj} from '@storybook/vue3';
 
-const meta: Meta<typeof AntTableNav> = {
-    title: 'Components/Table Nav',
-    component: AntTableNav,
+const meta: Meta<typeof AntCrudTableNav> = {
+    title: 'Crud/Crud Table Nav',
+    component: AntCrudTableNav,
     parameters: {controls: {sort: 'requiredFirst'}},
     argTypes: {
         pageQuery: {
@@ -14,17 +14,17 @@ const meta: Meta<typeof AntTableNav> = {
 
 export default meta;
 
-type Story = StoryObj<typeof AntTableNav>;
+type Story = StoryObj<typeof AntCrudTableNav>;
 
 export const Docs: Story = {
     render: (args) => ({
-        components: {AntTableNav},
+        components: {AntCrudTableNav},
         setup() {
             return {args};
         },
         template: `
           <div class="border border-dotted border-neutral-light">
-            <AntTableNav v-bind="args"/>
+            <AntCrudTableNav v-bind="args"/>
           </div>
         `
     }),
@@ -35,13 +35,13 @@ export const Docs: Story = {
 
 export const fullWidth: Story = {
     render: (args) => ({
-        components: {AntTableNav},
+        components: {AntCrudTableNav},
         setup() {
             return {args};
         },
         template: `
           <div class="p-4 flex gap-4">
-            <AntTableNav v-bind="args"/>
+            <AntCrudTableNav v-bind="args"/>
 
             <div v-if="!args.fullWidth" class="w-full">
               Another content

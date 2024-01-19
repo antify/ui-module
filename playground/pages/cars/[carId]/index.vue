@@ -1,70 +1,65 @@
 <script setup lang="ts">
-const {$updateCar, $cars} = useNuxtApp();
+const {$cars} = useNuxtApp();
 const {
   data,
   skeleton,
   save,
-  saveAndNew,
   validator,
-  formDisabled
+  formDisabled,
 } = $cars.item
 
-const {
-  error: updateError,
-} = $updateCar
+// const {
+//   error: updateError,
+// } = $updateCar
 
 // watch(updateError, () => useUiClient().handler.handleResponseError(updateError))
 </script>
 
 <template>
-  <AntCrudDetailContent
-    :buttons-skeleton="skeleton"
-    :buttons-disabled="formDisabled"
-    :get-listing-route="() => ({name: 'cars', query: $route.query})"
-    @save="save"
-    @saveAndNew="saveAndNew"
-  >
-    <pre>{{data}}</pre>
-    <div class="p-2.5">
-      <form @submit.prevent="save">
-        <AntFormGroup>
-          <AntFormGroup :direction="useUi().Direction.row">
-            <AntTextInput
-              v-model="data.manufacturer"
-              :label="validator.fieldMap.manufacturer.readableName"
-              :validator="validator.fieldMap.manufacturer.validator"
-              :skeleton="skeleton"
-              :disabled="formDisabled"
-            />
+  <div class="p-2.5">
+    <form @submit.prevent="save">
+      <AntFormGroup>
+        <AntFormGroup :direction="useUi().Direction.row">
+          <AntTextInput
+            v-model="data.manufacturer"
+            :label="validator.fieldMap.manufacturer.readableName"
+            :skeleton="skeleton"
+            :disabled="formDisabled"
+            :errors="validator.fieldMap.manufacturer.validator.getErrors()"
+            @validate="val => validator.fieldMap.manufacturer.validator.validate(val, data, ['client-put', 'client-post'])"
+          />
 
-            <AntTextInput
-              v-model="data.model"
-              :label="validator.fieldMap.model.readableName"
-              :validator="validator.fieldMap.model.validator"
-              :skeleton="skeleton"
-              :disabled="formDisabled"
-            />
-          </AntFormGroup>
-
-          <AntFormGroup :direction="useUi().Direction.row">
-            <AntTextInput
-              v-model="data.type"
-              :label="validator.fieldMap.type.readableName"
-              :validator="validator.fieldMap.type.validator"
-              :skeleton="skeleton"
-              :disabled="formDisabled"
-            />
-
-            <AntTextInput
-              v-model="data.color"
-              :label="validator.fieldMap.color.readableName"
-              :validator="validator.fieldMap.color.validator"
-              :skeleton="skeleton"
-              :disabled="formDisabled"
-            />
-          </AntFormGroup>
+          <AntTextInput
+            v-model="data.model"
+            :label="validator.fieldMap.model.readableName"
+            :skeleton="skeleton"
+            :disabled="formDisabled"
+            :errors="validator.fieldMap.model.validator.getErrors()"
+            @validate="val => validator.fieldMap.model.validator.validate(val, data, ['client-put', 'client-post'])"
+          />
         </AntFormGroup>
-      </form>
-    </div>
-  </AntCrudDetailContent>
+
+        <AntFormGroup :direction="useUi().Direction.row">
+          <AntTextInput
+            v-model="data.type"
+            :label="validator.fieldMap.type.readableName"
+            :skeleton="skeleton"
+            :disabled="formDisabled"
+            :errors="validator.fieldMap.type.validator.getErrors()"
+            @validate="val => validator.fieldMap.type.validator.validate(val, data, ['client-put', 'client-post'])"
+          />
+
+          <AntTextInput
+            v-model="data.color"
+            :label="validator.fieldMap.color.readableName"
+            :validator-groups="['client-put', 'client-post']"
+            :skeleton="skeleton"
+            :disabled="formDisabled"
+            :errors="validator.fieldMap.color.validator.getErrors()"
+            @validate="val => validator.fieldMap.color.validator.validate(val, data, ['client-put', 'client-post'])"
+          />
+        </AntFormGroup>
+      </AntFormGroup>
+    </form>
+  </div>
 </template>

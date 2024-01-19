@@ -21,7 +21,11 @@ export function handleResponseError(error: Ref<FetchError | null>) {
   }
 }
 
-function isFormDisabled(status: Ref) {
+function isFormDisabled(status: Ref | Ref[]): boolean {
+  if (Array.isArray(status)) {
+    return status.some((status) => isFormDisabled(status))
+  }
+
   return status.value === 'pending'
 }
 

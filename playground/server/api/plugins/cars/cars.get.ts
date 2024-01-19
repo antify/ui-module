@@ -1,4 +1,4 @@
-import {type Car} from "../../../../../glue/plugins/car";
+import {type Car} from "../../../../glue/plugins/car";
 
 export default defineEventHandler(async (event) => {
   let cars = (await useStorage<Car[]>('db').getItem('cars')) || []

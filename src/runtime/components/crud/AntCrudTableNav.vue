@@ -5,11 +5,11 @@
  * TODO:: fix ts errors
  */
 import {useRouter, useRoute} from 'vue-router'
-import AntPagination from './AntPagination.vue';
+import AntPagination from '../AntPagination.vue';
 import {computed, ref, watch} from 'vue';
-import AntSelect from './form/AntSelect.vue';
-import AntSkeleton from './AntSkeleton.vue';
-import {type SelectOption} from './form/__types';
+import AntSelect from '../form/AntSelect.vue';
+import AntSkeleton from '../AntSkeleton.vue';
+import {type SelectOption} from '../form/__types';
 
 const emit = defineEmits(['changeItemsPerPage', 'changePage'])
 const props = withDefaults(
@@ -75,14 +75,14 @@ const _fullWidth = ref(props.fullWidth)
 watch(() => props.fullWidth, (val) => {
   setTimeout(() => {
     _fullWidth.value = val
-  }, 350)
+  }, val ? 300 : 200)
 })
 </script>
 
 <template>
-  <div class="relative w-full h-full">
+  <div class="w-full">
     <div
-      class="flex w-full items-center px-2 h-full"
+      class="flex w-full items-center p-2.5"
       :class="{'justify-end': !_fullWidth, 'justify-between': _fullWidth}"
     >
       <div

@@ -2,43 +2,54 @@
 import {useRoute} from 'vue-router'
 
 const route = useRoute();
-const {$carTable} = useNuxtApp();
-const {skeleton} = $carTable;
-const isFullWidth = computed(() => route.name === 'cars');
-const getDetailRoute = (carId = 'create') => ({
-  name: 'cars-carId',
-  params: {carId},
-  query: route.query
-});
+const {$cars} = useNuxtApp();
+const {
+  skeleton,
+  refresh,
+  count,
+} = $cars.listing;
+const {
+  error: detailError,
+  createError,
+  updateError,
+  deleteError
+} = $cars.item;
+const {
+  goToDetailPage
+} = $cars.routing;
+const uiClient = useUiClient();
+const isDetailPage = computed(() => route.name !== 'cars');
+
+watch(detailError, () => uiClient.handler.handleResponseError(detailError))
+watch(createError, () => uiClient.handler.handleResponseError(createError))
+watch(updateError, () => uiClient.handler.handleResponseError(updateError))
+watch(deleteError, () => uiClient.handler.handleResponseError(deleteError))
 </script>
 
 <template>
-  <AntNavLeftCrud>
+  <AntCrud :show-detail="isDetailPage">
     <template #search-section>
-      <AntTableFilter
-        :full-width="isFullWidth"
-        @search="() => $carTable.refresh()"
-        @create="() => $router.push(getDetailRoute())"
+      <AntCrudTableFilter
+        :full-width="!isDetailPage"
+        @search="() => refresh()"
+        @create="() => goToDetailPage()"
       />
     </template>
 
     <template #table-section>
-      <CarTable
-        :get-detail-route="getDetailRoute"
-        :full-width="isFullWidth"
-      />
+      <CarTable :show-light-version="isDetailPage"/>
     </template>
 
     <template #table-nav-section>
-      <AntTableNav
-        :count="$carTable.count.value"
-        :full-width="isFullWidth"
+      <AntCrudTableNav
+        :count="count"
+        :full-width="!isDetailPage"
         :skeleton="skeleton"
-        @changeItemsPerPage="() => $carTable.refresh()"
-        @changePage="() => $carTable.refresh(false)"
+        @changeItemsPerPage="() => refresh()"
+        @changePage="() => refresh(false)"
       />
     </template>
 
     <NuxtPage/>
-  </AntNavLeftCrud>
+  </AntCrud>
 </template>
