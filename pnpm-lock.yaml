@@ -6,8 +6,8 @@ settings:
 
 dependencies:
   '@antify/validate':
-    specifier: 1.10.0
-    version: 1.10.0
+    specifier: 1.11.0
+    version: 1.11.0
   '@fortawesome/free-regular-svg-icons':
     specifier: ^6.4.2
     version: 6.5.1
@@ -170,8 +170,8 @@ packages:
     resolution: {integrity: sha512-gFPqTG7otEJ8uP6wrhDv6mqwGWYZKNvAcCq6u9hOj0c+IKCEsY4L1oC9trPq2SaWIzAfHvqfBDxF591JkMf+kg==}
     dev: true
 
-  /@antify/validate@1.10.0:
-    resolution: {integrity: sha512-F9L4Hsrf52jLtF7RZVf2cOZauEbp+9buoyD0wbo4emdRuRtSH3guW2INh3cyb5yVP3fQFIp6c1JRWOFe+3bBWA==}
+  /@antify/validate@1.11.0:
+    resolution: {integrity: sha512-Nh1KOqC0leQ5cNORqCWKaF/wyolooTrFp2ND7YhjqM00ZEptAavjM/jEoEBfDCQUQjMEGfIumM5kuCs1v+Hvvg==}
     engines: {node: '>=0.14'}
     dev: false
 
