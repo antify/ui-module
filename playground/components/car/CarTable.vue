@@ -79,7 +79,6 @@ const {
     watch: false,
     onResponse({response}) {
       if (response.status === 200) {
-        console.log(response._data);
         goToDetailPage(response._data.id);
         refresh(false);
         $uiModule.toaster.toastDuplicated();
