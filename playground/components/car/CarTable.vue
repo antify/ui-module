@@ -41,7 +41,9 @@ const tableHeaders: TableHeader[] = [
   {
     title: 'Model',
     identifier: 'model',
-    type: ui.AntTableRowTypes.text,
+    toProp: 'link',
+    type: ui.AntTableRowTypes.link,
+    lightVersion: true,
   },
   {
     title: 'Type',
