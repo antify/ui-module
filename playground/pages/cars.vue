@@ -1,16 +1,21 @@
 <script setup lang='ts'>
-import {useRoute} from 'vue-router'
+import {useRoute, useRouter} from 'vue-router'
+import {type SelectOption} from "../../src/runtime/components/form/__types";
+import {useRouteQuery} from '@vueuse/router';
 
 const route = useRoute();
+const router = useRouter();
 const {$cars} = useNuxtApp();
 const {
   skeleton,
   refresh,
   count,
+  allColors,
+  allTypes,
 } = $cars.listing;
 const {
-  error: detailError,
   createError,
+  readError,
   updateError,
   deleteError
 } = $cars.item;
@@ -19,11 +24,39 @@ const {
 } = $cars.routing;
 const uiClient = useUiClient();
 const isDetailPage = computed(() => route.name !== 'cars');
+const filterColor = useRouteQuery<string | null>('color', null, {
+  transform(val) {
+    return val || null;
+  },
+});
+const filterType = useRouteQuery<string | null>('type', null, {
+  transform(val) {
+    return val || null;
+  },
+});
+const filterColorOptions = computed<SelectOption[]>(() => allColors.value.map((color) => ({
+  label: color,
+  value: color
+})))
+const filterTypeOptions = computed<SelectOption[]>(() => allTypes.value.map((color) => ({
+  label: color,
+  value: color
+})))
 
-watch(detailError, () => uiClient.handler.handleResponseError(detailError))
+watch(() => route.query, (to, from) => {
+  if (uiClient.utils.queryChanged(from, to, ['color', 'type'])) {
+    refresh();
+  }
+})
+watch(readError, () => uiClient.handler.handleResponseError(readError))
 watch(createError, () => uiClient.handler.handleResponseError(createError))
 watch(updateError, () => uiClient.handler.handleResponseError(updateError))
 watch(deleteError, () => uiClient.handler.handleResponseError(deleteError))
+
+function resetFilters() {
+  filterColor.value = null;
+  filterType.value = null;
+}
 </script>
 
 <template>
@@ -31,9 +64,31 @@ watch(deleteError, () => uiClient.handler.handleResponseError(deleteError))
     <template #search-section>
       <AntCrudTableFilter
         :full-width="!isDetailPage"
+        :has-filter="filterColor !== null || filterType !== null"
+        :skeleton="skeleton"
         @search="() => refresh()"
         @create="() => goToDetailPage()"
-      />
+        @removeFilter="() => resetFilters()"
+      >
+        <template #dropdownContent>
+          <!-- TODO:: Build example with multiple colors selectable (when AntTagInput is finished) -->
+          <AntFormGroup>
+            <AntSelect
+              v-model="filterColor"
+              label="Color"
+              :options="filterColorOptions"
+              nullable
+            />
+
+            <AntSelect
+              v-model="filterType"
+              label="Type"
+              :options="filterTypeOptions"
+              nullable
+            />
+          </AntFormGroup>
+        </template>
+      </AntCrudTableFilter>
     </template>
 
     <template #table-section>

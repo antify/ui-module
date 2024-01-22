@@ -29,7 +29,7 @@ const {
   goToDetailPage,
 } = $cars.routing;
 const deleteDialogOpen = ref(false);
-const entryToDelete = ref<Car | null>(null);
+const entityToDelete = ref<Car | null>(null);
 const tableHeaders: TableHeader[] = [
   {
     title: 'Manufacturer',
@@ -66,13 +66,13 @@ const cars = computed(() => {
     return car;
   }) || [];
 });
-const entryIdToDuplicate = ref<string | null>(null);
+const entityIdToDuplicate = ref<string | null>(null);
 const {
   error: duplicateError,
   execute: executeDuplicate,
   status: duplicateStatus,
 } = useFetch(
-  () => `/api/components/cars/car-table/duplicate/${entryIdToDuplicate.value}`,
+  () => `/api/components/cars/car-table/duplicate/${entityIdToDuplicate.value}`,
   {
     method: 'post',
     immediate: false,
@@ -93,20 +93,20 @@ watch(error, () => useUiClient().handler.handleResponseError(error));
 watch(deleteError, () => useUiClient().handler.handleResponseError(deleteError));
 watch(duplicateError, () => useUiClient().handler.handleResponseError(duplicateError));
 
-function openDeleteEntry(entry: Car) {
-  entryToDelete.value = entry;
+function openDeleteEntry(entity: Car) {
+  entityToDelete.value = entity;
   deleteDialogOpen.value = true;
 }
 
 async function deleteEntry() {
-  if (entryToDelete.value?.id) {
-    await executeDelete(entryToDelete.value.id);
-    entryToDelete.value = null;
+  if (entityToDelete.value?.id) {
+    await executeDelete(entityToDelete.value.id);
+    entityToDelete.value = null;
   }
 }
 
 function duplicateEntry(id: string) {
-  entryIdToDuplicate.value = id;
+  entityIdToDuplicate.value = id;
   executeDuplicate()
 }
 </script>
@@ -150,7 +150,7 @@ function duplicateEntry(id: string) {
 
   <AntDeleteDialog
     v-model:open="deleteDialogOpen"
-    :entry="`${entryToDelete?.manufacturer} ${entryToDelete?.model}`"
+    :entity="`${entityToDelete?.manufacturer} ${entityToDelete?.model}`"
     @confirm="deleteEntry"
   />
 </template>

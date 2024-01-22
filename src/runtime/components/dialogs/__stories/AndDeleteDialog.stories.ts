@@ -24,13 +24,13 @@ export const Docs: Story = {
 
       <AntDeleteDialog
         v-model:open="args.open"
-        :entry="args.entry"
+        :entity="args.entity"
         v-bind="args"
       />
     `,
   }),
   args: {
     open: false,
-    entry: 'Lorem ipsum'
+    entity: 'Lorem ipsum'
   },
 }

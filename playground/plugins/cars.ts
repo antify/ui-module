@@ -4,11 +4,14 @@ import {type Car, validator} from "../glue/plugins/car";
 import {useRoute} from "vue-router";
 
 export default defineNuxtPlugin((nuxtApp) => {
-  const count = ref(0)
+  const count = ref(0);
   const route = useRoute();
-  const queryRef = computed(() => route.query)
+  const queryRef = computed(() => route.query);
   const router = useRouter();
-  const uiClient = useUiClient()
+  const uiClient = useUiClient();
+
+  const allColors = ref([]);
+  const allTypes = ref([]);
 
   const getDefaultData = (): Car => ({
     id: null,
@@ -22,7 +25,7 @@ export default defineNuxtPlugin((nuxtApp) => {
       powerPs: null,
     }
   })
-  const car = ref(getDefaultData())
+  const entity = ref(getDefaultData())
 
   const {
     data,
@@ -40,11 +43,13 @@ export default defineNuxtPlugin((nuxtApp) => {
       onResponse({response}) {
         if (response.status === 200) {
           count.value = response._data.count
+          allColors.value = response._data.colors
+          allTypes.value = response._data.types
         }
       }
     }
   )
-  const refreshCars = async (resetPageQuery = true, pageQuery = 'p') => {
+  const refreshListing = async (resetPageQuery = true, pageQuery = 'p') => {
     if (resetPageQuery) {
       const query = {...route.query}
 
@@ -59,9 +64,9 @@ export default defineNuxtPlugin((nuxtApp) => {
     await refresh();
   }
   const {
-    error: detailError,
-    pending: pendingDetail,
-    execute: executeDetail,
+    error: readError,
+    pending: readPending,
+    execute: executeRead,
   } = useFetch(
     () => `/api/plugins/cars/${route.params.carId}`,
     {
@@ -71,7 +76,7 @@ export default defineNuxtPlugin((nuxtApp) => {
         await uiClient.handler.handleNotFoundResponse(response, '/cars')
 
         if (response.status === 200) {
-          car.value = response._data
+          entity.value = response._data
         }
       }
     }
@@ -84,14 +89,14 @@ export default defineNuxtPlugin((nuxtApp) => {
     () => `/api/plugins/cars/${route.params.carId}`,
     {
       method: "put",
-      body: car,
+      body: entity,
       immediate: false,
       watch: false,
       async onResponse({response}) {
         await uiClient.handler.handleNotFoundResponse(response, '/cars')
 
         if (response.status === 200) {
-          car.value = response._data
+          entity.value = response._data
         }
       }
     }
@@ -104,19 +109,19 @@ export default defineNuxtPlugin((nuxtApp) => {
     () => `/api/plugins/cars/${route.params.carId}`,
     {
       method: "post",
-      body: car,
+      body: entity,
       immediate: false,
       watch: false,
       async onResponse({response}) {
         await uiClient.handler.handleNotFoundResponse(response, '/cars')
 
         if (response.status === 200) {
-          car.value = response._data
+          entity.value = response._data
 
           router.replace({
             name: route.name,
             params: {
-              carId: car.value.id
+              carId: entity.value.id
             },
             query: route.query
           });
@@ -124,13 +129,13 @@ export default defineNuxtPlugin((nuxtApp) => {
       }
     }
   )
-  const entryIdToDelete = ref<string | null>(null)
+  const entityIdToDelete = ref<string | null>(null)
   const {
     error: deleteError,
     execute: _executeDelete,
     status: deleteStatus,
   } = useFetch(
-    () => `/api/plugins/cars/${entryIdToDelete.value}`,
+    () => `/api/plugins/cars/${entityIdToDelete.value}`,
     {
       method: 'delete',
       immediate: false,
@@ -138,14 +143,14 @@ export default defineNuxtPlugin((nuxtApp) => {
       onResponse({response}) {
         if (response.status === 200) {
           routing.goToListingPage();
-          refreshCars(false);
+          refreshListing(false);
           nuxtApp.$uiModule.toaster.toastDeleted();
         }
       }
     }
   )
   const executeDelete = (id: string) => {
-    entryIdToDelete.value = id
+    entityIdToDelete.value = id
 
     return _executeDelete()
   }
@@ -153,7 +158,7 @@ export default defineNuxtPlugin((nuxtApp) => {
   const formDisabled = computed(() => uiClient.utils.isFormDisabled([updateStatus, createStatus, deleteStatus]))
   const _validator = reactive(validator)
   const save = async () => {
-    _validator.validate(car.value, isCreateContext.value ? 'client-post' : 'client-put')
+    _validator.validate(entity.value, isCreateContext.value ? 'client-post' : 'client-put')
 
     if (_validator.hasErrors()) {
       return nuxtApp.$uiModule.toaster.toastInfo('The form contains errors.\nPlease fix them before submitting.')
@@ -194,15 +199,17 @@ export default defineNuxtPlugin((nuxtApp) => {
           error,
           pending,
           skeleton: uiClient.utils.createSkeleton(pending),
-          refresh: refreshCars,
+          refresh: refreshListing,
           status,
-          count
+          count,
+          allColors,
+          allTypes,
         },
         item: {
-          data: car,
-          error: detailError,
-          execute: executeDetail,
-          pending: pendingDetail,
+          data: entity,
+          readError,
+          executeRead,
+          readPending,
           formDisabled,
           save,
           saveAndNew: async () => {
@@ -210,11 +217,11 @@ export default defineNuxtPlugin((nuxtApp) => {
 
             await routing.goToDetailPage('create')
           },
-          skeleton: computed(() => !isCreateContext.value ? pendingDetail.value : false),
+          skeleton: computed(() => !isCreateContext.value ? readPending.value : false),
           resetData: () => {
             _validator.reset()
 
-            car.value = getDefaultData()
+            entity.value = getDefaultData()
           },
           validator: _validator,
           isCreateContext,

@@ -6,8 +6,8 @@ settings:
 
 dependencies:
   '@antify/validate':
-    specifier: 1.11.0
-    version: 1.11.0
+    specifier: 1.14.0
+    version: 1.14.0
   '@fortawesome/free-regular-svg-icons':
     specifier: ^6.4.2
     version: 6.5.1
@@ -50,6 +50,9 @@ dependencies:
   '@vueuse/core':
     specifier: ^10.6.1
     version: 10.7.0(vue@3.3.11)
+  '@vueuse/router':
+    specifier: ^10.7.2
+    version: 10.7.2(vue-router@4.2.5)(vue@3.3.11)
   autoprefixer:
     specifier: ^10.4.16
     version: 10.4.16(postcss@8.4.32)
@@ -170,8 +173,8 @@ packages:
     resolution: {integrity: sha512-gFPqTG7otEJ8uP6wrhDv6mqwGWYZKNvAcCq6u9hOj0c+IKCEsY4L1oC9trPq2SaWIzAfHvqfBDxF591JkMf+kg==}
     dev: true
 
-  /@antify/validate@1.11.0:
-    resolution: {integrity: sha512-Nh1KOqC0leQ5cNORqCWKaF/wyolooTrFp2ND7YhjqM00ZEptAavjM/jEoEBfDCQUQjMEGfIumM5kuCs1v+Hvvg==}
+  /@antify/validate@1.14.0:
+    resolution: {integrity: sha512-eB11g3hRvNDxJniCVWfnSw/PbLL3XIJqoL7pKMgHIE1iCLrQG54UWOALeoVdvemHN95tr+n5szyEboc1hQfe6g==}
     engines: {node: '>=0.14'}
     dev: false
 
@@ -5751,8 +5754,30 @@ packages:
     resolution: {integrity: sha512-GlaH7tKP2iBCZ3bHNZ6b0cl9g0CJK8lttkBNUX156gWvNYhTKEtbweWLm9rxCPIiwzYcr/5xML6T8ZUEt+DkvA==}
     dev: false
 
+  /@vueuse/router@10.7.2(vue-router@4.2.5)(vue@3.3.11):
+    resolution: {integrity: sha512-TE9QtcqtZ793bwJWnlxn1gir7TXHJh5Y0KTIAS2DFOFvz4f3yTPmxAtIHC5e96oBVaVdnzxQQ9EsOhBDfBtCDg==}
+    peerDependencies:
+      vue-router: '>=4.0.0-rc.1'
+    dependencies:
+      '@vueuse/shared': 10.7.2(vue@3.3.11)
+      vue-demi: 0.14.6(vue@3.3.11)
+      vue-router: 4.2.5(vue@3.3.11)
+    transitivePeerDependencies:
+      - '@vue/composition-api'
+      - vue
+    dev: false
+
   /@vueuse/shared@10.7.0(vue@3.3.11):
     resolution: {integrity: sha512-kc00uV6CiaTdc3i1CDC4a3lBxzaBE9AgYNtFN87B5OOscqeWElj/uza8qVDmk7/U8JbqoONLbtqiLJ5LGRuqlw==}
+    dependencies:
+      vue-demi: 0.14.6(vue@3.3.11)
+    transitivePeerDependencies:
+      - '@vue/composition-api'
+      - vue
+    dev: false
+
+  /@vueuse/shared@10.7.2(vue@3.3.11):
+    resolution: {integrity: sha512-qFbXoxS44pi2FkgFjPvF4h7c9oMDutpyBdcJdMYIMg9XyXli2meFMuaKn+UMgsClo//Th6+beeCgqweT/79BVA==}
     dependencies:
       vue-demi: 0.14.6(vue@3.3.11)
     transitivePeerDependencies:

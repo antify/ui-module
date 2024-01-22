@@ -44,7 +44,7 @@ const dialogOpen = ref(false);
 
     <AntDeleteDialog
       v-model:open="dialogOpen"
-      :entry="getEntityName()"
+      :entity="getEntityName()"
       @confirm="$emit('delete')"
     />
   </div>

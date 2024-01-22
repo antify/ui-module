@@ -6,7 +6,7 @@ import {useVModel} from '@vueuse/core';
 const emit = defineEmits(['update:open', 'close', 'confirm']);
 const props = defineProps<{
   open: boolean,
-  entry: string
+  entity: string
 }>();
 
 const _open = useVModel(props, 'open', emit);
@@ -22,7 +22,7 @@ const _open = useVModel(props, 'open', emit);
     @close="() => $emit('close')"
   >
     <div>
-      Do you really want to delete <span class="font-semibold">{{entry}}</span>?
+      Do you really want to delete <span class="font-semibold">{{entity}}</span>?
     </div>
   </AntDialog>
 </template>

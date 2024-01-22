@@ -7,21 +7,25 @@ import AntDropdown from '../AntDropdown.vue';
 import AntIcon from '../AntIcon.vue';
 import {computed, ref, watch} from 'vue';
 import AntButton from '../buttons/AntButton.vue';
-import {faFilter} from '@fortawesome/free-solid-svg-icons';
+import {faFilter, faMultiply} from '@fortawesome/free-solid-svg-icons';
 import {IconColorType} from '../__types/AntIcon.types';
-import {Position} from '../../enums';
-import {useRouter, useRoute} from 'vue-router';
+import {ColorType, Grouped, Position} from '../../enums';
+import {useRoute, useRouter} from 'vue-router';
 
 const props = withDefaults(defineProps<{
   fullWidth?: boolean,
   showFilter?: boolean,
-  searchQuery?: string
+  searchQuery?: string,
+  hasFilter?: boolean,
+  skeleton?: boolean,
 }>(), {
   fullWidth: true,
   showFilter: true,
-  searchQuery: 'search'
+  searchQuery: 'search',
+  hasFilter: false,
+  skeleton: false,
 });
-const emit = defineEmits(['search', 'create']);
+const emit = defineEmits(['search', 'create', 'removeFilter']);
 const router = useRouter();
 const route = useRoute();
 
@@ -40,7 +44,7 @@ const search = computed({
     }
 
     (async () => {
-      await router.push({
+      await router.replace({
         ...route,
         query
       })
@@ -64,7 +68,10 @@ watch(() => props.fullWidth, (val) => {
       :class="{'flex-grow': !_fullWidth}"
     >
       <div :class="{'w-80': _fullWidth, 'w-full': !_fullWidth}">
-        <AntSearch v-model="search"/>
+        <AntSearch
+          v-model="search"
+          :skeleton="skeleton"
+        />
       </div>
 
       <AntDropdown
@@ -72,15 +79,32 @@ watch(() => props.fullWidth, (val) => {
         v-model:show-dropdown="showDropdown"
         :position="Position.left"
       >
-        <AntButton
-          outlined
-          @click="() => showDropdown = !showDropdown"
-        >
-          <AntIcon
-            :icon="faFilter"
-            :color-type="IconColorType.neutral"
-          />
-        </AntButton>
+        <div class="flex">
+          <AntButton
+            outlined
+            :color-type="hasFilter ? ColorType.info : ColorType.base"
+            :grouped="hasFilter ? Grouped.left : Grouped.none"
+            :skeleton="skeleton"
+            @click="() => showDropdown = !showDropdown"
+          >
+            <AntIcon
+              :icon="faFilter"
+              :color-type="IconColorType.info"
+            />
+          </AntButton>
+          <AntButton
+            v-if="hasFilter"
+            :color-type="ColorType.info"
+            :grouped="Grouped.right"
+            :skeleton="skeleton"
+            @click="$emit('removeFilter')"
+          >
+            <AntIcon
+              :icon="faMultiply"
+              :color-type="IconColorType.neutral"
+            />
+          </AntButton>
+        </div>
 
         <template #content>
           <slot name="dropdownContent"/>
@@ -92,6 +116,7 @@ watch(() => props.fullWidth, (val) => {
       <slot name="buttons">
         <AntCreateButton
           outlined
+          :skeleton="skeleton"
           @click="() => emit('create')"
         />
       </slot>

@@ -3,7 +3,7 @@ import {computed} from "vue";
 
 const {$cars} = useNuxtApp();
 const {
-  execute,
+  executeRead,
   resetData,
   isCreateContext,
   data,
@@ -49,7 +49,7 @@ onMounted(() => {
     resetData()
   } else if (carId !== data.value.id) {
     resetData()
-    execute()
+    executeRead()
   }
 })
 </script>
