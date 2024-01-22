@@ -20,7 +20,7 @@ const navbarItems = [
     logo-route="/"
   >
     <template #logo-image>
-      <img src="~/assets/logo.svg" class="h-full w-full"/>
+      <img src="~/assets/logo.svg" class="w-full"/>
     </template>
 
     <NuxtPage/>

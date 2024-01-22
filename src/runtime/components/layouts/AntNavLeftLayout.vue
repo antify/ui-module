@@ -14,7 +14,7 @@ const hasLogoImageSlot = computed(() => useSlots()['logo-image'] || false);
 
 <template>
   <div class="flex gap-px bg-neutral-light h-screen overflow-hidden">
-    <div class="flex flex-col gap-px bg-neutral-light w-52">
+    <div class="flex flex-col gap-px bg-neutral-light w-52 shrink-0">
       <component
         v-if="hasLogoImageSlot"
         :is="logoRoute ? 'RouterLink' : 'div'"
