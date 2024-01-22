@@ -5,9 +5,9 @@ import {useRoute} from "vue-router";
 
 export default defineNuxtPlugin((nuxtApp) => {
   const count = ref(0)
-  const queryRef = computed(() => useRoute().query)
-  const router = useRouter();
   const route = useRoute();
+  const queryRef = computed(() => route.query)
+  const router = useRouter();
   const uiClient = useUiClient()
 
   const getDefaultData = (): Car => ({
