@@ -9,7 +9,7 @@ import {watchOnce} from '@vueuse/core';
 
 export async function handleNotFoundResponse(response: FetchResponse, fallbackUrl: RouteLocationRaw) {
   if (response._data?.notFound) {
-    useNuxtApp().$uiModule.toaster.toastError('Entry not found. Maybe an other user deleted it.')
+    useNuxtApp().$uiModule.toaster.toastError('Entity not found. Maybe an other user deleted it.')
 
     await navigateTo(fallbackUrl)
   }

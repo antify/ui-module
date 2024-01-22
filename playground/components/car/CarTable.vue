@@ -93,19 +93,19 @@ watch(error, () => useUiClient().handler.handleResponseError(error));
 watch(deleteError, () => useUiClient().handler.handleResponseError(deleteError));
 watch(duplicateError, () => useUiClient().handler.handleResponseError(duplicateError));
 
-function openDeleteEntry(entity: Car) {
+function openDeleteEntity(entity: Car) {
   entityToDelete.value = entity;
   deleteDialogOpen.value = true;
 }
 
-async function deleteEntry() {
+async function deleteEntity() {
   if (entityToDelete.value?.id) {
     await executeDelete(entityToDelete.value.id);
     entityToDelete.value = null;
   }
 }
 
-function duplicateEntry(id: string) {
+function duplicateEntity(id: string) {
   entityIdToDuplicate.value = id;
   executeDuplicate()
 }
@@ -128,7 +128,7 @@ function duplicateEntry(id: string) {
           :icon-left="faCopy"
           :size="ui.Size.sm"
           outlined
-          @click="() => duplicateEntry(element.id)"
+          @click="() => duplicateEntity(element.id)"
         />
 
         <AntButton
@@ -142,7 +142,7 @@ function duplicateEntry(id: string) {
           :icon-left="faTrash"
           :size="ui.Size.sm"
           outlined
-          @click="() => openDeleteEntry(element)"
+          @click="() => openDeleteEntity(element)"
         />
       </div>
     </template>
@@ -151,7 +151,7 @@ function duplicateEntry(id: string) {
   <AntDeleteDialog
     v-model:open="deleteDialogOpen"
     :entity="`${entityToDelete?.manufacturer} ${entityToDelete?.model}`"
-    @confirm="deleteEntry"
+    @confirm="deleteEntity"
   />
 </template>
 
