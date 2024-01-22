@@ -52,7 +52,7 @@ function onClickOutside() {
 
 <template>
   <div
-    class="relative inline-flex justify-center items-end"
+    class="relative inline-flex justify-center items-end z-40"
     v-on-click-outside="onClickOutside"
   >
     <slot/>
