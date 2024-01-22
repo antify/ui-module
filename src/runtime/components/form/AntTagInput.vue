@@ -5,7 +5,10 @@ import type { SelectOption } from './__types';
 import { Grouped, InputColorType, Size } from '../../enums';
 import type { FieldValidator } from '@antify/validate';
 import { useVModel } from '@vueuse/core';
-import { faTag, type IconDefinition } from '@fortawesome/free-solid-svg-icons';
+import {
+  faChevronRight,
+  type IconDefinition
+} from '@fortawesome/free-solid-svg-icons';
 import { computed, type Ref, ref } from 'vue';
 import AntTag from '../AntTag.vue';
 import AntIcon from '../AntIcon.vue';
@@ -39,7 +42,7 @@ const props = withDefaults(
   }>(), {
     size: Size.md,
     colorType: InputColorType.base,
-    icon: () => faTag,
+    icon: () => faChevronRight,
     grouped: Grouped.none,
 
     allowCreate: false,
@@ -52,7 +55,9 @@ const _modelValue = useVModel(props, 'modelValue', emit);
 const _skeleton = useVModel(props, 'skeleton', emit);
 
 const dropDownOpen = ref(false);
+const focusedDropDownItem: Ref<string | number | null> = ref(null);
 const tagInput = ref('');
+const filteredOptions = ref(props.options);
 
 const inputRef: Ref<HTMLElement | null> = ref(null);
 
@@ -84,7 +89,7 @@ const inputContainerClasses = computed(() => {
     'rounded-none': props.grouped === Grouped.center,
     'rounded-tl-none rounded-bl-none rounded-tr-md rounded-br-md': props.grouped === Grouped.right,
     'rounded-md': props.grouped === Grouped.none,
-    'rounded-bl-none rounded-br-none': dropDownOpen.value,
+    'rounded-bl-none rounded-br-none': dropDownOpen.value && (!props.options || props.options.length > 0),
     'invisible': props.skeleton,
   };
 });
@@ -118,7 +123,7 @@ function onClickOutside() {
 }
 
 function addTag(): void {
-  if (tagInput.value && props.allowCreate) {
+  if ((tagInput.value && props.allowCreate) || props.options?.findIndex(option => option.label === tagInput.value) !== -1) {
     _modelValue.value = _modelValue.value || [];
 
     if (!props.allowDuplicates && _modelValue.value.includes(tagInput.value)) {
@@ -128,24 +133,123 @@ function addTag(): void {
     _modelValue.value.push(tagInput.value);
 
     tagInput.value = '';
+
+    filterDropDown();
   }
 }
 
 function removeLastTag() {
   if (tagInput.value === '' && _modelValue.value && _modelValue.value.length > 0) {
     _modelValue.value.splice(-1, 1);
+
+    filterDropDown();
   }
 }
 
 function removeTag(tag: string) {
   if (_modelValue.value) {
     _modelValue.value.splice(_modelValue.value.findIndex((_value) => _value === tag), 1);
+
+    filterDropDown();
   }
 }
 
 function changeFocus() {
   if (props.openOnFocus) {
     dropDownOpen.value = true;
+  }
+}
+
+function filterDropDown() {
+  if (!props.options) {
+    return;
+  }
+
+  dropDownOpen.value = true;
+
+
+  filteredOptions.value = props.options.filter(option => option.label.toLowerCase().includes(tagInput.value.toLowerCase()));
+
+  // Remove all elements that are in modelValue from the filtered options
+  if (_modelValue.value) {
+    filteredOptions.value = filteredOptions.value.filter(option => !_modelValue.value?.includes(option.label));
+  }
+
+  // if (filteredOptions.value.length === 0) {
+  //   dropDownOpen.value = false;
+  // } else {
+  //   dropDownOpen.value = true;
+  // }
+}
+
+function controlDropDown(e: KeyboardEvent) {
+  console.log(dropDownOpen.value, filteredOptions.value);
+  if (!dropDownOpen.value || !filteredOptions.value || filteredOptions.value.length === 0) {
+    // Open dropdown if the user presses down or up key and select the first element
+    if ((e.key === 'ArrowDown' || e.key === 'ArrowUp') && filteredOptions.value && filteredOptions.value.length > 0) {
+      focusedDropDownItem.value = filteredOptions.value[0].value;
+      dropDownOpen.value = true;
+    }
+
+    return;
+  }
+
+  console.log('control dropdown')
+
+  if (e.key === 'Escape') {
+    dropDownOpen.value = false;
+  }
+
+  if (e.key === 'ArrowUp') {
+    e.preventDefault();
+    // Select the prev element in the list
+    const index = filteredOptions.value.findIndex(option => option.value === focusedDropDownItem.value);
+
+    if (index !== -1 && index !== 0) {
+      focusedDropDownItem.value = filteredOptions.value[index - 1].value;
+    } else {
+      focusedDropDownItem.value = filteredOptions.value[filteredOptions.value.length - 1].value;
+      return;
+    }
+
+    console.log('focusUp');
+  }
+
+  if (e.key === 'ArrowDown') {
+    e.preventDefault();
+
+
+    // Select the next element in the list
+    const index = filteredOptions.value.findIndex(option => option.value === focusedDropDownItem.value);
+
+    if (index !== -1 && index !== filteredOptions.value.length - 1) {
+      focusedDropDownItem.value = filteredOptions.value[index + 1].value;
+    } else {
+      focusedDropDownItem.value = filteredOptions.value[0].value;
+      return;
+    }
+
+    console.log('focusdown', focusedDropDownItem.value, index);
+  }
+
+  if (e.key === 'Enter') {
+    e.preventDefault();
+
+    dropDownOpen.value = false;
+    _modelValue.value = _modelValue.value || [];
+
+    if (filteredOptions.value && filteredOptions.value.length > 0) {
+      // find the focused item in the options and add it to the model value
+      const option = filteredOptions.value.find(option => option.value === focusedDropDownItem.value);
+
+      if (option) {
+        tagInput.value = option.label;
+      }
+
+      addTag();
+    } else {
+      addTag();
+    }
   }
 }
 </script>
@@ -160,6 +264,7 @@ function changeFocus() {
     :validator="validator"
     :show-message-on-error="showMessageOnError"
     :expanded="expanded"
+    class="cursor-pointer"
   >
     <div
       class="relative w-full"
@@ -188,7 +293,7 @@ function changeFocus() {
         </AntTag>
 
         <!-- Input -->
-        <AntIcon :icon="icon" :size="size === Size.sm ? IconSize.sm : IconSize.md"/>
+        <AntIcon :icon="icon" :size="size === Size.sm ? IconSize.xs : IconSize.sm"/>
 
         <input
           v-model="tagInput"
@@ -198,16 +303,17 @@ function changeFocus() {
           :placeholder="placeholder"
           :class="inputClasses"
           @focus="changeFocus"
-          @input="dropDownOpen = true"
+          @input="filterDropDown"
+          @keydown="controlDropDown"
         />
       </div>
 
       <AntDropDown
         v-if="options"
-        :model-value="null"
+        v-model="focusedDropDownItem"
         v-model:open="dropDownOpen"
         ref="dropDownRef"
-        :options="options"
+        :options="filteredOptions"
         :input-ref="inputRef"
         :size="size"
         :color-type="_colorType"

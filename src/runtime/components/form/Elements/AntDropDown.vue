@@ -74,8 +74,8 @@ watch(isOpen, (val) => {
   nextTick(() => {
     if (val && props.focusOnOpen) {
       dropDownRef.value?.focus();
-      focusedDropDownItem.value = _modelValue.value || props.options[0].value;
     }
+    focusedDropDownItem.value = _modelValue.value || props.options[0].value;
   });
 });
 
@@ -135,6 +135,10 @@ function onClickDropDownItem(e: MouseEvent, value: string | number | null) {
   isOpen.value = false;
   _modelValue.value = value;
 }
+
+watch(_modelValue, (val) => {
+  focusedDropDownItem.value = val;
+});
 </script>
 
 <template>
