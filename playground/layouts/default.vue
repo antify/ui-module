@@ -1,15 +1,11 @@
 <script setup lang="ts">
-import {faCar, faHome} from '@fortawesome/free-solid-svg-icons';
+import {faHome} from '@fortawesome/free-solid-svg-icons';
 
 const navbarItems = [
   {
     label: 'Home',
     icon: faHome,
     to: '/'
-  }, {
-    label: 'Cars',
-    icon: faCar,
-    to: '/cars'
   }
 ]
 </script>
