@@ -35,7 +35,7 @@ export default defineNuxtPlugin((nuxtApp) => {
     pending,
     status
   } = useFetch(
-    `/api/plugins/cars/cars`,
+    `/api/plugins/cars`,
     {
       immediate: false,
       watch: false,
