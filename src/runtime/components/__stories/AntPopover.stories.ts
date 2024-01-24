@@ -1,5 +1,5 @@
 import AntPopover from '../AntPopover.vue';
-import AntButton from '../form/AntButton.vue';
+import AntButton from '../buttons/AntButton.vue';
 import { type Meta, type StoryObj} from '@storybook/vue3';
 import {Position} from '../../enums/Position.enum';
 import {computed} from 'vue';
@@ -41,7 +41,7 @@ export const Docs: Story = {
             <AntPopover popover-classes="w-64" v-bind="args">
               <template #content>{{ dummyText }}</template>
               <template #default>
-                <AntButton @click="() => showPopover = !showPopover" outlined>Click me</AntButton>
+                <AntButton @click="() => showPopover = !showPopover" filled>Click me</AntButton>
               </template>
             </AntPopover>
           </div>

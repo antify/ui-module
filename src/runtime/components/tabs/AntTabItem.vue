@@ -6,7 +6,6 @@ import {
   type IconDefinition
 } from '@fortawesome/free-solid-svg-icons';
 import {computed} from 'vue';
-import {IconColorType} from '../__types/AntIcon.types';
 import {type RouteLocationRaw, useRoute} from 'vue-router';
 import {ColorType} from './__types/AntTabItem.types';
 
@@ -35,7 +34,7 @@ const _active = computed<boolean>(() => {
     return route.path === props.to;
   }
 
-  if (typeof props.to === 'object' && props.to.name !== undefined) {
+  if (typeof props.to === 'object' && props.to?.name !== undefined) {
     return route.name === props.to.name;
   }
 
@@ -43,23 +42,23 @@ const _active = computed<boolean>(() => {
 });
 const containerClasses = computed(() => {
   const variants: Record<ColorType, string> = {
-    [ColorType.base]: 'hover:bg-neutral-lighter',
-    [ColorType.warning]: 'hover:bg-warning-lighter',
-    [ColorType.danger]: 'hover:bg-danger-lighter',
+    [ColorType.base]: 'hover:bg-neutral-100',
+    [ColorType.warning]: 'hover:bg-warning-100',
+    [ColorType.danger]: 'hover:bg-danger-100',
   };
   const activeVariants: Record<ColorType, string> = {
-    [ColorType.base]: 'text-primary border-primary',
-    [ColorType.warning]: 'text-warning border-warning',
-    [ColorType.danger]: 'text-danger border-danger',
+    [ColorType.base]: 'text-primary-500 border-primary-500',
+    [ColorType.warning]: 'text-warning-500 border-warning-500',
+    [ColorType.danger]: 'text-danger-500 border-danger-500',
   };
   const notActiveVariants: Record<ColorType, string> = {
-    [ColorType.base]: 'text-neutral-lightest-font border-neutral-lightest',
-    [ColorType.warning]: 'text-warning',
-    [ColorType.danger]: 'text-danger',
+    [ColorType.base]: 'text-neutral-50-font border-neutral-50',
+    [ColorType.warning]: 'text-warning-500',
+    [ColorType.danger]: 'text-danger-500',
   };
 
   return {
-    'p-2.5 hover:cursor-pointer text-center flex items-center justify-center gap-2.5 bg-neutral-lightest transition-[background-color] relative': true,
+    'p-2.5 hover:cursor-pointer text-center flex items-center justify-center gap-2.5 bg-neutral-50 transition-[background-color] relative': true,
     'grow': props.expanded,
     [variants[props.colorType]]: true,
     [activeVariants[props.colorType]]: _active.value,
@@ -68,15 +67,24 @@ const containerClasses = computed(() => {
 });
 const borderBoxClasses = computed(() => {
   const variants: Record<ColorType, string> = {
-    [ColorType.base]: 'bg-primary',
-    [ColorType.warning]: 'bg-warning',
-    [ColorType.danger]: 'bg-danger',
+    [ColorType.base]: 'bg-primary-500',
+    [ColorType.warning]: 'bg-warning-500',
+    [ColorType.danger]: 'bg-danger-500',
   };
 
   return {
-    'h-[2px] w-full bg-danger absolute bottom-0': true,
+    'h-[2px] w-full bg-danger-500 absolute bottom-0': true,
     [variants[props.colorType]]: true,
   }
+});
+const iconColor = computed(() => {
+  const variants = {
+    [ColorType.base]: 'text-neutral-100-font',
+    [ColorType.warning]: 'text-warning-500',
+    [ColorType.danger]: 'text-danger-500',
+  };
+
+  return variants[props.colorType];
 });
 </script>
 
@@ -90,7 +98,7 @@ const borderBoxClasses = computed(() => {
       <AntIcon
         v-if="icon"
         :icon="icon"
-        :color-type="_active ? IconColorType.primary: IconColorType.base"
+        :color="_active ? 'text-primary-500' : 'text-neutral-50-font'"
       />
     </slot>
 
@@ -99,7 +107,7 @@ const borderBoxClasses = computed(() => {
     <AntIcon
       v-if="iconRight && showIcon"
       :icon="iconRight"
-      :color-type="colorType as unknown as IconColorType"
+      :color="iconColor"
     />
 
     <div v-if="_active" :class="borderBoxClasses" />

@@ -25,7 +25,7 @@ function onClick() {
 <template>
   <div
       class="p-2.5 select-none cursor-pointer transition-colors"
-      :class="{'bg-primary text-primary-font': isOpen, 'bg-neutral-lightest text-neutral-lightest-font': !isOpen}"
+      :class="{'bg-primary-500 text-primary-500-font': isOpen, 'bg-neutral-50 text-neutral-50-font': !isOpen}"
       @click="onClick"
   >
     <slot name="label" v-bind="{ isOpen: isOpen }">
@@ -38,7 +38,7 @@ function onClick() {
 
         <AntIcon
             :icon="isOpen ? faAngleUp : faAngleDown"
-            :class="{'text-primary-font': isOpen}"
+            :color="isOpen ? 'text-primary-500-font' : undefined"
         />
       </div>
     </slot>
@@ -52,7 +52,7 @@ function onClick() {
       <transition name="bounce">
         <div
             v-show="isOpen"
-            class="p-2.5 bg-neutral-lightest"
+            class="p-2.5 bg-neutral-50"
         >
           <slot/>
         </div>

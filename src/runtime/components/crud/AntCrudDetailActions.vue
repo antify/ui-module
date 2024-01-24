@@ -1,0 +1,51 @@
+<script setup lang="ts">
+import AntButton from '../buttons/AntButton.vue';
+import {faAngleLeft} from '@fortawesome/free-solid-svg-icons';
+import AntSaveAndNewButton from '../buttons/AntSaveAndNewButton.vue';
+import AntSaveButton from '../buttons/AntSaveButton.vue';
+
+defineEmits(['back', 'save', 'save-and-new']);
+withDefaults(defineProps<{
+  disabled?: boolean
+  skeleton?: boolean
+}>(), {
+  disabled: false,
+  skeleton: false,
+});
+</script>
+
+<template>
+  <div class="flex justify-between p-2.5 gap-2.5 bg-neutral-50">
+    <div class="flex gap-2.5">
+      <slot name="buttons-left">
+        <AntButton
+          :outlined="false"
+          :filled="true"
+          :icon-left="faAngleLeft"
+          :disabled="disabled"
+          @click="$emit('back')"
+        >
+          Back
+        </AntButton>
+      </slot>
+    </div>
+
+    <div class="flex gap-2.5">
+      <slot name="before-buttons-right"/>
+      <slot name="buttons-right">
+        <AntSaveAndNewButton
+          :skeleton="skeleton"
+          :disabled="disabled"
+          @click="$emit('save-and-new')"
+        />
+
+        <AntSaveButton
+          :skeleton="skeleton"
+          :disabled="disabled"
+          @click="$emit('save')"
+        />
+      </slot>
+      <slot name="after-buttons-right"/>
+    </div>
+  </div>
+</template>

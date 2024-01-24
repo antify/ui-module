@@ -1,7 +1,7 @@
 import AntAccordion from '../AntAccordion.vue';
 import AntAccordionItem from '../AntAccordionItem.vue';
-import { type Meta, type StoryObj} from "@storybook/vue3";
-import {CollapseStrategy} from "../__types/Accordion.types";
+import { type Meta, type StoryObj} from '@storybook/vue3';
+import {CollapseStrategy} from '../__types/Accordion.types';
 
 const meta: Meta<typeof AntAccordion> = {
     title: 'Components/Accordion',
@@ -63,7 +63,7 @@ export const CustomContent: Story = {
           <div class="p-4">
             <AntAccordion v-bind="args">
               <template #item-content="{item, index}">
-                <div class="text-danger">{{ item.content }}</div>
+                <div class="text-danger-500">{{ item.content }}</div>
               </template>
             </AntAccordion>
           </div>`,

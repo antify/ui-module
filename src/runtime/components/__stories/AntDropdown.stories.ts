@@ -1,5 +1,5 @@
 import AntDropdown from '../AntDropdown.vue';
-import AntButton from '../form/AntButton.vue';
+import AntButton from '../buttons/AntButton.vue';
 import { type Meta, type StoryObj} from '@storybook/vue3';
 import {Position} from '../../enums/Position.enum';
 import {computed} from 'vue';
@@ -47,7 +47,7 @@ export const Docs: Story = {
                 labore et dolore magna aliquyam erat, sed diam voluptua.
               </template>
               <template #default>
-                <AntButton @click="() => showDropdown = !showDropdown" outlined>Click me</AntButton>
+                <AntButton @click="() => showDropdown = !showDropdown" filled>Click me</AntButton>
               </template>
             </AntDropdown>
           </div>

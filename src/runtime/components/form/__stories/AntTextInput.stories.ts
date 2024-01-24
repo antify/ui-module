@@ -1,10 +1,10 @@
-import { type Meta, type StoryObj} from '@storybook/vue3';
+import {type Meta, type StoryObj} from '@storybook/vue3';
 import {Size} from '../../../enums/Size.enum';
 import AntTextInput from '../AntTextInput.vue';
-import {useFieldValidator} from '@antify/validate';
+import {isRequiredRule, notBlankRule, useFieldValidator} from '@antify/validate';
 import {TextInputType} from '../__types/AntTextInput.type';
 import {InputColorType} from '../../../enums';
-import {emailRule} from '@antify/validate'
+import {reactive} from 'vue';
 
 const meta: Meta<typeof AntTextInput> = {
   title: 'Components/Forms/Text Input',
@@ -43,40 +43,22 @@ export const Docs: Story = {
   render: (args) => ({
     components: {AntTextInput},
     setup() {
-      return {args};
+      const validator = reactive(useFieldValidator([isRequiredRule, notBlankRule]))
+
+      return {args, validator};
     },
     template: `
-      <AntTextInput v-bind="args" v-model="args.modelValue"/>`,
+      <AntTextInput
+        v-bind="args"
+        v-model="args.modelValue"
+        :errors="Array.isArray(args.errors) ? args.errors : validator.getErrors()"
+        @validate="(val) => validator.validate(val)"
+      />`,
   }),
   args: {
     modelValue: null,
     label: 'Label',
     description: 'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod'
-  },
-};
-
-export const withValidator: Story = {
-  render: (args) => ({
-    components: {AntTextInput},
-    setup() {
-      setTimeout(() => { args.skeleton = false }, 1000);
-
-      return {args};
-    },
-    template: `
-      <AntTextInput v-bind="args" v-model="args.modelValue"/>`,
-  }),
-  args: {
-    ...Docs.args,
-    modelValue: '',
-    skeleton: true,
-    description: undefined,
-    validator: useFieldValidator([
-      (val: string) => val?.length > 0 || 'This field should not be empty',
-      (val: string) => val?.length >= 5 || 'This field should has min 5 characters',
-      (val: string) => val?.length <= 10 || 'This field should has max 10 characters',
-      emailRule
-    ])
   },
 };
 

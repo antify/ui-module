@@ -15,19 +15,16 @@ const navbarItems = [
 </script>
 
 <template>
-  <div class="flex h-screen overflow-hidden">
-    <div class="w-52 border-r border-neutral-light flex flex-col">
-      <NuxtLink to="/" class="border-b border-neutral-light">
-        <img src="~/assets/logo.svg" class="h-14 p-2.5"/>
-      </NuxtLink>
+  <AntNavLeftLayout
+    :navbar-items="navbarItems"
+    logo-route="/"
+  >
+    <template #logo-image>
+      <img src="~/assets/logo.svg" class="w-full"/>
+    </template>
 
-      <AntNavbar :navbar-items="navbarItems"/>
-    </div>
-
-    <div class="flex-grow">
-      <slot/>
-    </div>
-  </div>
+    <NuxtPage/>
+  </AntNavLeftLayout>
 
   <AntToaster/>
 </template>

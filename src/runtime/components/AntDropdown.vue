@@ -52,7 +52,7 @@ function onClickOutside() {
 
 <template>
   <div
-    class="relative inline-flex justify-center items-end"
+    class="relative inline-flex justify-center items-end z-40"
     v-on-click-outside="onClickOutside"
   >
     <slot/>
@@ -63,7 +63,7 @@ function onClickOutside() {
         :class="_dropdownClasses"
       >
         <div
-          class="shadow-lg border border-neutral-light rounded-md text-sm relative inline-flex flex-col relative bg-neutral-lightest text-neutral-lightest-font w-full"
+          class="shadow-lg border border-neutral-300 rounded-md text-sm relative inline-flex flex-col relative bg-neutral-50 text-neutral-50-font w-full"
           :class="{'p-2.5': contentPadding}"
         >
           <slot name="content"/>

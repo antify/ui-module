@@ -1,7 +1,7 @@
 import AntListGroupItem from '../AntListGroupItem.vue';
-import { type Meta, type StoryObj} from "@storybook/vue3";
-import {faUser, faChevronRight} from "@fortawesome/free-solid-svg-icons";
-import {ListGroupItemColorType} from "../../types/AntListGroupItem.type";
+import { type Meta, type StoryObj} from '@storybook/vue3';
+import {faUser, faChevronRight} from '@fortawesome/free-solid-svg-icons';
+import {ListGroupItemColorType} from '../../types/AntListGroupItem.type';
 
 const meta: Meta<typeof AntListGroupItem> = {
     title: 'Components/List Group Item',
@@ -35,7 +35,7 @@ export const Docs: Story = {
         setup() {
             return {args};
         },
-        template: '<div class="p-4 bg-neutral-lighter"><AntListGroupItem v-bind="args">Item</AntListGroupItem></div>',
+        template: '<div class="p-4 bg-neutral-100"><AntListGroupItem v-bind="args">Item</AntListGroupItem></div>',
     }),
     args: {},
 };
@@ -44,7 +44,7 @@ export const Link: Story = {
     render: Docs.render,
     args: {
         ...Docs.args,
-        to: "/example",
+        to: '/example',
     },
 };
 export const IconLeft: Story = {

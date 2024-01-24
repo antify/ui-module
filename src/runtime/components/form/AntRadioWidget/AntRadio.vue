@@ -1,17 +1,12 @@
-<script lang="ts">
-export default {
-  inheritAttrs: false,
-};
-</script>
-
 <script lang="ts" setup>
 import { AntField } from '../Elements';
 import { InputColorType, Size } from '../../../enums';
-import { useVModel } from '@vueuse/core';
 import AntSkeleton from '../../AntSkeleton.vue';
 import { computed, onMounted } from 'vue';
 import { type AntRadioType } from './__types/AntRadio.type';
 import { handleEnumValidation } from '../../../handler';
+
+defineOptions({ inheritAttrs: false });
 
 const emits = defineEmits([ 'update:modelValue', 'update:skeleton' ]);
 const props = withDefaults(
@@ -51,7 +46,7 @@ const inputClasses = computed(() => {
     'relative inline-flex flex-shrink-0': true,
     'focus:ring-offset-0 outline outline-offset-[-1px] outline-1 focus:outline-offset-[-1px] focus:outline-1 rounded-full': true,
     'cursor-pointer': hasAction.value,
-    'outline-neutral-light focus:outline-neutral-light': !isActive.value,
+    'outline-neutral-300 focus:outline-neutral-300': !isActive.value,
     'rounded-full transition-colors ease-in-out duration-200 disabled:opacity-50 disabled:cursor-not-allowed': true,
     'focus:ring-2': props.size === Size.sm && hasAction.value,
     'focus:ring-4': props.size === Size.md && hasAction.value,
@@ -60,19 +55,19 @@ const inputClasses = computed(() => {
   };
 
   const focusColorVariant = {
-    [InputColorType.base]: 'focus:ring-primary-lighter',
-    [InputColorType.danger]: 'focus:ring-danger-lighter',
-    [InputColorType.info]: 'focus:ring-info-lighter',
-    [InputColorType.success]: 'focus:ring-success-lighter',
-    [InputColorType.warning]: 'focus:ring-warning-lighter',
+    [InputColorType.base]: 'focus:ring-primary-100',
+    [InputColorType.danger]: 'focus:ring-danger-100',
+    [InputColorType.info]: 'focus:ring-info-100',
+    [InputColorType.success]: 'focus:ring-success-100',
+    [InputColorType.warning]: 'focus:ring-warning-100',
   };
 
   const activeColorVariant = {
-    [InputColorType.base]: 'text-primary outline-primary focus:outline-primary',
-    [InputColorType.danger]: 'text-danger outline-danger focus:outline-danger',
-    [InputColorType.info]: 'text-info outline-info focus:outline-info',
-    [InputColorType.success]: 'text-success outline-success focus:outline-success',
-    [InputColorType.warning]: 'text-warning outline-warning focus:outline-warning',
+    [InputColorType.base]: 'text-primary-500 outline-primary-500 focus:outline-primary-500',
+    [InputColorType.danger]: 'text-danger-500 outline-danger-500 focus:outline-danger-500',
+    [InputColorType.info]: 'text-info-500 outline-info-500 focus:outline-info-500',
+    [InputColorType.success]: 'text-success-500 outline-success-500 focus:outline-success-500',
+    [InputColorType.warning]: 'text-warning-500 outline-warning-500 focus:outline-warning-500',
   }
 
   classes[focusColorVariant[props.colorType]] = hasAction.value;

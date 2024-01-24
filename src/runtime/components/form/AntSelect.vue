@@ -1,10 +1,3 @@
-<script lang="ts">
-export default {
-  name: 'AntSelect',
-  inheritAttrs: false,
-};
-</script>
-
 <script lang="ts" setup>
 /**
  * This select is a custom component instead of a native <select> because the dropdown is not good
@@ -30,11 +23,12 @@ import AntIcon from '../AntIcon.vue';
 import {faChevronDown, faChevronUp, faMultiply} from '@fortawesome/free-solid-svg-icons';
 import AntSkeleton from '../AntSkeleton.vue';
 import {vOnClickOutside} from '@vueuse/components';
-import AntButton from './AntButton.vue';
+import AntButton from '../buttons/AntButton.vue';
 import {ColorType, InputColorType} from '../../enums';
 import {IconSize} from '../__types';
 import AntDropDown from './Elements/AntDropDown.vue';
 
+defineOptions({ inheritAttrs: false });
 const props = withDefaults(
     defineProps<{
       modelValue: string | number | null;
@@ -76,11 +70,11 @@ const _modelValue = computed({
 const valueLabel = computed(() => props.options.find(option => option.value === _modelValue.value)?.label || null);
 const inputClasses = computed(() => {
   const variants: Record<InputColorType, string> = {
-    [InputColorType.base]: 'outline-neutral-light focus:outline-primary bg-neutral-lightest focus:ring-primary/25',
-    [InputColorType.success]: 'outline-success focus:outline-success bg-success-lighter focus:ring-success/25',
-    [InputColorType.info]: 'outline-info focus:outline-info bg-info-lighter focus:ring-info/25',
-    [InputColorType.warning]: 'outline-warning focus:outline-warning bg-warning-lighter focus:ring-warning/25',
-    [InputColorType.danger]: 'outline-danger focus:outline-danger bg-danger-lighter focus:ring-danger/25',
+    [InputColorType.base]: 'outline-neutral-300 focus:outline-primary-500 bg-neutral-50 focus:ring-primary/25',
+    [InputColorType.success]: 'outline-success-500 focus:outline-success-500 bg-success-100 focus:ring-success/25',
+    [InputColorType.info]: 'outline-info-500 focus:outline-info-500 bg-info-100 focus:ring-info/25',
+    [InputColorType.warning]: 'outline-warning-500 focus:outline-warning-500 bg-warning-100 focus:ring-warning/25',
+    [InputColorType.danger]: 'outline-danger-500 focus:outline-danger-500 bg-danger-100 focus:ring-danger/25',
   };
 
   return {
@@ -109,11 +103,11 @@ const inputClasses = computed(() => {
 });
 const placeholderClasses = computed(() => {
   const variants: Record<InputColorType, string> = {
-    [InputColorType.base]: 'text-neutral',
-    [InputColorType.success]: 'text-success-dark',
-    [InputColorType.info]: 'text-info-dark',
-    [InputColorType.warning]: 'text-warning-dark',
-    [InputColorType.danger]: 'text-danger-dark',
+    [InputColorType.base]: 'text-neutral-500',
+    [InputColorType.success]: 'text-success-700',
+    [InputColorType.info]: 'text-info-700',
+    [InputColorType.warning]: 'text-warning-700',
+    [InputColorType.danger]: 'text-danger-700',
   };
 
   return {
@@ -123,11 +117,11 @@ const placeholderClasses = computed(() => {
 });
 const inputValueClasses = computed(() => {
   const variants: Record<InputColorType, string> = {
-    [InputColorType.base]: 'text-neutral-lightest-font',
-    [InputColorType.success]: 'text-success-lighter-font',
-    [InputColorType.info]: 'text-info-lighter-font',
-    [InputColorType.warning]: 'text-warning-lighter-font',
-    [InputColorType.danger]: 'text-danger-lighter-font',
+    [InputColorType.base]: 'text-neutral-50-font',
+    [InputColorType.success]: 'text-success-100-font',
+    [InputColorType.info]: 'text-info-100-font',
+    [InputColorType.warning]: 'text-warning-100-font',
+    [InputColorType.danger]: 'text-danger-100-font',
   };
   return {
     'select-none text-ellipsis overflow-hidden whitespace-nowrap w-full': true,
@@ -136,11 +130,11 @@ const inputValueClasses = computed(() => {
 });
 const arrowClasses = computed(() => {
   const variants: Record<InputColorType, string> = {
-    [InputColorType.base]: 'text-neutral-lightest-font',
-    [InputColorType.success]: 'text-success-lighter-font',
-    [InputColorType.info]: 'text-info-lighter-font',
-    [InputColorType.warning]: 'text-warning-lighter-font',
-    [InputColorType.danger]: 'text-danger-lighter-font',
+    [InputColorType.base]: 'text-neutral-50-font',
+    [InputColorType.success]: 'text-success-100-font',
+    [InputColorType.info]: 'text-info-100-font',
+    [InputColorType.warning]: 'text-warning-100-font',
+    [InputColorType.danger]: 'text-danger-100-font',
   };
 
   return {[variants[_colorType.value]]: true};

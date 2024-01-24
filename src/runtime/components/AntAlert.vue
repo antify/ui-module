@@ -1,6 +1,6 @@
 <script lang="ts" setup>
-import { computed, onMounted, useSlots } from 'vue';
-import { handleEnumValidation } from '../handler';
+import {computed, onMounted, useSlots} from 'vue';
+import {handleEnumValidation} from '../handler';
 import {
   faCheckCircle,
   faCircleQuestion,
@@ -12,8 +12,8 @@ import {
 import AntIcon from './AntIcon.vue';
 import AntTooltip from './AntTooltip.vue';
 import AntSkeleton from './AntSkeleton.vue';
-import { InputColorType, Position } from '../enums';
-import { IconColorType, IconSize } from './__types';
+import {InputColorType, Position} from '../enums';
+import {IconSize} from './__types';
 
 defineEmits(['close']);
 
@@ -44,11 +44,11 @@ const icons = {
 const _icon = computed(() => icons[props.colorType]);
 const classes = computed(() => {
   const variants: Record<InputColorType, string> = {
-    [InputColorType.danger]: 'bg-danger-lighter text-danger',
-    [InputColorType.info]: 'bg-info-lighter text-info',
-    [InputColorType.base]: 'bg-neutral-lighter text-neutral',
-    [InputColorType.success]: 'bg-success-lighter text-success',
-    [InputColorType.warning]: 'bg-warning-lighter text-warning',
+    [InputColorType.danger]: 'bg-danger-100 text-danger-500',
+    [InputColorType.info]: 'bg-info-100 text-info-500',
+    [InputColorType.base]: 'bg-neutral-100 text-neutral-500',
+    [InputColorType.success]: 'bg-success-100 text-success-500',
+    [InputColorType.warning]: 'bg-warning-100 text-warning-500',
   };
 
   return {
@@ -59,6 +59,17 @@ const classes = computed(() => {
 });
 const hasDefaultSlot = computed(() => useSlots()['default'] || false);
 const hasQuestionMark = computed(() => (useSlots()['question-mark-text'] || false) || props.questionMarkText);
+const iconColor = computed(() => {
+  const variants = {
+    [InputColorType.base]: 'text-neutral-100-font',
+    [InputColorType.danger]: 'text-danger-500',
+    [InputColorType.info]: 'text-info-500',
+    [InputColorType.success]: 'text-success-500',
+    [InputColorType.warning]: 'text-warning-500',
+  };
+
+  return variants[props.colorType];
+});
 
 onMounted(() => {
   handleEnumValidation(props.colorType, InputColorType, 'colorType');
@@ -77,7 +88,7 @@ onMounted(() => {
         <AntIcon
           v-if="icon"
           :icon="_icon"
-          :color-type="colorType as unknown as IconColorType"
+          :color="iconColor"
           :size="IconSize.sm"
         />
 
@@ -94,7 +105,7 @@ onMounted(() => {
             <AntTooltip :position="Position.bottom">
               <AntIcon
                 :icon="faCircleQuestion"
-                :color-type="colorType as unknown as IconColorType"
+                :color="iconColor"
                 :size="IconSize.sm"
               />
 
@@ -109,7 +120,7 @@ onMounted(() => {
           v-if="dismissBtn"
           :icon="faXmark"
           class="cursor-pointer"
-          :color-type="colorType as unknown as IconColorType"
+          :color="iconColor"
           :size="IconSize.sm"
           @click="() => $emit('close')"
         />

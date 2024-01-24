@@ -1,11 +1,9 @@
 <script setup lang="ts">
-
-import type { NavbarItem } from './__types/NavbarItem';
-import { computed, ref } from 'vue';
+import type {NavbarItem} from './__types/NavbarItem';
+import {computed, ref} from 'vue';
 import AntIcon from '../AntIcon.vue';
-import { faChevronDown, faChevronUp } from '@fortawesome/free-solid-svg-icons';
+import {faChevronDown, faChevronUp} from '@fortawesome/free-solid-svg-icons';
 import AntTransitionCollapseHeight from '../transitions/AntTransitionCollapseHeight.vue';
-import { IconColorType } from '../__types';
 
 const props = defineProps<{
   navbarItem: NavbarItem
@@ -13,8 +11,8 @@ const props = defineProps<{
 
 const itemClasses = computed(() => ({
   'w-full text-sm p-1.5 rounded-md cursor-pointer flex items-center flex-nowrap gap-1': true,
-  'hover:bg-neutral-lighter': true,
-  'text-primary': props.navbarItem.active
+  'transition-colors hover:bg-neutral-100': true,
+  'text-primary-500': props.navbarItem.active
 }))
 
 const open = ref(false)
@@ -28,7 +26,6 @@ function itemClick(): void {
     open.value = !open.value;
   }
 }
-
 </script>
 
 <template>
@@ -39,7 +36,11 @@ function itemClick(): void {
     :class="itemClasses"
     @click="itemClick"
   >
-    <AntIcon v-if="navbarItem.icon" :icon="navbarItem.icon" :color-type="navbarItem.active ? IconColorType.primary : IconColorType.base"/>
+    <AntIcon
+      v-if="navbarItem.icon"
+      :icon="navbarItem.icon"
+      :color="navbarItem.active ? 'text-primary-500' : 'text-for-white-bg-font'"
+    />
 
     <div class="flex-grow select-none">
       {{ navbarItem.label }}
@@ -51,13 +52,13 @@ function itemClick(): void {
       <AntIcon
         v-if="!open"
         :icon="faChevronDown"
-        :color-type="navbarItem.active ? IconColorType.primary : IconColorType.base"
+        :color="navbarItem.active ? 'text-primary-500' : 'text-for-white-bg-font'"
       />
 
       <AntIcon
         v-if="open"
         :icon="faChevronUp"
-        :color-type="navbarItem.active ? IconColorType.primary : IconColorType.base"
+        :color="navbarItem.active ? 'text-primary-500' : 'text-for-white-bg-font'"
       />
     </div>
   </component>
@@ -71,7 +72,7 @@ function itemClick(): void {
         :key="`navbar-item-child-${index}`"
         :navbar-item="child"
         class="pl-[30px]"
-      ></AntNavbarItem>
+      />
     </div>
   </AntTransitionCollapseHeight>
 </template>

@@ -1,90 +1,115 @@
 <script lang="ts" setup>
-import {type RouteLocationRaw} from "vue-router";
 import type {TableHeader} from "#uiModule";
-import {faPencil, faTrash} from "@fortawesome/free-solid-svg-icons";
+import {faCopy, faPencil, faTrash} from "@fortawesome/free-solid-svg-icons";
+import {ref} from 'vue';
+import {type Car} from "../../glue/plugins/car";
 import {useFetch} from "nuxt/app";
 
-const props = defineProps<{
-  fullWidth: boolean
-  getDetailRoute: (carId: string) => RouteLocationRaw
+defineProps<{
+  showLightVersion: boolean
 }>();
 
-const {$uiModule, $carTable} = useNuxtApp();
+const {$cars, $uiModule} = useNuxtApp();
 const route = useRoute();
-// TODO:: use skeleton from $carTable in table
-const {data, error, execute, refresh, pending, skeleton} = $carTable;
-const deleteDialogOpen = ref(false);
-const entryToDelete = ref<string | null>(null);
+const ui = useUi();
 const {
-  error: deleteError,
-  execute: executeDelete,
-  status: deleteStatus,
-} = useFetch(
-  () => `/api/components/car/car-table/${entryToDelete.value}`,
-  {
-    method: 'delete',
-    immediate: false,
-    watch: false,
-    onResponse({response}) {
-      if (response.status === 200) {
-        refresh(false);
-        $uiModule.toaster.toastDeleted();
-      }
-    }
-  }
-)
-
+  executeDelete,
+  deleteStatus,
+  deleteError
+} = $cars.item;
+const {
+  execute,
+  data,
+  pending,
+  error,
+  refresh
+} = $cars.listing;
+const {
+  getDetailRoute,
+  goToDetailPage,
+} = $cars.routing;
+const deleteDialogOpen = ref(false);
+const entityToDelete = ref<Car | null>(null);
 const tableHeaders: TableHeader[] = [
   {
     title: 'Manufacturer',
     identifier: 'manufacturer',
     toProp: 'link',
-    type: useUi().AntTableRowTypes.link,
+    type: ui.AntTableRowTypes.link,
+    lightVersion: true,
   },
   {
     title: 'Model',
     identifier: 'model',
-    type: useUi().AntTableRowTypes.text,
+    toProp: 'link',
+    type: ui.AntTableRowTypes.link,
+    lightVersion: true,
   },
   {
     title: 'Type',
     identifier: 'type',
-    type: useUi().AntTableRowTypes.text,
+    type: ui.AntTableRowTypes.text,
   },
   {
     title: 'Color',
     identifier: 'color',
-    type: useUi().AntTableRowTypes.text,
+    type: ui.AntTableRowTypes.text,
   },
   {
     identifier: 'actions',
-    type: useUi().AntTableRowTypes.slot,
+    type: ui.AntTableRowTypes.slot,
   },
 ];
 const selectedRow = computed(() => route.params.carId ? data.value?.cars?.find((car) => car.id === route.params.carId) : undefined);
 const cars = computed(() => {
   return data.value?.cars?.map((car) => {
-    car.link = props.getDetailRoute(car.id);
+    car.link = getDetailRoute(car.id);
 
     return car;
   }) || [];
 });
+const entityIdToDuplicate = ref<string | null>(null);
+const {
+  error: duplicateError,
+  execute: executeDuplicate,
+  status: duplicateStatus,
+} = useFetch(
+  () => `/api/components/cars/car-table/duplicate/${entityIdToDuplicate.value}`,
+  {
+    method: 'post',
+    immediate: false,
+    watch: false,
+    onResponse({response}) {
+      if (response.status === 200) {
+        goToDetailPage(response._data.id);
+        refresh(false);
+        $uiModule.toaster.toastDuplicated();
+      }
+    }
+  }
+)
 
 onMounted(execute);
 
 watch(error, () => useUiClient().handler.handleResponseError(error));
 watch(deleteError, () => useUiClient().handler.handleResponseError(deleteError));
+watch(duplicateError, () => useUiClient().handler.handleResponseError(duplicateError));
 
-function openDeleteEntry(id: string) {
-  entryToDelete.value = id;
+function openDeleteEntity(entity: Car) {
+  entityToDelete.value = entity;
   deleteDialogOpen.value = true;
 }
 
-async function deleteEntry() {
-  if (entryToDelete.value) {
-    await executeDelete();
-    entryToDelete.value = null;
+async function deleteEntity() {
+  if (entityToDelete.value?.id) {
+    await executeDelete(entityToDelete.value.id);
+    entityToDelete.value = null;
   }
+}
+
+function duplicateEntity(id: string) {
+  entityIdToDuplicate.value = id;
+  executeDuplicate()
 }
 </script>
 
@@ -92,8 +117,9 @@ async function deleteEntry() {
   <AntTable
     :selected-row="selectedRow"
     :data="cars"
-    :headers="fullWidth ? tableHeaders : [tableHeaders[0]]"
-    :loading="pending || deleteStatus === 'pending'"
+    :headers="tableHeaders"
+    :loading="pending || deleteStatus === 'pending' || duplicateStatus === 'pending'"
+    :show-light-version="showLightVersion"
   >
     <template #cellContent="{header, element}">
       <div
@@ -101,32 +127,34 @@ async function deleteEntry() {
         class="flex justify-end gap-2.5"
       >
         <AntButton
-          :to="{name: 'cars-carId', params: {carId: element.id}}"
+          :icon-left="faCopy"
+          :size="ui.Size.sm"
+          filled
+          @click="() => duplicateEntity(element.id)"
+        />
+
+        <AntButton
+          :to="getDetailRoute(element.id)"
           :icon-left="faPencil"
-          :size="useUi().Size.sm"
-          outlined
+          :size="ui.Size.sm"
+          filled
         />
 
         <AntButton
           :icon-left="faTrash"
-          :size="useUi().Size.sm"
-          outlined
-          @click="() => openDeleteEntry(element.id)"
+          :size="ui.Size.sm"
+          filled
+          @click="() => openDeleteEntity(element)"
         />
       </div>
     </template>
   </AntTable>
 
-  <!-- TODO:: outsource to delete dialog -->
-  <AntDialog
+  <AntDeleteDialog
     v-model:open="deleteDialogOpen"
-    :color-type="useUi().InputColorType.danger"
-    title="Delete entry"
-    confirm-text="Delete"
-    @confirm="deleteEntry"
-  >
-    Do you really want to delete this entry?
-  </AntDialog>
+    :entity="`${entityToDelete?.manufacturer} ${entityToDelete?.model}`"
+    @confirm="deleteEntity"
+  />
 </template>
 
 

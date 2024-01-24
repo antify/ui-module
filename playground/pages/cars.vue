@@ -1,44 +1,110 @@
 <script setup lang='ts'>
-import {useRoute} from 'vue-router'
+import {useRoute, useRouter} from 'vue-router'
+import {type SelectOption} from "../../src/runtime/components/form/__types";
+import {useRouteQuery} from '@vueuse/router';
 
 const route = useRoute();
-const {$carTable} = useNuxtApp();
-const {skeleton} = $carTable;
-const isFullWidth = computed(() => route.name === 'cars');
-const getDetailRoute = (carId = 'create') => ({
-  name: 'cars-carId',
-  params: {carId},
-  query: route.query
+const router = useRouter();
+const {$cars} = useNuxtApp();
+const {
+  skeleton,
+  refresh,
+  count,
+  allColors,
+  allTypes,
+} = $cars.listing;
+const {
+  createError,
+  readError,
+  updateError,
+  deleteError
+} = $cars.item;
+const {
+  goToDetailPage
+} = $cars.routing;
+const uiClient = useUiClient();
+const isDetailPage = computed(() => route.name !== 'cars');
+const filterColor = useRouteQuery<string | null>('color', null, {
+  transform(val) {
+    return val || null;
+  },
 });
+const filterType = useRouteQuery<string | null>('type', null, {
+  transform(val) {
+    return val || null;
+  },
+});
+const filterColorOptions = computed<SelectOption[]>(() => allColors.value.map((color) => ({
+  label: color,
+  value: color
+})))
+const filterTypeOptions = computed<SelectOption[]>(() => allTypes.value.map((color) => ({
+  label: color,
+  value: color
+})))
+
+watch(() => route.query, (to, from) => {
+  if (uiClient.utils.queryChanged(from, to, ['color', 'type'])) {
+    refresh();
+  }
+})
+watch(readError, () => uiClient.handler.handleResponseError(readError))
+watch(createError, () => uiClient.handler.handleResponseError(createError))
+watch(updateError, () => uiClient.handler.handleResponseError(updateError))
+watch(deleteError, () => uiClient.handler.handleResponseError(deleteError))
+
+function resetFilters() {
+  filterColor.value = null;
+  filterType.value = null;
+}
 </script>
 
 <template>
-  <AntNavLeftCrud>
+  <AntCrud :show-detail="isDetailPage">
     <template #search-section>
-      <AntTableFilter
-        :full-width="isFullWidth"
-        @search="() => $carTable.refresh()"
-        @create="() => $router.push(getDetailRoute())"
-      />
+      <AntCrudTableFilter
+        :full-width="!isDetailPage"
+        :has-filter="filterColor !== null || filterType !== null"
+        :skeleton="skeleton"
+        @search="() => refresh()"
+        @create="() => goToDetailPage()"
+        @removeFilter="() => resetFilters()"
+      >
+        <template #dropdownContent>
+          <!-- TODO:: Build example with multiple colors selectable (when AntTagInput is finished) -->
+          <AntFormGroup>
+            <AntSelect
+              v-model="filterColor"
+              label="Color"
+              :options="filterColorOptions"
+              nullable
+            />
+
+            <AntSelect
+              v-model="filterType"
+              label="Type"
+              :options="filterTypeOptions"
+              nullable
+            />
+          </AntFormGroup>
+        </template>
+      </AntCrudTableFilter>
     </template>
 
     <template #table-section>
-      <CarTable
-        :get-detail-route="getDetailRoute"
-        :full-width="isFullWidth"
-      />
+      <CarTable :show-light-version="isDetailPage"/>
     </template>
 
     <template #table-nav-section>
-      <AntTableNav
-        :count="$carTable.count.value"
-        :full-width="isFullWidth"
+      <AntCrudTableNav
+        :count="count"
+        :full-width="!isDetailPage"
         :skeleton="skeleton"
-        @changeItemsPerPage="() => $carTable.refresh()"
-        @changePage="() => $carTable.refresh(false)"
+        @changeItemsPerPage="() => refresh()"
+        @changePage="() => refresh(false)"
       />
     </template>
 
     <NuxtPage/>
-  </AntNavLeftCrud>
+  </AntCrud>
 </template>

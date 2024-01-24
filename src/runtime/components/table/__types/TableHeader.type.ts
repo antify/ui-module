@@ -28,4 +28,9 @@ export type TableHeader = {
   rowClassList?: string;
   align?: AntTableAlign;
   toProp?: string;
+
+  /**
+   * Emit if the column should be shown on light table version.
+   */
+  lightVersion?: boolean;
 };

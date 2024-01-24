@@ -83,6 +83,9 @@ const meta: Meta<typeof AntTable> = {
         type: { summary: 'HTML' }
       }
     },
+    showLightVersion: {
+      description: 'Switch between the normal version, which contains all columns, and the light version, which only contains all columns with the property `lightVersion` set to `true`.'
+    },
   },
 };
 
@@ -92,44 +95,36 @@ type Story = StoryObj<typeof AntTable>;
 
 const testData = [
   {
-    name: 'Lindsay Walton',
-    title: 'Front-end Developer',
+    text: 'Lorem ipsum dolor sit amet',
+    number: 28,
     email: 'lindsay.walton@example.com',
     linkLabel: 'Link here',
-    link: '/#',
-    picture:
-      'https://images.unsplash.com/photo-1517841905240-472988babdf9?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80',
+    link: '/',
   },
   {
-    name: 'Courtney Henry',
-    title: 'Designer',
+    text: 'Lorem ipsum dolor sit amet',
+    number: 54,
     email: 'courtney.henry@example.com',
     linkLabel: 'Link here',
-    link: '/#',
-    picture:
-      'https://images.unsplash.com/photo-1517841905240-472988babdf9?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80',
+    link: '/',
   },
   {
-    name: 'Anderson a. First?',
-    title: 'Designer',
+    text: 'Lorem ipsum dolor sit amet',
+    number: 44,
     email: 'courtney.henry@example.com',
     linkLabel: 'Link here',
-    link: '/#',
-    picture:
-      'https://images.unsplash.com/photo-1517841905240-472988babdf9?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80',
+    link: '/',
   },
 ];
 
 // TODO:: add some kind of mixed test data, maybe faker?
 for (let i = 0; i < 100; i++) {
   testData.push({
-    name: 'Courtney Henry',
-    title: 'Designer',
+    text: 'Lorem ipsum dolor sit amet',
+    number: 32,
     email: 'courtney.henry@example.com',
     linkLabel: 'Link here',
-    link: '/#',
-    picture:
-      'https://images.unsplash.com/photo-1517841905240-472988babdf9?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80',
+    link: '/',
   })
 }
 
@@ -142,7 +137,7 @@ export const Docs: Story = {
       return { args, selected };
     },
     template: `
-      <div class="h-96 border border-dashed border-neutral-light">
+      <div class="h-96 border border-dashed border-neutral-300">
         <AntTable v-bind="args" v-model="selected">
           <template #emptyState>
           </template>
@@ -153,26 +148,24 @@ export const Docs: Story = {
   args: {
     headers: [
       {
-        title: 'Name',
-        identifier: 'name',
-        headerClassList: 'font-bold',
-        rowClassList: '',
+        title: 'Text',
+        identifier: 'text',
         type: AntTableRowTypes.text,
-        align: AntTableAlign.center,
         sortable: true,
-      },
-      {
-        title: 'Title',
-        identifier: 'title',
-        headerClassList: '',
-        rowClassList: '',
-        type: AntTableRowTypes.text,
+        lightVersion: true,
       },
       {
         title: 'E-Mail',
         identifier: 'email',
         rowClassList: '',
         type: AntTableRowTypes.text,
+      },
+      {
+        title: 'Number',
+        identifier: 'number',
+        type: AntTableRowTypes.text,
+        align: AntTableAlign.right,
+        lightVersion: true,
       },
       {
         title: 'Link',

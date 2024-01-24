@@ -27,7 +27,7 @@ export const Docs: Story = {
     },
     template: `
       <div class="w-screen h-screen" style="background: url('https://images.unsplash.com/photo-1703136678192-53fda2c5c602?q=80&w=3870&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D') lightgray 50% / cover no-repeat">
-      <div class="h-screen w-52 bg-primary">
+      <div class="h-screen w-52 bg-primary-500">
         <AntNavbar v-bind="args" />
       </div>
       </div>

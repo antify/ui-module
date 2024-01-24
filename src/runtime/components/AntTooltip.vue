@@ -40,33 +40,33 @@ const itemContainerClasses = computed(() => ({
 }));
 const contentClasses = computed(() => {
   const variants: Record<InputColorType, string> = {
-    [InputColorType.base]: 'text-neutral-lightest-font bg-neutral-lightest border-neutral-light',
-    [InputColorType.danger]: 'text-danger-font bg-danger border-danger',
-    [InputColorType.info]: 'text-info-font bg-info border-info',
-    [InputColorType.success]: 'text-success-font bg-success border-success',
-    [InputColorType.warning]: 'text-warning-font bg-warning border-warning',
+    [InputColorType.base]: 'text-neutral-50-font bg-neutral-50 border-neutral-300',
+    [InputColorType.danger]: 'text-danger-500-font bg-danger-500 border-danger-500',
+    [InputColorType.info]: 'text-info-500-font bg-info-500 border-info-500',
+    [InputColorType.success]: 'text-success-500-font bg-success-500 border-success-500',
+    [InputColorType.warning]: 'text-warning-500-font bg-warning-500 border-warning-500',
   };
 
   return {[variants[props.colorType]]: true};
 });
 const svgPathClasses = computed(() => {
   const variants: Record<InputColorType, string> = {
-    [InputColorType.base]: 'fill-neutral-lightest stroke-neutral-lightest',
-    [InputColorType.danger]: 'fill-danger stroke-danger',
-    [InputColorType.info]: 'fill-info stroke-info',
-    [InputColorType.success]: 'fill-success stroke-success',
-    [InputColorType.warning]: 'fill-warning stroke-warning',
+    [InputColorType.base]: 'fill-neutral-50 stroke-neutral-50',
+    [InputColorType.danger]: 'fill-danger-500 stroke-danger-500',
+    [InputColorType.info]: 'fill-info-500 stroke-info-500',
+    [InputColorType.success]: 'fill-success-500 stroke-success-500',
+    [InputColorType.warning]: 'fill-warning-500 stroke-warning-500',
   };
 
   return {[variants[props.colorType]]: true};
 });
 const arrowSvgPathClasses = computed(() => {
   const variants: Record<InputColorType, string> = {
-    [InputColorType.base]: 'stroke-neutral-light',
-    [InputColorType.danger]: 'stroke-danger',
-    [InputColorType.info]: 'stroke-info',
-    [InputColorType.success]: 'stroke-success',
-    [InputColorType.warning]: 'stroke-warning',
+    [InputColorType.base]: 'stroke-neutral-300',
+    [InputColorType.danger]: 'stroke-danger-500',
+    [InputColorType.info]: 'stroke-info-500',
+    [InputColorType.success]: 'stroke-success-500',
+    [InputColorType.warning]: 'stroke-warning-500',
   };
 
   return {[variants[props.colorType]]: true};

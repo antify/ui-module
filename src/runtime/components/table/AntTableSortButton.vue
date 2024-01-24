@@ -16,7 +16,7 @@ withDefaults(
 
 <template>
   <button
-    class="bg-neutral-lightest text-neutral-lightest-font rounded h-[26px] w-[26px] flex items-center justify-center"
+    class="bg-neutral-50 text-neutral-50-font rounded h-[26px] w-[26px] flex items-center justify-center"
     @click="$emit('sortClick')"
   >
     <AntIcon v-if="sortDirection === AntTableSortDirection.asc" :icon="faAngleDown" :size="IconSize.sm"/>

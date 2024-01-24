@@ -1,6 +1,6 @@
 /**
- * Convert html class syntax given as undefined, string ("text-base bg-primary") or
- * object syntax ({"text-base bg-primary": true}) always to object syntax ({"text-base bg-primary": true}).
+ * Convert html class syntax given as undefined, string ("text-base bg-primary-500") or
+ * object syntax ({"text-base bg-primary-500": true}) always to object syntax ({"text-base bg-primary-500": true}).
  *
  * @param classes
  */

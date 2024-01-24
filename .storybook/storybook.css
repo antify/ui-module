@@ -1,0 +1,7 @@
+.slot {
+  @apply p-2.5 rounded-md border-2 border-dashed border-neutral-300 flex items-center justify-center text-neutral-300 font-medium text-2xl;
+}
+
+.dashed {
+  @apply border border-dashed border-neutral-300;
+}

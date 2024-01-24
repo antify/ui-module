@@ -2,14 +2,14 @@
  * Set of helper functions for client side
  */
 import type {FetchResponse, FetchError} from 'ofetch';
-import {type RouteLocationRaw} from 'vue-router';
+import {type LocationQuery, type RouteLocationRaw} from 'vue-router';
 import {useNuxtApp, navigateTo, createError} from '#imports';
-import {ref, type Ref, watch} from 'vue';
+import {ref, type Ref} from 'vue';
 import {watchOnce} from '@vueuse/core';
 
 export async function handleNotFoundResponse(response: FetchResponse, fallbackUrl: RouteLocationRaw) {
   if (response._data?.notFound) {
-    useNuxtApp().$uiModule.toaster.toastError('Entry not found. Maybe an other user deleted it.')
+    useNuxtApp().$uiModule.toaster.toastError('Entity not found. Maybe an other user deleted it.')
 
     await navigateTo(fallbackUrl)
   }
@@ -21,7 +21,11 @@ export function handleResponseError(error: Ref<FetchError | null>) {
   }
 }
 
-function isFormDisabled(status: Ref) {
+function isFormDisabled(status: Ref | Ref[]): boolean {
+  if (Array.isArray(status)) {
+    return status.some((status) => isFormDisabled(status))
+  }
+
   return status.value === 'pending'
 }
 
@@ -54,6 +58,22 @@ function createSkeleton(pending: Ref<boolean>): Ref<boolean> {
   return skeleton
 }
 
+/**
+ * Detect if the given queryToWatch changed.
+ */
+function queryChanged(from: LocationQuery, to: LocationQuery, queryToWatch: string | string[]) : boolean {
+  const _queryToWatch = Array.isArray(queryToWatch) ? queryToWatch : [queryToWatch]
+  const changes = Object.keys(to).reduce((acc, key) => {
+    if (to[key] !== from[key]) {
+      acc[key] = to[key];
+    }
+
+    return acc;
+  }, {})
+
+  return _queryToWatch.some((key) => changes[key] !== undefined)
+}
+
 // function createFlickerProtectRef<T extends Ref>(refToProtect: T): T {
 //   watch(refToProtect, () => {
 //     const timeShowed = (Date.now() - (initialTimestamp || Date.now()));
@@ -78,6 +98,7 @@ export const useUiClient = () => {
     utils: {
       isFormDisabled,
       createSkeleton,
+      queryChanged
       // createFlickerProtectRef
     }
   }

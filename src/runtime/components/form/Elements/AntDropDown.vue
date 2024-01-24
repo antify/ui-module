@@ -36,11 +36,11 @@ const dropDownRef = ref<HTMLElement | null>(null);
 
 const dropdownClasses = computed(() => {
   const variants: Record<InputColorType, string> = {
-    [InputColorType.base]: 'bg-neutral-light border-neutral-light',
-    [InputColorType.success]: 'bg-success border-success',
-    [InputColorType.info]: 'bg-info border-info',
-    [InputColorType.warning]: 'bg-warning border-warning',
-    [InputColorType.danger]: 'bg-danger border-danger',
+    [InputColorType.base]: 'bg-neutral-300 border-neutral-300',
+    [InputColorType.success]: 'bg-success-500 border-success-500',
+    [InputColorType.info]: 'bg-info-500 border-info-500',
+    [InputColorType.warning]: 'bg-warning-500 border-warning-500',
+    [InputColorType.danger]: 'bg-danger-500 border-danger-500',
   };
 
   return {
@@ -54,11 +54,11 @@ const dropdownClasses = computed(() => {
 });
 const dropDownItemClasses = computed(() => {
   const variants: Record<InputColorType, string> = {
-    [InputColorType.base]: 'bg-neutral-lightest text-neutral-lightest-font',
-    [InputColorType.success]: 'bg-success-lighter border-success-lighter-font',
-    [InputColorType.info]: 'bg-info-lighter border-info-lighter-font',
-    [InputColorType.warning]: 'bg-warning-lighter border-warning-lighter-font',
-    [InputColorType.danger]: 'bg-danger-lighter border-danger-lighter-font',
+    [InputColorType.base]: 'bg-neutral-50 text-neutral-50-font',
+    [InputColorType.success]: 'bg-success-100 border-success-100-font',
+    [InputColorType.info]: 'bg-info-100 border-info-100-font',
+    [InputColorType.warning]: 'bg-warning-100 border-warning-100-font',
+    [InputColorType.danger]: 'bg-danger-100 border-danger-100-font',
   };
 
   return {
@@ -118,11 +118,11 @@ function onKeyDownDropDown(e: KeyboardEvent) {
 
 function getActiveDropDownItemClasses(option: SelectOption) {
   const variants: Record<InputColorType, string> = {
-    [InputColorType.base]: 'bg-neutral-lightest/25',
-    [InputColorType.success]: 'bg-success-lighter/25',
-    [InputColorType.info]: 'bg-info-lighter/25',
-    [InputColorType.warning]: 'bg-warning-lighter/25',
-    [InputColorType.danger]: 'bg-danger-lighter/25',
+    [InputColorType.base]: 'bg-neutral-50/25',
+    [InputColorType.success]: 'bg-success-100/25',
+    [InputColorType.info]: 'bg-info-100/25',
+    [InputColorType.warning]: 'bg-warning-100/25',
+    [InputColorType.danger]: 'bg-danger-100/25',
   };
 
   return option.value === focusedDropDownItem.value ? {[variants[props.colorType]]: true} : {};

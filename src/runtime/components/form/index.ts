@@ -1,4 +1,4 @@
-import AntButton from './AntButton.vue';
+import AntButton from '../buttons/AntButton.vue';
 import AntNumberInput from './AntNumberInput.vue';
 import AntRangeSlider from './AntRangeSlider.vue';
 import AntSwitcher from './AntSwitcher.vue';

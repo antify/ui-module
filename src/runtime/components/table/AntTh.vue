@@ -12,7 +12,7 @@ const props = defineProps<{
 const headerClasses = computed(() => {
   const classes = {
     [props.header.headerClassList || '']: true,
-    'px-2.5 py-0 h-[40px] text-sm text-neutral-lighter-font uppercase font-semi-bold': true,
+    'px-2.5 py-0 h-[40px] text-sm text-neutral-100-font uppercase font-semi-bold': true,
     'text-left': !props.header.align || props.header.align === AntTableAlign.left,
     'text-center': props.header.align === AntTableAlign.center,
     'text-right': props.header.align === AntTableAlign.right,

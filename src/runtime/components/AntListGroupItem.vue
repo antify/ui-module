@@ -12,20 +12,20 @@ const props = withDefaults(defineProps<{
   iconLeft?: IconDefinition;
   iconRight?: IconDefinition;
 }>(), {
-  colorType: ListGroupItemColorType.neutralLightest,
+  colorType: ListGroupItemColorType.neutral50,
 });
 
 const classes = computed(() => {
   const variants: Record<ListGroupItemColorType, string> = {
-    [ListGroupItemColorType.danger]: 'bg-danger text-danger-font',
-    [ListGroupItemColorType.info]: 'bg-info text-info-font',
-    [ListGroupItemColorType.neutralDark]: 'bg-neutral-dark text-neutral-dark-font',
-    [ListGroupItemColorType.neutralLight]: 'bg-neutral-light text-neutral-light-font',
-    [ListGroupItemColorType.neutralLightest]: 'bg-neutral-lightest text-neutral-lightest-font',
-    [ListGroupItemColorType.primary]: 'bg-primary text-primary-font',
-    [ListGroupItemColorType.secondary]: 'bg-secondary text-secondary-font',
-    [ListGroupItemColorType.success]: 'bg-success text-success-font',
-    [ListGroupItemColorType.warning]: 'bg-warning text-warning-font',
+    [ListGroupItemColorType.danger]: 'bg-danger-500 text-danger-500-font',
+    [ListGroupItemColorType.info]: 'bg-info-500 text-info-500-font',
+    [ListGroupItemColorType.neutral700]: 'bg-neutral-700 text-neutral-700-font',
+    [ListGroupItemColorType.neutral300]: 'bg-neutral-300 text-neutral-300-font',
+    [ListGroupItemColorType.neutral50]: 'bg-neutral-50 text-neutral-50-font',
+    [ListGroupItemColorType.primary]: 'bg-primary-500 text-primary-500-font',
+    [ListGroupItemColorType.secondary]: 'bg-secondary-500 text-secondary-500-font',
+    [ListGroupItemColorType.success]: 'bg-success-500 text-success-500-font',
+    [ListGroupItemColorType.warning]: 'bg-warning-500 text-warning-500-font',
   };
 
   return {
@@ -35,20 +35,20 @@ const classes = computed(() => {
 });
 const contentWrapperClasses = computed(() => {
   const variants: Record<ListGroupItemColorType, string> = {
-   [ListGroupItemColorType.danger]: 'text-danger-font',
-   [ListGroupItemColorType.info]: 'text-info-font',
-   [ListGroupItemColorType.neutralDark]: 'text-neutral-dark-font',
-   [ListGroupItemColorType.neutralLight]: 'text-neutral-light-font',
-   [ListGroupItemColorType.neutralLightest]: 'text-neutral-lightest-font',
-   [ListGroupItemColorType.primary]: 'text-primary-font',
-   [ListGroupItemColorType.secondary]: 'text-secondary-font',
-   [ListGroupItemColorType.success]: 'text-success-font',
-   [ListGroupItemColorType.warning]: 'text-warning-font',
+   [ListGroupItemColorType.danger]: 'text-danger-500-font',
+   [ListGroupItemColorType.info]: 'text-info-500-font',
+   [ListGroupItemColorType.neutral700]: 'text-neutral-700-font',
+   [ListGroupItemColorType.neutral300]: 'text-neutral-300-font',
+   [ListGroupItemColorType.neutral50]: 'text-neutral-50-font',
+   [ListGroupItemColorType.primary]: 'text-primary-500-font',
+   [ListGroupItemColorType.secondary]: 'text-secondary-500-font',
+   [ListGroupItemColorType.success]: 'text-success-500-font',
+   [ListGroupItemColorType.warning]: 'text-warning-500-font',
   };
 
   return {
     'w-full p-2.5 flex gap-2.5 items-center justify-between': true,
-    'hover:bg-neutral-darkest/25 cursor-pointer transition-colors': props.to !== undefined,
+    'hover:bg-neutral-950/25 cursor-pointer transition-colors': props.to !== undefined,
     [variants[props.colorType]]: props.to !== undefined
   };
 });

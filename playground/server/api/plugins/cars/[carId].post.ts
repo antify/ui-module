@@ -2,7 +2,7 @@ import {type Car, validator} from "../../../../glue/plugins/car";
 import {faker} from "@faker-js/faker";
 
 export default defineEventHandler(async (event) => {
-  const body = validator.validate(await readBody(event));
+  const body = validator.validate(await readBody(event), 'server-post');
 
   if (validator.hasErrors()) {
     throw new Error(validator.getErrorsAsString());
@@ -10,18 +10,16 @@ export default defineEventHandler(async (event) => {
 
   const storage = useStorage('db');
   const cars = (await storage.getItem<Car[]>('cars')) || [];
-  const id = faker.string.uuid();
-
-  cars[id] = {
-    id,
+  const newCar = {
+    id: faker.string.uuid(),
     createdAt: new Date(),
     updatedAt: new Date(),
     ...body
-  };
+  }
 
-  console.log(cars[id]);
+  cars.push(newCar)
 
   await storage.setItem('cars', cars);
 
-  return cars[id];
+  return newCar;
 })

@@ -1,9 +1,3 @@
-<script lang="ts">
-export default {
-  inheritAttrs: false,
-};
-</script>
-
 <script setup lang="ts">
 import AntField from './Elements/AntField.vue';
 import {FieldValidator} from '@antify/validate';
@@ -11,6 +5,8 @@ import {useVModel} from '@vueuse/core';
 import {computed, onMounted} from 'vue';
 import {InputColorType, Size} from '../../enums';
 import {handleEnumValidation} from '../../handler';
+
+defineOptions({ inheritAttrs: false });
 
 const emits = defineEmits(['update:modelValue', 'update:skeleton'])
 const props = withDefaults(defineProps<{
@@ -44,7 +40,7 @@ const inputClasses = computed(() => {
   };
 
   return {
-    'ant-range-slider transition-colors relative border-none w-full focus:z-10 h-2 bg-neutral-light rounded-md outline-none': true,
+    'ant-range-slider transition-colors relative border-none w-full focus:z-10 h-2 bg-neutral-300 rounded-md outline-none': true,
     'disabled:opacity-50 disabled:cursor-not-allowed': props.disabled,
     'invisible': props.skeleton,
     [variants[_colorType.value]]: true
