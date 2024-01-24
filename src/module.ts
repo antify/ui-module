@@ -6,10 +6,13 @@ import {
   addComponentsDir,
   addImportsDir,
 } from '@nuxt/kit';
+import type {NuxtModule} from 'nuxt/schema';
 
 const moduleKey = 'uiModule';
 
-const module = defineNuxtModule({
+type ModuleOptions = {};
+
+const module: NuxtModule<ModuleOptions> = defineNuxtModule<ModuleOptions>({
   meta: {
     name: 'ui-module',
     configKey: moduleKey
@@ -41,7 +44,7 @@ const module = defineNuxtModule({
 
     nuxt.options.runtimeConfig.public[moduleKey] = options;
   }
-});
+})
 
 /**
  * Export it like this, because otherwise following error get thrown:
