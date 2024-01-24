@@ -1,9 +1,3 @@
-<script lang="ts">
-export default {
-  inheritAttrs: false,
-};
-</script>
-
 <script lang="ts" setup>
 import {computed, onMounted} from 'vue';
 import AntButton from '../buttons/AntButton.vue'
@@ -17,6 +11,8 @@ import {Grouped} from '../../enums/Grouped.enum';
 import {BaseInputType} from './Elements/__types';
 import {handleEnumValidation} from '../../handler';
 import {FieldValidator} from '@antify/validate';
+
+defineOptions({ inheritAttrs: false });
 
 const props = withDefaults(defineProps<{
   modelValue: number | null;

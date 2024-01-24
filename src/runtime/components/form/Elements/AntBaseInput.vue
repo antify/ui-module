@@ -1,9 +1,3 @@
-<script lang="ts">
-export default {
-  inheritAttrs: false,
-};
-</script>
-
 <script lang="ts" setup>
 import {computed, onMounted, watch} from 'vue';
 import {Size} from '../../../enums/Size.enum'
@@ -23,6 +17,8 @@ import {type IconDefinition} from '@fortawesome/free-solid-svg-icons';
 import {classesToObjectSyntax} from '../../../utils';
 import {InputColorType} from '../../../enums';
 import {IconSize} from '../../__types';
+
+defineOptions({ inheritAttrs: false });
 
 const emit = defineEmits(['update:value', 'blur', 'validate']);
 const props = withDefaults(defineProps<{

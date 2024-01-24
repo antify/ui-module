@@ -1,11 +1,5 @@
-<!--<script lang="ts">-->
-<!--export default {-->
-<!--  name: 'AntRichTextEditor',-->
-<!--  inheritAttrs: false,-->
-<!--};-->
-<!--</script>-->
-
 <!--<script lang="ts" setup>-->
+<!--defineOptions({ inheritAttrs: false });-->
 <!--// TODO:: fix ts errors-->
 <!--// @ts-nocheck-->
 <!--import {ref, computed, onUnmounted, watch} from 'vue';-->

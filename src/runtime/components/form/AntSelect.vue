@@ -1,10 +1,3 @@
-<script lang="ts">
-export default {
-  name: 'AntSelect',
-  inheritAttrs: false,
-};
-</script>
-
 <script lang="ts" setup>
 /**
  * This select is a custom component instead of a native <select> because the dropdown is not good
@@ -35,6 +28,7 @@ import {ColorType, InputColorType} from '../../enums';
 import {IconSize} from '../__types';
 import AntDropDown from './Elements/AntDropDown.vue';
 
+defineOptions({ inheritAttrs: false });
 const props = withDefaults(
     defineProps<{
       modelValue: string | number | null;

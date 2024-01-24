@@ -1,16 +1,11 @@
-<script lang="ts">
+<script setup lang="ts">
 /**
  * It is not possible to smoothly animate height or max-height with CSS transitions not using a fixed value
  * like 'height: 1rem';
  *
  * This component does it via javascript.
  */
-export default {
-  name: 'AntTransitionCollapseHeight',
-};
-</script>
 
-<script setup lang="ts">
 // @ts-nocheck
 // TODO:: fix typescript errors
 /**

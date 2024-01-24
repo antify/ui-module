@@ -1,9 +1,3 @@
-<script lang="ts">
-export default {
-  inheritAttrs: false,
-};
-</script>
-
 <script lang="ts" setup>
 import {AntTableSortDirection, type TableHeader} from './__types/TableHeader.type';
 import {computed, ref, type Ref, watch} from 'vue';
@@ -13,6 +7,8 @@ import AntTh from './AntTh.vue';
 import AntTd from './AntTd.vue';
 import AntSpinner from '../AntSpinner.vue';
 import AntSkeleton from '../AntSkeleton.vue';
+
+defineOptions({ inheritAttrs: false });
 
 const emits = defineEmits([
   'update:modelValue',

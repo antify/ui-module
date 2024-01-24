@@ -1,9 +1,3 @@
-<script lang="ts">
-export default {
-  inheritAttrs: false,
-};
-</script>
-
 <script lang="ts" setup>
 import {onMounted} from 'vue';
 import AntField from './Elements/AntField.vue'
@@ -14,6 +8,8 @@ import {handleEnumValidation} from '../../handler';
 import {useVModel} from '@vueuse/core';
 import {InputColorType} from '../../enums';
 import {BaseInputType} from './Elements/__types';
+
+defineOptions({ inheritAttrs: false });
 
 const emit = defineEmits(['update:modelValue', 'update:skeleton', 'validate']);
 const props = withDefaults(defineProps<{

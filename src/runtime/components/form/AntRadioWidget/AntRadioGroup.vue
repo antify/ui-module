@@ -1,9 +1,3 @@
-<script lang="ts">
-export default {
-  inheritAttrs: false,
-};
-</script>
-
 <script lang="ts" setup>
 import AntRadio from './AntRadio.vue';
 import { useVModel } from '@vueuse/core';
@@ -13,6 +7,8 @@ import { InputColorType, Size } from '../../../enums';
 import { FieldValidator } from '@antify/validate';
 import { computed, type Ref, watch } from 'vue';
 import { Direction } from '../../../enums/Direction.enum';
+
+defineOptions({ inheritAttrs: false });
 
 const emits = defineEmits([ 'update:modelValue', 'update:skeleton' ]);
 const props = withDefaults(

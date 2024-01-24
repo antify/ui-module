@@ -1,9 +1,3 @@
-<script lang="ts">
-export default {
-  inheritAttrs: false,
-};
-</script>
-
 <script lang="ts" setup>
 import {computed, onMounted, watch} from 'vue';
 import {Size} from '../../enums/Size.enum'
@@ -22,6 +16,8 @@ import AntField from './Elements/AntField.vue';
 import {useVModel} from '@vueuse/core';
 import {InputColorType} from '../../enums';
 import {IconSize} from '../__types';
+
+defineOptions({ inheritAttrs: false });
 
 const emit = defineEmits(['update:modelValue', 'validate', 'blur']);
 const props = withDefaults(defineProps<{
