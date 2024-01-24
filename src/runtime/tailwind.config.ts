@@ -187,6 +187,7 @@ export default {
     './src/runtime/**/*.{vue,js,ts,jsx,tsx}',
     './src/runtime/**/*.stories.ts',
     './playground/**/*.{vue,js,ts,jsx,tsx}',
+    '../ui-module/src/**/*.{vue,js,ts,jsx,tsx}',
 
     // For project dev
     './app.vue',
