@@ -1,11 +1,5 @@
-<script lang="ts">
-// TODO:: Fix typo KeyCap with upperchar C
-export default {
-  name: 'AntKeycap',
-};
-</script>
-
 <script lang="ts" setup>
+// TODO:: Fix typo KeyCap with upperchar C
 import AntIcon from './AntIcon.vue';
 import {type IconDefinition} from '@fortawesome/free-solid-svg-icons';
 import {IconSize} from './__types';
