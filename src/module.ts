@@ -6,15 +6,10 @@ import {
   addComponentsDir,
   addImportsDir,
 } from '@nuxt/kit';
-import type {NuxtModule} from 'nuxt/schema';
 
 const moduleKey = 'uiModule';
 
-type ModuleOptions = {
-  toasterMessageShowTime: number;
-};
-
-const module = defineNuxtModule<ModuleOptions>({
+const module = defineNuxtModule({
   meta: {
     name: 'ui-module',
     configKey: moduleKey
