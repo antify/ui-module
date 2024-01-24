@@ -9,18 +9,18 @@ withDefaults(defineProps<{
 <template>
   <div class="flex w-full h-full">
     <div
-      class="left-content h-full flex flex-col bg-neutral-light gap-px overflow-hidden"
+      class="left-content h-full flex flex-col bg-neutral-300 gap-px overflow-hidden"
       :class="{'w-[40rem]': showDetail, 'w-full': !showDetail}"
     >
-      <div class="bg-neutral-lightest">
+      <div class="bg-neutral-50">
         <slot name="search-section"/>
       </div>
 
-      <div class="bg-neutral-lightest flex-grow h-full overflow-hidden">
+      <div class="bg-neutral-50 flex-grow h-full overflow-hidden">
         <slot name="table-section"/>
       </div>
 
-      <div class="bg-neutral-lightest">
+      <div class="bg-neutral-50">
         <slot name="table-nav-section"/>
       </div>
     </div>
@@ -28,7 +28,7 @@ withDefaults(defineProps<{
     <transition name="right-content">
       <div
         v-if="showDetail"
-        class="flex flex-col gap-px border-l border-neutral-light overflow-hidden"
+        class="flex flex-col gap-px border-l border-neutral-300 overflow-hidden"
         :class="{'w-full': showDetail}"
       >
         <slot/>

@@ -21,7 +21,7 @@ import {classesToObjectSyntax} from '../../utils';
 import AntField from './Elements/AntField.vue';
 import {useVModel} from '@vueuse/core';
 import {InputColorType} from '../../enums';
-import {IconColorType, IconSize} from '../__types';
+import {IconSize} from '../__types';
 
 const emit = defineEmits(['update:modelValue', 'validate', 'blur']);
 const props = withDefaults(defineProps<{
@@ -59,11 +59,11 @@ const icons = {
 };
 const inputClasses = computed(() => {
   const variants: Record<InputColorType, string> = {
-    [InputColorType.base]: 'outline-neutral-light focus:outline-primary focus:ring-primary/25 bg-neutral-lightest placeholder:text-neutral',
-    [InputColorType.danger]: 'outline-danger focus:outline-danger focus:ring-danger/25 bg-danger-lighter placeholder:text-danger-dark',
-    [InputColorType.info]: 'outline-info focus:outline-info focus:ring-info/25 bg-info-lighter placeholder:text-info-dark',
-    [InputColorType.success]: 'outline-success focus:outline-success focus:ring-success/25 bg-success-lighter placeholder:text-success-dark',
-    [InputColorType.warning]: 'outline-warning focus:outline-warning focus:ring-warning/25 bg-warning-lighter placeholder:text-warning-dark',
+    [InputColorType.base]: 'outline-neutral-300 focus:outline-primary-500 focus:ring-primary/25 bg-neutral-50 placeholder:text-neutral-500',
+    [InputColorType.danger]: 'outline-danger-500 focus:outline-danger-500 focus:ring-danger/25 bg-danger-100 placeholder:text-danger-700',
+    [InputColorType.info]: 'outline-info-500 focus:outline-info-500 focus:ring-info/25 bg-info-100 placeholder:text-info-700',
+    [InputColorType.success]: 'outline-success-500 focus:outline-success-500 focus:ring-success/25 bg-success-100 placeholder:text-success-700',
+    [InputColorType.warning]: 'outline-warning-500 focus:outline-warning-500 focus:ring-warning/25 bg-warning-100 placeholder:text-warning-700',
   };
   return {
     'block transition-colors relative border-none outline w-full focus:z-10': true,
@@ -83,6 +83,19 @@ const inputClasses = computed(() => {
     'rounded-md': props.grouped === Grouped.none,
     'invisible': props.skeleton
   };
+});
+const iconColor = computed(() => {
+  const variants = {
+    'base': undefined,
+    'danger': 'text-danger-500',
+    'info': 'text-info-500',
+    'primary': 'text-primary-500',
+    'secondary': 'text-secondary-500',
+    'success': 'text-success-500',
+    'warning': 'text-warning-500',
+  };
+
+  return variants[_colorType.value];
 });
 const _wrapperClass = computed(() => classesToObjectSyntax(props.wrapperClass));
 const icon = computed(() => icons[_colorType.value]);
@@ -146,7 +159,7 @@ function onBlur(e: FocusEvent) {
         <AntIcon
           :icon="icon"
           :size="size as unknown as IconSize"
-          :color-type="_colorType as unknown as IconColorType"
+          :color="iconColor"
         />
       </div>
 

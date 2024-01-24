@@ -49,30 +49,30 @@ function closeModal() {
       <transition :name="!fullscreen ? 'bounce' : 'bounce-slow'">
         <div
           v-if="openModal"
-          class="flex flex-col gap-px bg-neutral-light overflow-hidden cursor-auto"
-          :class="{'w-full h-full': fullscreen, 'border border-neutral-light rounded-md shadow-md': !fullscreen}"
+          class="flex flex-col gap-px bg-neutral-300 overflow-hidden cursor-auto"
+          :class="{'w-full h-full': fullscreen, 'border border-neutral-300 rounded-md shadow-md': !fullscreen}"
         >
           <div
-            class="bg-neutral-lightest p-2.5 flex items-center justify-between text-neutral-lightest-font text-lg font-medium">
+            class="bg-neutral-50 p-2.5 flex items-center justify-between text-neutral-50-font text-lg font-medium">
             <slot name="title">
               {{ title }}
             </slot>
 
             <AntButton
               :icon-left="faXmark"
-              :bordered="false"
-              outlined
+              :outlined="false"
+              filled
               @click="closeModal"
             />
           </div>
 
-          <div class="bg-neutral-lightest p-2.5 grow overflow-y-auto">
+          <div class="bg-neutral-50 p-2.5 grow overflow-y-auto">
             <slot/>
           </div>
 
           <div
             v-if="useSlots()['footer'] || false"
-            class="bg-neutral-lightest p-2.5 text-neutral-lightest-font"
+            class="bg-neutral-50 p-2.5 text-neutral-50-font"
           >
             <slot name="footer"/>
           </div>

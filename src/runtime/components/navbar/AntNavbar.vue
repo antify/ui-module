@@ -9,7 +9,7 @@ defineProps<{
 }>();
 
 const containerClasses = computed(() => ({
-  'w-full h-full bg-neutral-lightest flex flex-col gap-1 p-1.5': true,
+  'w-full h-full bg-white flex flex-col gap-1 p-1.5': true,
 }))
 
 </script>

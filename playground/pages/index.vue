@@ -7,7 +7,7 @@ import {InputColorType} from '#uiModule';
 const {$uiModule} = useNuxtApp();
 
 const validator = ref(useValidator((val) => val === 'asdf' || 'Value must be "asdf"'));
-const outlined = ref(false);
+const filled = ref(false);
 const modalOpen = ref(false);
 
 const addToast = (type: InputColorType) => {
@@ -25,9 +25,9 @@ const addToast = (type: InputColorType) => {
 
     <AntField label="Button">
       <AntButton
-        :outlined="outlined"
+        :filled="filled"
         color-type="danger"
-        @click="outlined = !outlined"
+        @click="filled = !filled"
       >
         Click me to change my style
       </AntButton>

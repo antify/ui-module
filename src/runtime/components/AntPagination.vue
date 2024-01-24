@@ -171,17 +171,17 @@ const pagination = computed(() => {
         :disabled="page === 1"
         :icon-left="faChevronLeft"
         :grouped="Grouped.left"
-        outlined
+        filled
         @click="() => page = page - 1"
       />
 
       <AntButton
         v-for="(pageObj, index) in pagination"
         :color-type="pageObj === page ? ColorType.primary : ColorType.base"
-        :class="{'text-primary': pageObj === page}"
+        :class="{'text-primary-500 z-10': pageObj === page}"
         :disabled="pageObj === '...'"
         :grouped="Grouped.center"
-        :outlined="pageObj !== page"
+        :filled="pageObj !== page"
         @click="() => page = pageObj"
         v-bind:key="`pagination-button-${index}`"
       >
@@ -192,7 +192,7 @@ const pagination = computed(() => {
         :icon-left="faChevronRight"
         :grouped="Grouped.right"
         :disabled="page === pages"
-        outlined
+        filled
         @click="() => page = page + 1"
       />
     </div>

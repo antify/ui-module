@@ -35,7 +35,7 @@ export const Docs: Story = {
             <AntTooltip v-bind="args">
               <template #content>Lorem ipsum dolor sit amet <br/> foo</template>
               <template #default>
-                <span class="text-primary bg-danger">
+                <span class="text-primary-500 bg-danger-500">
                   Hover me
                 </span>
               </template>

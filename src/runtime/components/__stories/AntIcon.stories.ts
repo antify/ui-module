@@ -1,25 +1,25 @@
 import AntIcon from '../AntIcon.vue';
-import { type Meta, type StoryObj } from "@storybook/vue3";
-import { faTag } from "@fortawesome/free-solid-svg-icons";
-import { IconColorType, IconSize } from "../__types/AntIcon.types";
+import {type Meta, type StoryObj} from '@storybook/vue3';
+import {faTag} from '@fortawesome/free-solid-svg-icons';
+import {IconSize} from '../__types/AntIcon.types';
 
 const meta: Meta<typeof AntIcon> = {
   title: 'Components/Icon',
   component: AntIcon,
-  parameters: { controls: { sort: 'requiredFirst' } },
+  parameters: {controls: {sort: 'requiredFirst'}},
   argTypes: {
     size: {
-      control: { type: 'radio' },
+      control: {type: 'radio'},
       options: Object.values(IconSize),
     },
-    colorType: {
-      control: { type: 'select' },
-      options: Object.values(IconColorType)
-    },
     icon: {
-      control: { type: 'none' },
+      control: {type: 'none'},
       description:
         'Use Font-awesome Icons.',
+    },
+    color: {
+      control: {type: 'text'},
+      description: 'A text-* css class to change the color of the icon.',
     },
   },
 };
@@ -30,64 +30,66 @@ type Story = StoryObj<typeof AntIcon>;
 
 export const Docs: Story = {
   render: (args) => ({
-    components: { AntIcon },
+    components: {AntIcon},
     setup() {
-      function logClick() {
-        console.log("Clicked close icon")
-      }
-
-      return { args, logClick };
+      return {args};
     },
-    template: '<AntIcon v-bind="args" @close="logClick">Tag</AntIcon>',
+    template: '<AntIcon v-bind="args"/>',
   }),
   args: {
     icon: faTag,
   },
 };
-export const small: Story = {
-  render: Docs.render,
-  args: {
-    ...Docs.args,
-    size: IconSize.sm,
-  },
-};
-export const large: Story = {
-  render: Docs.render,
-  args: {
-    ...Docs.args,
-    size: IconSize.xl3,
-  },
-};
-export const colors: Story = {
+
+export const Size: Story = {
   render: (args) => ({
-    components: { AntIcon },
+    components: {AntIcon},
     setup() {
-      return { args, IconColorType };
+      return {args};
     },
     template: `
-      <div class="flex items-center gap-1.5">
-        <AntIcon v-bind="args" :color-type="IconColorType.base">Tag</AntIcon>
-        <span>base</span>
+      <div class="flex flex-col gap-2.5">
+        <AntIcon v-bind="args" size="sm"/>
+        <AntIcon v-bind="args" size="md"/>
+        <AntIcon v-bind="args" size="3xl"/>
       </div>
-      <div class="flex items-center gap-1.5">
-        <AntIcon v-bind="args" :color-type="IconColorType.primary">Tag</AntIcon>
+    `,
+  }),
+  args: {
+    icon: faTag,
+  },
+};
+
+export const Color: Story = {
+  render: (args) => ({
+    components: {AntIcon},
+    setup() {
+      return {args};
+    },
+    template: `
+      <div class="flex items-center gap-2.5">
+        <AntIcon v-bind="args" color="text-primary-500"/>
         <span>primary</span>
       </div>
-      <div class="flex items-center gap-1.5">
-        <AntIcon v-bind="args" :color-type="IconColorType.secondary">Tag</AntIcon>
+      <div class="flex items-center gap-2.5">
+        <AntIcon v-bind="args" color="text-secondary-500"/>
         <span>secondary</span>
       </div>
-      <div class="flex items-center gap-1.5">
-        <AntIcon v-bind="args" :color-type="IconColorType.danger">Tag</AntIcon>
-        <span>danger</span>
-      </div>
-      <div class="flex items-center gap-1.5">
-        <AntIcon v-bind="args" :color-type="IconColorType.info">Tag</AntIcon>
+      <div class="flex items-center gap-2.5">
+        <AntIcon v-bind="args" color="text-info-500"/>
         <span>info</span>
       </div>
-      <div class="flex items-center gap-1.5">
-        <AntIcon v-bind="args" :color-type="IconColorType.success">Tag</AntIcon>
+      <div class="flex items-center gap-2.5">
+        <AntIcon v-bind="args" color="text-success-500"/>
         <span>success</span>
+      </div>
+      <div class="flex items-center gap-2.5">
+        <AntIcon v-bind="args" color="text-info-500">Warning</AntIcon>
+        <span>warning</span>
+      </div>
+      <div class="flex items-center gap-2.5">
+        <AntIcon v-bind="args" color="text-danger-500"/>
+        <span>danger</span>
       </div>
     `,
   }),

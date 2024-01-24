@@ -8,7 +8,6 @@ import AntIcon from '../AntIcon.vue';
 import {computed, ref, watch} from 'vue';
 import AntButton from '../buttons/AntButton.vue';
 import {faFilter, faMultiply} from '@fortawesome/free-solid-svg-icons';
-import {IconColorType} from '../__types/AntIcon.types';
 import {ColorType, Grouped, Position} from '../../enums';
 import {useRoute, useRouter} from 'vue-router';
 
@@ -62,7 +61,7 @@ watch(() => props.fullWidth, (val) => {
 </script>
 
 <template>
-  <div class="flex h-full items-center p-2.5 gap-2.5 bg-neutral-lightest">
+  <div class="flex h-full items-center p-2.5 gap-2.5 bg-neutral-50">
     <div
       class="flex gap-2.5 flex-grow"
       :class="{'flex-grow': !_fullWidth}"
@@ -81,29 +80,22 @@ watch(() => props.fullWidth, (val) => {
       >
         <div class="flex">
           <AntButton
-            outlined
             :color-type="hasFilter ? ColorType.info : ColorType.base"
             :grouped="hasFilter ? Grouped.left : Grouped.none"
             :skeleton="skeleton"
+            :icon-left="faFilter"
             @click="() => showDropdown = !showDropdown"
-          >
-            <AntIcon
-              :icon="faFilter"
-              :color-type="IconColorType.info"
-            />
-          </AntButton>
+          />
+
           <AntButton
             v-if="hasFilter"
             :color-type="ColorType.info"
             :grouped="Grouped.right"
             :skeleton="skeleton"
+            :icon-left="faMultiply"
+            filled
             @click="$emit('removeFilter')"
-          >
-            <AntIcon
-              :icon="faMultiply"
-              :color-type="IconColorType.neutral"
-            />
-          </AntButton>
+          />
         </div>
 
         <template #content>
@@ -115,7 +107,7 @@ watch(() => props.fullWidth, (val) => {
     <div v-if="_fullWidth">
       <slot name="buttons">
         <AntCreateButton
-          outlined
+          filled
           :skeleton="skeleton"
           @click="() => emit('create')"
         />

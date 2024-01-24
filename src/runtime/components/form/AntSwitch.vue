@@ -36,7 +36,7 @@ const buttonClasses = computed(() => {
     'focus-within:ring-4': props.size === Size.md && hasAction.value,
     'h-4 w-[30px]': props.size === Size.sm,
     'h-5 w-9': props.size === Size.md,
-    'bg-neutral-light': !_value.value,
+    'bg-neutral-300': !_value.value,
     'invisible': props.skeleton,
     // Disabled
     'opacity-50 cursor-not-allowed': props.disabled,
@@ -44,18 +44,18 @@ const buttonClasses = computed(() => {
   };
 
   const colorVariant = {
-    [InputColorType.base]: 'focus-within:ring-primary-lighter',
-    [InputColorType.danger]: 'focus-within:ring-danger-lighter',
-    [InputColorType.info]: 'focus-within:ring-info-lighter',
-    [InputColorType.success]: 'focus-within:ring-success-lighter',
-    [InputColorType.warning]: 'focus-within:ring-warning-lighter',
+    [InputColorType.base]: 'focus-within:ring-primary-100',
+    [InputColorType.danger]: 'focus-within:ring-danger-100',
+    [InputColorType.info]: 'focus-within:ring-info-100',
+    [InputColorType.success]: 'focus-within:ring-success-100',
+    [InputColorType.warning]: 'focus-within:ring-warning-100',
   };
   const activeColorVariant = {
-    [InputColorType.base]: 'bg-primary',
-    [InputColorType.danger]: 'bg-danger',
-    [InputColorType.info]: 'bg-info',
-    [InputColorType.success]: 'bg-success',
-    [InputColorType.warning]: 'bg-warning',
+    [InputColorType.base]: 'bg-primary-500',
+    [InputColorType.danger]: 'bg-danger-500',
+    [InputColorType.info]: 'bg-info-500',
+    [InputColorType.success]: 'bg-success-500',
+    [InputColorType.warning]: 'bg-warning-500',
   };
 
   classes[colorVariant[_colorType.value]] = hasAction.value;
@@ -65,7 +65,7 @@ const buttonClasses = computed(() => {
 })
 
 const ballClasses = computed(() => ({
-  'pointer-events-none inline-block rounded-full bg-neutral-lighter shadow transform ring-0 transition ease-in-out duration-200': true,
+  'pointer-events-none inline-block rounded-full bg-neutral-100 shadow transform ring-0 transition ease-in-out duration-200': true,
   'h-4 w-4 translate-y-0.5': props.size === Size.md,
   'h-3.5 w-3.5  translate-y-[1px]': props.size === Size.sm,
   'translate-x-[1.125rem]': _value.value && props.size === Size.md,
@@ -77,7 +77,7 @@ const ballClasses = computed(() => ({
 
 const valueClasses = computed(() => {
   const classes = {
-    'text-neutral-lightest-font': true,
+    'text-neutral-50-font': true,
     'text-sm': props.size === Size.sm,
     'text-md': props.size === Size.md,
     'opacity-50 cursor-not-allowed': props.disabled

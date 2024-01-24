@@ -47,7 +47,7 @@ export const Docs: Story = {
                 labore et dolore magna aliquyam erat, sed diam voluptua.
               </template>
               <template #default>
-                <AntButton @click="() => showDropdown = !showDropdown" outlined>Click me</AntButton>
+                <AntButton @click="() => showDropdown = !showDropdown" filled>Click me</AntButton>
               </template>
             </AntDropdown>
           </div>

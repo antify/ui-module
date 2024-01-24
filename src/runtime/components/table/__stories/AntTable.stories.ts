@@ -137,7 +137,7 @@ export const Docs: Story = {
       return { args, selected };
     },
     template: `
-      <div class="h-96 border border-dashed border-neutral-light">
+      <div class="h-96 border border-dashed border-neutral-300">
         <AntTable v-bind="args" v-model="selected">
           <template #emptyState>
           </template>

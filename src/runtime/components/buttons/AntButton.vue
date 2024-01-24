@@ -1,8 +1,4 @@
 <script lang="ts" setup>
-/**
- * TODO:: - summary height with border is not correct
- *  - not outlined version has no border
- */
 import {type IconDefinition} from '@fortawesome/free-solid-svg-icons';
 import {computed, onMounted} from 'vue';
 import {type RouteLocationRaw} from 'vue-router';
@@ -12,13 +8,14 @@ import {Grouped} from '../../enums/Grouped.enum';
 import {Size} from '../../enums/Size.enum';
 import {handleEnumValidation} from '../../handler';
 import {ColorType} from '../../enums';
-import {ButtonType} from '../form/__types';
+import {ButtonType} from './__types';
 import AntIcon from '../AntIcon.vue';
 import {IconSize} from '../__types/AntIcon.types';
 
-const emit = defineEmits(['click', 'blur']);
+defineEmits(['click', 'blur']);
+
 const props = withDefaults(defineProps<{
-  outlined?: boolean;
+  filled?: boolean;
   size?: Size;
   colorType?: ColorType;
   iconLeft?: IconDefinition;
@@ -31,12 +28,12 @@ const props = withDefaults(defineProps<{
   readonly?: boolean;
   expanded?: boolean;
   submit?: boolean;
-  bordered?: boolean;
+  outlined?: boolean;
   noFocus?: boolean;
 }>(), {
   colorType: ColorType.base,
   disabled: false,
-  outlined: false,
+  filled: false,
   skeleton: false,
   spinner: false,
   size: Size.md,
@@ -44,82 +41,107 @@ const props = withDefaults(defineProps<{
   readonly: false,
   expanded: false,
   submit: false,
-  bordered: true,
+  outlined: true,
   noFocus: false,
 });
 
-const hasAction = computed(() => (!props.skeleton && !props.readonly && !props.disabled))
+const hasAction = computed(() => (props.skeleton || props.readonly || props.disabled))
 const groupedClassList = computed(() => ({
-  'rounded-tl-md rounded-bl-md rounded-tr-none rounded-br-none': props.grouped === Grouped.left,
-  'rounded-none': props.grouped === Grouped.center,
-  'rounded-tl-none rounded-bl-none rounded-tr-md rounded-br-md': props.grouped === Grouped.right,
+  'rounded-tl-md rounded-bl-md rounded-tr-none rounded-br-none -mr-px': props.grouped === Grouped.left,
+  'rounded-none -mx-px': props.grouped === Grouped.center,
+  'rounded-tl-none rounded-bl-none rounded-tr-md rounded-br-md -ml-px': props.grouped === Grouped.right,
   'rounded-md': props.grouped === Grouped.none,
 }));
 const classes = computed(() => {
-  const hasActionVariants = {
-    'base': 'focus:ring-primary/25',
-    'danger': 'focus:ring-danger/25',
-    'info': 'focus:ring-info/25',
-    'primary': 'focus:ring-primary/25',
-    'secondary': 'focus:ring-secondary/25',
-    'success': 'focus:ring-success/25',
-    'warning': 'focus:ring-warning/25',
+  const variants = {
+    [ColorType.base]: 'ring-primary-200 outline-neutral-300',
+    [ColorType.danger]: 'ring-danger-200 outline-danger-500',
+    [ColorType.info]: 'ring-info-200 outline-info-500',
+    [ColorType.primary]: 'ring-primary-200 outline-primary-500',
+    [ColorType.secondary]: 'ring-secondary-200 outline-secondary-500',
+    [ColorType.success]: 'ring-success-200 outline-success-500',
+    [ColorType.warning]: 'ring-warning-200 outline-warning-500',
   };
-  const notOutlinedVariants = {
-    'base': 'text-neutral-light-font bg-neutral-light',
-    'danger': 'text-danger-font bg-danger',
-    'info': 'text-info-font bg-info',
-    'primary': 'text-primary-font bg-primary',
-    'secondary': 'text-secondary-font bg-secondary',
-    'success': 'text-success-font bg-success',
-    'warning': 'text-warning-font bg-warning',
+  const notFilledVariants = {
+    [ColorType.base]: 'bg-white text-neutral-50-font',
+    [ColorType.danger]: 'bg-white text-danger-500',
+    [ColorType.info]: 'bg-white text-info-500',
+    [ColorType.primary]: 'bg-white text-primary-500',
+    [ColorType.secondary]: 'bg-white text-secondary-500',
+    [ColorType.success]: 'bg-white text-success-500',
+    [ColorType.warning]: 'bg-white text-warning-500',
   };
-  const outlinedAndWithActionVariants = {
-    'base': 'hover:bg-neutral-light',
-    'danger': 'hover:bg-danger',
-    'info': 'hover:bg-info',
-    'primary': 'hover:bg-primary',
-    'secondary': 'hover:bg-secondary',
-    'success': 'hover:bg-success',
-    'warning': 'hover:bg-warning',
+  const notFilledHoverVariants = {
+    [ColorType.base]: 'hover:bg-neutral-100',
+    [ColorType.danger]: 'hover:bg-danger-100',
+    [ColorType.info]: 'hover:bg-info-100',
+    [ColorType.primary]: 'hover:bg-primary-100',
+    [ColorType.secondary]: 'hover:bg-secondary-100',
+    [ColorType.success]: 'hover:bg-success-100',
+    [ColorType.warning]: 'hover:bg-warning-100',
   };
-  const outlinedVariants = {
-    'base': 'text-neutral-light-font border-neutral-light focus:border-primary',
-    'danger': 'text-danger border-danger',
-    'info': 'text-info border-info',
-    'primary': 'text-primary border-primary',
-    'secondary': 'text-secondary border-secondary',
-    'success': 'text-success border-success',
-    'warning': 'text-warning border-warning',
+  const filledVariants = {
+    [ColorType.base]: 'bg-neutral-50 text-neutral-50-font',
+    [ColorType.danger]: 'bg-danger-500 text-danger-500-font',
+    [ColorType.info]: 'bg-info-500 text-info-500-font',
+    [ColorType.primary]: 'bg-primary-500 text-primary-500-font',
+    [ColorType.secondary]: 'bg-secondary-500 text-secondary-500-font',
+    [ColorType.success]: 'bg-success-500 text-success-500-font',
+    [ColorType.warning]: 'bg-warning-500 text-warning-500-font',
+  };
+  const filledHoverVariants = {
+    [ColorType.base]: 'hover:bg-neutral-200',
+    [ColorType.danger]: 'hover:bg-danger-600',
+    [ColorType.info]: 'hover:bg-info-600',
+    [ColorType.primary]: 'hover:bg-primary-600',
+    [ColorType.secondary]: 'hover:bg-secondary-600',
+    [ColorType.success]: 'hover:bg-success-600',
+    [ColorType.warning]: 'hover:bg-warning-600',
   };
 
   return {
-    'transition-colors inline-flex items-center relative focus:z-10 overflow-hidden': true,
-    'disabled:opacity-50 disabled:cursor-not-allowed': props.disabled && !props.skeleton,
-    'cursor-default': props.skeleton || props.readonly,
-    'focus:ring-2': props.size === Size.sm && hasAction.value && !props.noFocus,
-    'focus:ring-4': props.size === Size.md && hasAction.value && !props.noFocus,
+    'transition-all inline-flex items-center justify-center relative font-medium': true,
+    'focus:z-10': true,
+    'active:shadow-[inset_0_4px_4px_rgba(0,0,0,0.25)]': !props.readonly,
+    'py-1.5 px-2.5 text-xs gap-1': props.size === Size.sm,
+    'py-2.5 px-3.5 text-sm gap-2.5': props.size === Size.md,
+    'disabled:opacity-50 disabled:cursor-not-allowed': true,
+    'cursor-default': props.readonly,
+    'focus:ring-2': !props.readonly && props.size === Size.sm,
+    'focus:ring-4': !props.readonly && props.size === Size.md,
     'w-full': props.expanded,
     'invisible': props.skeleton,
-    'bg-neutral-lightest': props.outlined,
+    'outline outline-1 outline-offset-[-1px]': props.outlined,
     ...groupedClassList.value,
-    'border -m-px': props.outlined && props.bordered,
-    [hasActionVariants[props.colorType]]: hasAction.value && !props.noFocus,
-    [notOutlinedVariants[props.colorType]]: !props.outlined,
-    [outlinedVariants[props.colorType]]: props.outlined,
-    [outlinedAndWithActionVariants[props.colorType]]: props.outlined && hasAction.value,
+    [variants[props.colorType]]: true,
+    [notFilledVariants[props.colorType]]: !props.filled,
+    [notFilledHoverVariants[props.colorType]]: !props.filled && !props.readonly,
+    [filledVariants[props.colorType]]: props.filled,
+    [filledHoverVariants[props.colorType]]: props.filled && !props.readonly,
   };
 });
-const buttonContentClasses = computed(() => ({
-  'd-block w-full inline-flex items-center justify-center transition-colors font-medium': true,
-  'py-1.5 px-2.5 text-xs gap-1': props.size === Size.sm,
-  'py-2.5 px-3.5 text-sm gap-2.5': props.size === Size.md,
-  'active:shadow-[inset_0_4px_4px_rgba(0,0,0,0.25)]': hasAction.value,
-  'hover:bg-white/75': props.outlined && hasAction.value,
-  'hover:bg-black/25': !props.outlined && hasAction.value,
-  // Make sure, nothing shimmer through the skeleton
-  'invisible': props.skeleton
-}));
+const iconColor = computed(() => {
+  const notFilledVariants = {
+    [ColorType.base]: 'text-neutral-50-font',
+    [ColorType.danger]: 'text-danger-500',
+    [ColorType.info]: 'text-info-500',
+    [ColorType.primary]: 'text-primary-500',
+    [ColorType.secondary]: 'text-secondary-500',
+    [ColorType.success]: 'text-success-500',
+    [ColorType.warning]: 'text-warning-500',
+  };
+  const filledVariants = {
+    [ColorType.base]: 'text-neutral-50-font',
+    [ColorType.danger]: 'text-danger-500-font',
+    [ColorType.info]: 'text-info-500-font',
+    [ColorType.primary]: 'text-primary-500-font',
+    [ColorType.secondary]: 'text-secondary-500-font',
+    [ColorType.success]: 'text-success-500-font',
+    [ColorType.warning]: 'text-warning-500-font',
+  };
+
+  return props.filled ? filledVariants[props.colorType] : notFilledVariants[props.colorType];
+});
 const type = computed(() => {
   if (props.to !== undefined) {
     return undefined;
@@ -127,68 +149,77 @@ const type = computed(() => {
 
   return props.submit ? ButtonType.submit : ButtonType.button;
 });
+const is = computed(() => {
+  if (props.readonly) {
+    return 'div';
+  }
+
+  return props.to !== undefined ? 'router-link' : 'button'
+})
 
 onMounted(() => {
   handleEnumValidation(props.size, Size, 'size');
   handleEnumValidation(props.colorType, ColorType, 'colorType');
+  handleEnumValidation(props.grouped, Grouped, 'grouped');
 });
 </script>
 
 <template>
-  <div class="relative inline-flex">
+  <div
+    class="relative inline-flex h-fit"
+    :class="{'w-full': props.expanded}"
+  >
     <AntSkeleton
-        v-if="skeleton"
-        :grouped="grouped"
-        rounded
-        absolute
+      v-if="skeleton"
+      :grouped="grouped"
+      rounded
+      absolute
     />
 
     <component
-        :is="to !== undefined ? 'router-link' : 'button'"
-        :class="classes"
-        :type="type"
-        :to="to"
-        :disabled="disabled || undefined"
-        :tabindex="noFocus ? '-1' : '0'"
-        @click="() => !props.readonly ? $emit('click') : null"
-        @blur="() => $emit('blur')"
+      :is="is"
+      :class="classes"
+      :type="type"
+      :to="to"
+      :disabled="disabled || undefined"
+      :tabindex="noFocus || hasAction ? '-1' : '0'"
+      @click="() => !props.readonly ? $emit('click') : null"
+      @blur="() => !props.readonly ? $emit('blur') : null"
     >
-      <span
-          :class="buttonContentClasses"
+      <AntSpinner
+        v-if="spinner"
+        :size="size"
+        :color-type="colorType"
+        :inverted="!filled"
+      />
+
+      <slot
+        v-if="!spinner"
+        name="icon-left"
       >
-        <AntSpinner
-            v-if="spinner"
-            :size="size"
-            :color-type="colorType"
-            :inverted="!outlined"
+        <AntIcon
+          v-if="iconLeft"
+          :icon="iconLeft"
+          :size="size as unknown as IconSize"
+          :color="iconColor"
         />
+      </slot>
 
-        <slot
-            v-if="!spinner"
-            name="icon-left"
-        >
-          <AntIcon
-            v-if="iconLeft"
-            :icon="iconLeft"
-            :size="size as unknown as IconSize"
-          />
-        </slot>
+      <slot
+        v-if="!spinner"
+      />
 
-        <slot
-            v-if="!spinner"
+      <slot
+        v-if="!spinner"
+        name="icon-right"
+      >
+        <AntIcon
+          v-if="iconRight"
+          :icon="iconRight"
+          :size="size as unknown as IconSize"
+          :color="iconColor"
         />
-
-        <slot
-            v-if="!spinner"
-            name="icon-right"
-        >
-          <AntIcon
-            v-if="iconRight"
-            :icon="iconRight"
-            :size="size as unknown as IconSize"
-          />
-        </slot>
-      </span>
+      </slot>
     </component>
   </div>
 </template>

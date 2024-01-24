@@ -41,7 +41,7 @@ export const Docs: Story = {
             <AntPopover popover-classes="w-64" v-bind="args">
               <template #content>{{ dummyText }}</template>
               <template #default>
-                <AntButton @click="() => showPopover = !showPopover" outlined>Click me</AntButton>
+                <AntButton @click="() => showPopover = !showPopover" filled>Click me</AntButton>
               </template>
             </AntPopover>
           </div>

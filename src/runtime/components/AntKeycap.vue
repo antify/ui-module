@@ -17,7 +17,7 @@ defineProps<{
 
 <template>
   <span
-    class="inline-block py-0.5 px-1.5 bg-neutral-light rounded-md text-sm min-w-[1.5rem] text-center text-neutral-font font-medium"
+    class="inline-block py-0.5 px-1.5 bg-neutral-300 rounded-md text-sm min-w-[1.5rem] text-center text-neutral-500-font font-medium"
   >
     <AntIcon
       v-if="icon"

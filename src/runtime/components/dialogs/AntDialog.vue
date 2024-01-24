@@ -1,7 +1,7 @@
 <script setup lang="ts">
 // TODO:: remove ts ignore
 // @ts-nocheck
-import {ref, watch} from 'vue';
+import {computed, ref, watch} from 'vue';
 import AntButton from '../buttons/AntButton.vue';
 import AntIcon from '../AntIcon.vue';
 import {
@@ -12,7 +12,7 @@ import {
   type IconDefinition,
 } from '@fortawesome/free-solid-svg-icons';
 import {ColorType, InputColorType} from '../../enums';
-import {IconColorType, IconSize} from '../__types';
+import {IconSize} from '../__types';
 
 const emit = defineEmits(['update:open', 'close', 'confirm']);
 const props = withDefaults(defineProps<{
@@ -38,6 +38,18 @@ const icons = {
   [InputColorType.warning]: faExclamationTriangle,
   [InputColorType.success]: faCheckCircle,
 };
+
+const iconColor = computed(() => {
+  const variants = {
+    [InputColorType.base]: 'text-neutral-100-font',
+    [InputColorType.danger]: 'text-danger-500',
+    [InputColorType.info]: 'text-info-500',
+    [InputColorType.success]: 'text-success-500',
+    [InputColorType.warning]: 'text-warning-500',
+  };
+
+  return variants[props.colorType];
+});
 
 watch(() => props.open, (val) => {
   function onKeydown(e: KeyboardEvent) {
@@ -77,24 +89,24 @@ function confirmDialog() {
       <transition :name="'bounce'">
         <div
           v-if="openDialog"
-          class="flex flex-col gap-px bg-neutral-light overflow-hidden cursor-auto w-96 border border-neutral-light rounded-md shadow-md"
+          class="flex flex-col gap-px bg-neutral-300 overflow-hidden cursor-auto w-96 border border-neutral-300 rounded-md shadow-md"
         >
           <div
             v-if="title || $slots['title']"
-            class="bg-neutral-lighter p-2.5 flex items-center justify-between text-neutral-lighter-font text-sm font-semibold"
+            class="bg-neutral-100 p-2.5 flex items-center justify-between text-neutral-100-font text-sm font-semibold"
           >
             <slot name="title">
               {{ title }}
             </slot>
           </div>
 
-          <div class="bg-neutral-lightest p-2.5 grow flex items-center gap-2.5 text-sm">
+          <div class="bg-neutral-50 p-2.5 grow flex items-center gap-2.5 text-sm">
             <slot name="icon">
               <AntIcon
                 v-if="icons[colorType]"
                 :size="IconSize.xl3"
                 :icon="icons[colorType] as unknown as IconDefinition"
-                :color-type="colorType as unknown as IconColorType"
+                :color="iconColor"
                 class="px-2.5 w-8 h-8"
               />
             </slot>
@@ -103,7 +115,7 @@ function confirmDialog() {
           </div>
 
           <div
-            class="bg-neutral-lighter p-2.5 gap-2.5 text-neutral-lightest-font flex w-full justify-end"
+            class="bg-neutral-100 p-2.5 gap-2.5 text-neutral-50-font flex w-full justify-end"
           >
             <slot name="footer">
               <AntButton
@@ -116,6 +128,7 @@ function confirmDialog() {
 
               <AntButton
                 :color-type="colorType === ColorType.base ? ColorType.primary : colorType as unknown as ColorType"
+                filled
                 @click="confirmDialog()"
               >
                 {{ confirmText }}

@@ -19,7 +19,7 @@ const dialogOpen = ref(false);
 </script>
 
 <template>
-  <div class="flex justify-between items-stretch gap-2.5 bg-neutral-lightest">
+  <div class="flex justify-between items-stretch gap-2.5 bg-neutral-50">
     <slot name="tabs">
       <AntTabs
         :tabItems="tabItems"
@@ -33,7 +33,7 @@ const dialogOpen = ref(false);
         <slot name="delete-button">
           <AntDeleteButton
             :disabled="disabled"
-            outlined
+            filled
             @click="() => dialogOpen = true"
           />
         </slot>

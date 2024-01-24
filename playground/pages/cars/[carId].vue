@@ -80,7 +80,7 @@ onMounted(() => {
             v-if="$route.name === 'cars-carId-engine'"
             :skeleton="skeleton"
             :disabled="formDisabled"
-            outlined
+            filled
           >Print engine details</AntButton>
         </template>
       </AntCrudDetailActions>

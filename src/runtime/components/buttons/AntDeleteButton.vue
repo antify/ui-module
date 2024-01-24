@@ -22,7 +22,7 @@ defineProps<{
     :skeleton="skeleton"
     :expanded="expanded"
     :color-type="ColorType.danger"
-    outlined
+    filled
     @click="$emit('click')"
     @blur="$emit('blur')"
   >

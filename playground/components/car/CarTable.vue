@@ -129,7 +129,7 @@ function duplicateEntity(id: string) {
         <AntButton
           :icon-left="faCopy"
           :size="ui.Size.sm"
-          outlined
+          filled
           @click="() => duplicateEntity(element.id)"
         />
 
@@ -137,13 +137,13 @@ function duplicateEntity(id: string) {
           :to="getDetailRoute(element.id)"
           :icon-left="faPencil"
           :size="ui.Size.sm"
-          outlined
+          filled
         />
 
         <AntButton
           :icon-left="faTrash"
           :size="ui.Size.sm"
-          outlined
+          filled
           @click="() => openDeleteEntity(element)"
         />
       </div>

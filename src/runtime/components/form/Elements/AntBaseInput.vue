@@ -62,11 +62,11 @@ const icons = {
 
 const inputClasses = computed(() => {
   const variants: Record<InputColorType, string> = {
-    [InputColorType.base]: 'outline-neutral-light focus:outline-primary focus:ring-primary/25 bg-neutral-lightest placeholder:text-neutral',
-    [InputColorType.danger]: 'outline-danger focus:outline-danger focus:ring-danger/25 bg-danger-lighter placeholder:text-danger-dark',
-    [InputColorType.info]: 'outline-info focus:outline-info focus:ring-info/25 bg-info-lighter placeholder:text-info-dark',
-    [InputColorType.success]: 'outline-success focus:outline-success focus:ring-success/25 bg-success-lighter placeholder:text-success-dark',
-    [InputColorType.warning]: 'outline-warning focus:outline-warning focus:ring-warning/25 bg-warning-lighter placeholder:text-warning-dark',
+    [InputColorType.base]: 'outline-neutral-300 focus:outline-primary-500 focus:ring-primary/25 bg-neutral-50 placeholder:text-neutral-500',
+    [InputColorType.danger]: 'outline-danger-500 focus:outline-danger-500 focus:ring-danger/25 bg-danger-100 placeholder:text-danger-700',
+    [InputColorType.info]: 'outline-info-500 focus:outline-info-500 focus:ring-info/25 bg-info-100 placeholder:text-info-700',
+    [InputColorType.success]: 'outline-success-500 focus:outline-success-500 focus:ring-success/25 bg-success-100 placeholder:text-success-700',
+    [InputColorType.warning]: 'outline-warning-500 focus:outline-warning-500 focus:ring-warning/25 bg-warning-100 placeholder:text-warning-700',
   };
 
   return {
@@ -99,11 +99,11 @@ const iconClasses = computed(() => ({
 }));
 const iconColorClasses = computed(() => {
   const variants: Record<InputColorType, string> = {
-    [InputColorType.base]: 'text-neutral',
-    [InputColorType.danger]: 'text-danger',
-    [InputColorType.info]: 'text-info',
-    [InputColorType.success]: 'text-success',
-    [InputColorType.warning]: 'text-warning',
+    [InputColorType.base]: 'text-neutral-500',
+    [InputColorType.danger]: 'text-danger-500',
+    [InputColorType.info]: 'text-info-500',
+    [InputColorType.success]: 'text-success-500',
+    [InputColorType.warning]: 'text-warning-500',
   };
 
   return {
@@ -169,7 +169,7 @@ function onBlur(e: FocusEvent) {
       <AntIcon
           :icon="iconLeft"
           :size="size as unknown as IconSize"
-          class="text-neutral-lightest-font"
+          color="text-neutral-50-font"
       />
     </div>
 
@@ -192,7 +192,7 @@ function onBlur(e: FocusEvent) {
       <fa-icon
           :icon="faXmark"
           :class="iconClasses"
-          class="text-neutral-font cursor-pointer"
+          class="text-neutral-500-font cursor-pointer"
           @click="() => _value = null"
       />
     </div>

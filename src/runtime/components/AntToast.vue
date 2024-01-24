@@ -11,7 +11,6 @@ import {
 import AntIcon from './AntIcon.vue';
 import AntButton from './buttons/AntButton.vue';
 import {ColorType, InputColorType} from '../enums';
-import {IconColorType} from './__types';
 
 const props = withDefaults(defineProps<{
   title?: string,
@@ -35,11 +34,11 @@ const icons = {
 const _icon = computed(() => icons[props.colorType]);
 const classes = computed(() => {
   const variants: Record<InputColorType, string> = {
-    [InputColorType.base]: 'bg-neutral-lighter border-neutral text-neutral',
-    [InputColorType.danger]: 'bg-danger-lighter border-danger text-danger',
-    [InputColorType.info]: 'bg-info-lighter border-info text-info',
-    [InputColorType.success]: 'bg-success-lighter border-success text-success',
-    [InputColorType.warning]: 'bg-warning-lighter border-warning text-warning',
+    [InputColorType.base]: 'bg-neutral-100 border-neutral-500 text-neutral-500',
+    [InputColorType.danger]: 'bg-danger-100 border-danger-500 text-danger-500',
+    [InputColorType.info]: 'bg-info-100 border-info-500 text-info-500',
+    [InputColorType.success]: 'bg-success-100 border-success-500 text-success-500',
+    [InputColorType.warning]: 'bg-warning-100 border-warning-500 text-warning-500',
   };
 
   return {
@@ -48,6 +47,17 @@ const classes = computed(() => {
   };
 });
 const hasDefaultSlot = computed(() => useSlots()['default'] || false);
+const iconColor = computed(() => {
+  const variants = {
+    [InputColorType.base]: 'text-neutral-100-font',
+    [InputColorType.danger]: 'text-danger-500',
+    [InputColorType.info]: 'text-info-500',
+    [InputColorType.success]: 'text-success-500',
+    [InputColorType.warning]: 'text-warning-500',
+  };
+
+  return variants[props.colorType];
+});
 
 onMounted(() => {
   handleEnumValidation(props.colorType, InputColorType, 'colorType');
@@ -61,7 +71,7 @@ onMounted(() => {
         <AntIcon
           v-if="icon"
           :icon="_icon"
-          :color-type="props.colorType as unknown as IconColorType"
+          :color="iconColor"
         />
 
         <div class="whitespace-pre" :class="{'font-semibold': hasDefaultSlot}">
@@ -74,7 +84,7 @@ onMounted(() => {
       <AntIcon
         :icon="faXmark"
         class="cursor-pointer"
-        :color-type="props.colorType as unknown as IconColorType"
+        :color="iconColor"
         @click="() => $emit('close')"
       />
     </div>
@@ -86,6 +96,7 @@ onMounted(() => {
     <div v-if="showUndo" class="flex justify-end">
       <AntButton
         :color-type="props.colorType as unknown as ColorType"
+        filled
         @click="() => $emit('undo')"
       >
         undo

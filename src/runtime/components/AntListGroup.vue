@@ -15,7 +15,7 @@ withDefaults(
     <AntSkeleton v-if="skeleton" absolute rounded/>
 
     <div
-        class="flex flex-col rounded-md bg-neutral-light gap-px relative border border-neutral-light overflow-hidden"
+        class="flex flex-col rounded-md bg-neutral-300 gap-px relative border border-neutral-300 overflow-hidden"
         :class="{'invisible': skeleton}"
     >
       <slot/>

@@ -15,12 +15,12 @@ withDefaults(defineProps<{
 </script>
 
 <template>
-  <div class="flex justify-between p-2.5 gap-2.5 bg-neutral-lightest">
+  <div class="flex justify-between p-2.5 gap-2.5 bg-neutral-50">
     <div class="flex gap-2.5">
       <slot name="buttons-left">
         <AntButton
-          :bordered="false"
-          :outlined="true"
+          :outlined="false"
+          :filled="true"
           :icon-left="faAngleLeft"
           :disabled="disabled"
           @click="$emit('back')"

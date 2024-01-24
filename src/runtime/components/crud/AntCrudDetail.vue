@@ -1,8 +1,8 @@
 <template>
-  <div class="flex flex-col bg-neutral-light gap-px h-full">
+  <div class="flex flex-col bg-neutral-300 gap-px h-full">
     <slot name="header"/>
 
-    <div class="flex-grow bg-neutral-lightest h-full overflow-y-auto">
+    <div class="flex-grow bg-neutral-50 h-full overflow-y-auto">
       <slot/>
     </div>
 

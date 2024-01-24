@@ -6,7 +6,7 @@ const meta: Meta<typeof AntCrudDetailNav> = {
   title: 'Crud/Crud Detail Nav',
   component: AntCrudDetailNav,
   parameters: {controls: {sort: 'requiredFirst'}},
-  decorators: [() => ({template: '<div class="border border-dashed border-neutral-light"><story/></div>'})],
+  decorators: [() => ({template: '<div class="border border-dashed border-neutral-300"><story/></div>'})],
   argTypes: {},
 };
 

@@ -25,22 +25,22 @@ onMounted(() => {
 });
 const circleClass = computed(() => {
   const invertedVariants: Record<ColorType, string> = {
-    [ColorType.base]: 'fill-neutral',
-    [ColorType.primary]: 'fill-primary-dark',
-    [ColorType.secondary]: 'fill-secondary-dark',
-    [ColorType.danger]: 'fill-danger-dark',
-    [ColorType.info]: 'fill-info-dark',
-    [ColorType.success]: 'fill-success-dark',
-    [ColorType.warning]: 'fill-warning-dark',
+    [ColorType.base]: 'fill-neutral-500',
+    [ColorType.primary]: 'fill-primary-700',
+    [ColorType.secondary]: 'fill-secondary-700',
+    [ColorType.danger]: 'fill-danger-700',
+    [ColorType.info]: 'fill-info-700',
+    [ColorType.success]: 'fill-success-700',
+    [ColorType.warning]: 'fill-warning-700',
   };
   const notInvertedVariants: Record<ColorType, string> = {
-    [ColorType.base]: 'fill-neutral-lighter',
-    [ColorType.primary]: 'fill-primary-lighter',
-    [ColorType.secondary]: 'fill-secondary-lighter',
-    [ColorType.danger]: 'fill-danger-lighter',
-    [ColorType.info]: 'fill-info-lighter',
-    [ColorType.success]: 'fill-success-lighter',
-    [ColorType.warning]: 'fill-warning-lighter',
+    [ColorType.base]: 'fill-neutral-100',
+    [ColorType.primary]: 'fill-primary-100',
+    [ColorType.secondary]: 'fill-secondary-100',
+    [ColorType.danger]: 'fill-danger-100',
+    [ColorType.info]: 'fill-info-100',
+    [ColorType.success]: 'fill-success-100',
+    [ColorType.warning]: 'fill-warning-100',
   };
 
   return {
@@ -50,22 +50,22 @@ const circleClass = computed(() => {
 });
 const spinningElementClass = computed(() => {
   const invertedVariants: Record<ColorType, string> = {
-    [ColorType.base]: 'fill-neutral-lighter',
-    [ColorType.primary]: 'fill-primary-lighter',
-    [ColorType.secondary]: 'fill-secondary-lighter',
-    [ColorType.danger]: 'fill-danger-lighter',
-    [ColorType.info]: 'fill-info-lighter',
-    [ColorType.success]: 'fill-success-lighter',
-    [ColorType.warning]: 'fill-warning-lighter',
+    [ColorType.base]: 'fill-neutral-100',
+    [ColorType.primary]: 'fill-primary-100',
+    [ColorType.secondary]: 'fill-secondary-100',
+    [ColorType.danger]: 'fill-danger-100',
+    [ColorType.info]: 'fill-info-100',
+    [ColorType.success]: 'fill-success-100',
+    [ColorType.warning]: 'fill-warning-100',
   };
   const notInvertedVariants: Record<ColorType, string> = {
-    [ColorType.base]: 'fill-neutral',
-    [ColorType.primary]: 'fill-primary',
-    [ColorType.secondary]: 'fill-secondary',
-    [ColorType.danger]: 'fill-danger',
-    [ColorType.info]: 'fill-info',
-    [ColorType.success]: 'fill-success',
-    [ColorType.warning]: 'fill-warning',
+    [ColorType.base]: 'fill-neutral-500',
+    [ColorType.primary]: 'fill-primary-500',
+    [ColorType.secondary]: 'fill-secondary-500',
+    [ColorType.danger]: 'fill-danger-500',
+    [ColorType.info]: 'fill-info-500',
+    [ColorType.success]: 'fill-success-500',
+    [ColorType.warning]: 'fill-warning-500',
   };
 
   return {

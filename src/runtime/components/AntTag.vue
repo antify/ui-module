@@ -13,18 +13,18 @@ const props = withDefaults(defineProps<{
   dismiss?: boolean
 }>(), {
   size: Size.md,
-  colorType: TagColorType.neutralLight,
+  colorType: TagColorType.neutral300,
   dismiss: false
 });
 
 const classes = computed(() => {
   const variants: Record<TagColorType, string> = {
-    [TagColorType.danger]: 'bg-danger text-danger-font',
-    [TagColorType.info]: 'bg-info text-info-font',
-    [TagColorType.neutralLight]: 'bg-neutral-light text-neutral-light-font',
-    [TagColorType.neutralLightest]: 'bg-neutral-lightest text-neutral-lightest-font',
-    [TagColorType.success]: 'bg-success text-success-font',
-    [TagColorType.warning]: 'bg-warning text-warning-font',
+    [TagColorType.danger]: 'bg-danger-500 text-danger-500-font',
+    [TagColorType.info]: 'bg-info-500 text-info-500-font',
+    [TagColorType.neutral300]: 'bg-neutral-300 text-neutral-300-font',
+    [TagColorType.neutral50]: 'bg-neutral-50 text-neutral-50-font',
+    [TagColorType.success]: 'bg-success-500 text-success-500-font',
+    [TagColorType.warning]: 'bg-warning-500 text-warning-500-font',
   };
 
   return {

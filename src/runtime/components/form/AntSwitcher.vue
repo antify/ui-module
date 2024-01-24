@@ -57,11 +57,11 @@ const containerClasses = computed(() => {
     'focus-within:ring-4': (props.size as Size) === Size.md && hasAction.value,
   };
   const colorVariant = {
-    [InputColorType.base]: 'focus-within:ring-primary-lighter',
-    [InputColorType.danger]: 'focus-within:ring-danger-lighter',
-    [InputColorType.info]: 'focus-within:ring-info-lighter',
-    [InputColorType.success]: 'focus-within:ring-success-lighter',
-    [InputColorType.warning]: 'focus-within:ring-warning-lighter',
+    [InputColorType.base]: 'focus-within:ring-primary-100',
+    [InputColorType.danger]: 'focus-within:ring-danger-100',
+    [InputColorType.info]: 'focus-within:ring-info-100',
+    [InputColorType.success]: 'focus-within:ring-success-100',
+    [InputColorType.warning]: 'focus-within:ring-warning-100',
   };
 
   classes[colorVariant[_colorType.value]] = true;
@@ -79,11 +79,11 @@ const itemClasses = computed(() => {
   };
 
   const colorVariant = {
-    [InputColorType.base]: 'border-neutral-light bg-neutral-lightest text-neutral-lightest-font',
-    [InputColorType.danger]: 'border-danger bg-danger-lighter text-danger-lighter-font',
-    [InputColorType.info]: 'border-info bg-info-lighter text-info-lighter-font',
-    [InputColorType.success]: 'border-success bg-success-lighter text-success-lighter-font',
-    [InputColorType.warning]: 'border-warning bg-warning-lighter text-warning-lighter-font',
+    [InputColorType.base]: 'border-neutral-300 bg-neutral-50 text-neutral-50-font',
+    [InputColorType.danger]: 'border-danger-500 bg-danger-100 text-danger-100-font',
+    [InputColorType.info]: 'border-info-500 bg-info-100 text-info-100-font',
+    [InputColorType.success]: 'border-success-500 bg-success-100 text-success-100-font',
+    [InputColorType.warning]: 'border-warning-500 bg-warning-100 text-warning-100-font',
   };
 
   classes[colorVariant[_colorType.value]] = true;

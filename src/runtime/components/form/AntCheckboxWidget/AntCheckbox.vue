@@ -37,8 +37,8 @@ const _value = useVModel(props, 'modelValue', emits);
 const hasAction = computed(() => (!props.skeleton && !props.readonly && !props.disabled));
 const inputClasses = computed(() => {
   const classes: { [key: string]: boolean } = {
-    'relative inline-flex flex-shrink-0 bg-neutral-lighter border-0': true,
-    'outline outline-1 outline-offset-[-1px] outline-neutral-light rounded': true,
+    'relative inline-flex flex-shrink-0 bg-neutral-100 border-0': true,
+    'outline outline-1 outline-offset-[-1px] outline-neutral-300 rounded': true,
     'focus:ring-offset-0': true,
     'invisible': props.skeleton,
     'cursor-pointer': hasAction.value,
@@ -50,19 +50,19 @@ const inputClasses = computed(() => {
   };
 
   const focusColorVariant = {
-    [InputColorType.base]: 'text-primary focus:ring-primary-lighter',
-    [InputColorType.danger]: 'text-danger focus:ring-danger-lighter',
-    [InputColorType.info]: 'text-info focus:ring-info-lighter',
-    [InputColorType.success]: 'text-success focus:ring-success-lighter',
-    [InputColorType.warning]: 'text-warning focus:ring-warning-lighter',
+    [InputColorType.base]: 'text-primary-500 focus:ring-primary-100',
+    [InputColorType.danger]: 'text-danger-500 focus:ring-danger-100',
+    [InputColorType.info]: 'text-info-500 focus:ring-info-100',
+    [InputColorType.success]: 'text-success-500 focus:ring-success-100',
+    [InputColorType.warning]: 'text-warning-500 focus:ring-warning-100',
   };
 
   const activeColorVariant = {
-    [InputColorType.base]: 'text-primary outline-primary focus:outline-primary',
-    [InputColorType.danger]: 'text-danger outline-danger focus:outline-danger',
-    [InputColorType.info]: 'text-info outline-info focus:outline-info',
-    [InputColorType.success]: 'text-success outline-success focus:outline-success',
-    [InputColorType.warning]: 'text-warning outline-warning focus:outline-warning',
+    [InputColorType.base]: 'text-primary-500 outline-primary-500 focus:outline-primary-500',
+    [InputColorType.danger]: 'text-danger-500 outline-danger-500 focus:outline-danger-500',
+    [InputColorType.info]: 'text-info-500 outline-info-500 focus:outline-info-500',
+    [InputColorType.success]: 'text-success-500 outline-success-500 focus:outline-success-500',
+    [InputColorType.warning]: 'text-warning-500 outline-warning-500 focus:outline-warning-500',
   }
 
   classes[focusColorVariant[props.colorType]] = hasAction.value;
@@ -113,7 +113,7 @@ onMounted(() => {
         <AntIcon
           v-if="_value"
           :icon="faCheck"
-          class="absolute !text-neutral-lightest pointer-events-none"
+          class="absolute !text-neutral-50 pointer-events-none"
           :size="size as unknown as IconSize"
         />
 

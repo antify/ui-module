@@ -1,3 +1,3 @@
-export * from './AntButton.type';
 export * from './AntSelect.type';
+export * from './AntSwitcher.type';
 export * from './AntTextInput.type';

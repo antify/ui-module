@@ -6,7 +6,7 @@ const meta: Meta<typeof AntTabItem> = {
   title: 'Components/Tab Item',
   component: AntTabItem,
   parameters: {controls: {sort: 'requiredFirst'}},
-  decorators: [() => ({template: '<div class="border border-neutral-light border-dashed"><story /></div>'})],
+  decorators: [() => ({template: '<div class="border border-neutral-300 border-dashed"><story /></div>'})],
   argTypes: {
     showIcon: {
       control: 'boolean',

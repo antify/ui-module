@@ -17,11 +17,11 @@ const props = withDefaults(defineProps<{
 
 const classes = computed(() => {
   const variants: Record<InputColorType, string> = {
-    [InputColorType.base]: 'text-neutral',
-    [InputColorType.danger]: 'text-danger',
-    [InputColorType.info]: 'text-info',
-    [InputColorType.success]: 'text-success',
-    [InputColorType.warning]: 'text-warning',
+    [InputColorType.base]: 'text-neutral-500',
+    [InputColorType.danger]: 'text-danger-500',
+    [InputColorType.info]: 'text-info-500',
+    [InputColorType.success]: 'text-success-500',
+    [InputColorType.warning]: 'text-warning-500',
   };
 
   return {

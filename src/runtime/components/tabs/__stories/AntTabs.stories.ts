@@ -8,7 +8,7 @@ const meta: Meta<typeof AntTabs> = {
   title: 'Components/Tabs',
   component: AntTabs,
   parameters: {controls: {sort: 'requiredFirst'}},
-  decorators: [() => ({template: '<div class="border border-neutral-light border-dashed"><story /></div>'})],
+  decorators: [() => ({template: '<div class="border border-neutral-300 border-dashed"><story /></div>'})],
   argTypes: {
     modelValue: {
       control: 'text',
@@ -177,7 +177,7 @@ export const Overview: Story = {
 
       <div class="mt-8">Larger container:</div>
 
-      <div class="h-16 bg-primary">
+      <div class="h-16 bg-primary-500">
         <AntTabs v-model="value_3" :tab-items="tabItems_3" expanded separators/>
       </div>
     `

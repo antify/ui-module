@@ -87,7 +87,7 @@ watch(() => props.fullWidth, (val) => {
     >
       <div
         v-if="_fullWidth"
-        class="flex gap-2 items-center text-neutral-lightest-font text-sm">
+        class="flex gap-2 items-center text-neutral-50-font text-sm">
         <span class="relative">
           <AntSkeleton v-if="skeleton" rounded absolute/>
           Items per page

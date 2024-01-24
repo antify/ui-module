@@ -95,7 +95,7 @@ function rowClick(elem: Record<string, unknown>): void {
         class="min-w-full max-h-full relative"
         :class="{'h-full': data.length === 0 && !_loading}"
       >
-        <thead class="bg-neutral-lighter sticky top-0 z-10">
+        <thead class="bg-neutral-100 sticky top-0 z-10">
         <tr>
           <slot name="headerFirstCell"/>
 
@@ -124,9 +124,9 @@ function rowClick(elem: Record<string, unknown>): void {
           :id="elem[rowKey] as string"
           class="transition-all"
           :class="{
-            'bg-primary-light text-primary-light-font': elem === selected,
-            'bg-neutral-lightest text-neutral-lightest-font': elem !== selected && index % 2 === 0,
-            'bg-neutral-lighter text-neutral-lighter-font': elem !== selected && index % 2 !== 0,
+            'bg-primary-300 text-primary-300-font': elem === selected,
+            'bg-neutral-50 text-neutral-50-font': elem !== selected && index % 2 === 0,
+            'bg-neutral-100 text-neutral-100-font': elem !== selected && index % 2 !== 0,
             'cursor-pointer': selectableRows
           }"
         >
@@ -161,7 +161,7 @@ function rowClick(elem: Record<string, unknown>): void {
         <tr v-if="data.length <= 0 && !_loading">
           <td
             colspan="100"
-            class="w-full h-full py-2 text-center text-neutral-lightest-font text-lg"
+            class="w-full h-full py-2 text-center text-neutral-50-font text-lg"
           >
             <slot name="emptyState">
               <div class="flex items-center flex-col">
@@ -177,14 +177,14 @@ function rowClick(elem: Record<string, unknown>): void {
 
     <div
       v-if="data.length > 0 && _loading"
-      class="absolute bg-opacity-50 w-full top-0 bottom-0 bg-neutral-light flex items-center justify-center"
+      class="absolute bg-opacity-50 w-full top-0 bottom-0 bg-neutral-300 flex items-center justify-center"
     >
       <AntSpinner class="!w-24 !h-24" :color-type="ColorType.primary"/>
     </div>
 
     <div
       v-if="!data || data.length <= 0 && _loading"
-      class="absolute bg-opacity-50 w-full top-[40px] bottom-0 bg-neutral-light flex items-center justify-center"
+      class="absolute bg-opacity-50 w-full top-[40px] bottom-0 bg-neutral-300 flex items-center justify-center"
     >
       <AntSkeleton
         v-model="_loading" absolute/>
