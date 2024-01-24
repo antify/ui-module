@@ -6,16 +6,15 @@ import {
   addComponentsDir,
   addImportsDir,
 } from '@nuxt/kit';
+import type {NuxtModule} from 'nuxt/schema';
 
 const moduleKey = 'uiModule';
-
-export * from './runtime/types';
 
 type ModuleOptions = {
   toasterMessageShowTime: number;
 };
 
-export default defineNuxtModule<ModuleOptions>({
+const module = defineNuxtModule<ModuleOptions>({
   meta: {
     name: 'ui-module',
     configKey: moduleKey
@@ -49,4 +48,11 @@ export default defineNuxtModule<ModuleOptions>({
   }
 });
 
-
+/**
+ * Export it like this, because otherwise following error get thrown:
+ * The inferred type of 'default' cannot be named without a reference to '..'.
+ * This is likely not portable. A type annotation is necessary.
+ * @see: https://github.com/microsoft/TypeScript/issues/47663#issuecomment-1904420622
+ */
+export default module;
+export * from './runtime/types';

@@ -1,4 +1,4 @@
-import defaultColors from 'tailwindcss/colors';
+import defaultColors from 'tailwindcss/colors.js';
 // import {type Config} from "tailwindcss";
 
 const colors = {
