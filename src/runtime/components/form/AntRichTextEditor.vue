@@ -1,3 +1,5 @@
+<template></template>
+
 <!--<script lang="ts" setup>-->
 <!--defineOptions({ inheritAttrs: false });-->
 <!--// TODO:: fix ts errors-->
