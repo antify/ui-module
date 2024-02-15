@@ -20,8 +20,8 @@ import { vOnClickOutside } from '@vueuse/components'
 const emit = defineEmits([ 'update:modelValue' ]);
 const props = withDefaults(
   defineProps<{
-    modelValue: string[] | null;
-    options?: SelectOption[];
+    modelValue: (string | number)[] | null;
+    options: SelectOption[];
     label?: string;
     description?: string;
     placeholder?: string;
@@ -41,7 +41,6 @@ const props = withDefaults(
     allowDuplicates?: boolean;
     openOnFocus?: boolean;
     autoCloseAfterSelection?: boolean;
-    filterOptionsWithSelection?: boolean;
 
     createCallback?: (item: string) => Promise<SelectOption>;
   }>(), {
@@ -52,13 +51,15 @@ const props = withDefaults(
 
     allowCreate: false,
     allowDuplicates: false,
-    openOnFocus: false,
+    openOnFocus: true,
     autoCloseAfterSelection: false,
-    filterOptionsWithSelection: false,
+    showMessageOnError: true,
+
+    placeholder: 'Add new tag'
   }
 );
 
-const _modelValue = useVModel(props, 'modelValue', emit);
+const _modelValue: Ref<(string | number)[] | null> = useVModel(props, 'modelValue', emit);
 const _skeleton = useVModel(props, 'skeleton', emit);
 
 const dropDownOpen = ref(false);
@@ -72,18 +73,18 @@ const _colorType = computed(() => props.validator?.hasErrors() ? InputColorType.
 
 const inputContainerClasses = computed(() => {
   const variants: Record<InputColorType, string> = {
-    [InputColorType.base]: 'outline-neutral-300 focus:outline-primary-500 focus-within:ring-primary-200 bg-neutral-50 placeholder:text-neutral-500',
-    [InputColorType.danger]: 'outline-danger-500 focus:outline-danger-500 focus-within:ring-danger-200 bg-danger-100 placeholder:text-danger-700',
-    [InputColorType.info]: 'outline-info-500 focus:outline-info-500 focus-within:ring-info-200 bg-info-100 placeholder:text-info-700',
-    [InputColorType.success]: 'outline-success-500 focus:outline-success-500 focus-within:ring-success-200 bg-success-100 placeholder:text-success-700',
-    [InputColorType.warning]: 'outline-warning-500 focus:outline-warning -500focus-within:ring-warning-200 bg-warning-100 placeholder:text-warning-700',
+    [InputColorType.base]: 'outline-neutral-300 focus-within:outline-primary-500 focus-within:ring-primary-200 bg-white',
+    [InputColorType.danger]: 'outline-danger-500 focus-within:outline-danger-500 focus-within:ring-danger-200 bg-danger-100',
+    [InputColorType.info]: 'outline-info-500 focus-within:outline-info-500 focus-within:ring-info-200 bg-info-100',
+    [InputColorType.success]: 'outline-success-500 focus-within:outline-success-500 focus-within:ring-success-200 bg-success-100',
+    [InputColorType.warning]: 'outline-warning-500 focus-within:outline-warning-500 focus-within:ring-warning-200 bg-warning-100',
   };
 
   return {
     'flex gap-1 items-center flex-wrap': true,
     'transition-colors relative border-none outline w-full focus-within:z-10': true,
     'outline-offset-[-1px] outline-1 focus-within:outline-offset-[-1px] focus-within:outline-1': true,
-    'disabled:opacity-50 disabled:cursor-not-allowed': props.disabled,
+    'opacity-50 cursor-not-allowed': props.disabled,
     [variants[_colorType.value]]: true,
     // Size
     'focus-within:ring-2 px-1.5 py-1.5 text-xs': props.size === Size.sm,
@@ -99,8 +100,18 @@ const inputContainerClasses = computed(() => {
 });
 
 const inputClasses = computed(() => {
+  const variants: Record<InputColorType, string> = {
+    [InputColorType.base]: 'placeholder:text-neutral-500',
+    [InputColorType.danger]: 'placeholder:text-danger-700',
+    [InputColorType.info]: 'placeholder:text-info-700',
+    [InputColorType.success]: 'placeholder:text-success-700',
+    [InputColorType.warning]: 'placeholder:text-warning-700',
+  };
+
   return {
-    'outline-0 border:none ring:none': true,
+    'outline-0 border:none ring:none bg-transparent w-full': true,
+    'opacity-50 cursor-not-allowed': props.disabled,
+    [variants[_colorType.value]]: true,
   }
 });
 
@@ -124,18 +135,20 @@ function onClickOutside() {
   dropDownOpen.value = false;
 }
 
-function checkCreateTag(item: string): void {
+async function checkCreateTag(item: string): Promise<void> {
   if (props.allowCreate && focusedDropDownItem.value) {
     // If allowCreate is active but a item is focused inside the dropdown do nothing here.
     return;
   }
 
-  if ((item && props.allowCreate) || props.options?.findIndex(option => option.label === item) !== -1) {
-    addTag(item);
+  if (item && props.allowCreate && props.createCallback) {
+    const newOption: SelectOption = await props.createCallback(item);
+
+    addTag(newOption.value);
   }
 }
 
-function addTagFromOptions(item: string) {
+function addTagFromOptions(item: string | number) {
   if (props.allowCreate && !focusedDropDownItem.value) {
     // If allowCreate is active we don't need to add it here.
     return;
@@ -144,7 +157,7 @@ function addTagFromOptions(item: string) {
   const option = props.options?.find(option => option.value === item);
 
   if (option) {
-    addTag(option.label);
+    addTag(item);
 
     if (props.autoCloseAfterSelection) {
       dropDownOpen.value = false;
@@ -152,14 +165,14 @@ function addTagFromOptions(item: string) {
   }
 }
 
-function addTag(newTag: string): void {
+function addTag(tagValue: string | number): void {
   _modelValue.value = _modelValue.value || [];
 
-  if (!props.allowDuplicates && _modelValue.value.includes(newTag) || !newTag.trim()) {
+  if (!props.allowDuplicates && _modelValue.value.includes(tagValue) || !tagValue) {
     return;
   }
 
-  _modelValue.value.push(newTag.trim());
+  _modelValue.value.push(tagValue);
 
   tagInput.value = '';
 
@@ -174,8 +187,8 @@ function removeLastTag() {
   }
 }
 
-function removeTag(tag: string) {
-  if (_modelValue.value) {
+function removeTag(tag: string | number) {
+  if (_modelValue.value && !props.disabled && !props.skeleton) {
     _modelValue.value.splice(_modelValue.value.findIndex((_value) => _value === tag), 1);
 
     filterDropDown();
@@ -202,8 +215,8 @@ function filterDropDown() {
   filteredOptions.value = props.options.filter(option => option.label.toLowerCase().includes(tagInput.value.toLowerCase()));
 
   // Remove all elements that are in modelValue from the filtered options
-  if (_modelValue.value && props.filterOptionsWithSelection) {
-    filteredOptions.value = filteredOptions.value.filter(option => !_modelValue.value?.includes(option.label));
+  if (_modelValue.value && !props.allowDuplicates) {
+    filteredOptions.value = filteredOptions.value.filter(option => !_modelValue.value?.includes(option.value));
   }
 
   if (!props.allowCreate && filteredOptions.value.length > 0) {
@@ -237,7 +250,7 @@ function filterDropDown() {
 
       <div
         :class="inputContainerClasses"
-        class="w-full flex gap-1 items-center"
+        class="w-full flex gap-2.5 items-center"
       >
         <AntTag
           v-for="(tag, index) in _modelValue"
@@ -247,11 +260,11 @@ function filterDropDown() {
           dismiss
           @close="removeTag(tag)"
         >
-          {{ tag }}
+          {{ options.find((option: SelectOption) => option.value === tag)?.label }}
         </AntTag>
 
         <!-- Input -->
-        <div class="flex items-center gap-1">
+        <div class="flex items-center gap-1 w-32 shrink grow">
           <AntIcon :icon="icon" :size="size === Size.sm ? IconSize.xs : IconSize.sm"/>
 
           <input
@@ -264,13 +277,14 @@ function filterDropDown() {
             :class="inputClasses"
             @focus="changeFocus"
             @input="filterDropDown"
-            class="bg-transparent py-1"
+            class=" py-1"
+            :disabled="disabled"
           />
         </div>
       </div>
 
       <AntDropDown
-        v-if="filteredOptions"
+        v-if="filteredOptions && !disabled"
         :model-value="null"
         v-model:focused="focusedDropDownItem"
         v-model:open="dropDownOpen"

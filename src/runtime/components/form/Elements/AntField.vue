@@ -7,7 +7,7 @@ import {handleEnumValidation} from '../../../handler';
 import AntInputLimiter from './AntInputLimiter.vue';
 import {InputColorType} from '../../../enums';
 
-const emits = defineEmits(['clickLabel', 'validate']);
+defineEmits(['clickLabel', 'validate']);
 const props = withDefaults(defineProps<{
   label?: string;
   description?: string;
@@ -25,7 +25,7 @@ const props = withDefaults(defineProps<{
   skeleton: false,
   size: Size.md,
   showMessageOnError: true,
-  errors: [],
+  errors: () => [],
   expanded: true
 });
 

@@ -25,6 +25,22 @@ const meta: Meta<typeof AntTagInput> = {
     placeholder: {
       table: { defaultValue: { summary: 'this.label' } },
     },
+    createCallback: {
+      control: 'none',
+      description: 'If allowCreate is true the createCallback needs to be specified. It will be called when the user creates a new tag. It should return a promise that resolves to a SelectOption.',
+      table: {
+        type: {
+          summary: '(item: string) => Promise<SelectOption>',
+          detail: `
+Params:
+item: string - the label of the new tag
+
+Returns:
+Promise<SelectOption> - the new tag as a SelectOption
+          `
+        }
+      }
+    }
   },
 };
 
@@ -73,9 +89,31 @@ export const Docs: Story = {
   }
 };
 
-export const NoOptions: Story = {
+export const AllowCreate: Story = {
   render: Docs.render,
   args: {
+    options,
     allowCreate: true,
+    createCallback(item: string): Promise<SelectOption> {
+      return new Promise((resolve) => {
+        resolve({ label: item, value: `${Math.random()}-${item}` });
+      });
+    },
+  }
+}
+
+export const Disabled: Story = {
+  render: Docs.render,
+  args: {
+    options,
+    disabled: true,
+  }
+}
+
+export const Skeleton: Story = {
+  render: Docs.render,
+  args: {
+    options,
+    skeleton: true,
   }
 }
