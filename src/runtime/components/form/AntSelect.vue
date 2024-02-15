@@ -254,6 +254,7 @@ function onClickRemoveButton() {
       :show-message-on-error="showMessageOnError"
       :expanded="expanded"
       label-for="noop"
+      data-e2e="select"
       @clickLabel="() => inputRef?.focus()"
   >
     <div

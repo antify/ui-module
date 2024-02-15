@@ -46,7 +46,10 @@ onMounted(() => {
 </script>
 
 <template>
-  <span :class="classes">
+  <span
+    :class="classes"
+    data-e2e="tag"
+  >
     <span
         v-if="iconLeft"
         class="inline-flex items-center justify-center"

@@ -100,9 +100,11 @@ function onMouseLeave() {
 </script>
 
 <template>
-  <div class="relative inline-flex justify-center items-center"
-       @mouseover="onMouseOver"
-       @mouseleave="onMouseLeave"
+  <div
+    class="relative inline-flex justify-center items-center"
+    data-e2e="tooltip"
+    @mouseover="onMouseOver"
+    @mouseleave="onMouseLeave"
   >
     <slot/>
 

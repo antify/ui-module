@@ -65,7 +65,10 @@ onMounted(() => {
 </script>
 
 <template>
-  <div :class="classes">
+  <div
+    :class="classes"
+    data-e2e="toast"
+  >
     <div class="inline-flex items-center justify-between w-content gap-2.5">
       <div class="inline-flex items-center gap-2.5">
         <AntIcon

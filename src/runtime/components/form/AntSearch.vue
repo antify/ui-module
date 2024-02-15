@@ -58,6 +58,7 @@ onMounted(() => handleEnumValidation(props.size, Size, 'size'));
       :skeleton="skeleton"
       :description="description"
       :validator="validator"
+      data-e2e="search"
   >
     <AntBaseInput
         v-model:value="_value"

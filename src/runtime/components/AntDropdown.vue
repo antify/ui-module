@@ -53,6 +53,7 @@ function onClickOutside() {
 <template>
   <div
     class="relative inline-flex justify-center items-end z-40"
+    data-e2e="dropdown"
     v-on-click-outside="onClickOutside"
   >
     <slot/>

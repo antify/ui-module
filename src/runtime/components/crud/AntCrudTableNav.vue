@@ -80,14 +80,19 @@ watch(() => props.fullWidth, (val) => {
 </script>
 
 <template>
-  <div class="w-full">
+  <div
+    class="w-full"
+    data-e2e="crud-table-nav"
+  >
     <div
       class="flex w-full items-center p-2.5"
       :class="{'justify-end': !_fullWidth, 'justify-between': _fullWidth}"
     >
       <div
         v-if="_fullWidth"
-        class="flex gap-2 items-center text-neutral-50-font text-sm">
+        class="flex gap-2 items-center text-neutral-50-font text-sm"
+        data-e2e="items-per-page"
+      >
         <span class="relative">
           <AntSkeleton v-if="skeleton" rounded absolute/>
           Items per page
@@ -105,7 +110,10 @@ watch(() => props.fullWidth, (val) => {
 
           <span class="font-medium">{{ fromItems }} - {{ itemsPerPage * page }}</span>
           <span>of</span>
-          <span class="font-medium">{{ count }}</span>
+          <span
+            class="font-medium"
+            data-e2e="total-items"
+          >{{ count }}</span>
         </div>
       </div>
 

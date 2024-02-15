@@ -19,7 +19,7 @@ const dialogOpen = ref(false);
 </script>
 
 <template>
-  <div class="flex justify-between items-stretch gap-2.5 bg-neutral-50">
+  <div class="flex justify-between items-stretch gap-2.5 bg-neutral-50" data-e2e="crud-detail-nav">
     <slot name="tabs">
       <AntTabs
         :tabItems="tabItems"

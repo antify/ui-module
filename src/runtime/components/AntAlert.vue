@@ -77,7 +77,10 @@ onMounted(() => {
 </script>
 
 <template>
-  <div :class="classes">
+  <div
+    :class="classes"
+    data-e2e="alert"
+  >
     <AntSkeleton v-if="skeleton" absolute rounded/>
 
     <div

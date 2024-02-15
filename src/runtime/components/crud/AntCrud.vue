@@ -7,7 +7,7 @@ withDefaults(defineProps<{
 </script>
 
 <template>
-  <div class="flex w-full h-full">
+  <div class="flex w-full h-full" data-e2e="crud">
     <div
       class="left-content h-full flex flex-col bg-neutral-300 gap-px overflow-hidden"
       :class="{'w-[40rem]': showDetail, 'w-full': !showDetail}"

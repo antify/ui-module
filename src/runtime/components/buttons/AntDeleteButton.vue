@@ -23,6 +23,7 @@ defineProps<{
     :expanded="expanded"
     :color-type="ColorType.danger"
     filled
+    data-e2e="delete-button"
     @click="$emit('click')"
     @blur="$emit('blur')"
   >
