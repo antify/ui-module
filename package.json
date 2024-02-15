@@ -1,6 +1,6 @@
 {
   "name": "@antify/ui-module",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "license": "MIT",
   "type": "module",
   "exports": {
@@ -24,7 +24,7 @@
     "dev:prepare": "nuxt-module-build build && nuxi prepare playground",
     "storybook": "storybook dev -p 6006 --no-open",
     "build-storybook": "storybook build",
-    "release": "pnpm run prepack && changelogen --release && pnpm publish && git push --follow-tags",
+    "release": "standard-version && git push --follow-tags && pnpm publish",
     "release-minor": "standard-version -- --release-as minor && git push --follow-tags && pnpm publish"
   },
   "dependencies": {
