@@ -63,10 +63,19 @@ export const Docs: Story = {
       };
     },
     template: `
+      <div style="width: 360px">
       <AntTagInput v-model="value" v-bind="args"/>
+      </div>
     `
   }),
   args: {
     options
   }
 };
+
+export const NoOptions: Story = {
+  render: Docs.render,
+  args: {
+    allowCreate: true,
+  }
+}
