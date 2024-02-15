@@ -160,6 +160,7 @@ const pagination = computed(() => {
 <template>
   <div
     class="inline-flex relative"
+    data-e2e="pagination"
   >
     <AntSkeleton v-if="skeleton" rounded absolute/>
 

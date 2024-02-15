@@ -31,5 +31,8 @@ const classList = computed(() => ({
 </script>
 
 <template>
-  <div :class="classList" />
+  <div
+    :class="classList"
+    data-e2e="skeleton"
+  />
 </template>

@@ -168,6 +168,8 @@ onMounted(() => {
   <div
     class="relative inline-flex h-fit"
     :class="{'w-full': props.expanded}"
+    data-e2e="button"
+    :data-e2e-color-type="props.colorType"
   >
     <AntSkeleton
       v-if="skeleton"

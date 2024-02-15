@@ -2,7 +2,7 @@
 import {faXmark} from '@fortawesome/free-solid-svg-icons';
 import {ref} from "vue";
 import {useNuxtApp} from '#imports';
-import {InputColorType} from '#uiModule';
+import {InputColorType} from "../../src/runtime/enums";
 
 const {$uiModule} = useNuxtApp();
 

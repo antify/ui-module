@@ -22,6 +22,7 @@ defineProps<{
     :skeleton="skeleton"
     :expanded="expanded"
     :color-type="ColorType.primary"
+    data-e2e="save-button"
     @click="$emit('click')"
     @blur="$emit('blur')"
   >

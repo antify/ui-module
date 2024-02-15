@@ -18,6 +18,7 @@ const _open = useVModel(props, 'open', emit);
     :color-type="InputColorType.danger"
     title="Delete"
     confirm-text="Delete"
+    data-e2e="delete-dialog"
     @confirm="() => $emit('confirm')"
     @close="() => $emit('close')"
   >

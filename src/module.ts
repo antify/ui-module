@@ -10,35 +10,29 @@ import type {NuxtModule} from 'nuxt/schema';
 
 const moduleKey = 'uiModule';
 
-type ModuleOptions = {
-  toasterMessageShowTime: number;
-};
+type ModuleOptions = {};
 
-const module = defineNuxtModule<ModuleOptions>({
+const module: NuxtModule<ModuleOptions> = defineNuxtModule<ModuleOptions>({
   meta: {
     name: 'ui-module',
     configKey: moduleKey
   },
-  defaults: {
-    toasterMessageShowTime: 5000
-  },
+  defaults: {},
   async setup(options, nuxt) {
     const {resolve} = createResolver(import.meta.url);
     const runtimeDir = resolve('./runtime');
 
     nuxt.options.build.transpile.push(runtimeDir);
-    nuxt.options.alias['#uiModule'] = resolve(runtimeDir, 'types');
+    // nuxt.options.alias['#uiModule'] = resolve(runtimeDir, 'types');
 
     addPlugin(resolve(runtimeDir, 'plugins/ui-module'));
-
     addImportsDir(resolve(runtimeDir, 'composables'));
 
     await addComponentsDir({
       path: resolve(runtimeDir, 'components'),
       pattern: '**/*.vue',
       pathPrefix: false,
-      prefix: '',
-      global: false
+      global: true
     });
 
     nuxt.options.postcss.plugins.tailwindcss = tailwindcss;
@@ -46,7 +40,7 @@ const module = defineNuxtModule<ModuleOptions>({
 
     nuxt.options.runtimeConfig.public[moduleKey] = options;
   }
-});
+})
 
 /**
  * Export it like this, because otherwise following error get thrown:

@@ -84,7 +84,10 @@ function rowClick(elem: Record<string, unknown>): void {
 </script>
 
 <template>
-  <div class="relative inline-block min-w-full align-middle h-full">
+  <div
+    class="relative inline-block min-w-full align-middle h-full"
+    data-e2e="table"
+  >
     <div class="overflow-hidden h-full overflow-x-auto overflow-y-auto">
       <table
         v-bind="$attrs"

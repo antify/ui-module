@@ -192,8 +192,8 @@ export default {
 
     // For project dev
     './app.vue',
-    './components.{vue,js,ts,jsx,tsx}',
-    './pages.{vue,js,ts,jsx,tsx}',
+    './components/**/*.{vue,js,ts,jsx,tsx}',
+    './pages/**/*.{vue,js,ts,jsx,tsx}',
 
     // If this config is used in a project
     './node_modules/@antify/*/dist/**/*.{js,vue,ts}',

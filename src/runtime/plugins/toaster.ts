@@ -23,7 +23,7 @@ export default () => {
         if (index !== -1) {
           toasts.value.splice(index, 1);
         }
-      }, useRuntimeConfig().public.uiModule.toasterMessageShowTime);
+      }, 5000);
     },
     removeToast(toast: Toast) {
       const index = toasts.value.indexOf(toast);

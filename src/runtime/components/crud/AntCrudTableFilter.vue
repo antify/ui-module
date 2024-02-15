@@ -61,7 +61,10 @@ watch(() => props.fullWidth, (val) => {
 </script>
 
 <template>
-  <div class="flex h-full items-center p-2.5 gap-2.5 bg-neutral-50">
+  <div
+    class="flex h-full items-center p-2.5 gap-2.5 bg-neutral-50"
+    data-e2e="crud-table-filter"
+  >
     <div
       class="flex gap-2.5 flex-grow"
       :class="{'flex-grow': !_fullWidth}"

@@ -24,6 +24,7 @@ const classes = computed(() => ({
   <div
     class="absolute flex flex-col items-baseline space-y-2.5 p-2.5"
     :class="classes"
+    data-e2e="toaster"
   >
     <TransitionGroup name="list">
       <AntToast
