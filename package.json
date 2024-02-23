@@ -26,7 +26,8 @@
     "storybook": "storybook dev -p 6006 --no-open",
     "build-storybook": "storybook build",
     "release": "standard-version && git push --follow-tags && pnpm publish --access public",
-    "release-minor": "standard-version -- --release-as minor && git push --follow-tags && pnpm publish"
+    "release-minor": "standard-version -- --release-as minor && git push --follow-tags && pnpm publish",
+    "chromatic": "npx chromatic --project-token=chpt_2abc12269958fdc"
   },
   "dependencies": {
     "@antify/validate": "1.14.0",
@@ -77,6 +78,7 @@
     "storybook": "7.5.3",
     "typescript": "^5.3.3",
     "unbuild": "^2.0.0",
-    "vue-cli-plugin-tailwind": "3.0.0"
+    "vue-cli-plugin-tailwind": "3.0.0",
+    "chromatic": "^11.0.0"
   }
 }
