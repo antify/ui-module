@@ -30,7 +30,7 @@ jobs:
       - name: Install dependencies
         run: pnpm i
 
-      - name: Prepair playground
+      - name: Prepare playground
         run: pnpm run dev:build
 
         # 👇 Adds Chromatic as a step in the workflow
