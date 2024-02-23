@@ -28,6 +28,7 @@ export const Docs: Story = {
         },
         template: `
           <div class="p-4">
+            Hier
             <AntAccordion v-bind="args"/>
           </div>`,
     }),
