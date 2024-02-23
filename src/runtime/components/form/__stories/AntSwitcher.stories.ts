@@ -95,6 +95,9 @@ export const withValidator: Story = {
 };
 
 export const Summary: Story = {
+  parameters: {
+    chromatic: { disableSnapshot: false },
+  },
   render: (args) => ({
     components: { AntSwitcher },
     setup() {

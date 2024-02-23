@@ -5,7 +5,6 @@ import {computed} from 'vue';
 import {useFieldValidator} from '@antify/validate';
 import {type SelectOption} from '../__types/AntSelect.type';
 import {InputColorType} from '../../../enums';
-
 const meta: Meta<typeof AntSelect> = {
   title: 'Components/Forms/Select',
   component: AntSelect,
@@ -153,6 +152,9 @@ export const ellipsisText: Story = {
   },
 };
 export const summary: Story = {
+  parameters: {
+    chromatic: { disableSnapshot: false },
+  },
   render: (args) => ({
     components: {AntSelect},
     setup() {
