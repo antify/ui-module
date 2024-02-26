@@ -122,6 +122,9 @@ export const IconLeft: Story = {
 };
 
 export const Summary: Story = {
+  parameters: {
+    chromatic: { disableSnapshot: false },
+  },
   render: (args) => ({
     components: {AntBaseInput, AntButton},
     setup: () => {

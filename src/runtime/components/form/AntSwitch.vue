@@ -1,12 +1,11 @@
 <script setup lang="ts">
 import AntField from './Elements/AntField.vue';
-import { useVModel } from '@vueuse/core';
 import { computed, type Ref } from 'vue';
 import { FieldValidator } from '@antify/validate';
 import AntSkeleton from '../AntSkeleton.vue';
 import { InputColorType, Size } from '../../enums';
 
-const emits = defineEmits([ 'update:modelValue' ]);
+const emits = defineEmits([ 'update:modelValue', 'input' ]);
 const props = withDefaults(defineProps<{
   modelValue: boolean;
   label?: string;
@@ -23,7 +22,13 @@ const props = withDefaults(defineProps<{
   colorType: InputColorType.base
 });
 
-const _value = useVModel(props, 'modelValue', emits);
+const _value = computed({
+  get: () => props.modelValue,
+  set: (value: boolean) => {
+    emits('update:modelValue', value)
+    emits('input', value)
+  }
+});
 const hasAction = computed(() => (!props.skeleton && !props.readonly && !props.disabled))
 const _colorType: Ref<InputColorType> = computed(() => props.validator?.hasErrors() ? InputColorType.danger : props.colorType);
 
