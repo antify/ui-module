@@ -96,7 +96,6 @@ onUnmounted(() => {
 });
 
 function onKeyDownDropDown(e: KeyboardEvent) {
-  console.log('emits', e.key);
   if (e.key === 'Enter') {
     if (props.closeOnEnter) {
       isOpen.value = false;

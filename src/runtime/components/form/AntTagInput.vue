@@ -109,7 +109,7 @@ const inputClasses = computed(() => {
   };
 
   return {
-    'outline-0 border:none ring:none bg-transparent w-full': true,
+    'outline-0 border:none ring:none bg-transparent w-full py-1': true,
     'opacity-50 cursor-not-allowed': props.disabled,
     [variants[_colorType.value]]: true,
   }
@@ -235,7 +235,6 @@ function filterDropDown() {
     :validator="validator"
     :show-message-on-error="showMessageOnError"
     :expanded="expanded"
-    class="cursor-pointer"
   >
     <div
       class="relative w-full"
@@ -271,24 +270,23 @@ function filterDropDown() {
             v-model="tagInput"
             type="text"
             ref="inputRef"
-            @keydown.enter.prevent="checkCreateTag(tagInput)"
-            @keydown.delete="removeLastTag"
             :placeholder="placeholder"
             :class="inputClasses"
+            :disabled="disabled"
             @focus="changeFocus"
             @input="filterDropDown"
-            class=" py-1"
-            :disabled="disabled"
+            @keydown.delete="removeLastTag"
+            @keydown.enter.prevent="checkCreateTag(tagInput)"
           />
         </div>
       </div>
 
       <AntDropDown
         v-if="filteredOptions && !disabled"
-        :model-value="null"
         v-model:focused="focusedDropDownItem"
         v-model:open="dropDownOpen"
         ref="dropDownRef"
+        :model-value="null"
         :auto-select-first-on-open="!allowCreate"
         :options="filteredOptions"
         :input-ref="inputRef"
@@ -306,7 +304,3 @@ function filterDropDown() {
     </div>
   </AntField>
 </template>
-
-<style scoped>
-
-</style>
