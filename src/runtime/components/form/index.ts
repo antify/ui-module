@@ -5,6 +5,7 @@ import AntSwitcher from './AntSwitcher.vue';
 import AntSearch from './AntSearch.vue';
 import AntSelect from './AntSelect.vue';
 import AntSwitch from './AntSwitch.vue';
+import AntTagInput from './AntTagInput.vue';
 import AntTextarea from './AntTextarea.vue';
 import AntTextInput from './AntTextInput.vue';
 import AntUnitInput from './AntUnitInput.vue';
@@ -19,6 +20,7 @@ export {
   AntSearch,
   AntSelect,
   AntSwitch,
+  AntTagInput,
   AntTextarea,
   AntTextInput,
   AntUnitInput,

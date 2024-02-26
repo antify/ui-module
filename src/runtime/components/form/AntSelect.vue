@@ -14,7 +14,7 @@
  */
 import AntField from './Elements/AntField.vue';
 import {type SelectOption} from './__types/AntSelect.type';
-import {computed, onMounted, ref, watch, nextTick} from 'vue';
+import {computed, onMounted, ref} from 'vue';
 import {Size} from '../../enums/Size.enum';
 import {FieldValidator} from '@antify/validate';
 import {handleEnumValidation} from '../../handler';
@@ -164,13 +164,6 @@ onMounted(() => {
 
   focusedDropDownItem.value = _modelValue.value;
 });
-watch(isOpen, (val) => {
-  nextTick(() => {
-    if (val) {
-      dropDownRef.value?.focus();
-    }
-  });
-});
 
 function onClickOutside() {
   if (!isOpen.value) {
@@ -179,47 +172,6 @@ function onClickOutside() {
 
   isOpen.value = false;
   inputRef.value?.focus();
-}
-
-function onKeyDownInput(e: KeyboardEvent) {
-  if (e.key === 'Enter') {
-    isOpen.value = true;
-    inputRef.value?.blur();
-  }
-
-  if (e.key === 'Escape') {
-    isOpen.value = false;
-    inputRef.value?.focus();
-  }
-
-  if (e.key === 'ArrowDown' || e.key === 'ArrowRight') {
-    const index = props.options.findIndex(option => option.value === _modelValue.value);
-    const option = props.options[index + 1];
-
-    if (index === -1) {
-      _modelValue.value = props.options[0].value;
-    } else if (option !== undefined) {
-      _modelValue.value = option.value;
-    }
-  }
-
-  if (e.key === 'ArrowUp' || e.key === 'ArrowLeft') {
-    const index = props.options.findIndex(option => option.value === _modelValue.value);
-    const option = props.options[index - 1];
-
-    if (option !== undefined) {
-      _modelValue.value = option.value;
-    }
-  }
-}
-
-function onFocusInInput() {
-  inputRef.value?.addEventListener('keydown', onKeyDownInput);
-}
-
-function onFocusOutInput(e: FocusEvent) {
-  e.preventDefault();
-  inputRef.value?.removeEventListener('keydown', onKeyDownInput);
 }
 
 function onClickSelectInput(e: MouseEvent) {
@@ -280,9 +232,8 @@ function onClickRemoveButton() {
             ref="inputRef"
             :tabindex="disabled ? undefined : 0"
             @mousedown="onClickSelectInput"
-            @focusin="onFocusInInput"
-            @focusout="onFocusOutInput"
             v-bind="$attrs"
+            @click="inputRef?.focus()"
         >
           <div
               v-if="_modelValue === null && placeholder !== undefined"
@@ -329,6 +280,8 @@ function onClickRemoveButton() {
           :input-ref="inputRef"
           :size="size"
           :color-type="_colorType"
+          @select-element="(e) => _modelValue = e"
+          close-on-enter
         />
       </div>
 

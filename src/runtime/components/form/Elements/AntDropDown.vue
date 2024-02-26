@@ -7,30 +7,34 @@
  * TODO:: if the dropdown is open and the user types something, the element with a matching value should be focused.
  */
 
-import { computed, nextTick, ref, watch } from 'vue';
+import { computed, nextTick, onMounted, onUnmounted, ref, watch } from 'vue';
 import { InputColorType, Size } from '../../../enums';
 import type { SelectOption } from '../__types';
 import { useVModel } from '@vueuse/core';
 import type { Validator } from '@antify/validate';
 
-const emit = defineEmits(['update:open', 'update:modelValue']);
+const emit = defineEmits([ 'update:open', 'update:modelValue', 'update:focused', 'selectElement' ]);
 const props = withDefaults(defineProps<{
-  modelValue: string | number | null;
+  modelValue: string | string[] | number | number[] | null;
+  focused: string | number | null;
   open: boolean;
   options: SelectOption[];
   colorType?: InputColorType;
   validator?: Validator;
   size?: Size;
-  inputRef?: HTMLElement | null
+  inputRef?: HTMLElement | null;
+  closeOnEnter?: boolean;
+  autoSelectFirstOnOpen?: boolean;
 }>(), {
   colorType: InputColorType.base,
+  focusOnOpen: true,
+  closeOnEnter: false,
+  autoSelectFirstOnOpen: true
 });
 
 const _modelValue = useVModel(props, 'modelValue', emit);
 const isOpen = useVModel(props, 'open', emit);
-
-const focusedDropDownItem = ref<string | number | null>(null);
-const dropDownRef = ref<HTMLElement | null>(null);
+const focusedDropDownItem = useVModel(props, 'focused', emit);
 
 const dropdownClasses = computed(() => {
   const variants: Record<InputColorType, string> = {
@@ -68,28 +72,45 @@ const dropDownItemClasses = computed(() => {
   };
 });
 
-watch(isOpen, (val) => {
+watch(isOpen, () => {
   nextTick(() => {
-    if (val) {
-      dropDownRef.value?.focus();
-      focusedDropDownItem.value = _modelValue.value || props.options[0].value;
+    if (props.autoSelectFirstOnOpen) {
+      focusedDropDownItem.value =
+        typeof _modelValue.value === 'string' || typeof _modelValue.value === 'number' ? _modelValue.value :
+          Array.isArray(_modelValue.value) ? _modelValue.value[0] :
+            props.options[0].value;
+    } else {
+      focusedDropDownItem.value = null;
     }
   });
 });
 
+onMounted(() => {
+  nextTick(() => {
+    props.inputRef?.addEventListener('keydown', onKeyDownDropDown);
+  });
+});
+
+onUnmounted(() => {
+  props.inputRef?.removeEventListener('keydown', onKeyDownDropDown);
+});
+
 function onKeyDownDropDown(e: KeyboardEvent) {
   if (e.key === 'Enter') {
-    isOpen.value = false;
-    _modelValue.value = focusedDropDownItem.value;
-    props.inputRef?.focus();
+    if (props.closeOnEnter) {
+      isOpen.value = false;
+    }
+
+    emit('selectElement', focusedDropDownItem.value);
   }
 
   if (e.key === 'Escape') {
     isOpen.value = false;
-    props.inputRef?.focus();
   }
 
   if (e.key === 'ArrowDown' || e.key === 'ArrowRight') {
+    isOpen.value = true;
+
     const index = props.options.findIndex(option => option.value === focusedDropDownItem.value);
     const option = props.options[index + 1];
 
@@ -101,6 +122,8 @@ function onKeyDownDropDown(e: KeyboardEvent) {
   }
 
   if (e.key === 'ArrowUp' || e.key === 'ArrowLeft') {
+    isOpen.value = true;
+
     const index = props.options.findIndex(option => option.value === focusedDropDownItem.value);
     const option = props.options[index - 1];
 
@@ -123,7 +146,7 @@ function getActiveDropDownItemClasses(option: SelectOption) {
     [InputColorType.danger]: 'bg-danger-100/25',
   };
 
-  return option.value === focusedDropDownItem.value ? {[variants[props.colorType]]: true} : {};
+  return option.value === focusedDropDownItem.value ? { [variants[props.colorType]]: true } : {};
 }
 
 function onClickDropDownItem(e: MouseEvent, value: string | number | null) {
@@ -131,17 +154,19 @@ function onClickDropDownItem(e: MouseEvent, value: string | number | null) {
   props.inputRef?.focus();
 
   isOpen.value = false;
+  emit('selectElement', value);
   _modelValue.value = value;
 }
+
+watch(_modelValue, (val) => {
+  focusedDropDownItem.value = Array.isArray(val) ? val[0] : val;
+});
 </script>
 
 <template>
   <div
     v-if="isOpen"
     :class="dropdownClasses"
-    @keydown="onKeyDownDropDown"
-    ref="dropDownRef"
-    tabindex="0"
   >
     <div
       v-for="(option, index) in options"
@@ -152,9 +177,14 @@ function onClickDropDownItem(e: MouseEvent, value: string | number | null) {
     >
       {{ option.label }}
     </div>
+
+    <div
+      v-if="options.length === 0"
+      :class="{...dropDownItemClasses}"
+    >
+      <slot name="empty">
+        No options available
+      </slot>
+    </div>
   </div>
 </template>
-
-<style scoped>
-
-</style>

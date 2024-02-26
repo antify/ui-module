@@ -2,6 +2,7 @@ import defaultColors from 'tailwindcss/colors.js';
 // import {type Config} from "tailwindcss";
 
 const colors = {
+  'transparent': defaultColors.transparent,
   'white': defaultColors.white,
   'black': defaultColors.black,
 
