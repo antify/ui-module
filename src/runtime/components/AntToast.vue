@@ -68,6 +68,7 @@ onMounted(() => {
   <div
     :class="classes"
     data-e2e="toast"
+    :data-e2e-color-type="props.colorType"
   >
     <div class="inline-flex items-center justify-between w-content gap-2.5">
       <div class="inline-flex items-center gap-2.5">
