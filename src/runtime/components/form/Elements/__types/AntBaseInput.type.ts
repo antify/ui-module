@@ -1,6 +1,7 @@
 export enum BaseInputType {
     date = 'date',
     datetime = 'datetime',
+    datetimeLocal = 'datetime-local',
     email = 'email',
     hidden = 'hidden',
     month = 'month',
