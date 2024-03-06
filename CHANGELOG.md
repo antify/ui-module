@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.2.1](https://github.com/antify/ui-module/compare/v1.2.0...v1.2.1) (2024-03-06)
+
+
+### Bug Fixes
+
+* Fix heap out of memory on tailwinds content purging ([1a4363b](https://github.com/antify/ui-module/commit/1a4363b1f0be20214c0d8131706861c3b7329aab))
+
 ## [1.2.0](https://github.com/antify/ui-module/compare/v1.1.5...v1.2.0) (2024-03-06)
 
 
