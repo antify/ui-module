@@ -2,6 +2,27 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.2.0](https://github.com/antify/ui-module/compare/v1.1.5...v1.2.0) (2024-03-06)
+
+
+### Features
+
+* Ant tag input ([c004203](https://github.com/antify/ui-module/commit/c004203431b23dd2003e9f6188c7590c58a32745))
+* Ant tag input ([1ef4486](https://github.com/antify/ui-module/commit/1ef448698e732e9951a4b26543a5e09b90eda5cf))
+* **AntBaseInput:** support datetime-local input type ([322a8c0](https://github.com/antify/ui-module/commit/322a8c0a0507670e052233fcb38d62eb1e510fac))
+* build playground ([d46dced](https://github.com/antify/ui-module/commit/d46dced2522c584ab6f147c2d74b0317f292d1d3))
+* build playground ([3c7aa40](https://github.com/antify/ui-module/commit/3c7aa400848a3d8e8d92389cae740ecce8403504))
+* chromatic ([fab6b6a](https://github.com/antify/ui-module/commit/fab6b6a3f9f1503359b4dcc1d29aa8e487ab4903))
+* fix checkout ([1685014](https://github.com/antify/ui-module/commit/1685014b626176dbc8a8d05282a11a490760e98a))
+* fix checkout ([36c0843](https://github.com/antify/ui-module/commit/36c0843c51112fb49248f631ce919b5b8f0d285c))
+* fix css ([c784db0](https://github.com/antify/ui-module/commit/c784db0777cdb7116235aafc5021f1d59377fbc1))
+* fix fontawesome import ([e53c16d](https://github.com/antify/ui-module/commit/e53c16d9e659deab6085bdd4750fe430c8d87fc5))
+* Tag input ([758e151](https://github.com/antify/ui-module/commit/758e151c1a20297a947af374a73e4da2b096d14e))
+* Tag input ([97da2e5](https://github.com/antify/ui-module/commit/97da2e505297ad5663319c2dd224dec2e400516e))
+* update action ([a188505](https://github.com/antify/ui-module/commit/a188505e092ae9562f4c373f5dc0ad3b675b28fc))
+* update action ([e6da60e](https://github.com/antify/ui-module/commit/e6da60ecd7c61eadb8a2e4532d67df33902e7f41))
+* update action ([bd980bc](https://github.com/antify/ui-module/commit/bd980bc962d3ad0b1b7495d8949275a9c48f7401))
+
 ### [1.1.5](https://github.com/antify/ui-module/compare/v1.1.4...v1.1.5) (2024-02-15)
 
 ### [1.1.4](https://github.com/antify/ui-module/compare/v1.1.3...v1.1.4) (2024-02-15)
