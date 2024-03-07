@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.3.0](https://github.com/antify/ui-module/compare/v1.2.1...v1.3.0) (2024-03-07)
+
+
+### Features
+
+* add AntActionButton for primary actions ([12d4d80](https://github.com/antify/ui-module/commit/12d4d80221498220b08cf4951abbe7d9f9277990))
+
 ### [1.2.1](https://github.com/antify/ui-module/compare/v1.2.0...v1.2.1) (2024-03-06)
 
 
