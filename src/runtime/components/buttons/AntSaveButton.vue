@@ -2,7 +2,7 @@
 import {Grouped} from '../../enums/Grouped.enum';
 import {Size} from '../../enums/Size.enum';
 import {ColorType} from '../../enums/ColorType.enum';
-import AntButton from './AntButton.vue';
+import AntActionButton from './AntActionButton.vue';
 
 defineEmits(['click', 'blur']);
 defineProps<{
@@ -15,7 +15,7 @@ defineProps<{
 </script>
 
 <template>
-  <AntButton
+  <AntActionButton
     :size="size"
     :disabled="disabled"
     :grouped="grouped"
@@ -27,5 +27,5 @@ defineProps<{
     @blur="$emit('blur')"
   >
     Save
-  </AntButton>
+  </AntActionButton>
 </template>

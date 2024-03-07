@@ -1,8 +1,7 @@
 <script lang="ts" setup>
 import {Grouped} from '../../enums/Grouped.enum';
 import {Size} from '../../enums/Size.enum';
-import {ColorType} from '../../enums/ColorType.enum';
-import AntButton from './AntButton.vue';
+import AntActionButton from './AntActionButton.vue';
 
 defineEmits(['click', 'blur']);
 defineProps<{
@@ -15,18 +14,16 @@ defineProps<{
 </script>
 
 <template>
-  <AntButton
+  <AntActionButton
     :size="size"
     :disabled="disabled"
     :grouped="grouped"
     :skeleton="skeleton"
     :expanded="expanded"
-    :color-type="ColorType.primary"
-    filled
     data-e2e="save-and-new-button"
     @click="$emit('click')"
     @blur="$emit('blur')"
   >
     Save and new
-  </AntButton>
+  </AntActionButton>
 </template>
