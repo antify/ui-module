@@ -1,23 +1,25 @@
 import AntTooltip from '../AntTooltip.vue';
 import AntButton from '../buttons/AntButton.vue';
-import { type Meta, type StoryObj} from '@storybook/vue3';
+import {type Meta, type StoryObj} from '@storybook/vue3';
 import {Position} from '../../enums/Position.enum';
 import {InputColorType} from '../../enums';
+import AntIcon from '../AntIcon.vue';
+import {faTag} from '@fortawesome/free-solid-svg-icons';
 
 const meta: Meta<typeof AntTooltip> = {
-    title: 'Components/Tooltip',
-    component: AntTooltip,
-    parameters: {controls: {sort: 'requiredFirst'}},
-    argTypes: {
-        position: {
-            control: {type: 'select'},
-            options: Object.values(Position),
-        },
-        colorType: {
-            control: {type: 'select'},
-            options: Object.values(InputColorType),
-        }
-    },
+	title: 'Components/Tooltip',
+	component: AntTooltip,
+	parameters: {controls: {sort: 'requiredFirst'}},
+	argTypes: {
+		position: {
+			control: {type: 'select'},
+			options: Object.values(Position),
+		},
+		colorType: {
+			control: {type: 'select'},
+			options: Object.values(InputColorType),
+		}
+	},
 };
 
 export default meta;
@@ -25,25 +27,45 @@ export default meta;
 type Story = StoryObj<typeof AntTooltip>;
 
 export const Docs: Story = {
-    render: (args) => ({
-        components: {AntTooltip, AntButton},
-        setup() {
-            return {args};
-        },
-        template: `
-          <div class="p-32 flex justify-center items-center">
-            <AntTooltip v-bind="args">
-              <template #content>Lorem ipsum dolor sit amet <br/> foo</template>
-              <template #default>
-                <span class="text-primary-500 bg-danger-500">
+	render: (args) => ({
+		components: {AntTooltip, AntButton},
+		setup() {
+			return {args};
+		},
+		template: `
+			<div class="p-32 flex justify-center items-center">
+				<AntTooltip v-bind="args">
+					<template #content>Lorem ipsum dolor sit amet <br/> foo</template>
+					<template #default>
+                <span>
                   Hover me
                 </span>
-              </template>
-            </AntTooltip>
-          </div>
-        `,
-    }),
-    args: {
-        position: Position.top
-    },
+					</template>
+				</AntTooltip>
+			</div>
+		`,
+	}),
+	args: {
+		position: Position.top
+	},
+};
+
+/**
+ * Make sure, no tooltip get shown if no content is provided.
+ */
+export const WithoutContent: Story = {
+	render: (args) => ({
+		components: {AntTooltip},
+		setup() {
+			return {args};
+		},
+		template: `
+			<div class="p-32 flex justify-center items-center">
+				<AntTooltip v-bind="args">
+					<span>Hover me</span>
+				</AntTooltip>
+			</div>
+    `,
+	}),
+	args: {},
 };

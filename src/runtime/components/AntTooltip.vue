@@ -1,11 +1,10 @@
 <script lang="ts" setup>
-import {computed, onMounted, ref} from 'vue';
+import {computed, onMounted, ref, useSlots} from 'vue';
 import {handleEnumValidation} from '../handler';
 import {InputColorType, Position} from '../enums';
 import {classesToObjectSyntax} from '../utils';
 
 const props = withDefaults(defineProps<{
-  content?: string,
   position?: Position,
   tooltipClasses?: string | Record<string, boolean>,
   colorType?: InputColorType
@@ -15,6 +14,7 @@ const props = withDefaults(defineProps<{
   colorType: InputColorType.base
 });
 const visible = ref(false);
+const slots = useSlots();
 const _tooltipClasses = computed(() => ({
   'absolute w-max inline-flex': true,
   // Position
@@ -106,9 +106,12 @@ function onMouseLeave() {
     @mouseover="onMouseOver"
     @mouseleave="onMouseLeave"
   >
-    <slot/>
+    <slot />
 
-    <div v-if="visible" :class="_tooltipClasses">
+    <div
+      v-if="visible && !!slots.content"
+      :class="_tooltipClasses"
+    >
       <div
         class="shadow-lg text-sm relative inline-flex flex-col relative"
       >
@@ -157,7 +160,7 @@ function onMouseLeave() {
           class="p-2.5 rounded-md border"
           :class="contentClasses"
         >
-          <slot name="content"/>
+          <slot name="content" />
         </div>
       </div>
     </div>
