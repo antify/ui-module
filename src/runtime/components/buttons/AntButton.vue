@@ -102,7 +102,7 @@ const classes = computed(() => {
   return {
     'transition-all inline-flex items-center justify-center relative font-medium': true,
     'focus:z-10': true,
-    'active:shadow-[inset_0_4px_4px_rgba(0,0,0,0.25)]': !props.readonly,
+    'active:shadow-[inset_0_4px_4px_rgba(0,0,0,0.25)]': !hasAction.value,
     'py-1.5 px-2.5 text-xs gap-1': props.size === Size.sm,
     'py-2.5 px-3.5 text-sm gap-2.5': props.size === Size.md,
     'disabled:opacity-50 disabled:cursor-not-allowed': true,
@@ -115,9 +115,9 @@ const classes = computed(() => {
     ...groupedClassList.value,
     [variants[props.colorType]]: true,
     [notFilledVariants[props.colorType]]: !props.filled,
-    [notFilledHoverVariants[props.colorType]]: !props.filled && !props.readonly,
+    [notFilledHoverVariants[props.colorType]]: !props.filled && !hasAction.value,
     [filledVariants[props.colorType]]: props.filled,
-    [filledHoverVariants[props.colorType]]: props.filled && !props.readonly,
+    [filledHoverVariants[props.colorType]]: props.filled && !hasAction.value,
   };
 });
 const iconColor = computed(() => {
