@@ -4,9 +4,11 @@ import {Size} from '../../enums/Size.enum';
 import {ColorType} from '../../enums/ColorType.enum';
 import AntActionButton from './AntActionButton.vue';
 import {Position} from '../../enums';
+import {faTrash} from '@fortawesome/free-solid-svg-icons';
 
 defineEmits(['click', 'blur']);
 withDefaults(defineProps<{
+	iconVariant?: boolean;
 	size?: Size;
 	disabled?: boolean;
 	grouped?: Grouped;
@@ -15,12 +17,15 @@ withDefaults(defineProps<{
 	canDelete?: boolean;
 	invalidPermissionTooltipPosition?: Position;
 }>(), {
+	iconVariant: false,
 	canDelete: true
 })
 </script>
 
 <template>
   <AntActionButton
+    :icon-left="iconVariant ? faTrash : undefined"
+    :filled="false"
     :size="size"
     :disabled="disabled"
     :grouped="grouped"
@@ -33,7 +38,12 @@ withDefaults(defineProps<{
     @click="$emit('click')"
     @blur="$emit('blur')"
   >
-    <template #default>Delete</template>
+    <template
+      v-if="!iconVariant"
+      #default
+    >
+      Delete
+    </template>
 
     <template #invalidPermissionTooltipContent>
       You have no permission to delete this entry.<br>

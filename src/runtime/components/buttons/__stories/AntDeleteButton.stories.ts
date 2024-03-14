@@ -32,7 +32,9 @@ export const Docs: Story = {
     },
     template: '<AntDeleteButton v-bind="args"/>',
   }),
-  args: {},
+  args: {
+		invalidPermissionTooltipPosition: Position.right
+	},
 };
 
 export const Disabled: Story = {
@@ -67,11 +69,18 @@ export const Expanded: Story = {
   },
 };
 
+export const IconVariant: Story = {
+  render: Docs.render,
+  args: {
+    ...Docs.args,
+    iconVariant: true
+  },
+};
+
 export const InvalidPermission: Story = {
 	render: Docs.render,
 	args: {
 		...Docs.args,
 		canDelete: false,
-		invalidPermissionTooltipPosition: Position.right,
 	},
 };

@@ -2,7 +2,7 @@ import AntActionButton from '../AntActionButton.vue';
 import {type Meta, type StoryObj} from '@storybook/vue3';
 import {Size} from '../../../enums/Size.enum';
 import {Grouped as _Grouped} from '../../../enums/Grouped.enum';
-import {Position} from '../../../enums';
+import {Position} from '../../../enums/Position.enum';
 
 const meta: Meta<typeof AntActionButton> = {
   title: 'Components/Buttons/Action Button',
@@ -36,7 +36,9 @@ export const Docs: Story = {
     },
     template: '<AntActionButton v-bind="args">Action Button</AntActionButton>',
   }),
-  args: {},
+  args: {
+		invalidPermissionTooltipPosition: Position.right
+	},
 };
 
 export const Disabled: Story = {
@@ -84,7 +86,7 @@ export const WithPermissionTooltip: Story = {
 		</AntActionButton>`,
 	}),
 	args: {
+		...Docs.args,
 		hasPermission: false,
-		invalidPermissionTooltipPosition: Position.right,
 	},
 };

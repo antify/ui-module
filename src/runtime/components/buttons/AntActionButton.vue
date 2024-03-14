@@ -9,10 +9,13 @@ import {ColorType, InputColorType} from '../../enums/ColorType.enum';
 import {Position} from '../../enums/Position.enum';
 import AntButton from './AntButton.vue';
 import AntTooltip from '../AntTooltip.vue';
+import type {IconDefinition} from '@fortawesome/free-solid-svg-icons';
 
 defineEmits(['click', 'blur']);
 withDefaults(
 	defineProps<{
+		iconLeft?: IconDefinition;
+		iconRight?: IconDefinition;
 		size?: Size;
 		disabled?: boolean;
 		grouped?: Grouped;
@@ -38,6 +41,8 @@ withDefaults(
   >
     <slot name="button">
       <AntButton
+        :icon-left="iconLeft"
+        :icon-right="iconRight"
         :size="size"
         :disabled="disabled || !hasPermission"
         :grouped="grouped"

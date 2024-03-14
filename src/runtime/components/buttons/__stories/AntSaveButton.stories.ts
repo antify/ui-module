@@ -32,7 +32,9 @@ export const Docs: Story = {
     },
     template: '<AntSaveButton v-bind="args"/>',
   }),
-  args: {},
+  args: {
+		invalidPermissionTooltipPosition: Position.right
+	},
 };
 
 export const Disabled: Story = {
@@ -72,6 +74,5 @@ export const InvalidPermission: Story = {
 	args: {
 		...Docs.args,
 		canSave: false,
-		invalidPermissionTooltipPosition: Position.right,
 	},
 };

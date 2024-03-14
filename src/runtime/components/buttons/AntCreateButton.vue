@@ -20,6 +20,7 @@ withDefaults(defineProps<{
 
 <template>
   <AntActionButton
+    :filled="false"
     :size="size"
     :disabled="disabled"
     :grouped="grouped"
