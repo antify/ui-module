@@ -56,7 +56,7 @@ const dropdownClasses = computed(() => {
 });
 const dropDownItemClasses = computed(() => {
   const variants: Record<InputColorType, string> = {
-    [InputColorType.base]: 'bg-neutral-50 text-neutral-50-font',
+    [InputColorType.base]: 'bg-white text-for-white-bg-font',
     [InputColorType.success]: 'bg-success-100 border-success-100-font',
     [InputColorType.info]: 'bg-info-100 border-info-100-font',
     [InputColorType.warning]: 'bg-warning-100 border-warning-100-font',

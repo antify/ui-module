@@ -58,7 +58,7 @@ const icons = {
 
 const inputClasses = computed(() => {
   const variants: Record<InputColorType, string> = {
-    [InputColorType.base]: 'outline-neutral-300 focus:outline-primary-500 focus:ring-primary/25 bg-neutral-50 placeholder:text-neutral-500',
+    [InputColorType.base]: 'outline-neutral-300 focus:outline-primary-500 focus:ring-primary/25 bg-white placeholder:text-neutral-500',
     [InputColorType.danger]: 'outline-danger-500 focus:outline-danger-500 focus:ring-danger/25 bg-danger-100 placeholder:text-danger-700',
     [InputColorType.info]: 'outline-info-500 focus:outline-info-500 focus:ring-info/25 bg-info-100 placeholder:text-info-700',
     [InputColorType.success]: 'outline-success-500 focus:outline-success-500 focus:ring-success/25 bg-success-100 placeholder:text-success-700',
@@ -156,57 +156,63 @@ function onBlur(e: FocusEvent) {
 </script>
 
 <template>
-  <div class="block relative w-full" :class="{...{'-mr-px': grouped !== Grouped.none}, ..._wrapperClass}">
+  <div
+    class="block relative w-full"
+    :class="{...{'-mr-px': grouped !== Grouped.none}, ..._wrapperClass}"
+  >
     <div
-        v-if="iconLeft"
-        class="absolute h-full flex items-center justify-center z-20"
-        :class="{'w-7': size === Size.sm, 'w-10': size === Size.md}"
+      v-if="iconLeft"
+      class="absolute h-full flex items-center justify-center z-20"
+      :class="{'w-7': size === Size.sm, 'w-10': size === Size.md}"
     >
       <AntIcon
-          :icon="iconLeft"
-          :size="size as unknown as IconSize"
-          color="text-neutral-50-font"
+        :icon="iconLeft"
+        :size="size as unknown as IconSize"
+        color="text-for-white-bg-font"
       />
     </div>
 
     <input
-        v-model="_value"
-        :class="inputClasses"
-        :type="type"
-        :placeholder="placeholder"
-        :disabled="disabled || skeleton"
-        @blur="onBlur"
-        v-bind="$attrs"
+      v-model="_value"
+      :class="inputClasses"
+      :type="type"
+      :placeholder="placeholder"
+      :disabled="disabled || skeleton"
+      v-bind="$attrs"
+      @blur="onBlur"
     >
 
     <div
-        v-if="nullable && _value !== null && _value !== ''"
-        class="absolute flex w-fit right-0 top-0 h-full transition-all z-20"
-        :class="{'p-1.5': size === Size.sm, 'p-2.5': size === Size.md}"
+      v-if="nullable && _value !== null && _value !== ''"
+      class="absolute flex w-fit right-0 top-0 h-full transition-all z-20"
+      :class="{'p-1.5': size === Size.sm, 'p-2.5': size === Size.md}"
     >
       <!-- TODO:: Replace with AntIcon -->
-      <fa-icon
-          :icon="faXmark"
-          :class="iconClasses"
-          class="text-neutral-500-font cursor-pointer"
-          @click="() => _value = null"
+      <FaIcon
+        :icon="faXmark"
+        :class="iconClasses"
+        class="text-neutral-500-font cursor-pointer"
+        @click="() => _value = null"
       />
     </div>
 
     <div
-        v-else-if="showIcon && icon"
-        class="absolute flex w-fit right-0 top-0 h-full transition-all z-20"
-        :class="{'p-1.5': size === Size.sm, 'p-2.5': size === Size.md}"
+      v-else-if="showIcon && icon"
+      class="absolute flex w-fit right-0 top-0 h-full transition-all z-20"
+      :class="{'p-1.5': size === Size.sm, 'p-2.5': size === Size.md}"
     >
       <!-- TODO:: Replace with AntIcon -->
-      <fa-icon :icon="icon" :class="{...iconClasses, ...iconColorClasses}"/>
+      <FaIcon
+        :icon="icon"
+        :class="{...iconClasses, ...iconColorClasses}"
+      />
     </div>
 
     <AntSkeleton
-        v-if="skeleton"
-        absolute
-        :grouped="grouped"
-        rounded
+      v-if="skeleton"
+      absolute
+      :grouped="grouped"
+      rounded
     />
   </div>
 </template>

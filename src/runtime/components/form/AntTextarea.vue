@@ -55,7 +55,7 @@ const icons = {
 };
 const inputClasses = computed(() => {
   const variants: Record<InputColorType, string> = {
-    [InputColorType.base]: 'outline-neutral-300 focus:outline-primary-500 focus:ring-primary/25 bg-neutral-50 placeholder:text-neutral-500',
+    [InputColorType.base]: 'outline-neutral-300 focus:outline-primary-500 focus:ring-primary/25 bg-white placeholder:text-neutral-500',
     [InputColorType.danger]: 'outline-danger-500 focus:outline-danger-500 focus:ring-danger/25 bg-danger-100 placeholder:text-danger-700',
     [InputColorType.info]: 'outline-info-500 focus:outline-info-500 focus:ring-info/25 bg-info-100 placeholder:text-info-700',
     [InputColorType.success]: 'outline-success-500 focus:outline-success-500 focus:ring-success/25 bg-success-100 placeholder:text-success-700',
@@ -132,12 +132,15 @@ function onBlur(e: FocusEvent) {
     :size="size"
     :skeleton="skeleton"
     :description="description"
-    :colorType="colorType"
+    :color-type="colorType"
     :limiter-max-value="limiter && max !== undefined ? max : undefined"
     :limiter-value="limiter ? _modelValue.length : undefined"
     :errors="errors"
   >
-    <div class="block relative w-full" :class="{...{'-mr-px': grouped !== Grouped.none}, ..._wrapperClass}">
+    <div
+      class="block relative w-full"
+      :class="{...{'-mr-px': grouped !== Grouped.none}, ..._wrapperClass}"
+    >
       <textarea
         v-model="_modelValue"
         :class="inputClasses"

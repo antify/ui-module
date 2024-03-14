@@ -23,7 +23,7 @@ const dialogOpen = ref(false);
 
 <template>
   <div
-    class="flex justify-between items-stretch gap-2.5 bg-neutral-50"
+    class="flex justify-between items-stretch gap-2.5 bg-white"
     data-e2e="crud-detail-nav"
   >
     <slot name="tabs">

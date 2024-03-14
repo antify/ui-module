@@ -52,25 +52,25 @@ function onClickOutside() {
 
 <template>
   <div
+    v-on-click-outside="onClickOutside"
     class="relative inline-flex justify-center items-end z-40"
     data-e2e="dropdown"
-    v-on-click-outside="onClickOutside"
   >
-    <slot/>
+    <slot />
 
-    <transition name="bounce">
+    <Transition name="bounce">
       <div
         v-if="showDropdown"
         :class="_dropdownClasses"
       >
         <div
-          class="shadow-lg border border-neutral-300 rounded-md text-sm relative inline-flex flex-col relative bg-neutral-50 text-neutral-50-font w-full"
+          class="shadow-lg border border-neutral-300 rounded-md text-sm relative inline-flex flex-col relative bg-white text-for-white-bg-font w-full"
           :class="{'p-2.5': contentPadding}"
         >
-          <slot name="content"/>
+          <slot name="content" />
         </div>
       </div>
-    </transition>
+    </Transition>
   </div>
 </template>
 

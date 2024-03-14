@@ -62,7 +62,7 @@ watch(() => props.fullWidth, (val) => {
 
 <template>
   <div
-    class="flex h-full items-center p-2.5 gap-2.5 bg-neutral-50"
+    class="flex h-full items-center p-2.5 gap-2.5 bg-white"
     data-e2e="crud-table-filter"
   >
     <div

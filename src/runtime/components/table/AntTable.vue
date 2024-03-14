@@ -95,81 +95,98 @@ function rowClick(elem: Record<string, unknown>): void {
         :class="{'h-full': data.length === 0 && !_loading}"
       >
         <thead class="bg-neutral-100 sticky top-0 z-10">
-        <tr>
-          <slot name="headerFirstCell"/>
+          <tr>
+            <slot name="headerFirstCell" />
 
-          <template v-for="(header, index) in _headers">
-            <AntTh
-              v-if="!_showLightVersion || (_showLightVersion && header.lightVersion)"
-              :key="`table-header-${header.identifier}-${index}`"
-              :header="header"
-              @sort="sortTable"
-            >
-              <template  #headerContent>
-                <slot name="headerContent" v-bind="header"/>
-              </template>
-            </AntTh>
-          </template>
+            <template v-for="(header, index) in _headers">
+              <AntTh
+                v-if="!_showLightVersion || (_showLightVersion && header.lightVersion)"
+                :key="`table-header-${header.identifier}-${index}`"
+                :header="header"
+                @sort="sortTable"
+              >
+                <template #headerContent>
+                  <slot
+                    name="headerContent"
+                    v-bind="header"
+                  />
+                </template>
+              </AntTh>
+            </template>
 
-          <slot name="headerLastCell"></slot>
-        </tr>
+            <slot name="headerLastCell"></slot>
+          </tr>
         </thead>
 
         <tbody class="bg-white relative">
-        <!-- TODO:: Add some kind of virtual list for very large tree data (or required pagination??) -->
-        <tr
-          v-for="(elem, index) in data"
-          :key="`table-row-${elem[rowKey]}-${index}`"
-          :id="elem[rowKey] as string"
-          class="transition-all"
-          :class="{
-            'bg-primary-300 text-primary-300-font': elem === selected,
-            'bg-neutral-50 text-neutral-50-font': elem !== selected && index % 2 === 0,
-            'bg-neutral-100 text-neutral-100-font': elem !== selected && index % 2 !== 0,
-            'cursor-pointer': selectableRows
-          }"
-        >
-          <slot name="rowFirstCell" v-bind="{ elem }"/>
-
-          <template v-for="(header, index) in _headers">
-            <AntTd
-              v-if="!_showLightVersion || (_showLightVersion && header.lightVersion)"
-              :header="header"
-              :element="elem"
-              :align="header.align"
-              :key="`table-cell-${header.identifier}-${index}`"
-              @click="rowClick(elem)"
-            >
-              <template #beforeCellContent="props">
-                <slot name="beforeCellContent" v-bind="props"/>
-              </template>
-
-              <template #cellContent="props">
-                <slot name="cellContent" v-bind="props"/>
-              </template>
-
-              <template #afterCellContent="props">
-                <slot name="afterCellContent" v-bind="props"/>
-              </template>
-            </AntTd>
-          </template>
-
-          <slot name="rowLastCell" v-bind="{ elem }"/>
-        </tr>
-
-        <tr v-if="data.length <= 0 && !_loading">
-          <td
-            colspan="100"
-            class="w-full h-full py-2 text-center text-neutral-50-font text-lg"
+          <!-- TODO:: Add some kind of virtual list for very large tree data (or required pagination??) -->
+          <tr
+            v-for="(elem, index) in data"
+            :id="elem[rowKey] as string"
+            :key="`table-row-${elem[rowKey]}-${index}`"
+            class="transition-all"
+            :class="{
+              'bg-primary-300 text-primary-300-font': elem === selected,
+              'bg-white text-for-white-bg-font': elem !== selected && index % 2 === 0,
+              'bg-neutral-100 text-neutral-100-font': elem !== selected && index % 2 !== 0,
+              'cursor-pointer': selectableRows
+            }"
           >
-            <slot name="emptyState">
-              <div class="flex items-center flex-col">
-                <span class="font-semibold">We couldn't find any entry</span>
-              </div>
-            </slot>
-          </td>
-        </tr>
+            <slot
+              name="rowFirstCell"
+              v-bind="{ elem }"
+            />
 
+            <template v-for="(header, index) in _headers">
+              <AntTd
+                v-if="!_showLightVersion || (_showLightVersion && header.lightVersion)"
+                :key="`table-cell-${header.identifier}-${index}`"
+                :header="header"
+                :element="elem"
+                :align="header.align"
+                @click="rowClick(elem)"
+              >
+                <template #beforeCellContent="props">
+                  <slot
+                    name="beforeCellContent"
+                    v-bind="props"
+                  />
+                </template>
+
+                <template #cellContent="props">
+                  <slot
+                    name="cellContent"
+                    v-bind="props"
+                  />
+                </template>
+
+                <template #afterCellContent="props">
+                  <slot
+                    name="afterCellContent"
+                    v-bind="props"
+                  />
+                </template>
+              </AntTd>
+            </template>
+
+            <slot
+              name="rowLastCell"
+              v-bind="{ elem }"
+            />
+          </tr>
+
+          <tr v-if="data.length <= 0 && !_loading">
+            <td
+              colspan="100"
+              class="w-full h-full py-2 text-center text-for-white-bg-font text-lg"
+            >
+              <slot name="emptyState">
+                <div class="flex items-center flex-col">
+                  <span class="font-semibold">We couldn't find any entry</span>
+                </div>
+              </slot>
+            </td>
+          </tr>
         </tbody>
       </table>
     </div>
@@ -178,7 +195,10 @@ function rowClick(elem: Record<string, unknown>): void {
       v-if="data.length > 0 && _loading"
       class="absolute bg-opacity-50 w-full top-0 bottom-0 bg-neutral-300 flex items-center justify-center"
     >
-      <AntSpinner class="!w-24 !h-24" :color-type="ColorType.primary"/>
+      <AntSpinner
+        class="!w-24 !h-24"
+        :color-type="ColorType.primary"
+      />
     </div>
 
     <div
@@ -186,7 +206,9 @@ function rowClick(elem: Record<string, unknown>): void {
       class="absolute bg-opacity-50 w-full top-[40px] bottom-0 bg-neutral-300 flex items-center justify-center"
     >
       <AntSkeleton
-        v-model="_loading" absolute/>
+        v-model="_loading"
+        absolute
+      />
     </div>
   </div>
 </template>

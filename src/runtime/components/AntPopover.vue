@@ -44,9 +44,9 @@ onMounted(() => {
 
 <template>
   <div class="relative inline-flex justify-center items-end">
-    <slot/>
+    <slot />
 
-    <transition name="bounce">
+    <Transition name="bounce">
       <template v-if="showPopover">
         <div :class="_popoverClasses">
           <div class="shadow-lg border-neutral-300 rounded-md text-sm relative inline-flex flex-col relative">
@@ -66,12 +66,12 @@ onMounted(() => {
                 >
                   <path
                     d="M20.3284 1.82843L23.1569 4.65685C24.6571 6.15715 26.692 7 28.8137 7L6.18629 7C8.30802 7 10.3429 6.15715 11.8431 4.65686L14.6716 1.82843C16.2337 0.266331 18.7663 0.266328 20.3284 1.82843Z"
-                    :class="{'fill-neutral-100': position === Position.bottom, 'fill-neutral-50': position === Position.top || position === Position.right || position === Position.left}"
+                    :class="{'fill-neutral-100': position === Position.bottom, 'fill-white': position === Position.top || position === Position.right || position === Position.left}"
                   />
 
                   <path
                     d="M34.5 7L28.8137 7C26.692 7 24.6571 6.15715 23.1569 4.65685L20.3284 1.82843C18.7663 0.266328 16.2337 0.266331 14.6716 1.82843L11.8431 4.65686C10.3429 6.15715 8.30802 7 6.18629 7L0.5 7L34.5 7Z"
-                    :class="{'stroke-neutral-100': position === Position.bottom, 'stroke-neutral-50': position === Position.top || position === Position.right || position === Position.left}"
+                    :class="{'stroke-neutral-100': position === Position.bottom, 'stroke-white': position === Position.top || position === Position.right || position === Position.left}"
                   />
                 </svg>
 
@@ -92,18 +92,20 @@ onMounted(() => {
             </div>
 
             <div
-              class="border-neutral-300 border-b p-2.5 bg-neutral-100 rounded-t-md border-t border-l border-r text-neutral-100-font font-semibold">
+              class="border-neutral-300 border-b p-2.5 bg-neutral-100 rounded-t-md border-t border-l border-r text-neutral-100-font font-semibold"
+            >
               {{ title }}
             </div>
 
             <div
-              class="p-2.5 rounded-b-md text-neutral-50-font border-neutral-300 border-l border-b border-r bg-neutral-50">
-              <slot name="content"/>
+              class="p-2.5 rounded-b-md text-for-white-bg-font border-neutral-300 border-l border-b border-r bg-white"
+            >
+              <slot name="content" />
             </div>
           </div>
         </div>
       </template>
-    </transition>
+    </Transition>
   </div>
 </template>
 

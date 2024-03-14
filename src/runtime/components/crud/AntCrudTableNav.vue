@@ -90,11 +90,15 @@ watch(() => props.fullWidth, (val) => {
     >
       <div
         v-if="_fullWidth"
-        class="flex gap-2 items-center text-neutral-50-font text-sm"
+        class="flex gap-2 items-center text-for-white-bg-font text-sm"
         data-e2e="items-per-page"
       >
         <span class="relative">
-          <AntSkeleton v-if="skeleton" rounded absolute/>
+          <AntSkeleton
+            v-if="skeleton"
+            rounded
+            absolute
+          />
           Items per page
         </span>
 
@@ -105,8 +109,15 @@ watch(() => props.fullWidth, (val) => {
           :expanded="false"
         />
 
-        <div v-if="count !== null" class="flex gap-1 relative">
-          <AntSkeleton v-if="skeleton" rounded absolute/>
+        <div
+          v-if="count !== null"
+          class="flex gap-1 relative"
+        >
+          <AntSkeleton
+            v-if="skeleton"
+            rounded
+            absolute
+          />
 
           <span class="font-medium">{{ fromItems }} - {{ itemsPerPage * page }}</span>
           <span>of</span>

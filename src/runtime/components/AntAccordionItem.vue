@@ -24,21 +24,24 @@ function onClick() {
 
 <template>
   <div
-      class="p-2.5 select-none cursor-pointer transition-colors"
-      :class="{'bg-primary-500 text-primary-500-font': isOpen, 'bg-neutral-50 text-neutral-50-font': !isOpen}"
-      @click="onClick"
+    class="p-2.5 select-none cursor-pointer transition-colors"
+    :class="{'bg-primary-500 text-primary-500-font': isOpen, 'bg-white text-for-white-bg-font': !isOpen}"
+    @click="onClick"
   >
-    <slot name="label" v-bind="{ isOpen: isOpen }">
+    <slot
+      name="label"
+      v-bind="{ isOpen: isOpen }"
+    >
       <div
-          class="hover:text-gray-800 flex justify-between items-center"
+        class="hover:text-gray-800 flex justify-between items-center"
       >
         <span class="text-sm font-semibold">
           {{ label }}
         </span>
 
         <AntIcon
-            :icon="isOpen ? faAngleUp : faAngleDown"
-            :color="isOpen ? 'text-primary-500-font' : undefined"
+          :icon="isOpen ? faAngleUp : faAngleDown"
+          :color="isOpen ? 'text-primary-500-font' : undefined"
         />
       </div>
     </slot>
@@ -46,17 +49,17 @@ function onClick() {
 
   <AntTransitionCollapseHeight>
     <div
-        v-show="isOpen"
-        class="bg-white overflow-hidden -mt-px"
+      v-show="isOpen"
+      class="bg-white overflow-hidden -mt-px"
     >
-      <transition name="bounce">
+      <Transition name="bounce">
         <div
-            v-show="isOpen"
-            class="p-2.5 bg-neutral-50"
+          v-show="isOpen"
+          class="p-2.5 bg-white"
         >
-          <slot/>
+          <slot />
         </div>
-      </transition>
+      </Transition>
     </div>
   </AntTransitionCollapseHeight>
 </template>

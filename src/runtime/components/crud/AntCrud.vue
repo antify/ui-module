@@ -7,33 +7,36 @@ withDefaults(defineProps<{
 </script>
 
 <template>
-  <div class="flex w-full h-full" data-e2e="crud">
+  <div
+    class="flex w-full h-full"
+    data-e2e="crud"
+  >
     <div
       class="left-content h-full flex flex-col bg-neutral-300 gap-px overflow-hidden"
       :class="{'w-[40rem]': showDetail, 'w-full': !showDetail}"
     >
-      <div class="bg-neutral-50">
-        <slot name="search-section"/>
+      <div class="bg-white">
+        <slot name="search-section" />
       </div>
 
-      <div class="bg-neutral-50 flex-grow h-full overflow-hidden">
-        <slot name="table-section"/>
+      <div class="bg-white flex-grow h-full overflow-hidden">
+        <slot name="table-section" />
       </div>
 
-      <div class="bg-neutral-50">
-        <slot name="table-nav-section"/>
+      <div class="bg-white">
+        <slot name="table-nav-section" />
       </div>
     </div>
 
-    <transition name="right-content">
+    <Transition name="right-content">
       <div
         v-if="showDetail"
         class="flex flex-col gap-px border-l border-neutral-300 overflow-hidden"
         :class="{'w-full': showDetail}"
       >
-        <slot/>
+        <slot />
       </div>
-    </transition>
+    </Transition>
   </div>
 </template>
 

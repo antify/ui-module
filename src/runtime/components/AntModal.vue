@@ -39,21 +39,22 @@ function closeModal() {
 </script>
 
 <template>
-  <transition name="fade">
+  <Transition name="fade">
     <div
       v-if="openBackground"
       class="absolute inset-0 flex items-center justify-center z-50 cursor-pointer overflow-hidden"
       :class="{'bg-black/50 backdrop-blur-sm': !fullscreen}"
       @click.self="closeModal"
     >
-      <transition :name="!fullscreen ? 'bounce' : 'bounce-slow'">
+      <Transition :name="!fullscreen ? 'bounce' : 'bounce-slow'">
         <div
           v-if="openModal"
           class="flex flex-col gap-px bg-neutral-300 overflow-hidden cursor-auto"
           :class="{'w-full h-full': fullscreen, 'border border-neutral-300 rounded-md shadow-md': !fullscreen}"
         >
           <div
-            class="bg-neutral-50 p-2.5 flex items-center justify-between text-neutral-50-font text-lg font-medium">
+            class="bg-white p-2.5 flex items-center justify-between text-for-white-bg-font text-lg font-medium"
+          >
             <slot name="title">
               {{ title }}
             </slot>
@@ -66,20 +67,20 @@ function closeModal() {
             />
           </div>
 
-          <div class="bg-neutral-50 p-2.5 grow overflow-y-auto">
-            <slot/>
+          <div class="bg-white p-2.5 grow overflow-y-auto">
+            <slot />
           </div>
 
           <div
             v-if="useSlots()['footer'] || false"
-            class="bg-neutral-50 p-2.5 text-neutral-50-font"
+            class="bg-white p-2.5 text-for-white-bg-font"
           >
-            <slot name="footer"/>
+            <slot name="footer" />
           </div>
         </div>
-      </transition>
+      </Transition>
     </div>
-  </transition>
+  </Transition>
 </template>
 
 <style scoped>

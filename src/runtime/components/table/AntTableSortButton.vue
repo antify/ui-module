@@ -16,11 +16,23 @@ withDefaults(
 
 <template>
   <button
-    class="bg-neutral-50 text-neutral-50-font rounded h-[26px] w-[26px] flex items-center justify-center"
+    class="bg-white text-for-white-bg-font rounded h-[26px] w-[26px] flex items-center justify-center"
     @click="$emit('sortClick')"
   >
-    <AntIcon v-if="sortDirection === AntTableSortDirection.asc" :icon="faAngleDown" :size="IconSize.sm"/>
-    <AntIcon v-if="sortDirection === AntTableSortDirection.desc" :icon="faAngleUp" :size="IconSize.sm"/>
-    <AntIcon v-if="sortDirection === AntTableSortDirection.neutral" :icon="faMinus" :size="IconSize.sm"/>
+    <AntIcon
+      v-if="sortDirection === AntTableSortDirection.asc"
+      :icon="faAngleDown"
+      :size="IconSize.sm"
+    />
+    <AntIcon
+      v-if="sortDirection === AntTableSortDirection.desc"
+      :icon="faAngleUp"
+      :size="IconSize.sm"
+    />
+    <AntIcon
+      v-if="sortDirection === AntTableSortDirection.neutral"
+      :icon="faMinus"
+      :size="IconSize.sm"
+    />
   </button>
 </template>

@@ -79,7 +79,7 @@ const itemClasses = computed(() => {
   };
 
   const colorVariant = {
-    [InputColorType.base]: 'border-neutral-300 bg-neutral-50 text-neutral-50-font',
+    [InputColorType.base]: 'border-neutral-300 bg-white text-for-white-bg-font',
     [InputColorType.danger]: 'border-danger-500 bg-danger-100 text-danger-100-font',
     [InputColorType.info]: 'border-info-500 bg-info-100 text-info-100-font',
     [InputColorType.success]: 'border-success-500 bg-success-100 text-success-100-font',
@@ -126,7 +126,7 @@ function nextOption() {
     :size="size"
     :skeleton="skeleton"
     :description="description"
-    :colorType="colorType"
+    :color-type="colorType"
     :validator="validator"
     label-for="noop"
   >
@@ -140,12 +140,12 @@ function nextOption() {
         :icon-left="faChevronLeft"
         :grouped="Grouped.left"
         no-focus
-        @click="prevOption"
         :color-type="_colorType as unknown as ColorType"
         :size="size"
         :skeleton="skeleton"
         :readonly="readonly"
         :disabled="disabled"
+        @click="prevOption"
       />
 
       <div class="grow relative">
@@ -168,12 +168,12 @@ function nextOption() {
         :icon-left="faChevronRight"
         :grouped="Grouped.right"
         no-focus
-        @click="nextOption"
         :color-type="_colorType as unknown as ColorType"
         :size="size"
         :skeleton="skeleton"
         :readonly="readonly"
         :disabled="disabled"
+        @click="nextOption"
       />
     </div>
   </AntField>

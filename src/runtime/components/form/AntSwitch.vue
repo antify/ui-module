@@ -82,7 +82,7 @@ const ballClasses = computed(() => ({
 
 const valueClasses = computed(() => {
   const classes = {
-    'text-neutral-50-font': true,
+    'text-for-white-bg-font': true,
     'text-sm': props.size === Size.sm,
     'text-md': props.size === Size.md,
     'opacity-50 cursor-not-allowed': props.disabled
@@ -115,17 +115,17 @@ function changeValue() {
           :class="buttonClasses"
           role="switch"
           :aria-checked="_value"
-          @click="changeValue"
-          @blur="validator?.validate(_value)"
           :disabled="disabled"
           :tabindex="readonly ? -1 : 1"
+          @click="changeValue"
+          @blur="validator?.validate(_value)"
         >
-        <span
-          aria-hidden="true"
-          :class="ballClasses"
-        >
-          <slot name="icon"></slot>
-        </span>
+          <span
+            aria-hidden="true"
+            :class="ballClasses"
+          >
+            <slot name="icon"></slot>
+          </span>
         </button>
 
         <AntSkeleton
@@ -135,7 +135,10 @@ function changeValue() {
         ></AntSkeleton>
       </div>
 
-      <div v-if="value" class="relative">
+      <div
+        v-if="value"
+        class="relative"
+      >
         <span :class="valueClasses">{{ value }}</span>
 
         <AntSkeleton

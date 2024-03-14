@@ -16,12 +16,12 @@ const hasLogoImageSlot = computed(() => useSlots()['logo-image'] || false);
   <div class="flex gap-px bg-neutral-300 h-screen overflow-hidden">
     <div class="flex flex-col gap-px bg-neutral-300 w-52 shrink-0">
       <component
-        v-if="hasLogoImageSlot"
         :is="logoRoute ? 'RouterLink' : 'div'"
+        v-if="hasLogoImageSlot"
         :to="logoRoute"
-        class="bg-neutral-50 min-h-[60px] flex justify-center items-center p-2.5"
+        class="bg-white min-h-[60px] flex justify-center items-center p-2.5"
       >
-        <slot name="logo-image"/>
+        <slot name="logo-image" />
       </component>
 
       <AntNavbar
@@ -30,7 +30,7 @@ const hasLogoImageSlot = computed(() => useSlots()['logo-image'] || false);
     </div>
 
     <div class="flex-grow">
-      <slot/>
+      <slot />
     </div>
   </div>
 </template>

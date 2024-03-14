@@ -52,13 +52,13 @@ const containerClasses = computed(() => {
     [ColorType.danger]: 'text-danger-500 border-danger-500',
   };
   const notActiveVariants: Record<ColorType, string> = {
-    [ColorType.base]: 'text-neutral-50-font border-neutral-50',
+    [ColorType.base]: 'text-for-white-bg-font border-white',
     [ColorType.warning]: 'text-warning-500',
     [ColorType.danger]: 'text-danger-500',
   };
 
   return {
-    'p-2.5 hover:cursor-pointer text-center flex items-center justify-center gap-2.5 bg-neutral-50 transition-[background-color] relative': true,
+    'p-2.5 hover:cursor-pointer text-center flex items-center justify-center gap-2.5 bg-white transition-[background-color] relative': true,
     'grow': props.expanded,
     [variants[props.colorType]]: true,
     [activeVariants[props.colorType]]: _active.value,
@@ -98,7 +98,7 @@ const iconColor = computed(() => {
       <AntIcon
         v-if="icon"
         :icon="icon"
-        :color="_active ? 'text-primary-500' : 'text-neutral-50-font'"
+        :color="_active ? 'text-primary-500' : 'text-for-white-bg-font'"
       />
     </slot>
 
@@ -110,6 +110,9 @@ const iconColor = computed(() => {
       :color="iconColor"
     />
 
-    <div v-if="_active" :class="borderBoxClasses" />
+    <div
+      v-if="_active"
+      :class="borderBoxClasses"
+    />
   </component>
 </template>

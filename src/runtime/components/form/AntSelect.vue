@@ -70,7 +70,7 @@ const _modelValue = computed({
 const valueLabel = computed(() => props.options.find(option => option.value === _modelValue.value)?.label || null);
 const inputClasses = computed(() => {
   const variants: Record<InputColorType, string> = {
-    [InputColorType.base]: 'outline-neutral-300 focus:outline-primary-500 bg-neutral-50 focus:ring-primary/25',
+    [InputColorType.base]: 'outline-neutral-300 focus:outline-primary-500 bg-white focus:ring-primary/25',
     [InputColorType.success]: 'outline-success-500 focus:outline-success-500 bg-success-100 focus:ring-success/25',
     [InputColorType.info]: 'outline-info-500 focus:outline-info-500 bg-info-100 focus:ring-info/25',
     [InputColorType.warning]: 'outline-warning-500 focus:outline-warning-500 bg-warning-100 focus:ring-warning/25',
@@ -117,7 +117,7 @@ const placeholderClasses = computed(() => {
 });
 const inputValueClasses = computed(() => {
   const variants: Record<InputColorType, string> = {
-    [InputColorType.base]: 'text-neutral-50-font',
+    [InputColorType.base]: 'text-for-white-bg-font',
     [InputColorType.success]: 'text-success-100-font',
     [InputColorType.info]: 'text-info-100-font',
     [InputColorType.warning]: 'text-warning-100-font',
@@ -130,7 +130,7 @@ const inputValueClasses = computed(() => {
 });
 const arrowClasses = computed(() => {
   const variants: Record<InputColorType, string> = {
-    [InputColorType.base]: 'text-neutral-50-font',
+    [InputColorType.base]: 'text-for-white-bg-font',
     [InputColorType.success]: 'text-success-100-font',
     [InputColorType.info]: 'text-info-100-font',
     [InputColorType.warning]: 'text-warning-100-font',
@@ -196,103 +196,107 @@ function onClickRemoveButton() {
 
 <template>
   <AntField
-      :label="label"
-      :size="size"
-      :skeleton="skeleton"
-      :description="description"
-      :color-type="colorType"
-      :validator="validator"
-      :class="wrapperClass"
-      :show-message-on-error="showMessageOnError"
-      :expanded="expanded"
-      label-for="noop"
-      data-e2e="select"
-      @clickLabel="() => inputRef?.focus()"
+    :label="label"
+    :size="size"
+    :skeleton="skeleton"
+    :description="description"
+    :color-type="colorType"
+    :validator="validator"
+    :class="wrapperClass"
+    :show-message-on-error="showMessageOnError"
+    :expanded="expanded"
+    label-for="noop"
+    data-e2e="select"
+    @click-label="() => inputRef?.focus()"
   >
     <div
-        class="h-fit flex flex-row w-full"
+      class="h-fit flex flex-row w-full"
     >
       <div
-          class="relative w-full"
-          :class="{'cursor-pointer': !skeleton}"
-          v-on-click-outside="onClickOutside"
+        v-on-click-outside="onClickOutside"
+        class="relative w-full"
+        :class="{'cursor-pointer': !skeleton}"
       >
         <AntSkeleton
-            v-if="skeleton"
-            absolute
-            rounded
-            :grouped="skeletonGrouped"
+          v-if="skeleton"
+          absolute
+          rounded
+          :grouped="skeletonGrouped"
         />
 
-        <input type="hidden" :name="name" v-model="_modelValue">
+        <input
+          v-model="_modelValue"
+          type="hidden"
+          :name="name"
+        >
 
         <!-- Input -->
         <div
-            :class="inputClasses"
-            ref="inputRef"
-            :tabindex="disabled ? undefined : 0"
-            @mousedown="onClickSelectInput"
-            v-bind="$attrs"
-            @click="inputRef?.focus()"
+          ref="inputRef"
+          :class="inputClasses"
+          :tabindex="disabled ? undefined : 0"
+          v-bind="$attrs"
+          @mousedown="onClickSelectInput"
+          @click="inputRef?.focus()"
         >
           <div
-              v-if="_modelValue === null && placeholder !== undefined"
-              :class="placeholderClasses"
+            v-if="_modelValue === null && placeholder !== undefined"
+            :class="placeholderClasses"
           >
             {{ placeholder }}
           </div>
 
           <div
-              v-else-if="_modelValue === null && label !== undefined"
-              :class="placeholderClasses"
+            v-else-if="_modelValue === null && label !== undefined"
+            :class="placeholderClasses"
           >
             {{ label }}
           </div>
 
           <div
-              v-else
-              :class="inputValueClasses"
+            v-else
+            :class="inputValueClasses"
           >
             {{ valueLabel }}
           </div>
 
           <AntIcon
-              v-if="isOpen"
-              :icon="faChevronUp"
-              :size="size as unknown as IconSize"
-              :class="arrowClasses"
+            v-if="isOpen"
+            :icon="faChevronUp"
+            :size="size as unknown as IconSize"
+            :class="arrowClasses"
           />
 
           <AntIcon
-              v-else
-              :icon="faChevronDown"
-              :size="size as unknown as IconSize"
-              :class="arrowClasses"
+            v-else
+            :icon="faChevronDown"
+            :size="size as unknown as IconSize"
+            :class="arrowClasses"
           />
         </div>
 
         <!-- Dropdown -->
         <AntDropDown
+          ref="dropDownRef"
           v-model="_modelValue"
           v-model:open="isOpen"
-          ref="dropDownRef"
           :options="options"
           :input-ref="inputRef"
           :size="size"
           :color-type="_colorType"
-          @select-element="(e) => _modelValue = e"
           close-on-enter
+          @select-element="(e) => _modelValue = e"
         />
       </div>
 
       <AntButton
-          v-if="nullable && _modelValue !== null"
-          :icon-left="faMultiply"
-          :color-type="_colorType as unknown as ColorType"
-          :grouped="[Grouped.left, Grouped.center].some(item => item === grouped) ? Grouped.center : Grouped.right"
-          :size="size"
-          :skeleton="skeleton"
-          @click="onClickRemoveButton"
+        v-if="nullable && _modelValue !== null"
+        :icon-left="faMultiply"
+        :color-type="_colorType as unknown as ColorType"
+        :grouped="[Grouped.left, Grouped.center].some(item => item === grouped) ? Grouped.center : Grouped.right"
+        :size="size"
+        :skeleton="skeleton"
+        @click="onClickRemoveButton"
       />
     </div>
   </AntField>

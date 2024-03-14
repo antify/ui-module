@@ -113,7 +113,7 @@ onMounted(() => {
         <AntIcon
           v-if="_value"
           :icon="faCheck"
-          class="absolute !text-neutral-50 pointer-events-none"
+          class="absolute !text-white pointer-events-none"
           :size="size as unknown as IconSize"
         />
 
@@ -137,7 +137,6 @@ onMounted(() => {
       </div>
     </div>
   </AntField>
-
 </template>
 
 <style scoped>

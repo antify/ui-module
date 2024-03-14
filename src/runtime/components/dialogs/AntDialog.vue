@@ -80,14 +80,14 @@ function confirmDialog() {
 </script>
 
 <template>
-  <transition name="fade">
+  <Transition name="fade">
     <div
       v-if="openBackground"
       class="absolute inset-0 flex items-center justify-center z-50 cursor-pointer overflow-hidden bg-black/50 backdrop-blur-sm"
       data-e2e="dialog"
       @click.self="closeDialog"
     >
-      <transition :name="'bounce'">
+      <Transition :name="'bounce'">
         <div
           v-if="openDialog"
           class="flex flex-col gap-px bg-neutral-300 overflow-hidden cursor-auto w-96 border border-neutral-300 rounded-md shadow-md"
@@ -101,7 +101,7 @@ function confirmDialog() {
             </slot>
           </div>
 
-          <div class="bg-neutral-50 p-2.5 grow flex items-center gap-2.5 text-sm">
+          <div class="bg-white p-2.5 grow flex items-center gap-2.5 text-sm">
             <slot name="icon">
               <AntIcon
                 v-if="icons[colorType]"
@@ -112,11 +112,11 @@ function confirmDialog() {
               />
             </slot>
 
-            <slot/>
+            <slot />
           </div>
 
           <div
-            class="bg-neutral-100 p-2.5 gap-2.5 text-neutral-50-font flex w-full justify-end"
+            class="bg-neutral-100 p-2.5 gap-2.5 text-for-white-bg-font flex w-full justify-end"
           >
             <slot name="footer">
               <AntButton
@@ -137,9 +137,9 @@ function confirmDialog() {
             </slot>
           </div>
         </div>
-      </transition>
+      </Transition>
     </div>
-  </transition>
+  </Transition>
 </template>
 
 <style scoped>

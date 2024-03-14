@@ -91,7 +91,7 @@ const colors = {
   'danger-950': defaultColors.red['950'],
 };
 const fontColors = {
-  'for-white-bg-font': colors['neutral-900'],
+  'for-white-bg-font': colors['neutral-600'],
   'for-black-bg-font': colors['neutral-100'],
 
   'neutral-50-font': colors['neutral-600'],

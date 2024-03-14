@@ -21,7 +21,7 @@ const classes = computed(() => {
     [ListGroupItemColorType.info]: 'bg-info-500 text-info-500-font',
     [ListGroupItemColorType.neutral700]: 'bg-neutral-700 text-neutral-700-font',
     [ListGroupItemColorType.neutral300]: 'bg-neutral-300 text-neutral-300-font',
-    [ListGroupItemColorType.neutral50]: 'bg-neutral-50 text-neutral-50-font',
+    [ListGroupItemColorType.neutral50]: 'bg-white text-for-white-bg-font',
     [ListGroupItemColorType.primary]: 'bg-primary-500 text-primary-500-font',
     [ListGroupItemColorType.secondary]: 'bg-secondary-500 text-secondary-500-font',
     [ListGroupItemColorType.success]: 'bg-success-500 text-success-500-font',
@@ -39,7 +39,7 @@ const contentWrapperClasses = computed(() => {
    [ListGroupItemColorType.info]: 'text-info-500-font',
    [ListGroupItemColorType.neutral700]: 'text-neutral-700-font',
    [ListGroupItemColorType.neutral300]: 'text-neutral-300-font',
-   [ListGroupItemColorType.neutral50]: 'text-neutral-50-font',
+   [ListGroupItemColorType.neutral50]: 'text-for-white-bg-font',
    [ListGroupItemColorType.primary]: 'text-primary-500-font',
    [ListGroupItemColorType.secondary]: 'text-secondary-500-font',
    [ListGroupItemColorType.success]: 'text-success-500-font',
@@ -60,21 +60,27 @@ onMounted(() => {
 
 <template>
   <component
-      :is="to !== undefined ? 'router-link' : 'div'"
-      :to="to"
-      :class="classes"
+    :is="to !== undefined ? 'router-link' : 'div'"
+    :to="to"
+    :class="classes"
   >
     <div :class="contentWrapperClasses">
       <div class="flex items-center gap-2.5">
-        <slot v-if="iconLeft" name="icon-left">
-          <AntIcon :icon="iconLeft"/>
+        <slot
+          v-if="iconLeft"
+          name="icon-left"
+        >
+          <AntIcon :icon="iconLeft" />
         </slot>
 
-        <slot/>
+        <slot />
       </div>
 
-      <slot v-if="iconRight" name="icon-right">
-        <AntIcon :icon="iconRight"/>
+      <slot
+        v-if="iconRight"
+        name="icon-right"
+      >
+        <AntIcon :icon="iconRight" />
       </slot>
     </div>
   </component>

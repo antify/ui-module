@@ -42,7 +42,7 @@ const itemContainerClasses = computed(() => ({
 }));
 const contentClasses = computed(() => {
 	const variants: Record<InputColorType, string> = {
-		[InputColorType.base]: 'text-neutral-50-font bg-neutral-50 border-neutral-300',
+		[InputColorType.base]: 'text-for-white-bg-font bg-white border-neutral-300',
 		[InputColorType.danger]: 'text-danger-500-font bg-danger-500 border-danger-500',
 		[InputColorType.info]: 'text-info-500-font bg-info-500 border-info-500',
 		[InputColorType.success]: 'text-success-500-font bg-success-500 border-success-500',
@@ -53,7 +53,7 @@ const contentClasses = computed(() => {
 });
 const svgPathClasses = computed(() => {
 	const variants: Record<InputColorType, string> = {
-		[InputColorType.base]: 'fill-neutral-50 stroke-neutral-50',
+		[InputColorType.base]: 'fill-white stroke-white',
 		[InputColorType.danger]: 'fill-danger-500 stroke-danger-500',
 		[InputColorType.info]: 'fill-info-500 stroke-info-500',
 		[InputColorType.success]: 'fill-success-500 stroke-success-500',
