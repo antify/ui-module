@@ -81,7 +81,7 @@ const classes = computed(() => {
 		[ColorType.warning]: 'hover:bg-warning-100',
 	};
 	const filledVariants = {
-		[ColorType.base]: 'bg-white text-for-white-bg-font',
+		[ColorType.base]: 'bg-neutral-50 text-neutral-50-font',
 		[ColorType.danger]: 'bg-danger-500 text-danger-500-font',
 		[ColorType.info]: 'bg-info-500 text-info-500-font',
 		[ColorType.primary]: 'bg-primary-500 text-primary-500-font',
