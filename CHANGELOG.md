@@ -2,6 +2,21 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.4.0](https://github.com/antify/ui-module/compare/v1.3.0...v1.4.0) (2024-03-14)
+
+
+### Features
+
+* Add default permissions tooltip ([9f31e14](https://github.com/antify/ui-module/commit/9f31e14d2290a214da10f96bdbd0ae5bd70ca40a))
+* **AntTooltip:** Add expanded prop to tooltip, to keep wrapped elements expanded if needed ([3a735c7](https://github.com/antify/ui-module/commit/3a735c71a9bea92dc093e1c9ece51cb52ca445cf))
+* **CRUD:** Add permissions props ([9643fbf](https://github.com/antify/ui-module/commit/9643fbf5fc34e1c1c968cd0741ced224fb7ddcbc))
+
+
+### Bug Fixes
+
+* do not show tooltip if content slot is empty ([1f57977](https://github.com/antify/ui-module/commit/1f57977cac32f4b1e497e48aecc71dc998b0fe4a))
+* make disabled buttons not visual  clickable ([22bee4c](https://github.com/antify/ui-module/commit/22bee4cde4ea01d0f0ef4add8f299c0b24332ba0))
+
 ## [1.3.0](https://github.com/antify/ui-module/compare/v1.2.1...v1.3.0) (2024-03-07)
 
 
