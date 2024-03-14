@@ -5,40 +5,46 @@ import AntTabs from '../tabs/AntTabs.vue';
 import AntDeleteButton from '../buttons/AntDeleteButton.vue';
 import AntDeleteDialog from '../dialogs/AntDeleteDialog.vue';
 import {ref} from 'vue';
+import {Position} from '../../enums';
 
 defineEmits(['delete']);
 withDefaults(defineProps<{
-  tabItems?: TabItem[]
-  disabled?: boolean
-  getEntityName: () => string
+	tabItems?: TabItem[]
+	deleteButtonDisabled?: boolean
+	getEntityName: () => string
+	canDelete?: boolean
 }>(), {
-  disabled: false,
+	deleteButtonDisabled: false,
+	canDelete: true
 });
 
 const dialogOpen = ref(false);
 </script>
 
 <template>
-  <div class="flex justify-between items-stretch gap-2.5 bg-neutral-50" data-e2e="crud-detail-nav">
+  <div
+    class="flex justify-between items-stretch gap-2.5 bg-neutral-50"
+    data-e2e="crud-detail-nav"
+  >
     <slot name="tabs">
       <AntTabs
-        :tabItems="tabItems"
+        :tab-items="tabItems"
       />
     </slot>
 
     <div class="flex gap-2.5 pr-2.5 py-2.5">
       <slot name="buttons">
-        <slot name="before-delete-button"/>
+        <slot name="before-delete-button" />
 
-        <slot name="delete-button">
-          <AntDeleteButton
-            :disabled="disabled"
-            filled
-            @click="() => dialogOpen = true"
-          />
-        </slot>
+        <AntDeleteButton
+          :disabled="deleteButtonDisabled || !canDelete"
+          filled
+          :can-delete="canDelete"
+          :invalid-permission-tooltip-position="Position.left"
+          @click="() => dialogOpen = true"
+        />
 
-        <slot name="after-delete-button"/>
+        <slot name="after-delete-button" />
       </slot>
     </div>
 

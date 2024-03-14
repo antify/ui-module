@@ -8,14 +8,19 @@ defineEmits(['back', 'save', 'save-and-new']);
 withDefaults(defineProps<{
   disabled?: boolean
   skeleton?: boolean
+	canSave?: boolean
 }>(), {
   disabled: false,
   skeleton: false,
+	canSave: true
 });
 </script>
 
 <template>
-  <div class="flex justify-between p-2.5 gap-2.5 bg-neutral-50" data-e2e="crud-detail-actions">
+  <div
+    class="flex justify-between p-2.5 gap-2.5 bg-neutral-50"
+    data-e2e="crud-detail-actions"
+  >
     <div class="flex gap-2.5">
       <slot name="buttons-left">
         <AntButton
@@ -31,21 +36,23 @@ withDefaults(defineProps<{
     </div>
 
     <div class="flex gap-2.5">
-      <slot name="before-buttons-right"/>
+      <slot name="before-buttons-right" />
       <slot name="buttons-right">
         <AntSaveAndNewButton
           :skeleton="skeleton"
           :disabled="disabled"
+          :can-save="canSave"
           @click="$emit('save-and-new')"
         />
 
         <AntSaveButton
           :skeleton="skeleton"
           :disabled="disabled"
+          :can-save="canSave"
           @click="$emit('save')"
         />
       </slot>
-      <slot name="after-buttons-right"/>
+      <slot name="after-buttons-right" />
     </div>
   </div>
 </template>

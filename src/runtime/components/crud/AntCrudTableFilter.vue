@@ -1,10 +1,8 @@
 <script lang="ts" setup>
 // TODO:: This component works only with vue-router. Make it work in storybook.
-// TODO:: add skeleton
 import AntSearch from '../form/AntSearch.vue';
 import AntCreateButton from '../buttons/AntCreateButton.vue';
 import AntDropdown from '../AntDropdown.vue';
-import AntIcon from '../AntIcon.vue';
 import {computed, ref, watch} from 'vue';
 import AntButton from '../buttons/AntButton.vue';
 import {faFilter, faMultiply} from '@fortawesome/free-solid-svg-icons';
@@ -12,17 +10,19 @@ import {ColorType, Grouped, Position} from '../../enums';
 import {useRoute, useRouter} from 'vue-router';
 
 const props = withDefaults(defineProps<{
-  fullWidth?: boolean,
-  showFilter?: boolean,
-  searchQuery?: string,
-  hasFilter?: boolean,
-  skeleton?: boolean,
+	fullWidth?: boolean,
+	showFilter?: boolean,
+	searchQuery?: string,
+	hasFilter?: boolean,
+	canCreate?: boolean,
+	skeleton?: boolean,
 }>(), {
-  fullWidth: true,
-  showFilter: true,
-  searchQuery: 'search',
-  hasFilter: false,
-  skeleton: false,
+	fullWidth: true,
+	showFilter: true,
+	searchQuery: 'search',
+	hasFilter: false,
+	canCreate: true,
+	skeleton: false,
 });
 const emit = defineEmits(['search', 'create', 'removeFilter']);
 const router = useRouter();
@@ -31,32 +31,32 @@ const route = useRoute();
 const showDropdown = ref(false);
 const _fullWidth = ref(props.fullWidth)
 const search = computed({
-  get: () => route.query[props.searchQuery] as string || '',
-  set: (value) => {
-    const query = {
-      ...route.query,
-      [props.searchQuery]: value
-    }
+	get: () => route.query[props.searchQuery] as string || '',
+	set: (value) => {
+		const query = {
+			...route.query,
+			[props.searchQuery]: value
+		}
 
-    if (!value) {
-      delete query[props.searchQuery];
-    }
+		if (!value) {
+			delete query[props.searchQuery];
+		}
 
-    (async () => {
-      await router.replace({
-        ...route,
-        query
-      })
+		(async () => {
+			await router.replace({
+				...route,
+				query
+			})
 
-      emit('search', value)
-    })()
-  }
+			emit('search', value)
+		})()
+	}
 })
 
 watch(() => props.fullWidth, (val) => {
-  setTimeout(() => {
-    _fullWidth.value = val
-  }, val ? 250 : 300)
+	setTimeout(() => {
+		_fullWidth.value = val
+	}, val ? 250 : 300)
 })
 </script>
 
@@ -102,7 +102,7 @@ watch(() => props.fullWidth, (val) => {
         </div>
 
         <template #content>
-          <slot name="dropdownContent"/>
+          <slot name="dropdownContent" />
         </template>
       </AntDropdown>
     </div>
@@ -112,6 +112,8 @@ watch(() => props.fullWidth, (val) => {
         <AntCreateButton
           filled
           :skeleton="skeleton"
+          :can-create="canCreate"
+          :invalid-permission-tooltip-position="Position.left"
           @click="() => emit('create')"
         />
       </slot>
