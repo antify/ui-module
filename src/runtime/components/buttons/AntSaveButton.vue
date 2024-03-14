@@ -3,15 +3,20 @@ import {Grouped} from '../../enums/Grouped.enum';
 import {Size} from '../../enums/Size.enum';
 import {ColorType} from '../../enums/ColorType.enum';
 import AntActionButton from './AntActionButton.vue';
+import {Position} from '../../enums';
 
 defineEmits(['click', 'blur']);
-defineProps<{
-  size?: Size;
-  disabled?: boolean;
-  grouped?: Grouped;
-  skeleton?: boolean;
-  expanded?: boolean;
-}>()
+withDefaults(defineProps<{
+	size?: Size;
+	disabled?: boolean;
+	grouped?: Grouped;
+	skeleton?: boolean;
+	expanded?: boolean;
+	canSave?: boolean;
+	invalidPermissionTooltipPosition?: Position;
+}>(), {
+	canSave: true
+});
 </script>
 
 <template>
@@ -23,9 +28,16 @@ defineProps<{
     :expanded="expanded"
     :color-type="ColorType.primary"
     data-e2e="save-button"
+    :has-permission="canSave"
+    :invalid-permission-tooltip-position="invalidPermissionTooltipPosition"
     @click="$emit('click')"
     @blur="$emit('blur')"
   >
-    Save
+    <template #default>Save</template>
+
+    <template #invalidPermissionTooltipContent>
+      You have no permission to save this entry.<br>
+      Please contact your administrator.
+    </template>
   </AntActionButton>
 </template>

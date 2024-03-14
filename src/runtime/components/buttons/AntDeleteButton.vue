@@ -3,15 +3,20 @@ import {Grouped} from '../../enums/Grouped.enum';
 import {Size} from '../../enums/Size.enum';
 import {ColorType} from '../../enums/ColorType.enum';
 import AntActionButton from './AntActionButton.vue';
+import {Position} from '../../enums';
 
 defineEmits(['click', 'blur']);
-defineProps<{
-  size?: Size;
-  disabled?: boolean;
-  grouped?: Grouped;
-  skeleton?: boolean;
-  expanded?: boolean;
-}>()
+withDefaults(defineProps<{
+	size?: Size;
+	disabled?: boolean;
+	grouped?: Grouped;
+	skeleton?: boolean;
+	expanded?: boolean;
+	canDelete?: boolean;
+	invalidPermissionTooltipPosition?: Position;
+}>(), {
+	canDelete: true
+})
 </script>
 
 <template>
@@ -22,10 +27,17 @@ defineProps<{
     :skeleton="skeleton"
     :expanded="expanded"
     :color-type="ColorType.danger"
+    :has-permission="canDelete"
+    :invalid-permission-tooltip-position="invalidPermissionTooltipPosition"
     data-e2e="delete-button"
     @click="$emit('click')"
     @blur="$emit('blur')"
   >
-    Delete
+    <template #default>Delete</template>
+
+    <template #invalidPermissionTooltipContent>
+      You have no permission to delete this entry.<br>
+      Please contact your administrator.
+    </template>
   </AntActionButton>
 </template>

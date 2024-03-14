@@ -5,8 +5,10 @@
  */
 import {Grouped} from '../../enums/Grouped.enum';
 import {Size} from '../../enums/Size.enum';
-import {ColorType} from '../../enums/ColorType.enum';
+import {ColorType, InputColorType} from '../../enums/ColorType.enum';
+import {Position} from '../../enums/Position.enum';
 import AntButton from './AntButton.vue';
+import AntTooltip from '../AntTooltip.vue';
 
 defineEmits(['click', 'blur']);
 withDefaults(
@@ -17,25 +19,45 @@ withDefaults(
 		colorType?: ColorType;
 		skeleton?: boolean;
 		expanded?: boolean;
+		filled?: boolean;
+		hasPermission?: boolean;
+		invalidPermissionTooltipPosition?: Position;
 	}>(), {
 		colorType: ColorType.primary,
+		hasPermission: true,
+		filled: true
 	}
 )
 </script>
 
 <template>
-  <AntButton
-    :size="size"
-    :disabled="disabled"
-    :grouped="grouped"
-    :skeleton="skeleton"
+  <AntTooltip
     :expanded="expanded"
-    :color-type="colorType"
-    filled
-    data-e2e="action-button"
-    @click="$emit('click')"
-    @blur="$emit('blur')"
+    :position="invalidPermissionTooltipPosition"
+    :color-type="InputColorType.info"
   >
-    <slot />
-  </AntButton>
+    <slot name="button">
+      <AntButton
+        :size="size"
+        :disabled="disabled || !hasPermission"
+        :grouped="grouped"
+        :skeleton="skeleton"
+        :expanded="expanded"
+        :color-type="colorType"
+        :filled="filled"
+        data-e2e="action-button"
+        @click="$emit('click')"
+        @blur="$emit('blur')"
+      >
+        <slot />
+      </AntButton>
+    </slot>
+
+    <template
+      v-if="!hasPermission && !skeleton"
+      #content
+    >
+      <slot name="invalidPermissionTooltipContent" />
+    </template>
+  </AntTooltip>
 </template>

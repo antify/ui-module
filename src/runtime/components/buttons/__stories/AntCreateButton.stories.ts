@@ -2,6 +2,7 @@ import AntCreateButton from '../AntCreateButton.vue';
 import {type Meta, type StoryObj} from '@storybook/vue3';
 import {Size} from '../../../enums/Size.enum';
 import {Grouped as _Grouped} from '../../../enums/Grouped.enum';
+import {Position} from '../../../enums';
 
 const meta: Meta<typeof AntCreateButton> = {
   title: 'Components/Buttons/Create Button',
@@ -63,5 +64,14 @@ export const Expanded: Story = {
   args: {
     ...Docs.args,
     expanded: true
+  },
+};
+
+export const InvalidPermission: Story = {
+  render: Docs.render,
+  args: {
+    ...Docs.args,
+		canCreate: false,
+		invalidPermissionTooltipPosition: Position.right,
   },
 };

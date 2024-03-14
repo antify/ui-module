@@ -2,6 +2,7 @@ import AntActionButton from '../AntActionButton.vue';
 import {type Meta, type StoryObj} from '@storybook/vue3';
 import {Size} from '../../../enums/Size.enum';
 import {Grouped as _Grouped} from '../../../enums/Grouped.enum';
+import {Position} from '../../../enums';
 
 const meta: Meta<typeof AntActionButton> = {
   title: 'Components/Buttons/Action Button',
@@ -15,6 +16,10 @@ const meta: Meta<typeof AntActionButton> = {
     grouped: {
       control: {type: 'select'},
       options: Object.values(_Grouped),
+    },
+		invalidPermissionTooltipPosition: {
+      control: {type: 'select'},
+      options: Object.values(Position),
     },
   },
 };
@@ -64,4 +69,22 @@ export const Expanded: Story = {
     ...Docs.args,
     expanded: true
   },
+};
+
+export const WithPermissionTooltip: Story = {
+	render: (args) => ({
+		components: {AntActionButton},
+		setup() {
+			return {args};
+		},
+		template: `<AntActionButton v-bind="args">
+			Action Button
+
+			<template #invalidPermissionTooltipContent>You have no permission to do this</template>
+		</AntActionButton>`,
+	}),
+	args: {
+		hasPermission: false,
+		invalidPermissionTooltipPosition: Position.right,
+	},
 };

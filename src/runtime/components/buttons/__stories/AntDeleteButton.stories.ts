@@ -2,6 +2,7 @@ import AntDeleteButton from '../AntDeleteButton.vue';
 import {type Meta, type StoryObj} from '@storybook/vue3';
 import {Size} from '../../../enums/Size.enum';
 import {Grouped as _Grouped} from '../../../enums/Grouped.enum';
+import {Position} from '../../../enums';
 
 const meta: Meta<typeof AntDeleteButton> = {
   title: 'Components/Buttons/Delete Button',
@@ -64,4 +65,13 @@ export const Expanded: Story = {
     ...Docs.args,
     expanded: true
   },
+};
+
+export const InvalidPermission: Story = {
+	render: Docs.render,
+	args: {
+		...Docs.args,
+		canDelete: false,
+		invalidPermissionTooltipPosition: Position.right,
+	},
 };
