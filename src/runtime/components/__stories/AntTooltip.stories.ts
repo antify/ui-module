@@ -3,8 +3,6 @@ import AntButton from '../buttons/AntButton.vue';
 import {type Meta, type StoryObj} from '@storybook/vue3';
 import {Position} from '../../enums/Position.enum';
 import {InputColorType} from '../../enums';
-import AntIcon from '../AntIcon.vue';
-import {faTag} from '@fortawesome/free-solid-svg-icons';
 
 const meta: Meta<typeof AntTooltip> = {
 	title: 'Components/Tooltip',
@@ -37,9 +35,7 @@ export const Docs: Story = {
 				<AntTooltip v-bind="args">
 					<template #content>Lorem ipsum dolor sit amet <br/> foo</template>
 					<template #default>
-                <span>
-                  Hover me
-                </span>
+						<AntButton readonly filled expanded>Hover me</AntButton>
 					</template>
 				</AntTooltip>
 			</div>
@@ -55,17 +51,26 @@ export const Docs: Story = {
  */
 export const WithoutContent: Story = {
 	render: (args) => ({
-		components: {AntTooltip},
+		components: {AntTooltip, AntButton},
 		setup() {
 			return {args};
 		},
 		template: `
 			<div class="p-32 flex justify-center items-center">
 				<AntTooltip v-bind="args">
-					<span>Hover me</span>
+					<AntButton readonly filled expanded>Hover me</AntButton>
+
+					<template #content></template>
 				</AntTooltip>
 			</div>
     `,
 	}),
 	args: {},
+};
+
+export const Expanded: Story = {
+	render: Docs.render,
+	args: {
+		expanded: true
+	},
 };

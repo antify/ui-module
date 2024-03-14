@@ -1,80 +1,82 @@
 <script lang="ts" setup>
-import {computed, onMounted, ref, useSlots} from 'vue';
+import {computed, onMounted, ref} from 'vue';
 import {handleEnumValidation} from '../handler';
 import {InputColorType, Position} from '../enums';
 import {classesToObjectSyntax} from '../utils';
+import {hasSlotContent} from '../utils';
 
 const props = withDefaults(defineProps<{
-  position?: Position,
-  tooltipClasses?: string | Record<string, boolean>,
-  colorType?: InputColorType
+	position?: Position
+	tooltipClasses?: string | Record<string, boolean>
+	colorType?: InputColorType
+	expanded?: boolean
 }>(), {
-  position: Position.left,
-  tooltipClasses: '',
-  colorType: InputColorType.base
+	position: Position.left,
+	tooltipClasses: '',
+	colorType: InputColorType.base,
+	expanded: false
 });
 const visible = ref(false);
-const slots = useSlots();
 const _tooltipClasses = computed(() => ({
-  'absolute w-max inline-flex': true,
-  // Position
-  'bottom-full pb-3.5': props.position === Position.top,
-  'top-full pt-3.5': props.position === Position.bottom,
-  'right-full pr-3.5': props.position === Position.left,
-  'left-full pl-3.5': props.position === Position.right,
-  ...classesToObjectSyntax(props.tooltipClasses)
+	'absolute w-max inline-flex': true,
+	// Position
+	'bottom-full pb-3.5': props.position === Position.top,
+	'top-full pt-3.5': props.position === Position.bottom,
+	'right-full pr-3.5': props.position === Position.left,
+	'left-full pl-3.5': props.position === Position.right,
+	...classesToObjectSyntax(props.tooltipClasses)
 }));
 const classes = computed(() => ({
-  'z-10 absolute flex': true,
-  'top-0 left-0 right-0 -m-[2px] justify-center': props.position === Position.bottom,
-  'bottom-0 left-0 right-0 -m-[2px] justify-center': props.position === Position.top,
-  'top-0 left-0 bottom-0 -ml-[2.2px] items-center': props.position === Position.right,
-  'top-0 right-0 bottom-0 -mr-[2.2px] items-center': props.position === Position.left,
+	'z-10 absolute flex': true,
+	'top-0 left-0 right-0 -m-[2px] justify-center': props.position === Position.bottom,
+	'bottom-0 left-0 right-0 -m-[2px] justify-center': props.position === Position.top,
+	'top-0 left-0 bottom-0 -ml-[2.2px] items-center': props.position === Position.right,
+	'top-0 right-0 bottom-0 -mr-[2.2px] items-center': props.position === Position.left,
 }));
 const itemContainerClasses = computed(() => ({
-  'relative flex items-center': true,
-  'justify-center': props.position === Position.bottom,
-  'justify-center rotate-180': props.position === Position.top,
-  'justify-center -rotate-90': props.position === Position.right,
-  'justify-center rotate-90': props.position === Position.left,
+	'relative flex items-center': true,
+	'justify-center': props.position === Position.bottom,
+	'justify-center rotate-180': props.position === Position.top,
+	'justify-center -rotate-90': props.position === Position.right,
+	'justify-center rotate-90': props.position === Position.left,
 }));
 const contentClasses = computed(() => {
-  const variants: Record<InputColorType, string> = {
-    [InputColorType.base]: 'text-neutral-50-font bg-neutral-50 border-neutral-300',
-    [InputColorType.danger]: 'text-danger-500-font bg-danger-500 border-danger-500',
-    [InputColorType.info]: 'text-info-500-font bg-info-500 border-info-500',
-    [InputColorType.success]: 'text-success-500-font bg-success-500 border-success-500',
-    [InputColorType.warning]: 'text-warning-500-font bg-warning-500 border-warning-500',
-  };
+	const variants: Record<InputColorType, string> = {
+		[InputColorType.base]: 'text-neutral-50-font bg-neutral-50 border-neutral-300',
+		[InputColorType.danger]: 'text-danger-500-font bg-danger-500 border-danger-500',
+		[InputColorType.info]: 'text-info-500-font bg-info-500 border-info-500',
+		[InputColorType.success]: 'text-success-500-font bg-success-500 border-success-500',
+		[InputColorType.warning]: 'text-warning-500-font bg-warning-500 border-warning-500',
+	};
 
-  return {[variants[props.colorType]]: true};
+	return {[variants[props.colorType]]: true};
 });
 const svgPathClasses = computed(() => {
-  const variants: Record<InputColorType, string> = {
-    [InputColorType.base]: 'fill-neutral-50 stroke-neutral-50',
-    [InputColorType.danger]: 'fill-danger-500 stroke-danger-500',
-    [InputColorType.info]: 'fill-info-500 stroke-info-500',
-    [InputColorType.success]: 'fill-success-500 stroke-success-500',
-    [InputColorType.warning]: 'fill-warning-500 stroke-warning-500',
-  };
+	const variants: Record<InputColorType, string> = {
+		[InputColorType.base]: 'fill-neutral-50 stroke-neutral-50',
+		[InputColorType.danger]: 'fill-danger-500 stroke-danger-500',
+		[InputColorType.info]: 'fill-info-500 stroke-info-500',
+		[InputColorType.success]: 'fill-success-500 stroke-success-500',
+		[InputColorType.warning]: 'fill-warning-500 stroke-warning-500',
+	};
 
-  return {[variants[props.colorType]]: true};
+	return {[variants[props.colorType]]: true};
 });
 const arrowSvgPathClasses = computed(() => {
-  const variants: Record<InputColorType, string> = {
-    [InputColorType.base]: 'stroke-neutral-300',
-    [InputColorType.danger]: 'stroke-danger-500',
-    [InputColorType.info]: 'stroke-info-500',
-    [InputColorType.success]: 'stroke-success-500',
-    [InputColorType.warning]: 'stroke-warning-500',
-  };
+	const variants: Record<InputColorType, string> = {
+		[InputColorType.base]: 'stroke-neutral-300',
+		[InputColorType.danger]: 'stroke-danger-500',
+		[InputColorType.info]: 'stroke-info-500',
+		[InputColorType.success]: 'stroke-success-500',
+		[InputColorType.warning]: 'stroke-warning-500',
+	};
 
-  return {[variants[props.colorType]]: true};
+	return {[variants[props.colorType]]: true};
 });
 
 onMounted(() => {
-  handleEnumValidation(props.position, Position, 'Position')
-  handleEnumValidation(props.colorType, InputColorType, 'colorType')
+	handleEnumValidation(props.position, Position, 'Position')
+	handleEnumValidation(props.colorType, InputColorType, 'colorType')
 });
 
 /**
@@ -84,24 +86,25 @@ onMounted(() => {
 const delayVisible = ref(visible.value);
 
 function onMouseOver() {
-  delayVisible.value = true;
+	delayVisible.value = true;
 
-  setTimeout(() => {
-    if (delayVisible.value) {
-      visible.value = true
-    }
-  }, 300)
+	setTimeout(() => {
+		if (delayVisible.value) {
+			visible.value = true
+		}
+	}, 300)
 }
 
 function onMouseLeave() {
-  delayVisible.value = false
-  visible.value = false
+	delayVisible.value = false
+	visible.value = false
 }
 </script>
 
 <template>
   <div
-    class="relative inline-flex justify-center items-center"
+    class="relative justify-center items-center"
+    :class="{'flex w-full': props.expanded, 'inline-flex': !props.expanded}"
     data-e2e="tooltip"
     @mouseover="onMouseOver"
     @mouseleave="onMouseLeave"
@@ -109,11 +112,11 @@ function onMouseLeave() {
     <slot />
 
     <div
-      v-if="visible && !!slots.content"
+      v-if="visible && hasSlotContent($slots.content)"
       :class="_tooltipClasses"
     >
       <div
-        class="shadow-lg text-sm relative inline-flex flex-col relative"
+        class="shadow-lg text-sm relative"
       >
         <div
           :class="classes"
