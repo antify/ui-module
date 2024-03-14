@@ -23,7 +23,7 @@ const module: NuxtModule<ModuleOptions> = defineNuxtModule<ModuleOptions>({
     const runtimeDir = resolve('./runtime');
 
     nuxt.options.build.transpile.push(runtimeDir);
-    // nuxt.options.alias['#uiModule'] = resolve(runtimeDir, 'types');
+    nuxt.options.alias['#ui-module'] = resolve(runtimeDir, 'types');
 
     addPlugin(resolve(runtimeDir, 'plugins/ui-module'));
     addImportsDir(resolve(runtimeDir, 'composables'));
