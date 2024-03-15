@@ -1,7 +1,7 @@
 <script lang="ts" setup>
 import AntActionButton from './AntActionButton.vue';
 import {Position, Size, Grouped, ColorType} from '../../enums';
-import {faFloppyDisk} from '@fortawesome/free-solid-svg-icons';
+import {faPencil} from '@fortawesome/free-solid-svg-icons';
 
 defineEmits(['click', 'blur']);
 withDefaults(defineProps<{
@@ -11,27 +11,27 @@ withDefaults(defineProps<{
 	grouped?: Grouped;
 	skeleton?: boolean;
 	expanded?: boolean;
-	canSave?: boolean;
+	canEdit?: boolean;
 	tooltipPosition?: Position;
 }>(), {
 	iconVariant: false,
-	canSave: true
+	canEdit: true
 });
 </script>
 
 <template>
   <AntActionButton
-    :filled="true"
-    :color-type="ColorType.primary"
+    :filled="false"
+    :color-type="ColorType.base"
     :size="size"
     :disabled="disabled"
-    :icon-left="iconVariant ? faFloppyDisk : undefined"
+    :icon-left="iconVariant ? faPencil : undefined"
     :grouped="grouped"
     :skeleton="skeleton"
     :expanded="expanded"
-    :has-permission="canSave"
+    :has-permission="canEdit"
     :tooltip-position="tooltipPosition"
-    data-e2e="save-button"
+    data-e2e="edit-button"
     @click="$emit('click')"
     @blur="$emit('blur')"
   >
@@ -39,16 +39,16 @@ withDefaults(defineProps<{
       v-if="!iconVariant"
       #default
     >
-      Save
+      Edit
     </template>
 
     <template #invalidPermissionTooltipContent>
-      You have no permission to save entries.<br>
+      You have no permission to edit entries.<br>
       Please contact your administrator.
     </template>
 
     <template #tooltipContent>
-      Save entry
+      Edit entry
     </template>
   </AntActionButton>
 </template>

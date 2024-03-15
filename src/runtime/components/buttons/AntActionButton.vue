@@ -3,16 +3,14 @@
  * This button is used for everything what is the primary
  * action like save, confirm, create, etc.
  */
-import {Grouped} from '../../enums/Grouped.enum';
-import {Size} from '../../enums/Size.enum';
-import {ColorType, InputColorType} from '../../enums/ColorType.enum';
-import {Position} from '../../enums/Position.enum';
+import {Position, ColorType, InputColorType, Size, Grouped} from '../../enums';
 import AntButton from './AntButton.vue';
-import AntTooltip from '../AntTooltip.vue';
 import type {IconDefinition} from '@fortawesome/free-solid-svg-icons';
+import {computed, useSlots} from 'vue';
+import {hasSlotContent} from '../../utils';
 
 defineEmits(['click', 'blur']);
-withDefaults(
+const props = withDefaults(
 	defineProps<{
 		iconLeft?: IconDefinition;
 		iconRight?: IconDefinition;
@@ -24,45 +22,50 @@ withDefaults(
 		expanded?: boolean;
 		filled?: boolean;
 		hasPermission?: boolean;
-		invalidPermissionTooltipPosition?: Position;
+		tooltipPosition?: Position;
+		tooltipColorType?: InputColorType;
+		tooltipDelay?: number;
 	}>(), {
 		colorType: ColorType.primary,
 		hasPermission: true,
 		filled: true
 	}
 )
+const slots = useSlots();
+const hasTooltip = computed(() => !props.skeleton && !props.disabled && props.hasPermission && hasSlotContent(slots['tooltipContent']));
+const hasPermissionTooltip = computed(() => !props.skeleton && !props.disabled && !props.hasPermission && hasSlotContent(slots['invalidPermissionTooltipContent']));
 </script>
 
 <template>
-  <AntTooltip
+  <AntButton
+    :icon-left="iconLeft"
+    :icon-right="iconRight"
+    :size="size"
+    :disabled="disabled || !hasPermission"
+    :grouped="grouped"
+    :skeleton="skeleton"
     :expanded="expanded"
-    :position="invalidPermissionTooltipPosition"
-    :color-type="InputColorType.info"
+    :color-type="colorType"
+    :filled="filled"
+    :tooltip-position="tooltipPosition"
+    :tooltip-color-type="hasPermissionTooltip ? InputColorType.info : tooltipColorType"
+    :tooltip-delay="hasPermissionTooltip ? 300 : tooltipDelay"
+    data-e2e="action-button"
+    @click="$emit('click')"
+    @blur="$emit('blur')"
   >
-    <slot name="button">
-      <AntButton
-        :icon-left="iconLeft"
-        :icon-right="iconRight"
-        :size="size"
-        :disabled="disabled || !hasPermission"
-        :grouped="grouped"
-        :skeleton="skeleton"
-        :expanded="expanded"
-        :color-type="colorType"
-        :filled="filled"
-        data-e2e="action-button"
-        @click="$emit('click')"
-        @blur="$emit('blur')"
-      >
-        <slot />
-      </AntButton>
-    </slot>
+    <slot />
 
-    <template
-      v-if="!hasPermission && !skeleton"
-      #content
-    >
-      <slot name="invalidPermissionTooltipContent" />
+    <template #tooltip-content>
+      <slot
+        v-if="hasTooltip"
+        name="tooltipContent"
+      />
+
+      <slot
+        v-if="hasPermissionTooltip"
+        name="invalidPermissionTooltipContent"
+      />
     </template>
-  </AntTooltip>
+  </AntButton>
 </template>

@@ -1,42 +1,55 @@
 <script lang="ts" setup>
-import {Grouped} from '../../enums/Grouped.enum';
-import {Size} from '../../enums/Size.enum';
 import AntActionButton from './AntActionButton.vue';
-import {Position} from '../../enums';
+import {Position, Size, Grouped, ColorType} from '../../enums';
+import {faFloppyDisk, faPlus} from '@fortawesome/free-solid-svg-icons';
 
 defineEmits(['click', 'blur']);
 withDefaults(defineProps<{
+	iconVariant?: boolean;
 	size?: Size;
 	disabled?: boolean;
 	grouped?: Grouped;
 	skeleton?: boolean;
 	expanded?: boolean;
 	canSave?: boolean;
-	invalidPermissionTooltipPosition?: Position;
+	tooltipPosition?: Position;
 }>(), {
+	iconVariant: false,
 	canSave: true
 });
 </script>
 
 <template>
   <AntActionButton
+    :filled="false"
+    :color-type="ColorType.primary"
     :size="size"
     :disabled="disabled"
+    :icon-left="iconVariant ? faFloppyDisk : undefined"
+    :icon-right="iconVariant ? faPlus : undefined"
     :grouped="grouped"
     :skeleton="skeleton"
     :expanded="expanded"
-    :filled="false"
     :has-permission="canSave"
-    :invalid-permission-tooltip-position="invalidPermissionTooltipPosition"
+    :tooltip-position="tooltipPosition"
     data-e2e="save-and-new-button"
     @click="$emit('click')"
     @blur="$emit('blur')"
   >
-    <template #default>Save and new</template>
+    <template
+      v-if="!iconVariant"
+      #default
+    >
+      Save and new
+    </template>
 
     <template #invalidPermissionTooltipContent>
-      You have no permission to save this entry.<br>
+      You have no permission to save entries.<br>
       Please contact your administrator.
+    </template>
+
+    <template #tooltipContent>
+      Save entry
     </template>
   </AntActionButton>
 </template>

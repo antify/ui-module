@@ -7,9 +7,10 @@ import AntSpinner from '../AntSpinner.vue';
 import {Grouped} from '../../enums/Grouped.enum';
 import {Size} from '../../enums/Size.enum';
 import {handleEnumValidation} from '../../handler';
-import {ColorType} from '../../enums';
+import {ColorType, InputColorType, Position} from '../../enums';
 import {ButtonType} from './__types';
 import AntIcon from '../AntIcon.vue';
+import AntTooltip from '../AntTooltip.vue';
 import {IconSize} from '../__types/AntIcon.types';
 
 defineEmits(['click', 'blur']);
@@ -30,6 +31,9 @@ const props = withDefaults(defineProps<{
 	submit?: boolean;
 	outlined?: boolean;
 	noFocus?: boolean;
+	tooltipPosition?: Position;
+	tooltipColorType?: InputColorType;
+	tooltipDelay?: number;
 }>(), {
 	colorType: ColorType.base,
 	disabled: false,
@@ -43,6 +47,9 @@ const props = withDefaults(defineProps<{
 	submit: false,
 	outlined: true,
 	noFocus: false,
+	tooltipPosition: Position.bottom,
+	tooltipColorType: InputColorType.base,
+	tooltipDelay: 800
 });
 
 const hasAction = computed(() => (props.skeleton || props.readonly || props.disabled))
@@ -178,50 +185,63 @@ onMounted(() => {
       absolute
     />
 
-    <component
-      :is="is"
-      :class="classes"
-      :type="type"
-      :to="to"
-      :disabled="disabled || undefined"
-      :tabindex="noFocus || hasAction ? '-1' : '0'"
-      @click="() => !props.readonly ? $emit('click') : null"
-      @blur="() => !props.readonly ? $emit('blur') : null"
+    <AntTooltip
+      :expanded="expanded"
+      :position="tooltipPosition"
+      :color-type="tooltipColorType"
+      :delay="tooltipDelay"
     >
-      <AntSpinner
-        v-if="spinner"
-        :size="size"
-        :color-type="colorType"
-        :inverted="!filled"
-      />
+      <template #default>
+        <component
+          :is="is"
+          :class="classes"
+          :type="type"
+          :to="to"
+          :disabled="disabled || undefined"
+          :tabindex="noFocus || hasAction ? '-1' : '0'"
+          @click="() => !props.readonly ? $emit('click') : null"
+          @blur="() => !props.readonly ? $emit('blur') : null"
+        >
+          <AntSpinner
+            v-if="spinner"
+            :size="size"
+            :color-type="colorType"
+            :inverted="!filled"
+          />
 
-      <slot
-        v-if="!spinner"
-        name="icon-left"
-      >
-        <AntIcon
-          v-if="iconLeft"
-          :icon="iconLeft"
-          :size="size as unknown as IconSize"
-          :color="iconColor"
-        />
-      </slot>
+          <slot
+            v-if="!spinner"
+            name="icon-left"
+          >
+            <AntIcon
+              v-if="iconLeft"
+              :icon="iconLeft"
+              :size="size as unknown as IconSize"
+              :color="iconColor"
+            />
+          </slot>
 
-      <slot
-        v-if="!spinner"
-      />
+          <slot
+            v-if="!spinner"
+          />
 
-      <slot
-        v-if="!spinner"
-        name="icon-right"
-      >
-        <AntIcon
-          v-if="iconRight"
-          :icon="iconRight"
-          :size="size as unknown as IconSize"
-          :color="iconColor"
-        />
-      </slot>
-    </component>
+          <slot
+            v-if="!spinner"
+            name="icon-right"
+          >
+            <AntIcon
+              v-if="iconRight"
+              :icon="iconRight"
+              :size="size as unknown as IconSize"
+              :color="iconColor"
+            />
+          </slot>
+        </component>
+      </template>
+
+      <template #content>
+        <slot name="tooltip-content" />
+      </template>
+    </AntTooltip>
   </div>
 </template>

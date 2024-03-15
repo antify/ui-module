@@ -1,10 +1,10 @@
-import AntCreateButton from '../AntCreateButton.vue';
+import AntEditButton from '../AntEditButton.vue';
 import {type Meta, type StoryObj} from '@storybook/vue3';
 import {Position, Grouped as _Grouped, Size} from '../../../enums';
 
-const meta: Meta<typeof AntCreateButton> = {
-	title: 'Components/Buttons/Create Button',
-	component: AntCreateButton,
+const meta: Meta<typeof AntEditButton> = {
+	title: 'Components/Buttons/Edit Button',
+	component: AntEditButton,
 	parameters: {controls: {sort: 'requiredFirst'}},
 	argTypes: {
 		size: {
@@ -24,15 +24,15 @@ const meta: Meta<typeof AntCreateButton> = {
 
 export default meta;
 
-type Story = StoryObj<typeof AntCreateButton>;
+type Story = StoryObj<typeof AntEditButton>;
 
 export const Docs: Story = {
 	render: (args) => ({
-		components: {AntCreateButton},
+		components: {AntEditButton},
 		setup() {
 			return {args};
 		},
-		template: '<AntCreateButton v-bind="args"/>',
+		template: '<AntEditButton v-bind="args"/>',
 	}),
 	args: {
 		tooltipPosition: Position.right
@@ -83,6 +83,6 @@ export const InvalidPermission: Story = {
 	render: Docs.render,
 	args: {
 		...Docs.args,
-		canCreate: false,
+		canEdit: false,
 	},
 };

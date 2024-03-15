@@ -1,14 +1,17 @@
 import AntActionButton from '../AntActionButton.vue';
 import {type Meta, type StoryObj} from '@storybook/vue3';
-import {Size} from '../../../enums/Size.enum';
 import {Grouped as _Grouped} from '../../../enums/Grouped.enum';
-import {Position} from '../../../enums/Position.enum';
+import {ColorType, InputColorType, Position, Size} from '../../../enums';
 
 const meta: Meta<typeof AntActionButton> = {
   title: 'Components/Buttons/Action Button',
   component: AntActionButton,
   parameters: {controls: {sort: 'requiredFirst'}},
   argTypes: {
+		colorType: {
+			control: {type: 'select'},
+			options: Object.values(ColorType),
+		},
     size: {
       control: {type: 'radio'},
       options: Object.values(Size)
@@ -17,9 +20,13 @@ const meta: Meta<typeof AntActionButton> = {
       control: {type: 'select'},
       options: Object.values(_Grouped),
     },
-		invalidPermissionTooltipPosition: {
+		tooltipPosition: {
       control: {type: 'select'},
       options: Object.values(Position),
+    },
+		tooltipColorType: {
+      control: {type: 'select'},
+      options: Object.values(InputColorType),
     },
   },
 };
@@ -34,10 +41,14 @@ export const Docs: Story = {
     setup() {
       return {args};
     },
-    template: '<AntActionButton v-bind="args">Action Button</AntActionButton>',
+    template: `<AntActionButton v-bind="args">
+			<template #default>Action Button</template>
+			<template #tooltipContent>This is an action button</template>
+			<template #invalidPermissionTooltipContent>You have no permission <br>to click this button</template>
+		</AntActionButton>`,
   }),
   args: {
-		invalidPermissionTooltipPosition: Position.right
+		tooltipPosition: Position.right
 	},
 };
 
@@ -73,20 +84,12 @@ export const Expanded: Story = {
   },
 };
 
-export const WithPermissionTooltip: Story = {
-	render: (args) => ({
-		components: {AntActionButton},
-		setup() {
-			return {args};
-		},
-		template: `<AntActionButton v-bind="args">
-			Action Button
-
-			<template #invalidPermissionTooltipContent>You have no permission to do this</template>
-		</AntActionButton>`,
-	}),
+export const WithoutPermission: Story = {
+	render: Docs.render,
 	args: {
 		...Docs.args,
 		hasPermission: false,
 	},
 };
+
+// TODO:: write summary

@@ -1,9 +1,6 @@
 <script lang="ts" setup>
-import {Grouped} from '../../enums/Grouped.enum';
-import {Size} from '../../enums/Size.enum';
-import {ColorType} from '../../enums/ColorType.enum';
 import AntActionButton from './AntActionButton.vue';
-import {Position} from '../../enums';
+import {Position, Size, Grouped, ColorType} from '../../enums';
 import {faTrash} from '@fortawesome/free-solid-svg-icons';
 
 defineEmits(['click', 'blur']);
@@ -15,25 +12,25 @@ withDefaults(defineProps<{
 	skeleton?: boolean;
 	expanded?: boolean;
 	canDelete?: boolean;
-	invalidPermissionTooltipPosition?: Position;
+	tooltipPosition?: Position;
 }>(), {
 	iconVariant: false,
 	canDelete: true
-})
+});
 </script>
 
 <template>
   <AntActionButton
-    :icon-left="iconVariant ? faTrash : undefined"
     :filled="false"
+    :color-type="ColorType.danger"
     :size="size"
     :disabled="disabled"
+    :icon-left="iconVariant ? faTrash : undefined"
     :grouped="grouped"
     :skeleton="skeleton"
     :expanded="expanded"
-    :color-type="ColorType.danger"
     :has-permission="canDelete"
-    :invalid-permission-tooltip-position="invalidPermissionTooltipPosition"
+    :tooltip-position="tooltipPosition"
     data-e2e="delete-button"
     @click="$emit('click')"
     @blur="$emit('blur')"
@@ -46,8 +43,12 @@ withDefaults(defineProps<{
     </template>
 
     <template #invalidPermissionTooltipContent>
-      You have no permission to delete this entry.<br>
+      You have no permission to delete entries.<br>
       Please contact your administrator.
+    </template>
+
+    <template #tooltipContent>
+      Delete entry
     </template>
   </AntActionButton>
 </template>

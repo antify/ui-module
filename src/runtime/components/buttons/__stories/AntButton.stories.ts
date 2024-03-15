@@ -5,7 +5,8 @@ import {faCaretRight, faCaretLeft} from '@fortawesome/free-solid-svg-icons';
 import {type Meta, type StoryObj} from '@storybook/vue3';
 import {Size} from '../../../enums/Size.enum';
 import {Grouped as _Grouped} from '../../../enums/Grouped.enum';
-import {ColorType} from '../../../enums';
+import {ColorType, InputColorType, Position} from '../../../enums';
+import {userEvent, within, expect, waitFor} from '@storybook/test';
 
 const meta: Meta<typeof AntButton> = {
 	component: AntButton,
@@ -43,6 +44,16 @@ const meta: Meta<typeof AntButton> = {
 		},
 		submit: {
 			description: 'Change the button type to type="submit"',
+		},
+		tooltipPosition: {
+			control: {type: 'select'},
+			options: Object.values(Position),
+			description: 'The tooltips position. Tooltip is only shown if a tooltip-content slot is provided.'
+		},
+		tooltipColorType: {
+			control: {type: 'select'},
+			options: Object.values(InputColorType),
+			description: 'The tooltips color type. Tooltip is only shown if a tooltip-content slot is provided.'
 		},
 	},
 };
@@ -156,6 +167,58 @@ export const WithoutBorder: Story = {
 	},
 };
 
+export const WithTooltip: Story = {
+	render: (args) => ({
+		components: {AntButton},
+		setup() {
+			return {args};
+		},
+		template: `
+			<AntButton v-bind="args">
+				<template #default>Button</template>
+
+				<template #tooltip-content>This is a button</template>
+			</AntButton>`,
+	}),
+	play: async ({ canvasElement, step }) => {
+		const canvas = within(canvasElement);
+
+		// await step('Hover over the button, click it and expect not showing the tooltip', async () => {
+		// 	await userEvent.hover(canvas.getByText('Button'));
+		//
+		// 	await waitFor(() => expect(
+		// 		canvas.queryByText(
+		// 			'This is a button',
+		// 		),
+		// 	).not.toBeInTheDocument(), {timeout: 600});
+		//
+		// 	await userEvent.click(canvas.getByText('Button'));
+		//
+		// 	await waitFor(() => expect(
+		// 		canvas.queryByText(
+		// 			'This is a button',
+		// 		),
+		// 	).not.toBeInTheDocument(), {timeout: 600});
+		// });
+
+		// await step('Hover over the button and expect showing the tooltip after 800 ms delay', async () => {
+		// 	await userEvent.hover(canvas.getByText('Button'));
+		//
+		// 	await waitFor(() => expect(
+		// 		canvas.queryByText(
+		// 			'This is a button',
+		// 		),
+		// 	).toBeInTheDocument(), {timeout: 800});
+		// });
+	},
+	args: {
+		tooltipDelay: 800,
+	},
+	parameters: {
+		chromatic: {disableSnapshot: false},
+	}
+};
+
 export const Summary: Story = {
 	parameters: {
 		chromatic: {disableSnapshot: false},
@@ -172,7 +235,7 @@ export const Summary: Story = {
 		template: `
 			<div class="flex flex-col gap-2.5">
 				<AntFormGroup>
-					<AntFormGroupLabel class="text-xl">
+					<AntFormGroupLabel>
 						Grouped | Filled | Outlined combinations
 					</AntFormGroupLabel>
 					<div class="flex">
@@ -274,8 +337,9 @@ export const Summary: Story = {
 						</AntButton>
 					</div>
 				</AntFormGroup>
+
 				<AntFormGroup>
-					<AntFormGroupLabel class="text-xl">
+					<AntFormGroupLabel>
 						Size
 					</AntFormGroupLabel>
 					<AntFormGroup direction="row">

@@ -1,42 +1,54 @@
 <script lang="ts" setup>
-import {Grouped} from '../../enums/Grouped.enum';
-import {Size} from '../../enums/Size.enum';
 import AntActionButton from './AntActionButton.vue';
-import {ColorType, Position} from '../../enums';
+import {Position, Size, Grouped, ColorType} from '../../enums';
 import {faCopy} from '@fortawesome/free-solid-svg-icons';
 
 defineEmits(['click', 'blur']);
 withDefaults(defineProps<{
+	iconVariant?: boolean;
 	size?: Size;
 	disabled?: boolean;
 	grouped?: Grouped;
 	skeleton?: boolean;
 	expanded?: boolean;
 	canDuplicate?: boolean;
-	invalidPermissionTooltipPosition?: Position;
+	tooltipPosition?: Position;
 }>(), {
+	iconVariant: false,
 	canDuplicate: true
 });
 </script>
 
 <template>
   <AntActionButton
-    :icon-left="faCopy"
+    :filled="false"
     :color-type="ColorType.base"
     :size="size"
     :disabled="disabled"
+    :icon-left="iconVariant ? faCopy : undefined"
     :grouped="grouped"
     :skeleton="skeleton"
     :expanded="expanded"
     :has-permission="canDuplicate"
-    :invalid-permission-tooltip-position="invalidPermissionTooltipPosition"
-    data-e2e="create-button"
+    :tooltip-position="tooltipPosition"
+    data-e2e="duplicate-button"
     @click="$emit('click')"
     @blur="$emit('blur')"
   >
+    <template
+      v-if="!iconVariant"
+      #default
+    >
+      Duplicate
+    </template>
+
     <template #invalidPermissionTooltipContent>
       You have no permission to duplicate entries.<br>
       Please contact your administrator.
+    </template>
+
+    <template #tooltipContent>
+      Duplicate entry
     </template>
   </AntActionButton>
 </template>
