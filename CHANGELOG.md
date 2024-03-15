@@ -2,6 +2,22 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.5.0](https://github.com/antify/ui-module/compare/v1.4.0...v1.5.0) (2024-03-15)
+
+
+### Features
+
+* Add AntDuplicateButton ([869d591](https://github.com/antify/ui-module/commit/869d591b41b0cf6b8f11130e262c99a041b2a60d))
+* Add icon variant to action buttons ([942f87e](https://github.com/antify/ui-module/commit/942f87ef70f049f11315a18ba9fe1a6c79045d0e))
+* **AntBaseInput:** Replace fa-icon with AntIcon ([5e8d0bb](https://github.com/antify/ui-module/commit/5e8d0bbc3ccae4103655d8ae7549029b2c01b514))
+
+
+### Bug Fixes
+
+* Fix wrong neutral-50 <-> bg-white association ([912d65d](https://github.com/antify/ui-module/commit/912d65d391764b0124b89a6c958fa20dc72a3638))
+* Fix wrong neutral-50 <-> bg-white association ([16460fd](https://github.com/antify/ui-module/commit/16460fd0f682e8e7c54be22ffe9c25aa08881040))
+* Transpile client side ([1fda0dd](https://github.com/antify/ui-module/commit/1fda0dd2d44ebc9a709092e2dee84e5164176639))
+
 ## [1.4.0](https://github.com/antify/ui-module/compare/v1.3.0...v1.4.0) (2024-03-14)
 
 
