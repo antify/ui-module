@@ -66,7 +66,7 @@ const inputClasses = computed(() => {
   };
 
   return {
-    'transition-colors relative border-none outline w-full focus:z-10': true,
+    'transition-colors relative border-none outline w-full focus:z-10 text-black': true,
     'outline-offset-[-1px] outline-1 focus:outline-offset-[-1px] focus:outline-1': true,
     'disabled:opacity-50 disabled:cursor-not-allowed': props.disabled,
     'text-right': props.type === BaseInputType.number,
@@ -90,21 +90,17 @@ const inputClasses = computed(() => {
 });
 const iconClasses = computed(() => ({
   'transition-[height]': true,
-  'h-4': props.size === Size.sm,
-  'h-5': props.size === Size.md,
 }));
-const iconColorClasses = computed(() => {
+const iconColorClass = computed(() => {
   const variants: Record<InputColorType, string> = {
-    [InputColorType.base]: 'text-neutral-500',
+    [InputColorType.base]: 'text-for-white-bg-font',
     [InputColorType.danger]: 'text-danger-500',
     [InputColorType.info]: 'text-info-500',
     [InputColorType.success]: 'text-success-500',
     [InputColorType.warning]: 'text-warning-500',
   };
 
-  return {
-    [variants[_colorType.value]]: true,
-  };
+  return variants[_colorType.value];
 });
 const _wrapperClass = computed(() => classesToObjectSyntax(props.wrapperClass));
 const icon = computed(() => icons[_colorType.value]);
@@ -187,11 +183,12 @@ function onBlur(e: FocusEvent) {
       class="absolute flex w-fit right-0 top-0 h-full transition-all z-20"
       :class="{'p-1.5': size === Size.sm, 'p-2.5': size === Size.md}"
     >
-      <!-- TODO:: Replace with AntIcon -->
-      <FaIcon
+      <AntIcon
         :icon="faXmark"
         :class="iconClasses"
-        class="text-neutral-500-font cursor-pointer"
+        class="cursor-pointer"
+        :color="iconColorClass"
+        :size="size as unknown as IconSize"
         @click="() => _value = null"
       />
     </div>
@@ -201,10 +198,11 @@ function onBlur(e: FocusEvent) {
       class="absolute flex w-fit right-0 top-0 h-full transition-all z-20"
       :class="{'p-1.5': size === Size.sm, 'p-2.5': size === Size.md}"
     >
-      <!-- TODO:: Replace with AntIcon -->
-      <FaIcon
+      <AntIcon
         :icon="icon"
-        :class="{...iconClasses, ...iconColorClasses}"
+        :color="iconColorClass"
+        :class="iconClasses"
+        :size="size as unknown as IconSize"
       />
     </div>
 
