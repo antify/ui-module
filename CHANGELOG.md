@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.5.1](https://github.com/antify/ui-module/compare/v1.5.0...v1.5.1) (2024-03-15)
+
+
+### Bug Fixes
+
+* **AntFormGroup:** Fix using space instead of gap ([b34fa57](https://github.com/antify/ui-module/commit/b34fa57b6694bf56df2d55984c2428e4677258b7))
+
 ## [1.5.0](https://github.com/antify/ui-module/compare/v1.4.0...v1.5.0) (2024-03-15)
 
 
