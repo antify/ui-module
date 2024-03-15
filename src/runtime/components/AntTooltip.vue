@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import {computed, onMounted, ref} from 'vue';
+import {computed, onMounted, ref, getCurrentInstance} from 'vue';
 import {handleEnumValidation} from '../handler';
 import {InputColorType, Position} from '../enums';
 import {classesToObjectSyntax} from '../utils';
@@ -10,11 +10,13 @@ const props = withDefaults(defineProps<{
 	tooltipClasses?: string | Record<string, boolean>
 	colorType?: InputColorType
 	expanded?: boolean
+	delay?: number
 }>(), {
 	position: Position.left,
 	tooltipClasses: '',
 	colorType: InputColorType.base,
-	expanded: false
+	expanded: false,
+	delay: 800
 });
 const visible = ref(false);
 const _tooltipClasses = computed(() => ({
@@ -73,43 +75,53 @@ const arrowSvgPathClasses = computed(() => {
 
 	return {[variants[props.colorType]]: true};
 });
+const timeout = ref<number | undefined>();
+const clickLock = ref(false);
+const uuid = ref(getCurrentInstance()?.uid)
 
 onMounted(() => {
 	handleEnumValidation(props.position, Position, 'Position')
 	handleEnumValidation(props.colorType, InputColorType, 'colorType')
 });
 
-/**
- * To prevent a fliggering ux, add a delay on hover and leaving the hover target,
- * before showing the tooltip content.
- */
-const delayVisible = ref(visible.value);
-
 function onMouseOver() {
-	delayVisible.value = true;
+	if (visible.value || clickLock.value) {
+		return;
+	}
 
-	setTimeout(() => {
-		if (delayVisible.value) {
-			visible.value = true
-		}
-	}, 300)
+	timeout.value = setTimeout(() => visible.value = true, props.delay) as unknown as number
 }
 
 function onMouseLeave() {
-	delayVisible.value = false
+	clearTimeout(timeout.value)
+
 	visible.value = false
+	clickLock.value = false
+}
+
+function onClick() {
+	clearTimeout(timeout.value)
+
+	visible.value = false
+	clickLock.value = true
 }
 </script>
 
 <template>
   <div
+    :key="uuid"
     class="relative justify-center items-center"
     :class="{'flex w-full': props.expanded, 'inline-flex': !props.expanded}"
     data-e2e="tooltip"
-    @mouseover="onMouseOver"
-    @mouseleave="onMouseLeave"
+    @mouseover="() => onMouseOver()"
+    @mouseleave="() => onMouseLeave()"
   >
-    <slot />
+    <div
+      class="w-full"
+      @click="() => onClick()"
+    >
+      <slot />
+    </div>
 
     <div
       v-if="visible && hasSlotContent($slots.content)"
