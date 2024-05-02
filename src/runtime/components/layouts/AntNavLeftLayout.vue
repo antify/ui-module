@@ -13,7 +13,7 @@ const hasLogoImageSlot = computed(() => useSlots()['logo-image'] || false);
 </script>
 
 <template>
-  <div class="flex gap-px bg-neutral-300 h-screen overflow-hidden">
+  <div class="flex gap-px bg-neutral-300 h-screen min-w-full overflow-y-hidden">
     <div class="flex flex-col gap-px bg-neutral-300 w-52 shrink-0">
       <component
         :is="logoRoute ? 'RouterLink' : 'div'"
@@ -29,7 +29,7 @@ const hasLogoImageSlot = computed(() => useSlots()['logo-image'] || false);
       />
     </div>
 
-    <div class="flex-grow">
+    <div class="w-px flex-grow">
       <slot />
     </div>
   </div>

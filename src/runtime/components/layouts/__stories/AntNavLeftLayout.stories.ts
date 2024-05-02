@@ -31,7 +31,7 @@ export const Docs: Story = {
           <img src="/logo.svg" class="h-full w-full"/>
         </template>
 
-        <div class="slot m-2.5">SLOT</div>
+        <div class="slot m-2.5 h-full !text-white !border-white">SLOT</div>
       </AntNavLeftLayout>
     `,
   }),
