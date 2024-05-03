@@ -154,6 +154,8 @@ const skeletonGrouped = computed(() => {
 const inputRef = ref<HTMLElement | null>(null);
 const dropDownRef = ref<HTMLElement | null>(null);
 const focusedDropDownItem = ref<string | number | null>(null);
+// TODO:: Hotfix to prevent missing required prop warning. Fix it with https://github.com/antify/ui-module/issues/52
+const dropDownFocused = ref(null);
 
 onMounted(() => {
   handleEnumValidation(props.size, Size, 'size');
@@ -280,6 +282,7 @@ function onClickRemoveButton() {
           ref="dropDownRef"
           v-model="_modelValue"
           v-model:open="isOpen"
+          v-model:focused="dropDownFocused"
           :options="options"
           :input-ref="inputRef"
           :size="size"
