@@ -69,6 +69,15 @@ const itemsPerPage = computed({
   }
 })
 const fromItems = computed(() => (itemsPerPage.value * (page.value - 1)) + 1)
+const toItems = computed(() => {
+	const items = itemsPerPage.value * page.value;
+
+	if (page.value === pages.value &&  items > props.count) {
+		return props.count;
+	}
+
+	return itemsPerPage.value * page.value;
+})
 const pages = computed(() => Math.ceil(props.count / itemsPerPage.value))
 const _fullWidth = ref(props.fullWidth)
 
@@ -119,7 +128,7 @@ watch(() => props.fullWidth, (val) => {
             absolute
           />
 
-          <span class="font-medium">{{ fromItems }} - {{ itemsPerPage * page }}</span>
+          <span class="font-medium">{{ fromItems }} - {{ toItems }}</span>
           <span>of</span>
           <span
             class="font-medium"
