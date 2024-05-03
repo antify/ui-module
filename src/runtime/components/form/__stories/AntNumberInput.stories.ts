@@ -73,3 +73,11 @@ export const Limited: Story = {
     ])
   },
 };
+
+export const WithoutIndicators: Story = {
+  render: Docs.render,
+  args: {
+    ...Docs.args,
+    indicators: false
+  },
+};

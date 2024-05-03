@@ -27,6 +27,7 @@ const props = withDefaults(defineProps<{
   max?: number;
   limiter?: boolean;
   errors?: string[];
+	indicators?: boolean;
 }>(), {
   colorType: InputColorType.base,
   disabled: false,
@@ -34,7 +35,8 @@ const props = withDefaults(defineProps<{
   size: Size.md,
   steps: 1,
   limiter: false,
-  errors: []
+  errors: [],
+	indicators: false
 });
 const emit = defineEmits(['update:modelValue', 'validate']);
 const _modelValue = useVModel(props, 'modelValue', emit);
@@ -127,6 +129,7 @@ function onButtonBlur() {
       class="flex relative"
     >
       <AntButton
+        v-if="indicators"
         :icon-left="faMinus"
         :grouped="Grouped.left"
         :color-type="buttonColorType"
@@ -140,7 +143,7 @@ function onButtonBlur() {
       <AntBaseInput
         v-model:value.number="_modelValue"
         :type="BaseInputType.number"
-        :grouped="Grouped.center"
+        :grouped="indicators ? Grouped.center : Grouped.none"
         wrapper-class="flex-grow"
         :color-type="colorType"
         :size="size"
@@ -156,6 +159,7 @@ function onButtonBlur() {
       />
 
       <AntButton
+        v-if="indicators"
         :icon-left="faPlus"
         :grouped="Grouped.right"
         :color-type="buttonColorType"
