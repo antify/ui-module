@@ -162,7 +162,11 @@ const pagination = computed(() => {
     class="inline-flex relative"
     data-e2e="pagination"
   >
-    <AntSkeleton v-if="skeleton" rounded absolute/>
+    <AntSkeleton
+      v-if="skeleton"
+      rounded
+      absolute
+    />
 
     <div
       class="inline-flex gap-px"
@@ -177,14 +181,15 @@ const pagination = computed(() => {
       />
 
       <AntButton
-        v-for="(pageObj, index) in pagination"
+        v-for="(pageObj) in pagination"
+        :key="`pagination-button-${pageObj}`"
         :color-type="pageObj === page ? ColorType.primary : ColorType.base"
         :class="{'text-primary-500 z-10': pageObj === page}"
         :disabled="pageObj === '...'"
         :grouped="Grouped.center"
         :filled="pageObj !== page"
+        :readonly="pageObj === page"
         @click="() => page = pageObj"
-        v-bind:key="`pagination-button-${index}`"
       >
         {{ pageObj }}
       </AntButton>
