@@ -40,16 +40,19 @@ onMounted(() => {
 
 <template>
   <div
-      :class="classes"
+    :class="classes"
   >
-    <span :class="{'invisible': skeleton}">
-      <slot/>
+    <span
+      class="break-all"
+      :class="{'invisible': skeleton}"
+    >
+      <slot />
     </span>
 
     <AntSkeleton
-        v-if="skeleton"
-        absolute
-        rounded
+      v-if="skeleton"
+      absolute
+      rounded
     />
   </div>
 </template>
