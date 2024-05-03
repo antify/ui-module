@@ -29,19 +29,26 @@ export const Docs: Story = {
       return {args, logClick};
     },
     template: `
-      <div class="p-4">
-        <AntAlert v-bind="args" @close="logClick">
-          Lorem ipsum dolor sit amet, consetetur sadipscing elitr, <br/>
-          sed diam nonumy eirmod tempor invidunt <br/>
-          ut labore et dolore magna aliquyam erat, <br/>
-          sed diam voluptua. At vero eos et accusam et <br/>
-          justo duo dolores et ea rebum. Stet clita kasd
-        </AntAlert>
-      </div>
+			<AntAlert v-bind="args" @close="logClick">
+				Lorem ipsum dolor sit amet, consetetur sadipscing elitr, <br/>
+				sed diam nonumy eirmod tempor invidunt <br/>
+				ut labore et dolore magna aliquyam erat, <br/>
+				sed diam voluptua. At vero eos et accusam et <br/>
+				justo duo dolores et ea rebum. Stet clita kasd
+			</AntAlert>
     `,
   }),
   args: {
     title: 'Lorem ipsum dolor'
+  },
+};
+
+export const WithOutTitle: Story = {
+  render: Docs.render,
+  args: {
+    title: '',
+		dismissBtn: false,
+		icon: false,
   },
 };
 

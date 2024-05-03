@@ -18,17 +18,19 @@ import {IconSize} from './__types';
 defineEmits(['close']);
 
 const props = withDefaults(defineProps<{
-  title: string,
+  title?: string | null,
   colorType?: InputColorType,
   icon?: boolean,
   expanded?: boolean,
-  questionMarkText?: string,
+  questionMarkText?: string | null,
   skeleton?: boolean,
   dismissBtn?: boolean,
 }>(), {
+	title: null,
   colorType: InputColorType.base,
   icon: true,
   expanded: false,
+	questionMarkText: null,
   skeleton: false,
   dismissBtn: true,
 });
@@ -81,9 +83,14 @@ onMounted(() => {
     :class="classes"
     data-e2e="alert"
   >
-    <AntSkeleton v-if="skeleton" absolute rounded/>
+    <AntSkeleton
+      v-if="skeleton"
+      absolute
+      rounded
+    />
 
     <div
+      v-if="icon || hasQuestionMark || dismissBtn || title"
       class="inline-flex items-center justify-between w-content gap-2.5"
       :class="{'invisible': skeleton}"
     >
@@ -95,7 +102,9 @@ onMounted(() => {
           :size="IconSize.sm"
         />
 
-        <div :class="{'font-semibold': hasDefaultSlot}">
+        <div
+          :class="{'font-semibold': hasDefaultSlot}"
+        >
           <slot name="title">
             {{ title }}
           </slot>
@@ -131,7 +140,7 @@ onMounted(() => {
     </div>
 
     <div v-if="hasDefaultSlot">
-      <slot/>
+      <slot />
     </div>
   </div>
 </template>
