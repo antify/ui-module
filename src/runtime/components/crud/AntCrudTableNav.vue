@@ -68,7 +68,7 @@ const itemsPerPage = computed({
     })()
   }
 })
-const fromItems = computed(() => (itemsPerPage.value * (page.value - 1)))
+const fromItems = computed(() => (itemsPerPage.value * (page.value - 1)) + 1)
 const pages = computed(() => Math.ceil(props.count / itemsPerPage.value))
 const _fullWidth = ref(props.fullWidth)
 
