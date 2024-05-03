@@ -42,10 +42,7 @@ onMounted(() => {
   <div
     :class="classes"
   >
-    <span
-      class="break-all"
-      :class="{'invisible': skeleton}"
-    >
+    <span :class="{'invisible': skeleton}">
       <slot />
     </span>
 
