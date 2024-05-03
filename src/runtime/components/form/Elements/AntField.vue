@@ -17,14 +17,12 @@ const props = withDefaults(defineProps<{
   limiterValue?: number;
   limiterMaxValue?: number;
   labelFor?: string;
-  showMessageOnError?: boolean;
   errors?: string[];
   expanded?: boolean;
 }>(), {
   colorType: InputColorType.base,
   skeleton: false,
   size: Size.md,
-  showMessageOnError: true,
   errors: () => [],
   expanded: true
 });
@@ -35,34 +33,35 @@ onMounted(() => {
 });
 
 const _errors = computed(() => props.skeleton ? [] : props.errors);
-const _colorType = computed(() => _errors.value.length > 0 ? InputColorType.danger : props.colorType)
+const _colorType = computed(() => _errors.value.length > 0 ? InputColorType.danger : props.colorType);
 </script>
 
 <template>
   <div
-      class="flex flex-col items-start gap-1.5"
-      :class="{'w-full': expanded}"
+    class="flex flex-col items-start gap-1.5"
+    :class="{'w-full': expanded}"
   >
     <AntInputLabel
-        :label="label"
-        :size="size"
-        :skeleton="skeleton"
-        :for="labelFor"
-        @clickContent="$emit('clickLabel')"
+      :label="label"
+      :size="size"
+      :skeleton="skeleton"
+      :for="labelFor"
+      @click-content="$emit('clickLabel')"
     >
       <div class="w-full">
-        <slot/>
+        <slot />
       </div>
     </AntInputLabel>
 
     <div
-        v-if="showMessageOnError && (description || _errors.length > 0)"
-        class="flex justify-between w-full"
+      v-if="description || _errors.length > 0 || (limiterMaxValue !== undefined && limiterValue !== undefined)"
+      class="flex justify-between w-full"
     >
       <AntInputDescription
-          :size="size"
-          :skeleton="skeleton"
-          :color-type="_colorType"
+        v-if="description || _errors.length > 0"
+        :size="size"
+        :skeleton="skeleton"
+        :color-type="_colorType"
       >
         <slot name="description">
           <template v-if="_errors.length === 1">
@@ -87,16 +86,20 @@ const _colorType = computed(() => _errors.value.length > 0 ? InputColorType.dang
         </slot>
       </AntInputDescription>
 
-      <AntInputLimiter
-          v-if="limiterMaxValue !== undefined && limiterValue !== undefined"
+      <div
+        v-if="limiterMaxValue !== undefined && limiterValue !== undefined"
+        class="flex flex-grow justify-end"
+      >
+        <AntInputLimiter
           :value="limiterValue"
           :max-value="limiterMaxValue"
           :color-type="_colorType"
           :size="size"
           :skeleton="skeleton"
-      >
-        {{ limiterValue }}/{{ limiterMaxValue }}
-      </AntInputLimiter>
+        >
+          {{ limiterValue }}/{{ limiterMaxValue }}
+        </AntInputLimiter>
+      </div>
     </div>
   </div>
 </template>

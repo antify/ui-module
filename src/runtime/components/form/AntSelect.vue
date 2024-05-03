@@ -45,7 +45,6 @@ const props = withDefaults(
       grouped?: Grouped;
       name?: string;
       wrapperClass?: string | Record<string, boolean>;
-      showMessageOnError?: boolean;
       expanded?: boolean;
     }>(), {
       colorType: InputColorType.base,
@@ -54,7 +53,6 @@ const props = withDefaults(
       disabled: false,
       skeleton: false,
       nullable: false,
-      showMessageOnError: true,
       expanded: true
     }
 );
@@ -205,7 +203,6 @@ function onClickRemoveButton() {
     :color-type="colorType"
     :validator="validator"
     :class="wrapperClass"
-    :show-message-on-error="showMessageOnError"
     :expanded="expanded"
     label-for="noop"
     data-e2e="select"

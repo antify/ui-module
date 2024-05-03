@@ -31,7 +31,6 @@ const props = withDefaults(
     skeleton?: boolean;
     validator?: FieldValidator;
     name?: string;
-    showMessageOnError?: boolean;
     expanded?: boolean;
     icon?: IconDefinition;
     grouped?: Grouped;
@@ -53,7 +52,6 @@ const props = withDefaults(
     allowDuplicates: false,
     openOnFocus: true,
     autoCloseAfterSelection: false,
-    showMessageOnError: true,
 
     placeholder: 'Add new tag'
   }
@@ -233,12 +231,11 @@ function filterDropDown() {
     :description="description"
     :color-type="colorType"
     :validator="validator"
-    :show-message-on-error="showMessageOnError"
     :expanded="expanded"
   >
     <div
-      class="relative w-full"
       v-on-click-outside="onClickOutside"
+      class="relative w-full"
     >
       <AntSkeleton
         v-if="skeleton"
@@ -264,12 +261,15 @@ function filterDropDown() {
 
         <!-- Input -->
         <div class="flex items-center gap-1 w-32 shrink grow">
-          <AntIcon :icon="icon" :size="size === Size.sm ? IconSize.xs : IconSize.sm"/>
+          <AntIcon
+            :icon="icon"
+            :size="size === Size.sm ? IconSize.xs : IconSize.sm"
+          />
 
           <input
+            ref="inputRef"
             v-model="tagInput"
             type="text"
-            ref="inputRef"
             :placeholder="placeholder"
             :class="inputClasses"
             :disabled="disabled"
@@ -283,9 +283,9 @@ function filterDropDown() {
 
       <AntDropDown
         v-if="filteredOptions && !disabled"
+        ref="dropDownRef"
         v-model:focused="focusedDropDownItem"
         v-model:open="dropDownOpen"
-        ref="dropDownRef"
         :model-value="null"
         :auto-select-first-on-open="!allowCreate"
         :options="filteredOptions"
