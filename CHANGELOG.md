@@ -2,6 +2,26 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.6.0](https://github.com/antify/ui-module/compare/v1.5.1...v1.6.0) (2024-05-06)
+
+
+### Features
+
+* Add new component AntContent ([83fe2bd](https://github.com/antify/ui-module/commit/83fe2bdc6c4c213ba5c8b94740e1542293811b70))
+* **AntNumber:** make showing indicators changeable [#20](https://github.com/antify/ui-module/issues/20) ([104e32b](https://github.com/antify/ui-module/commit/104e32bd8df8c805fea0c2357d942bd73c564294))
+
+
+### Bug Fixes
+
+* **AntAlert:** Fix wrong gap [#42](https://github.com/antify/ui-module/issues/42) ([6e0a1ad](https://github.com/antify/ui-module/commit/6e0a1ad88d519c23c3e8a30e6289659d75139d70))
+* **AntCrudTableNav:** Fix invalid page count [#22](https://github.com/antify/ui-module/issues/22) ([d329094](https://github.com/antify/ui-module/commit/d32909496a50f0975abb5a2711d0ae88d275348f))
+* **AntCrudTableNav:** Start counting from 1 [#36](https://github.com/antify/ui-module/issues/36) ([12c38bd](https://github.com/antify/ui-module/commit/12c38bd7c6bd8c80974e961eef8c26976570fd61))
+* **AntNavLeftLayout:** Fix overflowing content on x-axis ([7e5af18](https://github.com/antify/ui-module/commit/7e5af189f90018c800e8250d57f5bb1da0007ee1))
+* **AntPagination:** Fix make current page not clickable [#9](https://github.com/antify/ui-module/issues/9) ([61e3fca](https://github.com/antify/ui-module/commit/61e3fca9148d02979afc5b6a0d9d5080d332a079))
+* Fix to long description texts overfloating field width ([0ef6d26](https://github.com/antify/ui-module/commit/0ef6d265d23791d02aa3d0e7feb569077be68292))
+* Fix wrong word break in description ([678ab05](https://github.com/antify/ui-module/commit/678ab05e4ae5eecffe42755a666b1829c997d46c))
+* Remove unnecessary showMessageOnError property. Close [#37](https://github.com/antify/ui-module/issues/37) ([de8cd26](https://github.com/antify/ui-module/commit/de8cd26ee558a995af5cdd82982cebea685ba5ed))
+
 ### [1.5.1](https://github.com/antify/ui-module/compare/v1.5.0...v1.5.1) (2024-03-15)
 
 
