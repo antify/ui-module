@@ -51,28 +51,28 @@ onMounted(() => {
     data-e2e="tag"
   >
     <span
-        v-if="iconLeft"
-        class="inline-flex items-center justify-center"
-        :class="{'w-4 h-4': props.size === Size.sm, 'w-5 h-5': props.size === Size.md}"
+      v-if="iconLeft"
+      class="inline-flex items-center justify-center"
+      :class="{'w-4 h-4': props.size === Size.sm, 'w-5 h-5': props.size === Size.md}"
     >
-      <fa-icon
-          :icon="iconLeft"
-          :class="iconClasses"
+      <FaIcon
+        :icon="iconLeft"
+        :class="iconClasses"
       />
     </span>
 
-    <slot/>
+    <slot />
 
     <span
-        v-if="dismiss"
-        class="inline-flex items-center justify-center"
-        :class="{'w-4 h-4': props.size === Size.sm, 'w-5 h-5': props.size === Size.md}"
+      v-if="dismiss"
+      class="inline-flex items-center justify-center"
+      :class="{'w-4 h-4': props.size === Size.sm, 'w-5 h-5': props.size === Size.md}"
     >
-      <fa-icon
-          :icon="faCircleXmark"
-          :class="iconClasses"
-          class="cursor-pointer"
-          @click="() => $emit('close')"
+      <FaIcon
+        :icon="faCircleXmark"
+        :class="iconClasses"
+        class="cursor-pointer"
+        @click="() => $emit('close')"
       />
     </span>
   </span>

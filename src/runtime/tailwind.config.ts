@@ -1,5 +1,5 @@
 import defaultColors from 'tailwindcss/colors.js';
-// import {type Config} from "tailwindcss";
+import {type Config} from 'tailwindcss';
 
 const colors = {
   'transparent': defaultColors.transparent,
@@ -179,8 +179,6 @@ const fontColors = {
   'danger-950-font': colors['neutral-100'],
 };
 
-// TODO:: add 2xs-font
-
 /** @type {import('tailwindcss').Config} */
 export default {
   content: [
@@ -209,6 +207,9 @@ export default {
       ...fontColors,
     },
     extend: {
+			fontSize: {
+				'2xs': ['0.625rem', '0.75rem'],
+			},
       animation: {
         skeleton: 'skeleton 2s ease-out infinite',
       },
@@ -220,5 +221,4 @@ export default {
       }
     }
   }
-}
-// as Config;
+} as Config;
