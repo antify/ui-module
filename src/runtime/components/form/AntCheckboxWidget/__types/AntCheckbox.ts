@@ -4,3 +4,8 @@ export type AntCheckboxType = {
   disabled?: boolean;
   readonly?: boolean;
 }
+
+export enum AntCheckboxSize {
+	sm = 'sm',
+	md = 'md',
+}

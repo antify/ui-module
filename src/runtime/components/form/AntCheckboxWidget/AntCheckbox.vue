@@ -1,15 +1,17 @@
 <script lang="ts" setup>
-import { useVModel } from '@vueuse/core';
-import { AntField } from '../Elements';
-import { InputColorType, Size } from '../../../enums';
+import {useVModel} from '@vueuse/core';
+import {AntField} from '../Elements';
+import {InputColorType, Size} from '../../../enums';
 import AntSkeleton from '../../AntSkeleton.vue';
-import { computed, onMounted, watch } from 'vue';
-import { handleEnumValidation } from '../../../handler';
+import {computed, onMounted, watch} from 'vue';
+import {handleEnumValidation} from '../../../handler';
 
-import { faCheck } from '@fortawesome/free-solid-svg-icons';
+import {faCheck} from '@fortawesome/free-solid-svg-icons';
 import AntIcon from '../../AntIcon.vue';
-import { IconSize } from '../../__types';
-import { FieldValidator } from '@antify/validate';
+import {IconSize} from '../../__types';
+import {FieldValidator} from '@antify/validate';
+import {AntCheckboxSize} from './__types/AntCheckbox';
+import {AntRadioSize} from '../AntRadioWidget/__types/AntRadio.type';
 
 const emits = defineEmits([ 'update:modelValue', 'update:skeleton' ]);
 const props =
@@ -20,14 +22,14 @@ const props =
       label?: string;
       description?: string;
       colorType?: InputColorType;
-      size?: Size,
+      size?: AntCheckboxSize,
       skeleton?: boolean;
       disabled?: boolean;
       readonly?: boolean;
       validator?: FieldValidator;
     }>(), {
       colorType: InputColorType.base,
-      size: Size.md,
+      size: AntCheckboxSize.md,
       skeleton: false,
       disabled: false,
       readonly: false,
@@ -42,10 +44,10 @@ const inputClasses = computed(() => {
     'focus:ring-offset-0': true,
     'invisible': props.skeleton,
     'cursor-pointer': hasAction.value,
-    'focus:ring-2': props.size === Size.sm && hasAction.value,
-    'focus:ring-4': props.size === Size.md && hasAction.value,
-    'h-5 w-5': props.size === Size.md,
-    'h-4 w-4': props.size === Size.sm,
+    'focus:ring-2': props.size === AntCheckboxSize.sm && hasAction.value,
+    'focus:ring-4': props.size === AntCheckboxSize.md && hasAction.value,
+    'h-5 w-5': props.size === AntCheckboxSize.md,
+    'h-4 w-4': props.size === AntCheckboxSize.sm,
     'cursor-not-allowed opacity-50': props.disabled
   };
 
@@ -73,8 +75,9 @@ const inputClasses = computed(() => {
 
 const valueClass = computed(() => {
   const classes = {
-    'text-sm': true,
     'cursor-not-allowed opacity-50': props.disabled,
+		'text-sm': props.size === AntCheckboxSize.md,
+		'text-xs': props.size === AntCheckboxSize.sm
   };
 
   return classes;
@@ -85,7 +88,7 @@ watch(_value, () => {
 });
 
 onMounted(() => {
-  handleEnumValidation(props.size, Size, 'size');
+  handleEnumValidation(props.size, AntCheckboxSize, 'size');
   handleEnumValidation(props.colorType, InputColorType, 'colorType');
 });
 </script>
@@ -97,7 +100,7 @@ onMounted(() => {
     :skeleton="skeleton"
     :color-type="colorType"
     :validator="validator"
-    :size="size"
+    :size="size as unknown as Size"
     :expanded="false"
   >
     <div class="flex items-center gap-1.5">
@@ -114,7 +117,7 @@ onMounted(() => {
           v-if="_value"
           :icon="faCheck"
           class="absolute !text-white pointer-events-none"
-          :size="size as unknown as IconSize"
+          :size="size === AntCheckboxSize.md ? IconSize.sm : IconSize.xs"
         />
 
         <AntSkeleton
@@ -124,7 +127,10 @@ onMounted(() => {
         />
       </div>
 
-      <div class="relative">
+      <div
+        class="relative flex items-center"
+        :class="props.size === AntCheckboxSize.md ? 'h-5' : 'h-4'"
+      >
         <span :class="valueClass">
           {{ valueLabel }}
         </span>

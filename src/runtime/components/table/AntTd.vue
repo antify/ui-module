@@ -1,6 +1,6 @@
 <script setup lang="ts">
 
-import { AntTableAlign, AntTableRowTypes, type TableHeader } from './__types/TableHeader.type';
+import {AntTableAlign, AntTableRowTypes, AntTableSize, type TableHeader} from './__types/TableHeader.type';
 import { computed } from 'vue';
 import type { RouteLocationRaw } from 'vue-router';
 
@@ -10,14 +10,19 @@ const props =
       element: Record<string, unknown>;
       header: TableHeader;
       align?: AntTableAlign
+			size: AntTableSize
     }>(), {
-      align: AntTableAlign.left
+      align: AntTableAlign.left,
+			size: AntTableSize.md
     });
 
 const cellClasses = computed(() => ({
-  'whitespace-nowrap px-2.5 py-0 h-[40px] text-sm font-medium relative': true,
+  'whitespace-nowrap text-sm font-medium relative': true,
   'text-right': props.align === AntTableAlign.right,
-  'text-center': props.align === AntTableAlign.center
+  'text-center': props.align === AntTableAlign.center,
+	'px-2.5 py-0 h-10': props.size === AntTableSize.lg,
+	'px-2 py-0 h-9': props.size === AntTableSize.md,
+	'px-1.5 py-0 h-8': props.size === AntTableSize.sm
 }))
 </script>
 
@@ -40,8 +45,11 @@ const cellClasses = computed(() => ({
     <div
       v-else-if="header.type === AntTableRowTypes.link && header.toProp"
     >
-      <router-link :to="element[header.toProp] as RouteLocationRaw" class="absolute inset-0">
-      </router-link>
+      <RouterLink
+        :to="element[header.toProp] as RouteLocationRaw"
+        class="absolute inset-0"
+      >
+      </RouterLink>
       {{ element[header.identifier] }}
     </div>
 
@@ -55,7 +63,10 @@ const cellClasses = computed(() => ({
       v-else-if="header.type === AntTableRowTypes.slot"
       :class="header.rowClassList"
     >
-      <slot name="cellContent" v-bind="{ element, header }"></slot>
+      <slot
+        name="cellContent"
+        v-bind="{ element, header }"
+      ></slot>
     </div>
 
     <slot

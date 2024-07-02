@@ -28,8 +28,11 @@ const classes = computed(() => {
 
   return {
     'relative font-regular inline-block transition-color': true,
-    'text-xs': props.size === Size.sm,
-    'text-sm': props.size === Size.md,
+		'text-2xs': props.size === Size.xs2,
+		'text-xs': props.size === Size.xs,
+		'text-sm': props.size === Size.sm,
+    'text-md': props.size === Size.md,
+		'text-lg': props.size === Size.lg,
     [variants[props.colorType]]: true,
   };
 });
@@ -43,13 +46,13 @@ onMounted(() => {
 <template>
   <div :class="classes">
     <span :class="{'invisible': skeleton}">
-        {{ value }}/{{ maxValue }}
+      {{ value }}/{{ maxValue }}
     </span>
 
     <AntSkeleton
-        v-if="skeleton"
-        absolute
-        rounded
+      v-if="skeleton"
+      absolute
+      rounded
     />
   </div>
 </template>

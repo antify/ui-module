@@ -1,6 +1,7 @@
 import AntRadioGroup from '../AntRadioGroup.vue';
 import { ref } from 'vue';
-import { InputColorType, Size } from '../../../../enums';
+import { InputColorType } from '../../../../enums';
+import {AntRadioSize} from '../__types/AntRadio.type';
 import { type Meta, type StoryObj } from '@storybook/vue3';
 import { useFieldValidator } from '@antify/validate';
 import { Direction } from '../../../../enums/Direction.enum';
@@ -53,7 +54,7 @@ const meta: Meta<typeof AntRadioGroup> = {
     },
     size: {
       control: { type: 'select' },
-      options: Object.values(Size),
+      options: Object.values(AntRadioSize),
     },
   },
 };

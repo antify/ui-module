@@ -53,6 +53,7 @@ const icons = {
   [InputColorType.success]: faCircleCheck,
   [InputColorType.base]: null,
 };
+/*TODO:: If the scrollbar is showing than the pr is moving and the gap between icon and text is bigger and the icon is stuck in the scrollbar*/
 const inputClasses = computed(() => {
   const variants: Record<InputColorType, string> = {
     [InputColorType.base]: 'outline-neutral-300 focus:outline-primary-500 focus:ring-primary/25 bg-white placeholder:text-neutral-500',
@@ -67,11 +68,17 @@ const inputClasses = computed(() => {
     'disabled:opacity-50 disabled:cursor-not-allowed': props.disabled,
     [variants[_colorType.value]]: true,
     // Size
-    'focus:ring-2 p-1.5 text-xs': props.size === Size.sm,
-    'focus:ring-4 p-2.5 text-sm': props.size === Size.md,
+		'focus:ring-2 p-1 text-xs': props.size === Size.xs2,
+		'focus:ring-2 p-1.5 text-xs': props.size === Size.xs,
+		'focus:ring-2 p-1.5 text-sm': props.size === Size.sm,
+    'focus:ring-4 p-2 text-sm': props.size === Size.md,
+		'focus:ring-4 p-2.5 text-sm': props.size === Size.lg,
     // Icon right
-    'pr-7': props.size === Size.sm && props.showIcon && icon.value,
-    'pr-10': props.size === Size.md && props.showIcon && icon.value,
+		'pr-6': props.size === Size.xs2 && props.showIcon && icon.value,
+		'pr-7': props.size === Size.xs && props.showIcon && icon.value,
+		'pr-8': props.size === Size.sm && props.showIcon && icon.value,
+    'pr-9': props.size === Size.md && props.showIcon && icon.value,
+		'pr-10': props.size === Size.lg && props.showIcon && icon.value,
     // Grouped
     'rounded-tl-md rounded-bl-md rounded-tr-none rounded-br-none': props.grouped === Grouped.left,
     'rounded-none': props.grouped === Grouped.center,
@@ -97,6 +104,13 @@ const _wrapperClass = computed(() => classesToObjectSyntax(props.wrapperClass));
 const icon = computed(() => icons[_colorType.value]);
 const hasErrors = computed(() => props.errors.length > 0);
 const _colorType = computed(() => hasErrors.value ? InputColorType.danger : props.colorType);
+const getIconSize = computed(() => {
+	if(props.size  === Size.xs || props.size === Size.xs2) {
+		return IconSize.xs
+	} else {
+		return IconSize.sm
+	}
+})
 
 onMounted(() => {
   handleEnumValidation(props.size, Size, 'size');
@@ -152,12 +166,12 @@ function onBlur(e: FocusEvent) {
 
       <div
         v-if="showIcon && icon"
-        class="absolute flex w-fit right-0 top-0 transition-all z-20"
-        :class="{'p-1.5': size === Size.sm, 'p-2.5': size === Size.md}"
+        class="absolute flex h-full right-0 top-0 transition-all z-20"
+        :class="{'p-1': size === Size.xs2, 'p-1.5': size === Size.sm || size === Size.xs, 'p-2': size === Size.md, 'p-2.5': size === Size.lg}"
       >
         <AntIcon
           :icon="icon"
-          :size="size as unknown as IconSize"
+          :size="getIconSize"
           :color="iconColor"
         />
       </div>

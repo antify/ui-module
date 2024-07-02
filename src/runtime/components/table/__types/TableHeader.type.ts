@@ -34,3 +34,9 @@ export type TableHeader = {
    */
   lightVersion?: boolean;
 };
+
+export enum AntTableSize {
+	lg = 'lg',
+	md = 'md',
+	sm = 'sm'
+}

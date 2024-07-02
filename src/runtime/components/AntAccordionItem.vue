@@ -24,7 +24,7 @@ function onClick() {
 
 <template>
   <div
-    class="p-2.5 select-none cursor-pointer transition-colors"
+    class="p-2 select-none cursor-pointer transition-colors"
     :class="{'bg-primary-500 text-primary-500-font': isOpen, 'bg-white text-for-white-bg-font': !isOpen}"
     @click="onClick"
   >

@@ -16,9 +16,9 @@ defineProps<{
     <AntIcon
       v-if="icon"
       :icon="icon"
-      :size="IconSize.sm"
+      :size="IconSize.xs"
     />
 
-    <slot v-else/>
+    <slot v-else />
   </span>
 </template>

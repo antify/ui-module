@@ -13,7 +13,7 @@ const props = withDefaults(defineProps<{
    */
   color?: string;
 }>(), {
-  size: IconSize.md,
+  size: IconSize.sm,
   color: 'text-for-white-bg-font'
 });
 

@@ -3,6 +3,7 @@ import {AntSwitch} from '../index';
 import { computed, ref } from 'vue';
 import { InputColorType, Size } from '../../../enums';
 import { useFieldValidator } from '@antify/validate';
+import {AntSwitchSize} from '../__types/AntSwitchTypes';
 
 const meta: Meta<typeof AntSwitch> = {
   title: 'Components/Forms/Switch',
@@ -14,7 +15,7 @@ const meta: Meta<typeof AntSwitch> = {
     },
     size: {
       control: { type: 'select' },
-      options: Object.values(Size),
+      options: Object.values(AntSwitchSize),
     },
   }
 };
@@ -64,7 +65,7 @@ export const Summary: Story = {
       const value = ref(true);
       const notValue = ref(false);
 
-      return {args, value, notValue, InputColorType, Size}
+      return {args, value, notValue, InputColorType, AntSwitchSize}
     },
     template: `
       <div class="flex flex-col gap-5 ">
@@ -146,81 +147,81 @@ export const Summary: Story = {
           <AntSwitch v-bind="args" v-model="notValue" skeleton label="Test" value="Value" description="Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua." :color-type="InputColorType.danger"/>
         </div>
         <div class="flex gap-2.5">
-          <AntSwitch v-bind="args" v-model="value" :size="Size.sm" :color-type="InputColorType.base"/>
-          <AntSwitch v-bind="args" v-model="value" :size="Size.sm" :color-type="InputColorType.info"/>
-          <AntSwitch v-bind="args" v-model="value" :size="Size.sm" :color-type="InputColorType.success"/>
-          <AntSwitch v-bind="args" v-model="value" :size="Size.sm" :color-type="InputColorType.warning"/>
-          <AntSwitch v-bind="args" v-model="value" :size="Size.sm" :color-type="InputColorType.danger"/>
+          <AntSwitch v-bind="args" v-model="value" :size="AntSwitchSize.sm" :color-type="InputColorType.base"/>
+          <AntSwitch v-bind="args" v-model="value" :size="AntSwitchSize.sm" :color-type="InputColorType.info"/>
+          <AntSwitch v-bind="args" v-model="value" :size="AntSwitchSize.sm" :color-type="InputColorType.success"/>
+          <AntSwitch v-bind="args" v-model="value" :size="AntSwitchSize.sm" :color-type="InputColorType.warning"/>
+          <AntSwitch v-bind="args" v-model="value" :size="AntSwitchSize.sm" :color-type="InputColorType.danger"/>
         </div>
         <div class="flex gap-2.5">
-          <AntSwitch v-bind="args" v-model="notValue" :size="Size.sm" :color-type="InputColorType.base"/>
-          <AntSwitch v-bind="args" v-model="notValue" :size="Size.sm" :color-type="InputColorType.info"/>
-          <AntSwitch v-bind="args" v-model="notValue" :size="Size.sm" :color-type="InputColorType.success"/>
-          <AntSwitch v-bind="args" v-model="notValue" :size="Size.sm" :color-type="InputColorType.warning"/>
-          <AntSwitch v-bind="args" v-model="notValue" :size="Size.sm" :color-type="InputColorType.danger"/>
+          <AntSwitch v-bind="args" v-model="notValue" :size="AntSwitchSize.sm" :color-type="InputColorType.base"/>
+          <AntSwitch v-bind="args" v-model="notValue" :size="AntSwitchSize.sm" :color-type="InputColorType.info"/>
+          <AntSwitch v-bind="args" v-model="notValue" :size="AntSwitchSize.sm" :color-type="InputColorType.success"/>
+          <AntSwitch v-bind="args" v-model="notValue" :size="AntSwitchSize.sm" :color-type="InputColorType.warning"/>
+          <AntSwitch v-bind="args" v-model="notValue" :size="AntSwitchSize.sm" :color-type="InputColorType.danger"/>
         </div>
         <div class="flex gap-2.5">
-          <AntSwitch v-bind="args" v-model="value" :size="Size.sm" label="Test" :color-type="InputColorType.base"/>
-          <AntSwitch v-bind="args" v-model="value" :size="Size.sm" label="Test" :color-type="InputColorType.info"/>
-          <AntSwitch v-bind="args" v-model="value" :size="Size.sm" label="Test" :color-type="InputColorType.success"/>
-          <AntSwitch v-bind="args" v-model="value" :size="Size.sm" label="Test" :color-type="InputColorType.warning"/>
-          <AntSwitch v-bind="args" v-model="value" :size="Size.sm" label="Test" :color-type="InputColorType.danger"/>
+          <AntSwitch v-bind="args" v-model="value" :size="AntSwitchSize.sm" label="Test" :color-type="InputColorType.base"/>
+          <AntSwitch v-bind="args" v-model="value" :size="AntSwitchSize.sm" label="Test" :color-type="InputColorType.info"/>
+          <AntSwitch v-bind="args" v-model="value" :size="AntSwitchSize.sm" label="Test" :color-type="InputColorType.success"/>
+          <AntSwitch v-bind="args" v-model="value" :size="AntSwitchSize.sm" label="Test" :color-type="InputColorType.warning"/>
+          <AntSwitch v-bind="args" v-model="value" :size="AntSwitchSize.sm" label="Test" :color-type="InputColorType.danger"/>
         </div>
         <div class="flex gap-2.5">
-          <AntSwitch v-bind="args" v-model="notValue" :size="Size.sm" label="Test" :color-type="InputColorType.base"/>
-          <AntSwitch v-bind="args" v-model="notValue" :size="Size.sm" label="Test" :color-type="InputColorType.info"/>
-          <AntSwitch v-bind="args" v-model="notValue" :size="Size.sm" label="Test" :color-type="InputColorType.success"/>
-          <AntSwitch v-bind="args" v-model="notValue" :size="Size.sm" label="Test" :color-type="InputColorType.warning"/>
-          <AntSwitch v-bind="args" v-model="notValue" :size="Size.sm" label="Test" :color-type="InputColorType.danger"/>
+          <AntSwitch v-bind="args" v-model="notValue" :size="AntSwitchSize.sm" label="Test" :color-type="InputColorType.base"/>
+          <AntSwitch v-bind="args" v-model="notValue" :size="AntSwitchSize.sm" label="Test" :color-type="InputColorType.info"/>
+          <AntSwitch v-bind="args" v-model="notValue" :size="AntSwitchSize.sm" label="Test" :color-type="InputColorType.success"/>
+          <AntSwitch v-bind="args" v-model="notValue" :size="AntSwitchSize.sm" label="Test" :color-type="InputColorType.warning"/>
+          <AntSwitch v-bind="args" v-model="notValue" :size="AntSwitchSize.sm" label="Test" :color-type="InputColorType.danger"/>
         </div>
         <div class="flex gap-2.5">
-          <AntSwitch v-bind="args" v-model="value" :size="Size.sm" label="Test" description="Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua." :color-type="InputColorType.base"/>
-          <AntSwitch v-bind="args" v-model="value" :size="Size.sm" label="Test" description="Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua." :color-type="InputColorType.info"/>
-          <AntSwitch v-bind="args" v-model="value" :size="Size.sm" label="Test" description="Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua." :color-type="InputColorType.success"/>
-          <AntSwitch v-bind="args" v-model="value" :size="Size.sm" label="Test" description="Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua." :color-type="InputColorType.warning"/>
-          <AntSwitch v-bind="args" v-model="value" :size="Size.sm" label="Test" description="Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua." :color-type="InputColorType.danger"/>
+          <AntSwitch v-bind="args" v-model="value" :size="AntSwitchSize.sm" label="Test" description="Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua." :color-type="InputColorType.base"/>
+          <AntSwitch v-bind="args" v-model="value" :size="AntSwitchSize.sm" label="Test" description="Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua." :color-type="InputColorType.info"/>
+          <AntSwitch v-bind="args" v-model="value" :size="AntSwitchSize.sm" label="Test" description="Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua." :color-type="InputColorType.success"/>
+          <AntSwitch v-bind="args" v-model="value" :size="AntSwitchSize.sm" label="Test" description="Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua." :color-type="InputColorType.warning"/>
+          <AntSwitch v-bind="args" v-model="value" :size="AntSwitchSize.sm" label="Test" description="Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua." :color-type="InputColorType.danger"/>
         </div>
         <div class="flex gap-2.5">
-          <AntSwitch v-bind="args" v-model="notValue" :size="Size.sm" label="Test" description="Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua." :color-type="InputColorType.base"/>
-          <AntSwitch v-bind="args" v-model="notValue" :size="Size.sm" label="Test" description="Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua." :color-type="InputColorType.info"/>
-          <AntSwitch v-bind="args" v-model="notValue" :size="Size.sm" label="Test" description="Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua." :color-type="InputColorType.success"/>
-          <AntSwitch v-bind="args" v-model="notValue" :size="Size.sm" label="Test" description="Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua." :color-type="InputColorType.warning"/>
-          <AntSwitch v-bind="args" v-model="notValue" :size="Size.sm" label="Test" description="Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua." :color-type="InputColorType.danger"/>
+          <AntSwitch v-bind="args" v-model="notValue" :size="AntSwitchSize.sm" label="Test" description="Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua." :color-type="InputColorType.base"/>
+          <AntSwitch v-bind="args" v-model="notValue" :size="AntSwitchSize.sm" label="Test" description="Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua." :color-type="InputColorType.info"/>
+          <AntSwitch v-bind="args" v-model="notValue" :size="AntSwitchSize.sm" label="Test" description="Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua." :color-type="InputColorType.success"/>
+          <AntSwitch v-bind="args" v-model="notValue" :size="AntSwitchSize.sm" label="Test" description="Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua." :color-type="InputColorType.warning"/>
+          <AntSwitch v-bind="args" v-model="notValue" :size="AntSwitchSize.sm" label="Test" description="Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua." :color-type="InputColorType.danger"/>
         </div>
         <div class="flex gap-2.5">
-          <AntSwitch v-bind="args" v-model="value" :size="Size.sm" label="Test" value="Value" description="Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua." :color-type="InputColorType.base"/>
-          <AntSwitch v-bind="args" v-model="value" :size="Size.sm" label="Test" value="Value" description="Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua." :color-type="InputColorType.info"/>
-          <AntSwitch v-bind="args" v-model="value" :size="Size.sm" label="Test" value="Value" description="Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua." :color-type="InputColorType.success"/>
-          <AntSwitch v-bind="args" v-model="value" :size="Size.sm" label="Test" value="Value" description="Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua." :color-type="InputColorType.warning"/>
-          <AntSwitch v-bind="args" v-model="value" :size="Size.sm" label="Test" value="Value" description="Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua." :color-type="InputColorType.danger"/>
+          <AntSwitch v-bind="args" v-model="value" :size="AntSwitchSize.sm" label="Test" value="Value" description="Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua." :color-type="InputColorType.base"/>
+          <AntSwitch v-bind="args" v-model="value" :size="AntSwitchSize.sm" label="Test" value="Value" description="Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua." :color-type="InputColorType.info"/>
+          <AntSwitch v-bind="args" v-model="value" :size="AntSwitchSize.sm" label="Test" value="Value" description="Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua." :color-type="InputColorType.success"/>
+          <AntSwitch v-bind="args" v-model="value" :size="AntSwitchSize.sm" label="Test" value="Value" description="Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua." :color-type="InputColorType.warning"/>
+          <AntSwitch v-bind="args" v-model="value" :size="AntSwitchSize.sm" label="Test" value="Value" description="Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua." :color-type="InputColorType.danger"/>
         </div>
         <div class="flex gap-2.5">
-          <AntSwitch v-bind="args" v-model="notValue" :size="Size.sm" label="Test" value="Value" description="Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua." :color-type="InputColorType.base"/>
-          <AntSwitch v-bind="args" v-model="notValue" :size="Size.sm" label="Test" value="Value" description="Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua." :color-type="InputColorType.info"/>
-          <AntSwitch v-bind="args" v-model="notValue" :size="Size.sm" label="Test" value="Value" description="Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua." :color-type="InputColorType.success"/>
-          <AntSwitch v-bind="args" v-model="notValue" :size="Size.sm" label="Test" value="Value" description="Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua." :color-type="InputColorType.warning"/>
-          <AntSwitch v-bind="args" v-model="notValue" :size="Size.sm" label="Test" value="Value" description="Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua." :color-type="InputColorType.danger"/>
+          <AntSwitch v-bind="args" v-model="notValue" :size="AntSwitchSize.sm" label="Test" value="Value" description="Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua." :color-type="InputColorType.base"/>
+          <AntSwitch v-bind="args" v-model="notValue" :size="AntSwitchSize.sm" label="Test" value="Value" description="Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua." :color-type="InputColorType.info"/>
+          <AntSwitch v-bind="args" v-model="notValue" :size="AntSwitchSize.sm" label="Test" value="Value" description="Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua." :color-type="InputColorType.success"/>
+          <AntSwitch v-bind="args" v-model="notValue" :size="AntSwitchSize.sm" label="Test" value="Value" description="Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua." :color-type="InputColorType.warning"/>
+          <AntSwitch v-bind="args" v-model="notValue" :size="AntSwitchSize.sm" label="Test" value="Value" description="Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua." :color-type="InputColorType.danger"/>
         </div>
         <div class="flex gap-2.5">
-          <AntSwitch v-bind="args" v-model="notValue" readonly :size="Size.sm" label="Test" value="Value" description="Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua." :color-type="InputColorType.base"/>
-          <AntSwitch v-bind="args" v-model="notValue" readonly :size="Size.sm" label="Test" value="Value" description="Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua." :color-type="InputColorType.info"/>
-          <AntSwitch v-bind="args" v-model="notValue" readonly :size="Size.sm" label="Test" value="Value" description="Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua." :color-type="InputColorType.success"/>
-          <AntSwitch v-bind="args" v-model="notValue" readonly :size="Size.sm" label="Test" value="Value" description="Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua." :color-type="InputColorType.warning"/>
-          <AntSwitch v-bind="args" v-model="notValue" readonly :size="Size.sm" label="Test" value="Value" description="Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua." :color-type="InputColorType.danger"/>
+          <AntSwitch v-bind="args" v-model="notValue" readonly :size="AntSwitchSize.sm" label="Test" value="Value" description="Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua." :color-type="InputColorType.base"/>
+          <AntSwitch v-bind="args" v-model="notValue" readonly :size="AntSwitchSize.sm" label="Test" value="Value" description="Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua." :color-type="InputColorType.info"/>
+          <AntSwitch v-bind="args" v-model="notValue" readonly :size="AntSwitchSize.sm" label="Test" value="Value" description="Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua." :color-type="InputColorType.success"/>
+          <AntSwitch v-bind="args" v-model="notValue" readonly :size="AntSwitchSize.sm" label="Test" value="Value" description="Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua." :color-type="InputColorType.warning"/>
+          <AntSwitch v-bind="args" v-model="notValue" readonly :size="AntSwitchSize.sm" label="Test" value="Value" description="Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua." :color-type="InputColorType.danger"/>
         </div>
         <div class="flex gap-2.5">
-          <AntSwitch v-bind="args" v-model="notValue" disabled :size="Size.sm" label="Test" value="Value" description="Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua." :color-type="InputColorType.base"/>
-          <AntSwitch v-bind="args" v-model="notValue" disabled :size="Size.sm" label="Test" value="Value" description="Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua." :color-type="InputColorType.info"/>
-          <AntSwitch v-bind="args" v-model="notValue" disabled :size="Size.sm" label="Test" value="Value" description="Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua." :color-type="InputColorType.success"/>
-          <AntSwitch v-bind="args" v-model="notValue" disabled :size="Size.sm" label="Test" value="Value" description="Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua." :color-type="InputColorType.warning"/>
-          <AntSwitch v-bind="args" v-model="notValue" disabled :size="Size.sm" label="Test" value="Value" description="Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua." :color-type="InputColorType.danger"/>
+          <AntSwitch v-bind="args" v-model="notValue" disabled :size="AntSwitchSize.sm" label="Test" value="Value" description="Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua." :color-type="InputColorType.base"/>
+          <AntSwitch v-bind="args" v-model="notValue" disabled :size="AntSwitchSize.sm" label="Test" value="Value" description="Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua." :color-type="InputColorType.info"/>
+          <AntSwitch v-bind="args" v-model="notValue" disabled :size="AntSwitchSize.sm" label="Test" value="Value" description="Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua." :color-type="InputColorType.success"/>
+          <AntSwitch v-bind="args" v-model="notValue" disabled :size="AntSwitchSize.sm" label="Test" value="Value" description="Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua." :color-type="InputColorType.warning"/>
+          <AntSwitch v-bind="args" v-model="notValue" disabled :size="AntSwitchSize.sm" label="Test" value="Value" description="Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua." :color-type="InputColorType.danger"/>
         </div>
         <div class="flex gap-2.5">
-          <AntSwitch v-bind="args" v-model="notValue" skeleton :size="Size.sm" label="Test" value="Value" description="Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua." :color-type="InputColorType.base"/>
-          <AntSwitch v-bind="args" v-model="notValue" skeleton :size="Size.sm" label="Test" value="Value" description="Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua." :color-type="InputColorType.info"/>
-          <AntSwitch v-bind="args" v-model="notValue" skeleton :size="Size.sm" label="Test" value="Value" description="Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua." :color-type="InputColorType.success"/>
-          <AntSwitch v-bind="args" v-model="notValue" skeleton :size="Size.sm" label="Test" value="Value" description="Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua." :color-type="InputColorType.warning"/>
-          <AntSwitch v-bind="args" v-model="notValue" skeleton :size="Size.sm" label="Test" value="Value" description="Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua." :color-type="InputColorType.danger"/>
+          <AntSwitch v-bind="args" v-model="notValue" skeleton :size="AntSwitchSize.sm" label="Test" value="Value" description="Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua." :color-type="InputColorType.base"/>
+          <AntSwitch v-bind="args" v-model="notValue" skeleton :size="AntSwitchSize.sm" label="Test" value="Value" description="Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua." :color-type="InputColorType.info"/>
+          <AntSwitch v-bind="args" v-model="notValue" skeleton :size="AntSwitchSize.sm" label="Test" value="Value" description="Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua." :color-type="InputColorType.success"/>
+          <AntSwitch v-bind="args" v-model="notValue" skeleton :size="AntSwitchSize.sm" label="Test" value="Value" description="Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua." :color-type="InputColorType.warning"/>
+          <AntSwitch v-bind="args" v-model="notValue" skeleton :size="AntSwitchSize.sm" label="Test" value="Value" description="Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua." :color-type="InputColorType.danger"/>
         </div>
       </div>
     `

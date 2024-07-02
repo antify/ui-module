@@ -1,8 +1,8 @@
 import AntRadio from '../AntRadio.vue';
 import { ref } from 'vue';
-import { InputColorType, Size } from "../../../../enums";
-import { type AntRadioType } from "../__types/AntRadio.type";
-import { type Meta, type StoryObj } from "@storybook/vue3";
+import { InputColorType } from '../../../../enums';
+import { type AntRadioType, AntRadioSize } from '../__types/AntRadio.type';
+import { type Meta, type StoryObj } from '@storybook/vue3';
 
 const meta: Meta<typeof AntRadio> = {
   title: 'Components/Forms/Radio/Radio',
@@ -22,7 +22,7 @@ const meta: Meta<typeof AntRadio> = {
     },
     size: {
       control: { type: 'select' },
-      options: Object.values(Size),
+      options: Object.values(AntRadioSize),
     },
   },
 };

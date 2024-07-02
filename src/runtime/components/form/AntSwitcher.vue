@@ -52,7 +52,7 @@ onMounted(() => {
 
 const containerClasses = computed(() => {
   const classes: { [key: string]: boolean } = {
-    'flex relative ring-primary/25 rounded-md outline-none': true,
+    'flex relative ring-primary/25 rounded-md outline-none gap-[1px]': true,
     'focus-within:ring-2': (props.size as Size) === Size.sm && hasAction.value,
     'focus-within:ring-4': (props.size as Size) === Size.md && hasAction.value,
   };
@@ -72,9 +72,12 @@ const containerClasses = computed(() => {
 const itemClasses = computed(() => {
   const classes: { [key: string]: boolean } = {
     'grow text-center': true,
-    'p-2.5 text-sm ': (props.size as Size) === Size.md,
-    'p-1.5 text-xs ': (props.size as Size) === Size.sm,
-    'invisible': props.skeleton,
+		'p-1 text-xs ': props.size === Size.xs2,
+		'p-1.5 text-xs ': props.size === Size.xs,
+		'p-1.5 text-sm ': props.size === Size.sm,
+		'p-2 text-sm ': props.size === Size.md,
+		'p-2.5 text-sm ': props.size === Size.lg,
+		'invisible': props.skeleton,
     'opacity-50 cursor-not-allowed': props.disabled,
   };
 

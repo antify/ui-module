@@ -1,11 +1,11 @@
 <script setup lang="ts">
-import { type AntCheckboxType } from './__types/AntCheckbox';
+import { type AntCheckboxType, AntCheckboxSize } from './__types/AntCheckbox';
 import { AntField } from '../Elements';
 import { useVModel } from '@vueuse/core';
 import AntCheckbox from './AntCheckbox.vue';
 import { computed, watch } from 'vue';
 import { Direction } from '../../../enums/Direction.enum';
-import { InputColorType, Size } from '../../../enums';
+import { InputColorType } from '../../../enums';
 import { FieldValidator } from '@antify/validate';
 
 const emits = defineEmits(['update:modelValue'])
@@ -17,7 +17,7 @@ const props = withDefaults(
     description?: string;
     direction?: Direction;
     colorType?: InputColorType;
-    size?: Size,
+    size?: AntCheckboxSize,
     skeleton?: boolean;
     readonly?: boolean;
     disabled?: boolean;
@@ -26,7 +26,7 @@ const props = withDefaults(
   {
     direction: Direction.column,
     colorType: InputColorType.base,
-    size: Size.md,
+    size: AntCheckboxSize.md,
     skeleton: false,
     readonly: false,
     disabled: false

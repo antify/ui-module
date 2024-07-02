@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import {AntTableSortDirection, type TableHeader} from './__types/TableHeader.type';
+import {AntTableSize, AntTableSortDirection, type TableHeader} from './__types/TableHeader.type';
 import {computed, ref, type Ref, watch} from 'vue';
 import {useVModel} from '@vueuse/core';
 import {ColorType} from '../../enums';
@@ -27,11 +27,13 @@ const props = withDefaults(
     loading?: boolean;
     selectableRows?: boolean;
     showLightVersion?: boolean;
+		size: AntTableSize
   }>(), {
     rowKey: 'id',
     loading: false,
     selectableRows: false,
     showLightVersion: false,
+		size: AntTableSize.md
   });
 
 const selected: Ref<Record<string, unknown> | undefined> = useVModel(props, 'selectedRow', emits);
@@ -103,6 +105,7 @@ function rowClick(elem: Record<string, unknown>): void {
                 v-if="!_showLightVersion || (_showLightVersion && header.lightVersion)"
                 :key="`table-header-${header.identifier}-${index}`"
                 :header="header"
+                :size="size"
                 @sort="sortTable"
               >
                 <template #headerContent>
@@ -144,6 +147,7 @@ function rowClick(elem: Record<string, unknown>): void {
                 :header="header"
                 :element="elem"
                 :align="header.align"
+                :size="size"
                 @click="rowClick(elem)"
               >
                 <template #beforeCellContent="props">

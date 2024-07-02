@@ -6,14 +6,14 @@ import AntIcon from '../../AntIcon.vue';
 import {BaseInputType} from './__types/AntBaseInput.type';
 import {Grouped} from '../../../enums/Grouped.enum';
 import {
-  faExclamationTriangle,
-  faExclamationCircle,
-  faCircleCheck,
-  faCircleInfo,
-  faXmark
+	faCircleCheck,
+	faCircleInfo,
+	faExclamationCircle,
+	faExclamationTriangle,
+	faXmark,
+	type IconDefinition
 } from '@fortawesome/free-solid-svg-icons';
 import {handleEnumValidation} from '../../../handler';
-import {type IconDefinition} from '@fortawesome/free-solid-svg-icons';
 import {classesToObjectSyntax} from '../../../utils';
 import {InputColorType} from '../../../enums';
 import {IconSize} from '../../__types';
@@ -66,20 +66,27 @@ const inputClasses = computed(() => {
   };
 
   return {
-    'transition-colors relative border-none outline w-full focus:z-10 text-black': true,
+    'block transition-colors relative border-none outline w-full focus:z-10 text-black': true,
     'outline-offset-[-1px] outline-1 focus:outline-offset-[-1px] focus:outline-1': true,
     'disabled:opacity-50 disabled:cursor-not-allowed': props.disabled,
     'text-right': props.type === BaseInputType.number,
     [variants[_colorType.value]]: true,
     // Size
-    'focus:ring-2 p-1.5 text-xs': props.size === Size.sm,
-    'focus:ring-4 p-2.5 text-sm': props.size === Size.md,
+		'focus:ring-2 p-1 text-xs': props.size === Size.xs2,
+		'focus:ring-2 p-1.5 text-xs': props.size === Size.xs,
+		'focus:ring-2 p-1.5 text-sm': props.size === Size.sm,
+    'focus:ring-4 p-2 text-sm': props.size === Size.md,
+		'focus:ring-4 p-2.5 text-sm': props.size === Size.lg,
     // Icon left
-    'pl-7': props.size === Size.sm && props.iconLeft,
-    'pl-10': props.size === Size.md && props.iconLeft,
+		'pl-6': props.size === Size.xs2 && props.iconLeft,
+		'pl-7': props.size === Size.sm && props.iconLeft || props.size === Size.xs && props.iconLeft,
+    'pl-8': props.size === Size.md && props.iconLeft,
+		'pl-9': props.size === Size.lg && props.iconLeft,
     // Icon right
-    'pr-7': props.size === Size.sm && props.showIcon && icon.value,
-    'pr-10': props.size === Size.md && props.showIcon && icon.value,
+		'pr-6': props.size === Size.xs2 && props.showIcon && icon.value || props.size === Size.xs2  && props.nullable,
+		'pr-7': props.size === Size.sm && props.showIcon && icon.value || props.size === Size.xs && props.showIcon && icon.value || props.size === Size.sm  && props.nullable || props.size === Size.xs  && props.nullable,
+		'pr-8': props.size === Size.md && props.showIcon && icon.value || props.size === Size.md  && props.nullable,
+		'pr-9': props.size === Size.lg && props.showIcon && icon.value || props.size === Size.lg  && props.nullable,
     // Grouped
     'rounded-tl-md rounded-bl-md rounded-tr-none rounded-br-none': props.grouped === Grouped.left,
     'rounded-none': props.grouped === Grouped.center,
@@ -115,6 +122,13 @@ const _value = computed<string | number | null>({
   },
 });
 const _colorType = computed(() => props.hasErrors ? InputColorType.danger : props.colorType);
+const inputIconSize = computed(() => {
+	if(props.size === Size.xs || props.size === Size.xs2) {
+		return IconSize.xs
+	} else {
+		return IconSize.sm
+	}
+})
 
 watch(_value, (val) => {
   if (props.hasErrors) {
@@ -159,11 +173,11 @@ function onBlur(e: FocusEvent) {
     <div
       v-if="iconLeft"
       class="absolute h-full flex items-center justify-center z-20"
-      :class="{'w-7': size === Size.sm, 'w-10': size === Size.md}"
+      :class="{'w-6': size === Size.xs2, 'w-7': size === Size.xs || size === Size.sm, 'w-8': size === Size.md, 'w-9': size === Size.lg}"
     >
       <AntIcon
         :icon="iconLeft"
-        :size="size as unknown as IconSize"
+        :size="inputIconSize"
         color="text-for-white-bg-font"
       />
     </div>
@@ -180,29 +194,29 @@ function onBlur(e: FocusEvent) {
 
     <div
       v-if="nullable && _value !== null && _value !== ''"
-      class="absolute flex w-fit right-0 top-0 h-full transition-all z-20"
-      :class="{'p-1.5': size === Size.sm, 'p-2.5': size === Size.md}"
+      class="absolute h-full flex items-center justify-center right-0 top-0 transition-all z-20"
+      :class="{'w-6': size === Size.xs2, 'w-7': size === Size.xs || size === Size.sm, 'w-8': size === Size.md, 'w-9': size === Size.lg}"
     >
       <AntIcon
         :icon="faXmark"
         :class="iconClasses"
         class="cursor-pointer"
         :color="iconColorClass"
-        :size="size as unknown as IconSize"
+        :size="inputIconSize"
         @click="() => _value = null"
       />
     </div>
 
     <div
       v-else-if="showIcon && icon"
-      class="absolute flex w-fit right-0 top-0 h-full transition-all z-20"
-      :class="{'p-1.5': size === Size.sm, 'p-2.5': size === Size.md}"
+      class="absolute h-full flex items-center justify-center right-0 top-0 transition-all z-20"
+      :class="{'w-6': size === Size.xs2, 'w-7': size === Size.xs || size === Size.sm, 'w-8': size === Size.md, 'w-9': size === Size.lg}"
     >
       <AntIcon
         :icon="icon"
         :color="iconColorClass"
         :class="iconClasses"
-        :size="size as unknown as IconSize"
+        :size="inputIconSize"
       />
     </div>
 

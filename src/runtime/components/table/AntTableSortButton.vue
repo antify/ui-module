@@ -1,38 +1,48 @@
 <script setup lang="ts">
 
-import AntIcon from '../AntIcon.vue';
-import { faAngleDown, faAngleUp, faMinus } from '@fortawesome/free-solid-svg-icons';
-import { IconSize } from '../__types';
-import { AntTableSortDirection } from './__types/TableHeader.type';
+import {faAngleDown, faAngleUp, faMinus} from '@fortawesome/free-solid-svg-icons';
+import {AntTableSize, AntTableSortDirection} from './__types/TableHeader.type';
+import AntButton from '../buttons/AntButton.vue';
+import {computed} from 'vue';
+import {Size} from '../../enums/Size.enum'
 
 defineEmits([ 'sortClick' ])
-withDefaults(
+const props = withDefaults(
   defineProps<{
     sortDirection?: AntTableSortDirection
+		size: AntTableSize
   }>(), {
-    sortDirection: AntTableSortDirection.neutral
+    sortDirection: AntTableSortDirection.neutral,
+		size: AntTableSize.md
   });
+
+const buttonSize = computed(() => {
+	if(props.size === AntTableSize.lg) {
+		return Size.sm
+	} else if(props.size === AntTableSize.md) {
+		return Size.xs
+	} else {
+		return Size.xs2
+	}
+})
+const buttonIcon = computed(() => {
+	if(props.sortDirection === AntTableSortDirection.asc) {
+		return faAngleDown
+	}
+
+	if(props.sortDirection === AntTableSortDirection.desc){
+		return faAngleUp
+	}
+
+	if(props.sortDirection === AntTableSortDirection.neutral) {
+		return faMinus
+	}
+})
 </script>
 
 <template>
-  <button
-    class="bg-white text-for-white-bg-font rounded h-[26px] w-[26px] flex items-center justify-center"
-    @click="$emit('sortClick')"
-  >
-    <AntIcon
-      v-if="sortDirection === AntTableSortDirection.asc"
-      :icon="faAngleDown"
-      :size="IconSize.sm"
-    />
-    <AntIcon
-      v-if="sortDirection === AntTableSortDirection.desc"
-      :icon="faAngleUp"
-      :size="IconSize.sm"
-    />
-    <AntIcon
-      v-if="sortDirection === AntTableSortDirection.neutral"
-      :icon="faMinus"
-      :size="IconSize.sm"
-    />
-  </button>
+  <AntButton
+    :size="buttonSize"
+    :icon-left="buttonIcon"
+  />
 </template>

@@ -1,7 +1,9 @@
 import AntTable from '../AntTable.vue';
-import { AntTableAlign, AntTableRowTypes } from '../__types/TableHeader.type';
+import { AntTableAlign, AntTableRowTypes, AntTableSize } from '../__types/TableHeader.type';
 import { type Meta, type StoryObj } from '@storybook/vue3';
 import { ref } from 'vue';
+import {faker} from '@faker-js/faker';
+import {AntSwitch} from '../../form';
 
 const meta: Meta<typeof AntTable> = {
   title: 'Components/Table',
@@ -41,6 +43,11 @@ const meta: Meta<typeof AntTable> = {
     loading: {
       description: 'If true will display skeleton rows instead of an empty table if there is no data provided, otherwise it will display an overlay.'
     },
+		size: {
+			control: {type: 'radio'},
+			options: Object.values(AntTableSize),
+			table: {defaultValue: {summary: AntTableSize.md}},
+		},
     // Slots
     afterCellContent: {
       description:
@@ -93,36 +100,20 @@ export default meta;
 
 type Story = StoryObj<typeof AntTable>;
 
-const testData = [
-  {
-    text: 'Lorem ipsum dolor sit amet',
-    number: 28,
-    email: 'lindsay.walton@example.com',
-    linkLabel: 'Link here',
-    link: '/',
-  },
-  {
-    text: 'Lorem ipsum dolor sit amet',
-    number: 54,
-    email: 'courtney.henry@example.com',
-    linkLabel: 'Link here',
-    link: '/',
-  },
-  {
-    text: 'Lorem ipsum dolor sit amet',
-    number: 44,
-    email: 'courtney.henry@example.com',
-    linkLabel: 'Link here',
-    link: '/',
-  },
-];
+const testData = [];
 
 // TODO:: add some kind of mixed test data, maybe faker?
 for (let i = 0; i < 100; i++) {
+	const randomName = faker.person.firstName() + ' ' + faker.person.lastName()
+	const randomNumber = faker.number.int({min: 18, max: 60})
+	const randomEmail=faker.internet.email()
+	const randomBoolean = faker.datatype.boolean()
+
   testData.push({
-    text: 'Lorem ipsum dolor sit amet',
-    number: 32,
-    email: 'courtney.henry@example.com',
+    name: randomName,
+    age: randomNumber,
+    email: randomEmail,
+		employeed: randomBoolean,
     linkLabel: 'Link here',
     link: '/',
   })
@@ -130,7 +121,7 @@ for (let i = 0; i < 100; i++) {
 
 export const Docs: Story = {
   render: (args) => ({
-    components: { AntTable },
+    components: { AntTable, AntSwitch },
     setup() {
       const selected = ref();
 
@@ -139,8 +130,11 @@ export const Docs: Story = {
     template: `
       <div class="h-96 border border-dashed border-neutral-300">
         <AntTable v-bind="args" v-model="selected">
-          <template #emptyState>
-          </template>
+					<template #cellContent="{element: entry, header}">
+						<div v-if="header.identifier === 'employeed'">
+							<AntSwitch :model-value="entry.employeed"/>
+						</div>
+					</template>
         </AntTable>
       </div>
     `,
@@ -148,25 +142,31 @@ export const Docs: Story = {
   args: {
     headers: [
       {
-        title: 'Text',
-        identifier: 'text',
+        title: 'Name',
+        identifier: 'name',
         type: AntTableRowTypes.text,
         sortable: true,
         lightVersion: true,
       },
-      {
+			{
+				title: 'Age',
+				identifier: 'age',
+				type: AntTableRowTypes.text,
+				align: AntTableAlign.right,
+				lightVersion: true,
+			},
+			{
         title: 'E-Mail',
         identifier: 'email',
         rowClassList: '',
         type: AntTableRowTypes.text,
       },
-      {
-        title: 'Number',
-        identifier: 'number',
-        type: AntTableRowTypes.text,
-        align: AntTableAlign.right,
-        lightVersion: true,
-      },
+			{
+				title: 'Employeed',
+				identifier: 'employeed',
+				rowClassList: '',
+				type: AntTableRowTypes.slot,
+			},
       {
         title: 'Link',
         identifier: 'linkLabel',

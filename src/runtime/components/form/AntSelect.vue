@@ -84,8 +84,8 @@ const inputClasses = computed(() => {
     // Disabled
     'disabled:opacity-50 disabled:cursor-not-allowed': true,
     // Size
-    'focus:ring-2 p-1.5 gap-1.5 text-xs': props.size === Size.sm,
-    'focus:ring-4 p-2.5 gap-2.5 text-sm': props.size === Size.md,
+    'focus:ring-2 p-1.5 gap-1.5 text-sm': props.size === Size.sm,
+    'focus:ring-4 p-2 gap-2 text-sm': props.size === Size.md,
     // Grouped
     'rounded-tl-md rounded-bl-md rounded-tr-none rounded-br-none': props.grouped === Grouped.left,
     'rounded-tl-none rounded-bl-none rounded-tr-md rounded-br-md': props.grouped === Grouped.right,
@@ -262,14 +262,14 @@ function onClickRemoveButton() {
           <AntIcon
             v-if="isOpen"
             :icon="faChevronUp"
-            :size="size as unknown as IconSize"
+            :size="IconSize.sm"
             :class="arrowClasses"
           />
 
           <AntIcon
             v-else
             :icon="faChevronDown"
-            :size="size as unknown as IconSize"
+            :size="IconSize.sm"
             :class="arrowClasses"
           />
         </div>

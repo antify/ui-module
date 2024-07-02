@@ -4,6 +4,7 @@ import { computed, type Ref } from 'vue';
 import { FieldValidator } from '@antify/validate';
 import AntSkeleton from '../AntSkeleton.vue';
 import { InputColorType, Size } from '../../enums';
+import {AntSwitchSize} from './__types/AntSwitchTypes';
 
 const emits = defineEmits([ 'update:modelValue', 'input' ]);
 const props = withDefaults(defineProps<{
@@ -15,10 +16,10 @@ const props = withDefaults(defineProps<{
   readonly?: boolean;
   disabled?: boolean;
   validator?: FieldValidator;
-  size?: Size;
+  size?: AntSwitchSize;
   colorType?: InputColorType
 }>(), {
-  size: Size.md,
+  size: AntSwitchSize.md,
   colorType: InputColorType.base
 });
 
@@ -37,10 +38,10 @@ const buttonClasses = computed(() => {
     'relative inline-flex flex-shrink-0': true,
     'focus:outline-none': true,
     'rounded-full transition-colors ease-in-out duration-200': true,
-    'focus-within:ring-2': props.size === Size.sm && hasAction.value,
-    'focus-within:ring-4': props.size === Size.md && hasAction.value,
-    'h-4 w-[30px]': props.size === Size.sm,
-    'h-5 w-9': props.size === Size.md,
+    'focus-within:ring-2': props.size === AntSwitchSize.sm && hasAction.value,
+    'focus-within:ring-4': props.size === AntSwitchSize.md && hasAction.value,
+    'h-4 w-[30px]': props.size === AntSwitchSize.sm,
+    'h-5 w-9': props.size === AntSwitchSize.md,
     'bg-neutral-300': !_value.value,
     'invisible': props.skeleton,
     // Disabled
@@ -71,20 +72,20 @@ const buttonClasses = computed(() => {
 
 const ballClasses = computed(() => ({
   'pointer-events-none inline-block rounded-full bg-neutral-100 shadow transform ring-0 transition ease-in-out duration-200': true,
-  'h-4 w-4 translate-y-0.5': props.size === Size.md,
-  'h-3.5 w-3.5  translate-y-[1px]': props.size === Size.sm,
-  'translate-x-[1.125rem]': _value.value && props.size === Size.md,
-  'translate-x-0.5': !_value.value && props.size === Size.md,
-  'translate-x-[.925rem]': _value.value && props.size === Size.sm,
-  'translate-x-[1px]': !_value.value && props.size === Size.sm,
+  'h-4 w-4 translate-y-0.5': props.size === AntSwitchSize.md,
+  'h-3.5 w-3.5  translate-y-[1px]': props.size === AntSwitchSize.sm,
+  'translate-x-[1.125rem]': _value.value && props.size === AntSwitchSize.md,
+  'translate-x-0.5': !_value.value && props.size === AntSwitchSize.md,
+  'translate-x-[.925rem]': _value.value && props.size === AntSwitchSize.sm,
+  'translate-x-[1px]': !_value.value && props.size === AntSwitchSize.sm,
   'invisible': props.skeleton
 }));
 
 const valueClasses = computed(() => {
   const classes = {
     'text-for-white-bg-font': true,
-    'text-sm': props.size === Size.sm,
-    'text-md': props.size === Size.md,
+    'text-sm': props.size === AntSwitchSize.sm,
+    'text-md': props.size === AntSwitchSize.md,
     'opacity-50 cursor-not-allowed': props.disabled
   }
 
@@ -101,7 +102,7 @@ function changeValue() {
 <template>
   <AntField
     :label="label"
-    :size="size"
+    :size="size as unknown as Size"
     :description="description"
     :skeleton="skeleton"
     :validator="validator"

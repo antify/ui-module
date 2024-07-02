@@ -1,10 +1,10 @@
 <script lang="ts" setup>
-import { AntField } from '../Elements';
-import { InputColorType, Size } from '../../../enums';
+import {AntField} from '../Elements';
+import {InputColorType, Size} from '../../../enums';
 import AntSkeleton from '../../AntSkeleton.vue';
-import { computed, onMounted } from 'vue';
-import { type AntRadioType } from './__types/AntRadio.type';
-import { handleEnumValidation } from '../../../handler';
+import {computed, onMounted} from 'vue';
+import {AntRadioSize, type AntRadioType} from './__types/AntRadio.type';
+import {handleEnumValidation} from '../../../handler';
 
 defineOptions({ inheritAttrs: false });
 
@@ -17,12 +17,12 @@ const props = withDefaults(
     description?: string;
     skeleton?: boolean;
     colorType?: InputColorType;
-    size?: Size
+    size?: AntRadioSize
     readonly?: boolean;
     disabled?: boolean;
   }>(), {
     colorType: InputColorType.base,
-    size: Size.md,
+    size: AntRadioSize.md,
     readonly: false,
     disabled: false,
   }
@@ -48,10 +48,10 @@ const inputClasses = computed(() => {
     'cursor-pointer': hasAction.value,
     'outline-neutral-300 focus:outline-neutral-300': !isActive.value,
     'rounded-full transition-colors ease-in-out duration-200 disabled:opacity-50 disabled:cursor-not-allowed': true,
-    'focus:ring-2': props.size === Size.sm && hasAction.value,
-    'focus:ring-4': props.size === Size.md && hasAction.value,
-    'h-4 w-4 small': props.size === Size.sm,
-    'h-5 w-5': props.size === Size.md,
+    'focus:ring-2': props.size === AntRadioSize.sm && hasAction.value,
+    'focus:ring-4': props.size === AntRadioSize.md && hasAction.value,
+    'h-4 w-4 small': props.size === AntRadioSize.sm,
+    'h-5 w-5': props.size === AntRadioSize.md,
   };
 
   const focusColorVariant = {
@@ -79,8 +79,10 @@ const inputClasses = computed(() => {
 const valueClass = computed(() => {
   const classes = {
     'relative w-fit full-height': true,
-    'cursor-pointer': hasAction.value,
-    'cursor-not-allowed opacity-50': props.disabled
+		'cursor-pointer': hasAction.value,
+		'cursor-not-allowed opacity-50': props.disabled,
+		'text-sm': props.size === AntRadioSize.md,
+		'text-xs': props.size === AntRadioSize.sm
   }
 
   return classes;
@@ -98,7 +100,7 @@ onMounted(() => {
     :color-type="colorType"
     class="cursor-pointer"
     :skeleton="skeleton"
-    :size="size"
+    :size="size as unknown as Size"
     :expanded="false"
   >
     <div class="flex items-center gap-1.5">
@@ -119,7 +121,10 @@ onMounted(() => {
         />
       </div>
 
-      <div class="relative">
+      <div
+        class="relative flex items-center"
+        :class="props.size === AntRadioSize.md ? 'h-5' : 'h-4'"
+      >
         <span :class="valueClass">
           {{ value.label }}
         </span>
