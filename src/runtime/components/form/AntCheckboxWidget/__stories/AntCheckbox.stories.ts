@@ -93,7 +93,7 @@ export const Summary: Story = {
         offValue,
         onValue,
         InputColorType,
-        Size
+        AntCheckboxSize
       };
     },
     template: `
