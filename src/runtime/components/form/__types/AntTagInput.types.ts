@@ -1,5 +1,5 @@
 export enum AntTagInputSize {
-	sm = 'sm',
-	md = 'md',
 	lg = 'lg',
+	md = 'md',
+	sm = 'sm',
 }

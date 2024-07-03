@@ -81,15 +81,19 @@ const ballClasses = computed(() => ({
   'invisible': props.skeleton
 }));
 
-const valueClasses = computed(() => {
-  const classes = {
+const valueClasses = computed(() => ({
     'text-for-white-bg-font': true,
-    'text-sm': props.size === AntSwitchSize.sm,
-    'text-md': props.size === AntSwitchSize.md,
+    'text-xs': props.size === AntSwitchSize.sm,
+    'text-sm': props.size === AntSwitchSize.md,
     'opacity-50 cursor-not-allowed': props.disabled
-  }
+}))
 
-  return classes;
+const fieldSize = computed(() => {
+	if(props.size === AntSwitchSize.md) {
+		return Size.sm
+	} else {
+		return Size.xs
+	}
 })
 
 function changeValue() {
@@ -102,7 +106,7 @@ function changeValue() {
 <template>
   <AntField
     :label="label"
-    :size="size as unknown as Size"
+    :size="fieldSize"
     :description="description"
     :skeleton="skeleton"
     :validator="validator"
@@ -138,7 +142,8 @@ function changeValue() {
 
       <div
         v-if="value"
-        class="relative"
+        class="relative flex items-center"
+        :class="props.size === AntSwitchSize.md ? 'h-5' : 'h-4'"
       >
         <span :class="valueClasses">{{ value }}</span>
 

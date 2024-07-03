@@ -123,14 +123,6 @@ export const summary: Story = {
           <AntTextarea v-bind="args" v-model:value="modelValue" :show-icon="false" color-type="danger"/>
         </div>
 
-        <div class="flex gap-2">
-          <AntTextarea v-bind="args" v-model:value="modelValue" :icon-left="faSearch" color-type="base"/>
-          <AntTextarea v-bind="args" v-model:value="modelValue" :icon-left="faSearch" color-type="info"/>
-          <AntTextarea v-bind="args" v-model:value="modelValue" :icon-left="faSearch" color-type="success"/>
-          <AntTextarea v-bind="args" v-model:value="modelValue" :icon-left="faSearch" color-type="warning"/>
-          <AntTextarea v-bind="args" v-model:value="modelValue" :icon-left="faSearch" color-type="danger"/>
-        </div>
-
         <div class="flex gap-[-2px]">
           <AntTextarea v-bind="args" v-model:value="modelValue" grouped="left"/>
           <AntTextarea v-bind="args" v-model:value="modelValue" grouped="center" color-type="danger"/>

@@ -1,7 +1,7 @@
 export enum Size {
-		xs2 = '2xs',
-		xs = 'xs',
-		sm = 'sm',
+		lg = 'lg',
 		md = 'md',
-		lg = 'lg'
+		sm = 'sm',
+		xs = 'xs',
+		xs2 = '2xs'
 }

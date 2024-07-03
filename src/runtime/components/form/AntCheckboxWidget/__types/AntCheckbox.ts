@@ -6,6 +6,6 @@ export type AntCheckboxType = {
 }
 
 export enum AntCheckboxSize {
-	sm = 'sm',
 	md = 'md',
+	sm = 'sm',
 }

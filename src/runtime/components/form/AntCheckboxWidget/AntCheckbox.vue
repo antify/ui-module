@@ -11,7 +11,6 @@ import AntIcon from '../../AntIcon.vue';
 import {IconSize} from '../../__types';
 import {FieldValidator} from '@antify/validate';
 import {AntCheckboxSize} from './__types/AntCheckbox';
-import {AntRadioSize} from '../AntRadioWidget/__types/AntRadio.type';
 
 const emits = defineEmits([ 'update:modelValue', 'update:skeleton' ]);
 const props =
@@ -83,6 +82,14 @@ const valueClass = computed(() => {
   return classes;
 });
 
+const fieldSize = computed(() => {
+	if(props.size === AntCheckboxSize.md) {
+		return Size.sm
+	} else {
+		return Size.xs
+	}
+})
+
 watch(_value, () => {
   props.validator?.validate(_value.value);
 });
@@ -100,7 +107,7 @@ onMounted(() => {
     :skeleton="skeleton"
     :color-type="colorType"
     :validator="validator"
-    :size="size as unknown as Size"
+    :size="fieldSize"
     :expanded="false"
   >
     <div class="flex items-center gap-1.5">
