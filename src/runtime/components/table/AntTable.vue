@@ -8,7 +8,7 @@ import AntTd from './AntTd.vue';
 import AntSpinner from '../AntSpinner.vue';
 import AntSkeleton from '../AntSkeleton.vue';
 
-defineOptions({ inheritAttrs: false });
+defineOptions({inheritAttrs: false});
 
 const emits = defineEmits([
   'update:modelValue',
@@ -27,13 +27,13 @@ const props = withDefaults(
     loading?: boolean;
     selectableRows?: boolean;
     showLightVersion?: boolean;
-		size: AntTableSize
+    size: AntTableSize
   }>(), {
     rowKey: 'id',
     loading: false,
     selectableRows: false,
     showLightVersion: false,
-		size: AntTableSize.md
+    size: AntTableSize.md
   });
 
 const selected: Ref<Record<string, unknown> | undefined> = useVModel(props, 'selectedRow', emits);
@@ -47,10 +47,10 @@ const _headers = computed(() => {
   // }
 
   return props.headers;
-})
+});
 
 watch(() => props.showLightVersion, (val) => {
-  setTimeout(() => _showLightVersion.value = val, val ? 200 : 400)
+  setTimeout(() => _showLightVersion.value = val, val ? 200 : 400);
 });
 
 function sortTable(header: TableHeader, newDirection: AntTableSortDirection) {

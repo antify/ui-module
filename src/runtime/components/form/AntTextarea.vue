@@ -1,6 +1,6 @@
 <script lang="ts" setup>
 import {computed, onMounted, watch} from 'vue';
-import {Size} from '../../enums/Size.enum'
+import {Size} from '../../enums/Size.enum';
 import AntSkeleton from '../AntSkeleton.vue';
 import AntIcon from '../AntIcon.vue';
 import {Grouped} from '../../enums/Grouped.enum';
@@ -17,7 +17,7 @@ import {useVModel} from '@vueuse/core';
 import {InputColorType} from '../../enums';
 import {IconSize} from '../__types';
 
-defineOptions({ inheritAttrs: false });
+defineOptions({inheritAttrs: false});
 
 const emit = defineEmits(['update:modelValue', 'validate', 'blur']);
 const props = withDefaults(defineProps<{
@@ -68,17 +68,17 @@ const inputClasses = computed(() => {
     'disabled:opacity-50 disabled:cursor-not-allowed': props.disabled,
     [variants[_colorType.value]]: true,
     // Size
-		'focus:ring-2 p-1 text-xs': props.size === Size.xs2,
-		'focus:ring-2 p-1.5 text-xs': props.size === Size.xs,
-		'focus:ring-2 p-1.5 text-sm': props.size === Size.sm,
+    'focus:ring-2 p-1 text-xs': props.size === Size.xs2,
+    'focus:ring-2 p-1.5 text-xs': props.size === Size.xs,
+    'focus:ring-2 p-1.5 text-sm': props.size === Size.sm,
     'focus:ring-4 p-2 text-sm': props.size === Size.md,
-		'focus:ring-4 p-2.5 text-sm': props.size === Size.lg,
+    'focus:ring-4 p-2.5 text-sm': props.size === Size.lg,
     // Icon right
-		'pr-6': props.size === Size.xs2 && props.showIcon && icon.value,
-		'pr-7': props.size === Size.xs && props.showIcon && icon.value,
-		'pr-8': props.size === Size.sm && props.showIcon && icon.value,
+    'pr-6': props.size === Size.xs2 && props.showIcon && icon.value,
+    'pr-7': props.size === Size.xs && props.showIcon && icon.value,
+    'pr-8': props.size === Size.sm && props.showIcon && icon.value,
     'pr-9': props.size === Size.md && props.showIcon && icon.value,
-		'pr-10': props.size === Size.lg && props.showIcon && icon.value,
+    'pr-10': props.size === Size.lg && props.showIcon && icon.value,
     // Grouped
     'rounded-tl-md rounded-bl-md rounded-tr-none rounded-br-none': props.grouped === Grouped.left,
     'rounded-none': props.grouped === Grouped.center,
@@ -105,12 +105,12 @@ const icon = computed(() => icons[_colorType.value]);
 const hasErrors = computed(() => props.errors.length > 0);
 const _colorType = computed(() => hasErrors.value ? InputColorType.danger : props.colorType);
 const getIconSize = computed(() => {
-	if(props.size  === Size.xs || props.size === Size.xs2) {
-		return IconSize.xs
-	} else {
-		return IconSize.sm
-	}
-})
+  if (props.size === Size.xs || props.size === Size.xs2) {
+    return IconSize.xs;
+  } else {
+    return IconSize.sm;
+  }
+});
 
 onMounted(() => {
   handleEnumValidation(props.size, Size, 'size');

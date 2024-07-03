@@ -1,6 +1,6 @@
 <script lang="ts" setup>
 import {onMounted, computed} from 'vue';
-import {Size} from '../../../enums/Size.enum'
+import {Size} from '../../../enums/Size.enum';
 import AntInputLabel from './AntInputLabel.vue';
 import AntInputDescription from './AntInputDescription.vue';
 import {handleEnumValidation} from '../../../handler';
@@ -35,12 +35,12 @@ onMounted(() => {
 const _errors = computed(() => props.skeleton ? [] : props.errors);
 const _colorType = computed(() => _errors.value.length > 0 ? InputColorType.danger : props.colorType);
 const fontSize = computed(() => {
-	if(props.size === Size.xs2 || props.size === Size.xs) {
-		return Size.xs
-	} else {
-		return Size.sm
-	}
-})
+  if (props.size === Size.xs2 || props.size === Size.xs) {
+    return Size.xs;
+  } else {
+    return Size.sm;
+  }
+});
 </script>
 
 <template>

@@ -104,10 +104,10 @@ const testData = [];
 
 // TODO:: add some kind of mixed test data, maybe faker?
 for (let i = 0; i < 100; i++) {
-	const randomName = faker.person.firstName() + ' ' + faker.person.lastName()
-	const randomNumber = faker.number.int({min: 18, max: 60})
-	const randomEmail=faker.internet.email()
-	const randomBoolean = faker.datatype.boolean()
+	const randomName = faker.person.firstName() + ' ' + faker.person.lastName();
+	const randomNumber = faker.number.int({min: 18, max: 60});
+	const randomEmail=faker.internet.email();
+	const randomBoolean = faker.datatype.boolean();
 
   testData.push({
     name: randomName,
@@ -116,7 +116,7 @@ for (let i = 0; i < 100; i++) {
 		employeed: randomBoolean,
     linkLabel: 'Link here',
     link: '/',
-  })
+  });
 }
 
 export const Docs: Story = {
@@ -176,7 +176,7 @@ export const Docs: Story = {
     ],
     data: testData
   }
-}
+};
 
 // TODO:: Stories for loading/custom/...
 export const Empty: Story = {
@@ -214,7 +214,7 @@ export const Empty: Story = {
     ],
     data: []
   }
-}
+};
 export const Skeleton: Story = {
   render: Docs.render,
   args: {
@@ -251,7 +251,7 @@ export const Skeleton: Story = {
     ],
     data: []
   }
-}
+};
 
 export const Loading: Story = {
   render: Docs.render,
@@ -289,4 +289,4 @@ export const Loading: Story = {
     ],
     data: testData
   }
-}
+};

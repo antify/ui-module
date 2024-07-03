@@ -12,10 +12,10 @@ import AntIcon from '../AntIcon.vue';
 import {AntTagSize, IconSize} from '../__types';
 import AntDropDown from './Elements/AntDropDown.vue';
 import AntSkeleton from '../AntSkeleton.vue';
-import {vOnClickOutside} from '@vueuse/components'
+import {vOnClickOutside} from '@vueuse/components';
 import {AntTagInputSize} from './__types/AntTagInput.types';
 
-const emit = defineEmits([ 'update:modelValue' ]);
+const emit = defineEmits(['update:modelValue']);
 const props = withDefaults(
   defineProps<{
     modelValue: (string | number)[] | null;
@@ -85,7 +85,7 @@ const inputContainerClasses = computed(() => {
     // Size
     'focus-within:ring-2 p-1.5 text-sm': props.size === AntTagInputSize.sm,
     'focus-within:ring-4 p-2 text-sm': props.size === AntTagInputSize.md,
-		'focus-within:ring-4 p-2.5 text-sm': props.size === AntTagInputSize.lg,
+    'focus-within:ring-4 p-2.5 text-sm': props.size === AntTagInputSize.lg,
     // Grouping
     'rounded-tl-md rounded-bl-md rounded-tr-none rounded-br-none': props.grouped === Grouped.left,
     'rounded-none': props.grouped === Grouped.center,
@@ -109,7 +109,7 @@ const inputClasses = computed(() => {
     'outline-0 border:none ring:none bg-transparent w-full': true,
     'opacity-50 cursor-not-allowed': props.disabled,
     [variants[_colorType.value]]: true,
-  }
+  };
 });
 
 const skeletonGrouped = computed(() => {

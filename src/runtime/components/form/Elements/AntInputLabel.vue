@@ -1,6 +1,6 @@
 <script lang="ts" setup>
 import {computed, onMounted} from 'vue';
-import {Size} from '../../../enums/Size.enum'
+import {Size} from '../../../enums/Size.enum';
 import AntSkeleton from '../../AntSkeleton.vue';
 import {handleEnumValidation} from '../../../handler';
 
@@ -17,10 +17,10 @@ const props = withDefaults(defineProps<{
 
 const classes = computed(() => ({
   'relative font-medium w-fit': true,
-	'text-2xs': props.size === Size.xs2,
+  'text-2xs': props.size === Size.xs2,
   'text-xs': props.size === Size.xs,
-	'text-sm': props.size === Size.sm,
-	'text-md': props.size === Size.md,
+  'text-sm': props.size === Size.sm,
+  'text-md': props.size === Size.md,
   'text-lg': props.size === Size.lg
 }));
 

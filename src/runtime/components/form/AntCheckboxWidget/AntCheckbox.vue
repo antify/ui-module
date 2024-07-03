@@ -12,7 +12,7 @@ import {IconSize} from '../../__types';
 import {FieldValidator} from '@antify/validate';
 import {AntCheckboxSize} from './__types/AntCheckbox';
 
-const emits = defineEmits([ 'update:modelValue', 'update:skeleton' ]);
+const emits = defineEmits(['update:modelValue', 'update:skeleton']);
 const props =
   withDefaults(
     defineProps<{
@@ -64,7 +64,7 @@ const inputClasses = computed(() => {
     [InputColorType.info]: 'text-info-500 outline-info-500 focus:outline-info-500',
     [InputColorType.success]: 'text-success-500 outline-success-500 focus:outline-success-500',
     [InputColorType.warning]: 'text-warning-500 outline-warning-500 focus:outline-warning-500',
-  }
+  };
 
   classes[focusColorVariant[props.colorType]] = hasAction.value;
   classes[activeColorVariant[props.colorType]] = _value.value;
@@ -75,20 +75,20 @@ const inputClasses = computed(() => {
 const valueClass = computed(() => {
   const classes = {
     'cursor-not-allowed opacity-50': props.disabled,
-		'text-sm': props.size === AntCheckboxSize.md,
-		'text-xs': props.size === AntCheckboxSize.sm
+    'text-sm': props.size === AntCheckboxSize.md,
+    'text-xs': props.size === AntCheckboxSize.sm
   };
 
   return classes;
 });
 
 const fieldSize = computed(() => {
-	if(props.size === AntCheckboxSize.md) {
-		return Size.sm
-	} else {
-		return Size.xs
-	}
-})
+  if (props.size === AntCheckboxSize.md) {
+    return Size.sm;
+  } else {
+    return Size.xs;
+  }
+});
 
 watch(_value, () => {
   props.validator?.validate(_value.value);

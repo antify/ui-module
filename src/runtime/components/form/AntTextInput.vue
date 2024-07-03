@@ -1,15 +1,15 @@
 <script lang="ts" setup>
 import {onMounted} from 'vue';
-import AntField from './Elements/AntField.vue'
-import AntBaseInput from './Elements/AntBaseInput.vue'
-import {Size} from '../../enums/Size.enum'
-import {TextInputType} from './__types/AntTextInput.type'
+import AntField from './Elements/AntField.vue';
+import AntBaseInput from './Elements/AntBaseInput.vue';
+import {Size} from '../../enums/Size.enum';
+import {TextInputType} from './__types/AntTextInput.type';
 import {handleEnumValidation} from '../../handler';
 import {useVModel} from '@vueuse/core';
 import {InputColorType} from '../../enums';
 import {BaseInputType} from './Elements/__types';
 
-defineOptions({ inheritAttrs: false });
+defineOptions({inheritAttrs: false});
 
 /*TODO:: Why is there no icon implemented?*/
 

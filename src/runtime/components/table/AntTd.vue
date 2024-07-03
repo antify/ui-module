@@ -1,8 +1,8 @@
 <script setup lang="ts">
 
 import {AntTableAlign, AntTableRowTypes, AntTableSize, type TableHeader} from './__types/TableHeader.type';
-import { computed } from 'vue';
-import type { RouteLocationRaw } from 'vue-router';
+import {computed} from 'vue';
+import type {RouteLocationRaw} from 'vue-router';
 
 const props =
   withDefaults(
@@ -10,20 +10,20 @@ const props =
       element: Record<string, unknown>;
       header: TableHeader;
       align?: AntTableAlign
-			size: AntTableSize
+      size: AntTableSize
     }>(), {
       align: AntTableAlign.left,
-			size: AntTableSize.md
+      size: AntTableSize.md
     });
 
 const cellClasses = computed(() => ({
   'whitespace-nowrap text-sm font-medium relative': true,
   'text-right': props.align === AntTableAlign.right,
   'text-center': props.align === AntTableAlign.center,
-	'px-2.5 py-0 h-10': props.size === AntTableSize.lg,
-	'px-2 py-0 h-9': props.size === AntTableSize.md,
-	'px-1.5 py-0 h-8': props.size === AntTableSize.sm
-}))
+  'px-2.5 py-0 h-10': props.size === AntTableSize.lg,
+  'px-2 py-0 h-9': props.size === AntTableSize.md,
+  'px-1.5 py-0 h-8': props.size === AntTableSize.sm
+}));
 </script>
 
 <template>

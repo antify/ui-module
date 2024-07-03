@@ -36,7 +36,7 @@ export type TableHeader = {
 };
 
 export enum AntTableSize {
-	lg = 'lg',
-	md = 'md',
-	sm = 'sm'
+  lg = 'lg',
+  md = 'md',
+  sm = 'sm'
 }

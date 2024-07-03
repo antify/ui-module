@@ -125,7 +125,6 @@ function onButtonBlur() {
     :limiter-value="limiter && _modelValue !== undefined && _modelValue !== null ? _modelValue : undefined"
     :errors="errors"
   >
-    <!--TODO:: If size is set to 2xs the div is 1.5px too high-->
     <div
       class="flex relative"
     >

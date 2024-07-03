@@ -1,24 +1,24 @@
 <script lang="ts" setup>
 import {computed, onMounted, watch} from 'vue';
-import {Size} from '../../../enums/Size.enum'
+import {Size} from '../../../enums/Size.enum';
 import AntSkeleton from '../../AntSkeleton.vue';
 import AntIcon from '../../AntIcon.vue';
 import {BaseInputType} from './__types/AntBaseInput.type';
 import {Grouped} from '../../../enums/Grouped.enum';
 import {
-	faCircleCheck,
-	faCircleInfo,
-	faExclamationCircle,
-	faExclamationTriangle,
-	faXmark,
-	type IconDefinition
+  faCircleCheck,
+  faCircleInfo,
+  faExclamationCircle,
+  faExclamationTriangle,
+  faXmark,
+  type IconDefinition
 } from '@fortawesome/free-solid-svg-icons';
 import {handleEnumValidation} from '../../../handler';
 import {classesToObjectSyntax} from '../../../utils';
 import {InputColorType} from '../../../enums';
 import {IconSize} from '../../__types';
 
-defineOptions({ inheritAttrs: false });
+defineOptions({inheritAttrs: false});
 
 const emit = defineEmits(['update:value', 'blur', 'validate']);
 const props = withDefaults(defineProps<{
@@ -72,21 +72,21 @@ const inputClasses = computed(() => {
     'text-right': props.type === BaseInputType.number,
     [variants[_colorType.value]]: true,
     // Size
-		'focus:ring-2 p-1 text-xs': props.size === Size.xs2,
-		'focus:ring-2 p-1.5 text-xs': props.size === Size.xs,
-		'focus:ring-2 p-1.5 text-sm': props.size === Size.sm,
+    'focus:ring-2 p-1 text-xs': props.size === Size.xs2,
+    'focus:ring-2 p-1.5 text-xs': props.size === Size.xs,
+    'focus:ring-2 p-1.5 text-sm': props.size === Size.sm,
     'focus:ring-4 p-2 text-sm': props.size === Size.md,
-		'focus:ring-4 p-2.5 text-sm': props.size === Size.lg,
+    'focus:ring-4 p-2.5 text-sm': props.size === Size.lg,
     // Icon left
-		'pl-6': props.size === Size.xs2 && props.iconLeft,
-		'pl-7': props.size === Size.sm && props.iconLeft || props.size === Size.xs && props.iconLeft,
+    'pl-6': props.size === Size.xs2 && props.iconLeft,
+    'pl-7': props.size === Size.sm && props.iconLeft || props.size === Size.xs && props.iconLeft,
     'pl-8': props.size === Size.md && props.iconLeft,
-		'pl-9': props.size === Size.lg && props.iconLeft,
+    'pl-9': props.size === Size.lg && props.iconLeft,
     // Icon right
-		'pr-6': props.size === Size.xs2 && props.showIcon && icon.value || props.size === Size.xs2  && props.nullable,
-		'pr-7': props.size === Size.sm && props.showIcon && icon.value || props.size === Size.xs && props.showIcon && icon.value || props.size === Size.sm  && props.nullable || props.size === Size.xs  && props.nullable,
-		'pr-8': props.size === Size.md && props.showIcon && icon.value || props.size === Size.md  && props.nullable,
-		'pr-9': props.size === Size.lg && props.showIcon && icon.value || props.size === Size.lg  && props.nullable,
+    'pr-6': props.size === Size.xs2 && props.showIcon && icon.value || props.size === Size.xs2 && props.nullable,
+    'pr-7': props.size === Size.sm && props.showIcon && icon.value || props.size === Size.xs && props.showIcon && icon.value || props.size === Size.sm && props.nullable || props.size === Size.xs && props.nullable,
+    'pr-8': props.size === Size.md && props.showIcon && icon.value || props.size === Size.md && props.nullable,
+    'pr-9': props.size === Size.lg && props.showIcon && icon.value || props.size === Size.lg && props.nullable,
     // Grouped
     'rounded-tl-md rounded-bl-md rounded-tr-none rounded-br-none': props.grouped === Grouped.left,
     'rounded-none': props.grouped === Grouped.center,
@@ -123,16 +123,16 @@ const _value = computed<string | number | null>({
 });
 const _colorType = computed(() => props.hasErrors ? InputColorType.danger : props.colorType);
 const inputIconSize = computed(() => {
-	if(props.size === Size.xs || props.size === Size.xs2) {
-		return IconSize.xs
-	} else {
-		return IconSize.sm
-	}
-})
+  if (props.size === Size.xs || props.size === Size.xs2) {
+    return IconSize.xs;
+  } else {
+    return IconSize.sm;
+  }
+});
 
 watch(_value, (val) => {
   if (props.hasErrors) {
-    emit('validate', val)
+    emit('validate', val);
   }
 });
 
@@ -141,7 +141,7 @@ watch(_value, (val) => {
  */
 watch(() => props.skeleton, (val) => {
   if (!val && props.value !== null) {
-    emit('validate', props.value)
+    emit('validate', props.value);
   }
 });
 
@@ -155,12 +155,12 @@ onMounted(() => {
    * Validate default value without delayed data fetching.
    */
   if (!props.skeleton && props.value !== null) {
-    emit('validate', props.value)
+    emit('validate', props.value);
   }
 });
 
 function onBlur(e: FocusEvent) {
-  emit('validate', props.value)
+  emit('validate', props.value);
   emit('blur', e);
 }
 </script>

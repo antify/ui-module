@@ -1,4 +1,4 @@
 export enum AntSwitchSize {
-	md = 'md',
-	sm = 'sm',
+  md = 'md',
+  sm = 'sm',
 }

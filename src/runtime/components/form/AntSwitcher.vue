@@ -8,7 +8,7 @@ import {type SwitcherOption} from './__types/AntSwitcher.type';
 import {ColorType, Grouped, InputColorType, Size} from '../../enums';
 import {computed, onMounted, watch} from 'vue';
 
-const emits = defineEmits([ 'update:modelValue' ]);
+const emits = defineEmits(['update:modelValue']);
 const props = withDefaults(defineProps<{
   modelValue: string;
   options: string[] | SwitcherOption[];
@@ -40,7 +40,7 @@ const _value = computed({
   }
 });
 
-const hasAction = computed(() => (!props.skeleton && !props.readonly && !props.disabled))
+const hasAction = computed(() => (!props.skeleton && !props.readonly && !props.disabled));
 const _colorType = computed(() => props.validator?.hasErrors() ? InputColorType.danger : props.colorType);
 
 watch(_value, () => props.validator?.validate(_value.value));
@@ -71,19 +71,19 @@ const containerClasses = computed(() => {
 const itemClasses = computed(() => {
   const classes: { [key: string]: boolean } = {
     'grow text-center relative outline outline-1 -outline-offset-1': true,
-		'p-1 text-xs ': props.size === Size.xs2,
-		'p-1.5 text-xs ': props.size === Size.xs,
-		'p-1.5 text-sm ': props.size === Size.sm,
-		'p-2 text-sm ': props.size === Size.md,
-		'p-2.5 text-sm ': props.size === Size.lg,
-		'invisible': props.skeleton,
+    'p-1 text-xs ': props.size === Size.xs2,
+    'p-1.5 text-xs ': props.size === Size.xs,
+    'p-1.5 text-sm ': props.size === Size.sm,
+    'p-2 text-sm ': props.size === Size.md,
+    'p-2.5 text-sm ': props.size === Size.lg,
+    'invisible': props.skeleton,
     'opacity-50 cursor-not-allowed': props.disabled,
   };
 
   const colorVariant = {
     [InputColorType.danger]: 'outline-danger-500 bg-danger-100 text-danger-100-font',
-		[InputColorType.base]: 'outline-neutral-300 bg-white text-for-white-bg-font',
-		[InputColorType.info]: 'outline-info-500 bg-info-100 text-info-100-font',
+    [InputColorType.base]: 'outline-neutral-300 bg-white text-for-white-bg-font',
+    [InputColorType.info]: 'outline-info-500 bg-info-100 text-info-100-font',
     [InputColorType.success]: 'outline-success-500 bg-success-100 text-success-100-font',
     [InputColorType.warning]: 'outline-warning-500 bg-warning-100 text-warning-100-font',
   };

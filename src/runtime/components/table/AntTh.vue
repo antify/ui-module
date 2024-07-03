@@ -4,7 +4,7 @@ import {AntTableAlign, AntTableSize, AntTableSortDirection, type TableHeader} fr
 import {computed, ref, type Ref} from 'vue';
 import AntTableSortButton from './AntTableSortButton.vue';
 
-defineEmits([ 'sort' ])
+defineEmits([ 'sort' ]);
 const props = defineProps<{
   header: TableHeader
 	size: AntTableSize
@@ -29,7 +29,7 @@ const cellClasses = computed(() => ({
 	'gap-2.5': props.size === AntTableSize.lg,
 	'gap-2': props.size === AntTableSize.md,
 	'gap-1.5': props.size === AntTableSize.sm,
-}))
+}));
 
 // TODO:: Initial sort should be possible with this
 const sortDirection: Ref<AntTableSortDirection> = ref(AntTableSortDirection.neutral);

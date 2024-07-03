@@ -185,10 +185,10 @@ export default {
     // For module dev
     './src/runtime/**/*.{vue,js,ts,jsx,tsx}',
     './src/runtime/**/*.stories.ts',
-		'./playground/app.vue',
-		'./playground/components/**/*.{vue,js,ts,jsx,tsx}',
-		'./playground/pages/**/*.{vue,js,ts,jsx,tsx}',
-		'./playground/layouts/**/*.{vue,js,ts,jsx,tsx}',
+    './playground/app.vue',
+    './playground/components/**/*.{vue,js,ts,jsx,tsx}',
+    './playground/pages/**/*.{vue,js,ts,jsx,tsx}',
+    './playground/layouts/**/*.{vue,js,ts,jsx,tsx}',
     '../ui-module/src/**/*.{vue,js,ts,jsx,tsx}',
 
     // For project dev
@@ -207,9 +207,9 @@ export default {
       ...fontColors,
     },
     extend: {
-			fontSize: {
-				'2xs': ['0.625rem', '0.75rem'],
-			},
+      fontSize: {
+        '2xs': ['0.625rem', '0.75rem'],
+      },
       animation: {
         skeleton: 'skeleton 2s ease-out infinite',
       },

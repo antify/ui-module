@@ -6,9 +6,9 @@ import {computed, onMounted} from 'vue';
 import {AntRadioSize, type AntRadioType} from './__types/AntRadio.type';
 import {handleEnumValidation} from '../../../handler';
 
-defineOptions({ inheritAttrs: false });
+defineOptions({inheritAttrs: false});
 
-const emits = defineEmits([ 'update:modelValue', 'update:skeleton' ]);
+const emits = defineEmits(['update:modelValue', 'update:skeleton']);
 const props = withDefaults(
   defineProps<{
     modelValue: string | null;
@@ -33,12 +33,12 @@ const _value = computed({
     return props.modelValue;
   },
   set(val: string | null | AntRadioType) {
-    emits('update:modelValue',  val ? typeof val === 'string' ? val : val.value : null);
+    emits('update:modelValue', val ? typeof val === 'string' ? val : val.value : null);
   }
 });
-const hasAction = computed(() => (!props.skeleton && !props.readonly && !props.disabled))
+const hasAction = computed(() => (!props.skeleton && !props.readonly && !props.disabled));
 const isActive = computed(() => {
-  return _value.value === props.value.value
+  return _value.value === props.value.value;
 });
 
 const inputClasses = computed(() => {
@@ -68,7 +68,7 @@ const inputClasses = computed(() => {
     [InputColorType.info]: 'text-info-500 outline-info-500 focus:outline-info-500',
     [InputColorType.success]: 'text-success-500 outline-success-500 focus:outline-success-500',
     [InputColorType.warning]: 'text-warning-500 outline-warning-500 focus:outline-warning-500',
-  }
+  };
 
   classes[focusColorVariant[props.colorType]] = hasAction.value;
   classes[activeColorVariant[props.colorType]] = isActive.value;
@@ -79,11 +79,11 @@ const inputClasses = computed(() => {
 const valueClass = computed(() => {
   const classes = {
     'relative w-fit full-height': true,
-		'cursor-pointer': hasAction.value,
-		'cursor-not-allowed opacity-50': props.disabled,
-		'text-sm': props.size === AntRadioSize.md,
-		'text-xs': props.size === AntRadioSize.sm
-  }
+    'cursor-pointer': hasAction.value,
+    'cursor-not-allowed opacity-50': props.disabled,
+    'text-sm': props.size === AntRadioSize.md,
+    'text-xs': props.size === AntRadioSize.sm
+  };
 
   return classes;
 });

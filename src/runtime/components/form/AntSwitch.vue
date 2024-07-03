@@ -1,12 +1,12 @@
 <script setup lang="ts">
 import AntField from './Elements/AntField.vue';
-import { computed, type Ref } from 'vue';
-import { FieldValidator } from '@antify/validate';
+import {computed, type Ref} from 'vue';
+import {FieldValidator} from '@antify/validate';
 import AntSkeleton from '../AntSkeleton.vue';
-import { InputColorType, Size } from '../../enums';
+import {InputColorType, Size} from '../../enums';
 import {AntSwitchSize} from './__types/AntSwitchTypes';
 
-const emits = defineEmits([ 'update:modelValue', 'input' ]);
+const emits = defineEmits(['update:modelValue', 'input']);
 const props = withDefaults(defineProps<{
   modelValue: boolean;
   label?: string;
@@ -26,11 +26,11 @@ const props = withDefaults(defineProps<{
 const _value = computed({
   get: () => props.modelValue,
   set: (value: boolean) => {
-    emits('update:modelValue', value)
-    emits('input', value)
+    emits('update:modelValue', value);
+    emits('input', value);
   }
 });
-const hasAction = computed(() => (!props.skeleton && !props.readonly && !props.disabled))
+const hasAction = computed(() => (!props.skeleton && !props.readonly && !props.disabled));
 const _colorType: Ref<InputColorType> = computed(() => props.validator?.hasErrors() ? InputColorType.danger : props.colorType);
 
 const buttonClasses = computed(() => {
@@ -68,7 +68,7 @@ const buttonClasses = computed(() => {
   classes[activeColorVariant[_colorType.value]] = _value.value;
 
   return classes;
-})
+});
 
 const ballClasses = computed(() => ({
   'pointer-events-none inline-block rounded-full bg-neutral-100 shadow transform ring-0 transition ease-in-out duration-200': true,
@@ -82,23 +82,23 @@ const ballClasses = computed(() => ({
 }));
 
 const valueClasses = computed(() => ({
-    'text-for-white-bg-font': true,
-    'text-xs': props.size === AntSwitchSize.sm,
-    'text-sm': props.size === AntSwitchSize.md,
-    'opacity-50 cursor-not-allowed': props.disabled
-}))
+  'text-for-white-bg-font': true,
+  'text-xs': props.size === AntSwitchSize.sm,
+  'text-sm': props.size === AntSwitchSize.md,
+  'opacity-50 cursor-not-allowed': props.disabled
+}));
 
 const fieldSize = computed(() => {
-	if(props.size === AntSwitchSize.md) {
-		return Size.sm
-	} else {
-		return Size.xs
-	}
-})
+  if (props.size === AntSwitchSize.md) {
+    return Size.sm;
+  } else {
+    return Size.xs;
+  }
+});
 
 function changeValue() {
   if (!props.readonly && !props.disabled) {
-    _value.value = !_value.value
+    _value.value = !_value.value;
   }
 }
 </script>
