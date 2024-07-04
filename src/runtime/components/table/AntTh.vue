@@ -16,7 +16,7 @@ const headerClasses = computed(() => ({
     'text-left': !props.header.align || props.header.align === AntTableAlign.left,
     'text-center': props.header.align === AntTableAlign.center,
     'text-right': props.header.align === AntTableAlign.right,
-		'px-2.5 py-0 h-10': props.size === AntTableSize.lg,
+    'px-2.5 py-0 h-10': props.size === AntTableSize.lg,
 		'px-2 py-0 h-9': props.size === AntTableSize.md,
 		'px-1.5 py-0 h-8': props.size === AntTableSize.sm
 }));

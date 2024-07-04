@@ -102,7 +102,6 @@ type Story = StoryObj<typeof AntTable>;
 
 const testData = [];
 
-// TODO:: add some kind of mixed test data, maybe faker?
 for (let i = 0; i < 100; i++) {
 	const randomName = faker.person.firstName() + ' ' + faker.person.lastName();
 	const randomNumber = faker.number.int({min: 18, max: 60});

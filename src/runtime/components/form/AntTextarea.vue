@@ -53,7 +53,7 @@ const icons = {
   [InputColorType.success]: faCircleCheck,
   [InputColorType.base]: null,
 };
-/*TODO:: If the scrollbar is showing than the pr is moving and the gap between icon and text is bigger and the icon is stuck in the scrollbar*/
+/*TODO #59:: If the scrollbar is showing than the pr is moving and the gap between icon and text is bigger and the icon is stuck in the scrollbar*/
 const inputClasses = computed(() => {
   const variants: Record<InputColorType, string> = {
     [InputColorType.base]: 'outline-neutral-300 focus:outline-primary-500 focus:ring-primary/25 bg-white placeholder:text-neutral-500',
