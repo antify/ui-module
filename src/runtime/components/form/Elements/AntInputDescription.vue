@@ -1,6 +1,6 @@
 <script lang="ts" setup>
 import {computed, onMounted} from 'vue';
-import {Size} from '../../../enums/Size.enum'
+import {Size} from '../../../enums/Size.enum';
 import AntSkeleton from '../../AntSkeleton.vue';
 import {handleEnumValidation} from '../../../handler';
 import {InputColorType} from '../../../enums';
@@ -26,8 +26,11 @@ const classes = computed(() => {
 
   return {
     'relative font-regular inline-block transition-color': true,
-    'text-xs': props.size === Size.sm,
-    'text-sm': props.size === Size.md,
+    'text-2xs': props.size === Size.xs2,
+    'text-xs': props.size === Size.xs,
+    'text-sm': props.size === Size.sm,
+    'text-md': props.size === Size.md,
+    'text-lg': props.size === Size.lg,
     [variants[props.colorType]]: true
   };
 });

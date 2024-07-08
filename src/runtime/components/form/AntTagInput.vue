@@ -1,23 +1,21 @@
 <script setup lang="ts">
 
-import { AntField } from './Elements';
-import type { SelectOption } from './__types';
-import { Grouped, InputColorType, Size } from '../../enums';
-import type { FieldValidator } from '@antify/validate';
-import { useVModel } from '@vueuse/core';
-import {
-  faChevronRight,
-  type IconDefinition
-} from '@fortawesome/free-solid-svg-icons';
-import { computed, type Ref, ref } from 'vue';
+import {AntField} from './Elements';
+import type {SelectOption} from './__types';
+import {Grouped, InputColorType, Size} from '../../enums';
+import type {FieldValidator} from '@antify/validate';
+import {useVModel} from '@vueuse/core';
+import {faChevronRight, type IconDefinition} from '@fortawesome/free-solid-svg-icons';
+import {computed, type Ref, ref} from 'vue';
 import AntTag from '../AntTag.vue';
 import AntIcon from '../AntIcon.vue';
-import { IconSize } from '../__types';
+import {AntTagSize, IconSize} from '../__types';
 import AntDropDown from './Elements/AntDropDown.vue';
 import AntSkeleton from '../AntSkeleton.vue';
-import { vOnClickOutside } from '@vueuse/components'
+import {vOnClickOutside} from '@vueuse/components';
+import {AntTagInputSize} from './__types/AntTagInput.types';
 
-const emit = defineEmits([ 'update:modelValue' ]);
+const emit = defineEmits(['update:modelValue']);
 const props = withDefaults(
   defineProps<{
     modelValue: (string | number)[] | null;
@@ -25,7 +23,7 @@ const props = withDefaults(
     label?: string;
     description?: string;
     placeholder?: string;
-    size?: Size;
+    size?: AntTagInputSize;
     colorType?: InputColorType;
     disabled?: boolean;
     skeleton?: boolean;
@@ -43,7 +41,7 @@ const props = withDefaults(
 
     createCallback?: (item: string) => Promise<SelectOption>;
   }>(), {
-    size: Size.md,
+    size: AntTagInputSize.md,
     colorType: InputColorType.base,
     icon: () => faChevronRight,
     grouped: Grouped.none,
@@ -85,8 +83,9 @@ const inputContainerClasses = computed(() => {
     'opacity-50 cursor-not-allowed': props.disabled,
     [variants[_colorType.value]]: true,
     // Size
-    'focus-within:ring-2 px-1.5 py-1.5 text-xs': props.size === Size.sm,
-    'focus-within:ring-4 px-2.5 py-1.5 text-sm': props.size === Size.md,
+    'focus-within:ring-2 p-1.5 text-sm': props.size === AntTagInputSize.sm,
+    'focus-within:ring-4 p-2 text-sm': props.size === AntTagInputSize.md,
+    'focus-within:ring-4 p-2.5 text-sm': props.size === AntTagInputSize.lg,
     // Grouping
     'rounded-tl-md rounded-bl-md rounded-tr-none rounded-br-none': props.grouped === Grouped.left,
     'rounded-none': props.grouped === Grouped.center,
@@ -107,10 +106,10 @@ const inputClasses = computed(() => {
   };
 
   return {
-    'outline-0 border:none ring:none bg-transparent w-full py-1': true,
+    'outline-0 border:none ring:none bg-transparent w-full': true,
     'opacity-50 cursor-not-allowed': props.disabled,
     [variants[_colorType.value]]: true,
-  }
+  };
 });
 
 const skeletonGrouped = computed(() => {
@@ -226,7 +225,7 @@ function filterDropDown() {
 <template>
   <AntField
     :label="label"
-    :size="size"
+    :size="Size.sm"
     :skeleton="_skeleton"
     :description="description"
     :color-type="colorType"
@@ -251,7 +250,7 @@ function filterDropDown() {
         <AntTag
           v-for="(tag, index) in _modelValue"
           :key="`tag-input-tag-${index}`"
-          :size="size"
+          :size="AntTagSize.xs3"
           :color-type="_colorType"
           dismiss
           @close="removeTag(tag)"
@@ -263,7 +262,7 @@ function filterDropDown() {
         <div class="flex items-center gap-1 w-32 shrink grow">
           <AntIcon
             :icon="icon"
-            :size="size === Size.sm ? IconSize.xs : IconSize.sm"
+            :size="size === AntTagInputSize.sm ? IconSize.xs : IconSize.sm"
           />
 
           <input
@@ -290,7 +289,7 @@ function filterDropDown() {
         :auto-select-first-on-open="!allowCreate"
         :options="filteredOptions"
         :input-ref="inputRef"
-        :size="size"
+        :size="size as unknown as Size"
         :color-type="_colorType"
         :focus-on-open="false"
         @select-element="addTagFromOptions"

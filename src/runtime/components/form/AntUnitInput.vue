@@ -55,7 +55,7 @@ onMounted(() => {
     :size="size"
     :skeleton="skeleton"
     :description="description"
-    :colorType="colorType"
+    :color-type="colorType"
     :validator="validator"
     :limiter-max-value="limiter && max !== undefined ? max : undefined"
     :limiter-value="limiter && _modelValue !== undefined && _modelValue !== null ? _modelValue : undefined"
@@ -90,7 +90,9 @@ onMounted(() => {
         :skeleton="skeleton"
         :readonly="true"
       >
-        <span v-if="typeof unit === 'string'">
+        <span
+          v-if="typeof unit === 'string'"
+        >
           {{ unit }}
         </span>
       </AntButton>

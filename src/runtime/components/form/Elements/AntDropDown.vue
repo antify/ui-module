@@ -50,8 +50,7 @@ const dropdownClasses = computed(() => {
     'rounded-bl-md rounded-br-md': true,
     [variants[props.colorType]]: true,
     // Size
-    'text-xs': props.size === Size.sm,
-    'text-sm': props.size === Size.md,
+    'text-sm': props.size === Size.sm ||  props.size === Size.md
   };
 });
 const dropDownItemClasses = computed(() => {
@@ -68,7 +67,7 @@ const dropDownItemClasses = computed(() => {
     [variants[props.colorType]]: true,
     // Size
     'p-1.5': props.size === Size.sm,
-    'p-2.5': props.size === Size.md,
+    'p-2': props.size === Size.md,
   };
 });
 

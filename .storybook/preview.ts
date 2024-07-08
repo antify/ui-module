@@ -14,7 +14,7 @@ const router = createRouter({
 });
 
 setup((app) => {
-  app.component('fa-icon', FontAwesomeIcon);
+  app.component('FaIcon', FontAwesomeIcon);
   app.use(router);
 });
 

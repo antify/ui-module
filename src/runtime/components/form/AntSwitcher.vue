@@ -1,15 +1,14 @@
 <script setup lang="ts">
 import AntField from './Elements/AntField.vue';
 import AntButton from '../buttons/AntButton.vue';
-import { faChevronLeft, faChevronRight } from '@fortawesome/free-solid-svg-icons';
+import {faChevronLeft, faChevronRight} from '@fortawesome/free-solid-svg-icons';
 import AntSkeleton from '../AntSkeleton.vue';
-import { FieldValidator } from '@antify/validate';
-import { type SwitcherOption } from './__types/AntSwitcher.type';
-import { ColorType, InputColorType } from '../../enums';
-import { Grouped, Size } from '../../enums';
-import { computed, onMounted, watch } from 'vue';
+import {FieldValidator} from '@antify/validate';
+import {type SwitcherOption} from './__types/AntSwitcher.type';
+import {ColorType, Grouped, InputColorType, Size} from '../../enums';
+import {computed, onMounted, watch} from 'vue';
 
-const emits = defineEmits([ 'update:modelValue' ]);
+const emits = defineEmits(['update:modelValue']);
 const props = withDefaults(defineProps<{
   modelValue: string;
   options: string[] | SwitcherOption[];
@@ -41,7 +40,7 @@ const _value = computed({
   }
 });
 
-const hasAction = computed(() => (!props.skeleton && !props.readonly && !props.disabled))
+const hasAction = computed(() => (!props.skeleton && !props.readonly && !props.disabled));
 const _colorType = computed(() => props.validator?.hasErrors() ? InputColorType.danger : props.colorType);
 
 watch(_value, () => props.validator?.validate(_value.value));
@@ -53,8 +52,8 @@ onMounted(() => {
 const containerClasses = computed(() => {
   const classes: { [key: string]: boolean } = {
     'flex relative ring-primary/25 rounded-md outline-none': true,
-    'focus-within:ring-2': (props.size as Size) === Size.sm && hasAction.value,
-    'focus-within:ring-4': (props.size as Size) === Size.md && hasAction.value,
+    'focus-within:ring-2': props.size === Size.xs2 || props.size === Size.xs || props.size === Size.sm && hasAction.value,
+    'focus-within:ring-4': props.size === Size.md || props.size === Size.lg && hasAction.value,
   };
   const colorVariant = {
     [InputColorType.base]: 'focus-within:ring-primary-100',
@@ -71,19 +70,22 @@ const containerClasses = computed(() => {
 
 const itemClasses = computed(() => {
   const classes: { [key: string]: boolean } = {
-    'grow text-center': true,
-    'p-2.5 text-sm ': (props.size as Size) === Size.md,
-    'p-1.5 text-xs ': (props.size as Size) === Size.sm,
+    'grow text-center relative outline outline-1 -outline-offset-1': true,
+    'p-1 text-xs ': props.size === Size.xs2,
+    'p-1.5 text-xs ': props.size === Size.xs,
+    'p-1.5 text-sm ': props.size === Size.sm,
+    'p-2 text-sm ': props.size === Size.md,
+    'p-2.5 text-sm ': props.size === Size.lg,
     'invisible': props.skeleton,
     'opacity-50 cursor-not-allowed': props.disabled,
   };
 
   const colorVariant = {
-    [InputColorType.base]: 'border-neutral-300 bg-white text-for-white-bg-font',
-    [InputColorType.danger]: 'border-danger-500 bg-danger-100 text-danger-100-font',
-    [InputColorType.info]: 'border-info-500 bg-info-100 text-info-100-font',
-    [InputColorType.success]: 'border-success-500 bg-success-100 text-success-100-font',
-    [InputColorType.warning]: 'border-warning-500 bg-warning-100 text-warning-100-font',
+    [InputColorType.danger]: 'outline-danger-500 bg-danger-100 text-danger-100-font',
+    [InputColorType.base]: 'outline-neutral-300 bg-white text-for-white-bg-font',
+    [InputColorType.info]: 'outline-info-500 bg-info-100 text-info-100-font',
+    [InputColorType.success]: 'outline-success-500 bg-success-100 text-success-100-font',
+    [InputColorType.warning]: 'outline-warning-500 bg-warning-100 text-warning-100-font',
   };
 
   classes[colorVariant[_colorType.value]] = true;
@@ -149,10 +151,7 @@ function nextOption() {
       />
 
       <div class="grow relative">
-        <div
-          :class="itemClasses"
-          class="switcher-content"
-        >
+        <div :class="itemClasses">
           {{ typeof _value === 'string' ? _value : _value.label }}
         </div>
 
@@ -178,23 +177,3 @@ function nextOption() {
     </div>
   </AntField>
 </template>
-
-<style scoped>
-.switcher-content {
-  position: relative;
-}
-
-.switcher-content:before {
-  content: '';
-
-  position: absolute;
-
-  inset: 0;
-
-  border-top: 1px;
-  border-bottom: 1px;
-  border-style: solid;
-
-  border-color: inherit;
-}
-</style>

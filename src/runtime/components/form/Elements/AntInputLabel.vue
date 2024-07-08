@@ -1,6 +1,6 @@
 <script lang="ts" setup>
 import {computed, onMounted} from 'vue';
-import {Size} from '../../../enums/Size.enum'
+import {Size} from '../../../enums/Size.enum';
 import AntSkeleton from '../../AntSkeleton.vue';
 import {handleEnumValidation} from '../../../handler';
 
@@ -17,8 +17,11 @@ const props = withDefaults(defineProps<{
 
 const classes = computed(() => ({
   'relative font-medium w-fit': true,
-  'text-xs': props.size === Size.sm,
-  'text-sm': props.size === Size.md,
+  'text-2xs': props.size === Size.xs2,
+  'text-xs': props.size === Size.xs,
+  'text-sm': props.size === Size.sm,
+  'text-md': props.size === Size.md,
+  'text-lg': props.size === Size.lg
 }));
 
 onMounted(() => {
@@ -28,15 +31,15 @@ onMounted(() => {
 
 <template>
   <label
-      class="flex flex-col gap-1.5 w-full"
+    class="flex flex-col gap-1.5 w-full"
   >
     <span
-        v-if="label"
-        :class="classes"
+      v-if="label"
+      :class="classes"
     >
       <span
-          :class="{'invisible': skeleton}"
-          @click="$emit('clickContent')"
+        :class="{'invisible': skeleton}"
+        @click="$emit('clickContent')"
       >
         <slot name="label">
           {{ label }}
@@ -44,12 +47,12 @@ onMounted(() => {
       </span>
 
       <AntSkeleton
-          v-if="skeleton"
-          absolute
-          rounded
+        v-if="skeleton"
+        absolute
+        rounded
       />
     </span>
 
-    <slot/>
+    <slot />
   </label>
 </template>

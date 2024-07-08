@@ -1,4 +1,9 @@
-import { InputColorType } from '../../../../enums';
+import {InputColorType} from '../../../../enums';
+
+export enum AntRadioSize {
+  sm = 'sm',
+  md = 'md',
+}
 
 export type AntRadioType = {
   value: string;

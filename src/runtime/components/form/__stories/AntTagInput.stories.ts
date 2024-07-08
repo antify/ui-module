@@ -2,8 +2,9 @@ import { AntTagInput } from '../index';
 import type { Meta, StoryObj } from '@storybook/vue3';
 import type { Ref } from 'vue';
 import { ref } from 'vue';
-import { InputColorType, Size } from '../../../enums';
+import { InputColorType } from '../../../enums';
 import type { SelectOption } from '../__types';
+import {AntTagInputSize} from '../__types/AntTagInput.types';
 
 const meta: Meta<typeof AntTagInput> = {
   title: 'Components/Forms/Tag input',
@@ -19,8 +20,8 @@ const meta: Meta<typeof AntTagInput> = {
     },
     size: {
       control: { type: 'radio' },
-      options: Object.values(Size),
-      table: { defaultValue: { summary: Size.md } },
+      options: Object.values(AntTagInputSize),
+      table: { defaultValue: { summary: AntTagInputSize.md } },
     },
     placeholder: {
       table: { defaultValue: { summary: 'this.label' } },

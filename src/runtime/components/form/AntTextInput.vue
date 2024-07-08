@@ -1,15 +1,17 @@
 <script lang="ts" setup>
 import {onMounted} from 'vue';
-import AntField from './Elements/AntField.vue'
-import AntBaseInput from './Elements/AntBaseInput.vue'
-import {Size} from '../../enums/Size.enum'
-import {TextInputType} from './__types/AntTextInput.type'
+import AntField from './Elements/AntField.vue';
+import AntBaseInput from './Elements/AntBaseInput.vue';
+import {Size} from '../../enums/Size.enum';
+import {TextInputType} from './__types/AntTextInput.type';
 import {handleEnumValidation} from '../../handler';
 import {useVModel} from '@vueuse/core';
 import {InputColorType} from '../../enums';
 import {BaseInputType} from './Elements/__types';
 
-defineOptions({ inheritAttrs: false });
+defineOptions({inheritAttrs: false});
+
+//TODO #61:: Implement icon-right, should be able to turn it on and off
 
 const emit = defineEmits(['update:modelValue', 'update:skeleton', 'validate']);
 const props = withDefaults(defineProps<{
@@ -46,28 +48,28 @@ onMounted(() => {
 
 <template>
   <AntField
-      :label="label"
-      :size="size"
-      :skeleton="skeleton"
-      :description="description"
-      :colorType="colorType"
-      :limiter-max-value="limiter && max !== undefined ? max : undefined"
-      :limiter-value="limiter ? _value?.length : undefined"
-      :errors="errors"
+    :label="label"
+    :size="size"
+    :skeleton="skeleton"
+    :description="description"
+    :color-type="colorType"
+    :limiter-max-value="limiter && max !== undefined ? max : undefined"
+    :limiter-value="limiter ? _value?.length : undefined"
+    :errors="errors"
   >
     <AntBaseInput
-        v-model:value="_value"
-        :type="type as unknown as BaseInputType"
-        wrapper-class="flex-grow"
-        :colorType="colorType"
-        :size="size"
-        :skeleton="skeleton"
-        :disabled="disabled"
-        :placeholder="placeholder !== undefined ? placeholder : label"
-        :show-icon="false"
-        v-bind="$attrs"
-        :has-errors="errors.length > 0"
-        @validate="val => $emit('validate', val)"
+      v-model:value="_value"
+      :type="type as unknown as BaseInputType"
+      wrapper-class="flex-grow"
+      :color-type="colorType"
+      :size="size"
+      :skeleton="skeleton"
+      :disabled="disabled"
+      :placeholder="placeholder !== undefined ? placeholder : label"
+      :show-icon="false"
+      v-bind="$attrs"
+      :has-errors="errors.length > 0"
+      @validate="val => $emit('validate', val)"
     />
   </AntField>
 </template>

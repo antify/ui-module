@@ -343,8 +343,11 @@ export const Summary: Story = {
 						Size
 					</AntFormGroupLabel>
 					<AntFormGroup direction="row">
+						<AntButton v-bind="args" size="lg">Button</AntButton>
 						<AntButton v-bind="args" size="md">Button</AntButton>
 						<AntButton v-bind="args" size="sm">Button</AntButton>
+						<AntButton v-bind="args" size="xs">Button</AntButton>
+						<AntButton v-bind="args" size="2xs">Button</AntButton>
 					</AntFormGroup>
 				</AntFormGroup>
 			</div>

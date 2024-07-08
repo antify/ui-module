@@ -110,12 +110,15 @@ const classes = computed(() => {
 		'transition-all inline-flex items-center justify-center relative font-medium': true,
 		'focus:z-10': true,
 		'active:shadow-[inset_0_4px_4px_rgba(0,0,0,0.25)]': !hasAction.value,
-		'py-1.5 px-2.5 text-xs gap-1': props.size === Size.sm,
-		'py-2.5 px-3.5 text-sm gap-2.5': props.size === Size.md,
+		'p-1 text-xs gap-1': props.size === Size.xs2,
+		'p-1.5 text-xs gap-1.5': props.size === Size.xs,
+		'p-1.5 text-sm gap-1.5': props.size === Size.sm,
+		'p-2 text-sm gap-2': props.size === Size.md,
+		'p-2.5 text-sm gap-2.5': props.size === Size.lg,
 		'disabled:opacity-50 disabled:cursor-not-allowed': true,
 		'cursor-default': props.readonly,
-		'focus:ring-2': !props.readonly && props.size === Size.sm,
-		'focus:ring-4': !props.readonly && props.size === Size.md,
+		'focus:ring-2': !props.readonly && props.size === Size.sm || props.size === Size.xs || props.size === Size.xs2,
+		'focus:ring-4': !props.readonly && props.size === Size.md || props.size === Size.lg,
 		'w-full': props.expanded,
 		'invisible': props.skeleton,
 		'outline outline-1 outline-offset-[-1px]': props.outlined,
@@ -162,6 +165,13 @@ const is = computed(() => {
 	}
 
 	return props.to !== undefined ? 'router-link' : 'button'
+})
+const getIconSize = computed(() => {
+	if (props.size === Size.xs || props.size === Size.xs2) {
+		return IconSize.xs
+	} else {
+		return IconSize.sm
+	}
 })
 
 onMounted(() => {
@@ -216,7 +226,7 @@ onMounted(() => {
             <AntIcon
               v-if="iconLeft"
               :icon="iconLeft"
-              :size="size as unknown as IconSize"
+              :size="getIconSize"
               :color="iconColor"
             />
           </slot>
@@ -232,7 +242,7 @@ onMounted(() => {
             <AntIcon
               v-if="iconRight"
               :icon="iconRight"
-              :size="size as unknown as IconSize"
+              :size="getIconSize"
               :color="iconColor"
             />
           </slot>

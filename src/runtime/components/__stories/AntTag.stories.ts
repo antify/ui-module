@@ -1,6 +1,6 @@
 import AntTag from '../AntTag.vue';
 import { type Meta, type StoryObj} from '@storybook/vue3';
-import {Size} from '../../enums/Size.enum';
+import {AntTagSize} from '../__types/AntTag.types';
 import {TagColorType} from '../../types/AntTag.type';
 import {faTag} from '@fortawesome/free-solid-svg-icons';
 
@@ -11,7 +11,7 @@ const meta: Meta<typeof AntTag> = {
     argTypes: {
         size: {
             control: {type: 'radio'},
-            options: Object.values(Size),
+            options: Object.values(AntTagSize),
         },
         colorType: {
             control: {type: 'select'},

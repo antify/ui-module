@@ -49,9 +49,12 @@ export const Size: Story = {
     },
     template: `
       <div class="flex flex-col gap-2.5">
-        <AntIcon v-bind="args" size="sm"/>
-        <AntIcon v-bind="args" size="md"/>
-        <AntIcon v-bind="args" size="3xl"/>
+				<AntIcon v-bind="args" size="2xs"/>
+				<AntIcon v-bind="args" size="xs"/>
+				<AntIcon v-bind="args" size="sm"/>
+				<AntIcon v-bind="args" size="md"/>
+				<AntIcon v-bind="args" size="lg"/>
+				<AntIcon v-bind="args" size="3xl"/>
       </div>
     `,
   }),

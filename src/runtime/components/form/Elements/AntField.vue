@@ -1,6 +1,6 @@
 <script lang="ts" setup>
 import {onMounted, computed} from 'vue';
-import {Size} from '../../../enums/Size.enum'
+import {Size} from '../../../enums/Size.enum';
 import AntInputLabel from './AntInputLabel.vue';
 import AntInputDescription from './AntInputDescription.vue';
 import {handleEnumValidation} from '../../../handler';
@@ -34,6 +34,13 @@ onMounted(() => {
 
 const _errors = computed(() => props.skeleton ? [] : props.errors);
 const _colorType = computed(() => _errors.value.length > 0 ? InputColorType.danger : props.colorType);
+const fontSize = computed(() => {
+  if (props.size === Size.xs2 || props.size === Size.xs) {
+    return Size.xs;
+  } else {
+    return Size.sm;
+  }
+});
 </script>
 
 <template>
@@ -43,7 +50,7 @@ const _colorType = computed(() => _errors.value.length > 0 ? InputColorType.dang
   >
     <AntInputLabel
       :label="label"
-      :size="size"
+      :size="fontSize"
       :skeleton="skeleton"
       :for="labelFor"
       @click-content="$emit('clickLabel')"
@@ -59,7 +66,7 @@ const _colorType = computed(() => _errors.value.length > 0 ? InputColorType.dang
     >
       <AntInputDescription
         v-if="description || _errors.length > 0"
-        :size="size"
+        :size="fontSize"
         :skeleton="skeleton"
         :color-type="_colorType"
       >
@@ -94,7 +101,7 @@ const _colorType = computed(() => _errors.value.length > 0 ? InputColorType.dang
           :value="limiterValue"
           :max-value="limiterMaxValue"
           :color-type="_colorType"
-          :size="size"
+          :size="fontSize"
           :skeleton="skeleton"
         >
           {{ limiterValue }}/{{ limiterMaxValue }}

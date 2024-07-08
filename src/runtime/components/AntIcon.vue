@@ -13,24 +13,29 @@ const props = withDefaults(defineProps<{
    */
   color?: string;
 }>(), {
-  size: IconSize.md,
+  size: IconSize.sm,
   color: 'text-for-white-bg-font'
 });
 
 const containerClasses = computed(() => ({
-  'inline-flex items-center justify-center': true,
-  'w-4 h-4': props.size === IconSize.sm,
-  'w-5 h-5': props.size === IconSize.md,
-  'w-9 h-9': props.size === IconSize.xl3,
-  [props.color]: true,
+	'inline-flex items-center justify-center': true,
+	'w-3 h-3': props.size === IconSize.xs2,
+	'w-4 h-4': props.size === IconSize.xs,
+	'w-5 h-5': props.size === IconSize.sm,
+	'w-6 h-6': props.size === IconSize.md,
+	'w-7 h-7': props.size === IconSize.lg,
+	'w-9 h-9': props.size === IconSize.xl3,
+	[props.color]: true,
 }));
 
-// TODO:: replace with/height with font-size
 const iconClasses = computed(() => ({
-  'transition-colors': true,
-  'h-3 w-3': props.size === IconSize.sm,
-  'h-4 w-4': props.size === IconSize.md,
-  'text-3xl': props.size === IconSize.xl3,
+	'transition-colors': true,
+	'text-2xs': props.size === IconSize.xs2,
+	'text-xs': props.size === IconSize.xs,
+	'text-sm': props.size === IconSize.sm,
+	'text-md': props.size === IconSize.md,
+	'text-lg': props.size === IconSize.lg,
+	'text-3xl': props.size === IconSize.xl3,
 }));
 
 onMounted(() => {
@@ -40,12 +45,12 @@ onMounted(() => {
 
 <template>
   <span
-      v-if="icon"
-      :class="containerClasses"
+    v-if="icon"
+    :class="containerClasses"
   >
-    <fa-icon
-        :icon="icon"
-        :class="iconClasses"
+    <FaIcon
+      :icon="icon"
+      :class="iconClasses"
     />
   </span>
 </template>

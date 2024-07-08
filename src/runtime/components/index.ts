@@ -17,7 +17,6 @@ import AntTag from './AntTag.vue';
 import AntToast from './AntToast.vue';
 import AntTooltip from './AntTooltip.vue';
 
-export * from './deprecated/elements';
 export * from './form';
 export * from './form/Elements';
 

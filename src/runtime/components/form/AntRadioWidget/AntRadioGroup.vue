@@ -2,7 +2,7 @@
 import AntRadio from './AntRadio.vue';
 import { useVModel } from '@vueuse/core';
 import { AntField } from '../Elements';
-import { type AntRadioType } from './__types/AntRadio.type';
+import { type AntRadioType, AntRadioSize } from './__types/AntRadio.type';
 import { InputColorType, Size } from '../../../enums';
 import { FieldValidator } from '@antify/validate';
 import { computed, type Ref, watch } from 'vue';
@@ -19,7 +19,7 @@ const props = withDefaults(
     description?: string;
     direction?: Direction;
     colorType?: InputColorType;
-    size?: Size;
+    size?: AntRadioSize;
     skeleton?: boolean;
     disabled?: boolean;
     readonly?: boolean;
@@ -27,7 +27,7 @@ const props = withDefaults(
   }>(), {
     direction: Direction.column,
     colorType: InputColorType.base,
-    size: Size.md,
+    size: AntRadioSize.md,
     skeleton: false,
     disabled: false,
     readonly: false
@@ -59,21 +59,22 @@ watch(_value, () => {
     :color-type="colorType"
     :skeleton="skeleton"
     :validator="validator"
-    :size="size"
+    :size="size as unknown as Size"
     label-for="noop"
   >
     <div
       :class="containerClasses"
     >
       <AntRadio
-        v-model="_value"
         v-for="(radio, index) in radioButtons"
         :key="`radio-button-widget_${radio.value}-${index}`"
+        v-model="_value"
         :value="radio"
         :skeleton="skeleton"
         :disabled="disabled || radio.disabled"
         :readonly="readonly || radio.readonly"
         :color-type="_colorType || radio.colorType || colorType"
+        :size="size"
       />
     </div>
   </AntField>

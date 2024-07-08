@@ -3,6 +3,7 @@ import { computed, ref } from 'vue';
 import { type Meta, type StoryObj } from '@storybook/vue3';
 import { InputColorType, Size } from '../../../../enums';
 import { useFieldValidator } from '@antify/validate';
+import {AntCheckboxSize} from '../__types/AntCheckbox';
 
 const meta: Meta<typeof AntCheckbox> = {
   title: 'Components/Forms/Checkbox/Checkbox',
@@ -15,7 +16,7 @@ const meta: Meta<typeof AntCheckbox> = {
     },
     size: {
       control: { type: 'select' },
-      options: Object.values(Size),
+      options: Object.values(AntCheckboxSize),
     },
   },
 };
@@ -92,7 +93,7 @@ export const Summary: Story = {
         offValue,
         onValue,
         InputColorType,
-        Size
+        AntCheckboxSize
       };
     },
     template: `
@@ -200,102 +201,102 @@ export const Summary: Story = {
       <h3>Small Size</h3>
       <div class="flex flex-col gap-5">
         <div class="flex gap-2.5">
-          <AntCheckbox v-model="offValue" :size="Size.sm" :color-type="InputColorType.base" />
-          <AntCheckbox v-model="offValue" :size="Size.sm" :color-type="InputColorType.info" />
-          <AntCheckbox v-model="offValue" :size="Size.sm" :color-type="InputColorType.success" />
-          <AntCheckbox v-model="offValue" :size="Size.sm" :color-type="InputColorType.warning" />
-          <AntCheckbox v-model="offValue" :size="Size.sm" :color-type="InputColorType.danger" />
+          <AntCheckbox v-model="offValue" :size="AntCheckboxSize.sm" :color-type="InputColorType.base" />
+          <AntCheckbox v-model="offValue" :size="AntCheckboxSize.sm" :color-type="InputColorType.info" />
+          <AntCheckbox v-model="offValue" :size="AntCheckboxSize.sm" :color-type="InputColorType.success" />
+          <AntCheckbox v-model="offValue" :size="AntCheckboxSize.sm" :color-type="InputColorType.warning" />
+          <AntCheckbox v-model="offValue" :size="AntCheckboxSize.sm" :color-type="InputColorType.danger" />
         </div>
         <div class="flex gap-2.5">
-          <AntCheckbox v-model="onValue" :size="Size.sm" :color-type="InputColorType.base" />
-          <AntCheckbox v-model="onValue" :size="Size.sm" :color-type="InputColorType.info" />
-          <AntCheckbox v-model="onValue" :size="Size.sm" :color-type="InputColorType.success" />
-          <AntCheckbox v-model="onValue" :size="Size.sm" :color-type="InputColorType.warning" />
-          <AntCheckbox v-model="onValue" :size="Size.sm" :color-type="InputColorType.danger" />
+          <AntCheckbox v-model="onValue" :size="AntCheckboxSize.sm" :color-type="InputColorType.base" />
+          <AntCheckbox v-model="onValue" :size="AntCheckboxSize.sm" :color-type="InputColorType.info" />
+          <AntCheckbox v-model="onValue" :size="AntCheckboxSize.sm" :color-type="InputColorType.success" />
+          <AntCheckbox v-model="onValue" :size="AntCheckboxSize.sm" :color-type="InputColorType.warning" />
+          <AntCheckbox v-model="onValue" :size="AntCheckboxSize.sm" :color-type="InputColorType.danger" />
         </div>
         <div class="flex gap-2.5">
-          <AntCheckbox v-model="offValue" :size="Size.sm" label="Label" :color-type="InputColorType.base" />
-          <AntCheckbox v-model="offValue" :size="Size.sm" label="Label" :color-type="InputColorType.info" />
-          <AntCheckbox v-model="offValue" :size="Size.sm" label="Label" :color-type="InputColorType.success" />
-          <AntCheckbox v-model="offValue" :size="Size.sm" label="Label" :color-type="InputColorType.warning" />
-          <AntCheckbox v-model="offValue" :size="Size.sm" label="Label" :color-type="InputColorType.danger" />
+          <AntCheckbox v-model="offValue" :size="AntCheckboxSize.sm" label="Label" :color-type="InputColorType.base" />
+          <AntCheckbox v-model="offValue" :size="AntCheckboxSize.sm" label="Label" :color-type="InputColorType.info" />
+          <AntCheckbox v-model="offValue" :size="AntCheckboxSize.sm" label="Label" :color-type="InputColorType.success" />
+          <AntCheckbox v-model="offValue" :size="AntCheckboxSize.sm" label="Label" :color-type="InputColorType.warning" />
+          <AntCheckbox v-model="offValue" :size="AntCheckboxSize.sm" label="Label" :color-type="InputColorType.danger" />
         </div>
         <div class="flex gap-2.5">
-          <AntCheckbox v-model="onValue" :size="Size.sm" label="Label" :color-type="InputColorType.base" />
-          <AntCheckbox v-model="onValue" :size="Size.sm" label="Label" :color-type="InputColorType.info" />
-          <AntCheckbox v-model="onValue" :size="Size.sm" label="Label" :color-type="InputColorType.success" />
-          <AntCheckbox v-model="onValue" :size="Size.sm" label="Label" :color-type="InputColorType.warning" />
-          <AntCheckbox v-model="onValue" :size="Size.sm" label="Label" :color-type="InputColorType.danger" />
+          <AntCheckbox v-model="onValue" :size="AntCheckboxSize.sm" label="Label" :color-type="InputColorType.base" />
+          <AntCheckbox v-model="onValue" :size="AntCheckboxSize.sm" label="Label" :color-type="InputColorType.info" />
+          <AntCheckbox v-model="onValue" :size="AntCheckboxSize.sm" label="Label" :color-type="InputColorType.success" />
+          <AntCheckbox v-model="onValue" :size="AntCheckboxSize.sm" label="Label" :color-type="InputColorType.warning" />
+          <AntCheckbox v-model="onValue" :size="AntCheckboxSize.sm" label="Label" :color-type="InputColorType.danger" />
         </div>
         <div class="flex gap-2.5">
-          <AntCheckbox v-model="offValue" :size="Size.sm" label="Label" description="Lorem ipsum dolor sit amet, consetetur sadipscing elitr." :color-type="InputColorType.base" />
-          <AntCheckbox v-model="offValue" :size="Size.sm" label="Label" description="Lorem ipsum dolor sit amet, consetetur sadipscing elitr." :color-type="InputColorType.info" />
-          <AntCheckbox v-model="offValue" :size="Size.sm" label="Label" description="Lorem ipsum dolor sit amet, consetetur sadipscing elitr." :color-type="InputColorType.success" />
-          <AntCheckbox v-model="offValue" :size="Size.sm" label="Label" description="Lorem ipsum dolor sit amet, consetetur sadipscing elitr." :color-type="InputColorType.warning" />
-          <AntCheckbox v-model="offValue" :size="Size.sm" label="Label" description="Lorem ipsum dolor sit amet, consetetur sadipscing elitr." :color-type="InputColorType.danger" />
+          <AntCheckbox v-model="offValue" :size="AntCheckboxSize.sm" label="Label" description="Lorem ipsum dolor sit amet, consetetur sadipscing elitr." :color-type="InputColorType.base" />
+          <AntCheckbox v-model="offValue" :size="AntCheckboxSize.sm" label="Label" description="Lorem ipsum dolor sit amet, consetetur sadipscing elitr." :color-type="InputColorType.info" />
+          <AntCheckbox v-model="offValue" :size="AntCheckboxSize.sm" label="Label" description="Lorem ipsum dolor sit amet, consetetur sadipscing elitr." :color-type="InputColorType.success" />
+          <AntCheckbox v-model="offValue" :size="AntCheckboxSize.sm" label="Label" description="Lorem ipsum dolor sit amet, consetetur sadipscing elitr." :color-type="InputColorType.warning" />
+          <AntCheckbox v-model="offValue" :size="AntCheckboxSize.sm" label="Label" description="Lorem ipsum dolor sit amet, consetetur sadipscing elitr." :color-type="InputColorType.danger" />
         </div>
         <div class="flex gap-2.5">
-          <AntCheckbox v-model="onValue" :size="Size.sm" label="Label" description="Lorem ipsum dolor sit amet, consetetur sadipscing elitr." :color-type="InputColorType.base" />
-          <AntCheckbox v-model="onValue" :size="Size.sm" label="Label" description="Lorem ipsum dolor sit amet, consetetur sadipscing elitr." :color-type="InputColorType.info" />
-          <AntCheckbox v-model="onValue" :size="Size.sm" label="Label" description="Lorem ipsum dolor sit amet, consetetur sadipscing elitr." :color-type="InputColorType.success" />
-          <AntCheckbox v-model="onValue" :size="Size.sm" label="Label" description="Lorem ipsum dolor sit amet, consetetur sadipscing elitr." :color-type="InputColorType.warning" />
-          <AntCheckbox v-model="onValue" :size="Size.sm" label="Label" description="Lorem ipsum dolor sit amet, consetetur sadipscing elitr." :color-type="InputColorType.danger" />
+          <AntCheckbox v-model="onValue" :size="AntCheckboxSize.sm" label="Label" description="Lorem ipsum dolor sit amet, consetetur sadipscing elitr." :color-type="InputColorType.base" />
+          <AntCheckbox v-model="onValue" :size="AntCheckboxSize.sm" label="Label" description="Lorem ipsum dolor sit amet, consetetur sadipscing elitr." :color-type="InputColorType.info" />
+          <AntCheckbox v-model="onValue" :size="AntCheckboxSize.sm" label="Label" description="Lorem ipsum dolor sit amet, consetetur sadipscing elitr." :color-type="InputColorType.success" />
+          <AntCheckbox v-model="onValue" :size="AntCheckboxSize.sm" label="Label" description="Lorem ipsum dolor sit amet, consetetur sadipscing elitr." :color-type="InputColorType.warning" />
+          <AntCheckbox v-model="onValue" :size="AntCheckboxSize.sm" label="Label" description="Lorem ipsum dolor sit amet, consetetur sadipscing elitr." :color-type="InputColorType.danger" />
         </div>
         <div class="flex gap-2.5">
-          <AntCheckbox v-model="offValue" :size="Size.sm" label="Label" value-label="Value" description="Lorem ipsum dolor sit amet, consetetur sadipscing elitr." :color-type="InputColorType.base" />
-          <AntCheckbox v-model="offValue" :size="Size.sm" label="Label" value-label="Value" description="Lorem ipsum dolor sit amet, consetetur sadipscing elitr." :color-type="InputColorType.info" />
-          <AntCheckbox v-model="offValue" :size="Size.sm" label="Label" value-label="Value" description="Lorem ipsum dolor sit amet, consetetur sadipscing elitr." :color-type="InputColorType.success" />
-          <AntCheckbox v-model="offValue" :size="Size.sm" label="Label" value-label="Value" description="Lorem ipsum dolor sit amet, consetetur sadipscing elitr." :color-type="InputColorType.warning" />
-          <AntCheckbox v-model="offValue" :size="Size.sm" label="Label" value-label="Value" description="Lorem ipsum dolor sit amet, consetetur sadipscing elitr." :color-type="InputColorType.danger" />
+          <AntCheckbox v-model="offValue" :size="AntCheckboxSize.sm" label="Label" value-label="Value" description="Lorem ipsum dolor sit amet, consetetur sadipscing elitr." :color-type="InputColorType.base" />
+          <AntCheckbox v-model="offValue" :size="AntCheckboxSize.sm" label="Label" value-label="Value" description="Lorem ipsum dolor sit amet, consetetur sadipscing elitr." :color-type="InputColorType.info" />
+          <AntCheckbox v-model="offValue" :size="AntCheckboxSize.sm" label="Label" value-label="Value" description="Lorem ipsum dolor sit amet, consetetur sadipscing elitr." :color-type="InputColorType.success" />
+          <AntCheckbox v-model="offValue" :size="AntCheckboxSize.sm" label="Label" value-label="Value" description="Lorem ipsum dolor sit amet, consetetur sadipscing elitr." :color-type="InputColorType.warning" />
+          <AntCheckbox v-model="offValue" :size="AntCheckboxSize.sm" label="Label" value-label="Value" description="Lorem ipsum dolor sit amet, consetetur sadipscing elitr." :color-type="InputColorType.danger" />
         </div>
         <div class="flex gap-2.5">
-          <AntCheckbox v-model="onValue" :size="Size.sm" label="Label" value-label="Value" description="Lorem ipsum dolor sit amet, consetetur sadipscing elitr." :color-type="InputColorType.base" />
-          <AntCheckbox v-model="onValue" :size="Size.sm" label="Label" value-label="Value" description="Lorem ipsum dolor sit amet, consetetur sadipscing elitr." :color-type="InputColorType.info" />
-          <AntCheckbox v-model="onValue" :size="Size.sm" label="Label" value-label="Value" description="Lorem ipsum dolor sit amet, consetetur sadipscing elitr." :color-type="InputColorType.success" />
-          <AntCheckbox v-model="onValue" :size="Size.sm" label="Label" value-label="Value" description="Lorem ipsum dolor sit amet, consetetur sadipscing elitr." :color-type="InputColorType.warning" />
-          <AntCheckbox v-model="onValue" :size="Size.sm" label="Label" value-label="Value" description="Lorem ipsum dolor sit amet, consetetur sadipscing elitr." :color-type="InputColorType.danger" />
+          <AntCheckbox v-model="onValue" :size="AntCheckboxSize.sm" label="Label" value-label="Value" description="Lorem ipsum dolor sit amet, consetetur sadipscing elitr." :color-type="InputColorType.base" />
+          <AntCheckbox v-model="onValue" :size="AntCheckboxSize.sm" label="Label" value-label="Value" description="Lorem ipsum dolor sit amet, consetetur sadipscing elitr." :color-type="InputColorType.info" />
+          <AntCheckbox v-model="onValue" :size="AntCheckboxSize.sm" label="Label" value-label="Value" description="Lorem ipsum dolor sit amet, consetetur sadipscing elitr." :color-type="InputColorType.success" />
+          <AntCheckbox v-model="onValue" :size="AntCheckboxSize.sm" label="Label" value-label="Value" description="Lorem ipsum dolor sit amet, consetetur sadipscing elitr." :color-type="InputColorType.warning" />
+          <AntCheckbox v-model="onValue" :size="AntCheckboxSize.sm" label="Label" value-label="Value" description="Lorem ipsum dolor sit amet, consetetur sadipscing elitr." :color-type="InputColorType.danger" />
         </div>
         <div class="flex gap-2.5">
-          <AntCheckbox v-model="offValue" :size="Size.sm" label="Label" value-label="Value" description="Lorem ipsum dolor sit amet, consetetur sadipscing elitr." :color-type="InputColorType.base" readonly/>
-          <AntCheckbox v-model="offValue" :size="Size.sm" label="Label" value-label="Value" description="Lorem ipsum dolor sit amet, consetetur sadipscing elitr." :color-type="InputColorType.info" readonly/>
-          <AntCheckbox v-model="offValue" :size="Size.sm" label="Label" value-label="Value" description="Lorem ipsum dolor sit amet, consetetur sadipscing elitr." :color-type="InputColorType.success" readonly/>
-          <AntCheckbox v-model="offValue" :size="Size.sm" label="Label" value-label="Value" description="Lorem ipsum dolor sit amet, consetetur sadipscing elitr." :color-type="InputColorType.warning" readonly/>
-          <AntCheckbox v-model="offValue" :size="Size.sm" label="Label" value-label="Value" description="Lorem ipsum dolor sit amet, consetetur sadipscing elitr." :color-type="InputColorType.danger" readonly/>
+          <AntCheckbox v-model="offValue" :size="AntCheckboxSize.sm" label="Label" value-label="Value" description="Lorem ipsum dolor sit amet, consetetur sadipscing elitr." :color-type="InputColorType.base" readonly/>
+          <AntCheckbox v-model="offValue" :size="AntCheckboxSize.sm" label="Label" value-label="Value" description="Lorem ipsum dolor sit amet, consetetur sadipscing elitr." :color-type="InputColorType.info" readonly/>
+          <AntCheckbox v-model="offValue" :size="AntCheckboxSize.sm" label="Label" value-label="Value" description="Lorem ipsum dolor sit amet, consetetur sadipscing elitr." :color-type="InputColorType.success" readonly/>
+          <AntCheckbox v-model="offValue" :size="AntCheckboxSize.sm" label="Label" value-label="Value" description="Lorem ipsum dolor sit amet, consetetur sadipscing elitr." :color-type="InputColorType.warning" readonly/>
+          <AntCheckbox v-model="offValue" :size="AntCheckboxSize.sm" label="Label" value-label="Value" description="Lorem ipsum dolor sit amet, consetetur sadipscing elitr." :color-type="InputColorType.danger" readonly/>
         </div>
         <div class="flex gap-2.5">
-          <AntCheckbox v-model="onValue" :size="Size.sm" label="Label" value-label="Value" description="Lorem ipsum dolor sit amet, consetetur sadipscing elitr." :color-type="InputColorType.base" readonly/>
-          <AntCheckbox v-model="onValue" :size="Size.sm" label="Label" value-label="Value" description="Lorem ipsum dolor sit amet, consetetur sadipscing elitr." :color-type="InputColorType.info" readonly/>
-          <AntCheckbox v-model="onValue" :size="Size.sm" label="Label" value-label="Value" description="Lorem ipsum dolor sit amet, consetetur sadipscing elitr." :color-type="InputColorType.success" readonly/>
-          <AntCheckbox v-model="onValue" :size="Size.sm" label="Label" value-label="Value" description="Lorem ipsum dolor sit amet, consetetur sadipscing elitr." :color-type="InputColorType.warning" readonly/>
-          <AntCheckbox v-model="onValue" :size="Size.sm" label="Label" value-label="Value" description="Lorem ipsum dolor sit amet, consetetur sadipscing elitr." :color-type="InputColorType.danger" readonly/>
+          <AntCheckbox v-model="onValue" :size="AntCheckboxSize.sm" label="Label" value-label="Value" description="Lorem ipsum dolor sit amet, consetetur sadipscing elitr." :color-type="InputColorType.base" readonly/>
+          <AntCheckbox v-model="onValue" :size="AntCheckboxSize.sm" label="Label" value-label="Value" description="Lorem ipsum dolor sit amet, consetetur sadipscing elitr." :color-type="InputColorType.info" readonly/>
+          <AntCheckbox v-model="onValue" :size="AntCheckboxSize.sm" label="Label" value-label="Value" description="Lorem ipsum dolor sit amet, consetetur sadipscing elitr." :color-type="InputColorType.success" readonly/>
+          <AntCheckbox v-model="onValue" :size="AntCheckboxSize.sm" label="Label" value-label="Value" description="Lorem ipsum dolor sit amet, consetetur sadipscing elitr." :color-type="InputColorType.warning" readonly/>
+          <AntCheckbox v-model="onValue" :size="AntCheckboxSize.sm" label="Label" value-label="Value" description="Lorem ipsum dolor sit amet, consetetur sadipscing elitr." :color-type="InputColorType.danger" readonly/>
         </div>
         <div class="flex gap-2.5">
-          <AntCheckbox v-model="offValue" :size="Size.sm" label="Label" value-label="Value" description="Lorem ipsum dolor sit amet, consetetur sadipscing elitr." :color-type="InputColorType.base" disabled/>
-          <AntCheckbox v-model="offValue" :size="Size.sm" label="Label" value-label="Value" description="Lorem ipsum dolor sit amet, consetetur sadipscing elitr." :color-type="InputColorType.info" disabled/>
-          <AntCheckbox v-model="offValue" :size="Size.sm" label="Label" value-label="Value" description="Lorem ipsum dolor sit amet, consetetur sadipscing elitr." :color-type="InputColorType.success" disabled/>
-          <AntCheckbox v-model="offValue" :size="Size.sm" label="Label" value-label="Value" description="Lorem ipsum dolor sit amet, consetetur sadipscing elitr." :color-type="InputColorType.warning" disabled/>
-          <AntCheckbox v-model="offValue" :size="Size.sm" label="Label" value-label="Value" description="Lorem ipsum dolor sit amet, consetetur sadipscing elitr." :color-type="InputColorType.danger" disabled/>
+          <AntCheckbox v-model="offValue" :size="AntCheckboxSize.sm" label="Label" value-label="Value" description="Lorem ipsum dolor sit amet, consetetur sadipscing elitr." :color-type="InputColorType.base" disabled/>
+          <AntCheckbox v-model="offValue" :size="AntCheckboxSize.sm" label="Label" value-label="Value" description="Lorem ipsum dolor sit amet, consetetur sadipscing elitr." :color-type="InputColorType.info" disabled/>
+          <AntCheckbox v-model="offValue" :size="AntCheckboxSize.sm" label="Label" value-label="Value" description="Lorem ipsum dolor sit amet, consetetur sadipscing elitr." :color-type="InputColorType.success" disabled/>
+          <AntCheckbox v-model="offValue" :size="AntCheckboxSize.sm" label="Label" value-label="Value" description="Lorem ipsum dolor sit amet, consetetur sadipscing elitr." :color-type="InputColorType.warning" disabled/>
+          <AntCheckbox v-model="offValue" :size="AntCheckboxSize.sm" label="Label" value-label="Value" description="Lorem ipsum dolor sit amet, consetetur sadipscing elitr." :color-type="InputColorType.danger" disabled/>
         </div>
         <div class="flex gap-2.5">
-          <AntCheckbox v-model="onValue" :size="Size.sm" label="Label" value-label="Value" description="Lorem ipsum dolor sit amet, consetetur sadipscing elitr." :color-type="InputColorType.base" disabled/>
-          <AntCheckbox v-model="onValue" :size="Size.sm" label="Label" value-label="Value" description="Lorem ipsum dolor sit amet, consetetur sadipscing elitr." :color-type="InputColorType.info" disabled/>
-          <AntCheckbox v-model="onValue" :size="Size.sm" label="Label" value-label="Value" description="Lorem ipsum dolor sit amet, consetetur sadipscing elitr." :color-type="InputColorType.success" disabled/>
-          <AntCheckbox v-model="onValue" :size="Size.sm" label="Label" value-label="Value" description="Lorem ipsum dolor sit amet, consetetur sadipscing elitr." :color-type="InputColorType.warning" disabled/>
-          <AntCheckbox v-model="onValue" :size="Size.sm" label="Label" value-label="Value" description="Lorem ipsum dolor sit amet, consetetur sadipscing elitr." :color-type="InputColorType.danger" disabled/>
+          <AntCheckbox v-model="onValue" :size="AntCheckboxSize.sm" label="Label" value-label="Value" description="Lorem ipsum dolor sit amet, consetetur sadipscing elitr." :color-type="InputColorType.base" disabled/>
+          <AntCheckbox v-model="onValue" :size="AntCheckboxSize.sm" label="Label" value-label="Value" description="Lorem ipsum dolor sit amet, consetetur sadipscing elitr." :color-type="InputColorType.info" disabled/>
+          <AntCheckbox v-model="onValue" :size="AntCheckboxSize.sm" label="Label" value-label="Value" description="Lorem ipsum dolor sit amet, consetetur sadipscing elitr." :color-type="InputColorType.success" disabled/>
+          <AntCheckbox v-model="onValue" :size="AntCheckboxSize.sm" label="Label" value-label="Value" description="Lorem ipsum dolor sit amet, consetetur sadipscing elitr." :color-type="InputColorType.warning" disabled/>
+          <AntCheckbox v-model="onValue" :size="AntCheckboxSize.sm" label="Label" value-label="Value" description="Lorem ipsum dolor sit amet, consetetur sadipscing elitr." :color-type="InputColorType.danger" disabled/>
         </div>
         <div class="flex gap-2.5">
-          <AntCheckbox v-model="offValue" :size="Size.sm" label="Label" value-label="Value" description="Lorem ipsum dolor sit amet, consetetur sadipscing elitr." :color-type="InputColorType.base" skeleton/>
-          <AntCheckbox v-model="offValue" :size="Size.sm" label="Label" value-label="Value" description="Lorem ipsum dolor sit amet, consetetur sadipscing elitr." :color-type="InputColorType.info" skeleton/>
-          <AntCheckbox v-model="offValue" :size="Size.sm" label="Label" value-label="Value" description="Lorem ipsum dolor sit amet, consetetur sadipscing elitr." :color-type="InputColorType.success" skeleton/>
-          <AntCheckbox v-model="offValue" :size="Size.sm" label="Label" value-label="Value" description="Lorem ipsum dolor sit amet, consetetur sadipscing elitr." :color-type="InputColorType.warning" skeleton/>
-          <AntCheckbox v-model="offValue" :size="Size.sm" label="Label" value-label="Value" description="Lorem ipsum dolor sit amet, consetetur sadipscing elitr." :color-type="InputColorType.danger" skeleton/>
+          <AntCheckbox v-model="offValue" :size="AntCheckboxSize.sm" label="Label" value-label="Value" description="Lorem ipsum dolor sit amet, consetetur sadipscing elitr." :color-type="InputColorType.base" skeleton/>
+          <AntCheckbox v-model="offValue" :size="AntCheckboxSize.sm" label="Label" value-label="Value" description="Lorem ipsum dolor sit amet, consetetur sadipscing elitr." :color-type="InputColorType.info" skeleton/>
+          <AntCheckbox v-model="offValue" :size="AntCheckboxSize.sm" label="Label" value-label="Value" description="Lorem ipsum dolor sit amet, consetetur sadipscing elitr." :color-type="InputColorType.success" skeleton/>
+          <AntCheckbox v-model="offValue" :size="AntCheckboxSize.sm" label="Label" value-label="Value" description="Lorem ipsum dolor sit amet, consetetur sadipscing elitr." :color-type="InputColorType.warning" skeleton/>
+          <AntCheckbox v-model="offValue" :size="AntCheckboxSize.sm" label="Label" value-label="Value" description="Lorem ipsum dolor sit amet, consetetur sadipscing elitr." :color-type="InputColorType.danger" skeleton/>
         </div>
         <div class="flex gap-2.5">
-          <AntCheckbox v-model="onValue" :size="Size.sm" label="Label" value-label="Value" description="Lorem ipsum dolor sit amet, consetetur sadipscing elitr." :color-type="InputColorType.base" skeleton/>
-          <AntCheckbox v-model="onValue" :size="Size.sm" label="Label" value-label="Value" description="Lorem ipsum dolor sit amet, consetetur sadipscing elitr." :color-type="InputColorType.info" skeleton/>
-          <AntCheckbox v-model="onValue" :size="Size.sm" label="Label" value-label="Value" description="Lorem ipsum dolor sit amet, consetetur sadipscing elitr." :color-type="InputColorType.success" skeleton/>
-          <AntCheckbox v-model="onValue" :size="Size.sm" label="Label" value-label="Value" description="Lorem ipsum dolor sit amet, consetetur sadipscing elitr." :color-type="InputColorType.warning" skeleton/>
-          <AntCheckbox v-model="onValue" :size="Size.sm" label="Label" value-label="Value" description="Lorem ipsum dolor sit amet, consetetur sadipscing elitr." :color-type="InputColorType.danger" skeleton/>
+          <AntCheckbox v-model="onValue" :size="AntCheckboxSize.sm" label="Label" value-label="Value" description="Lorem ipsum dolor sit amet, consetetur sadipscing elitr." :color-type="InputColorType.base" skeleton/>
+          <AntCheckbox v-model="onValue" :size="AntCheckboxSize.sm" label="Label" value-label="Value" description="Lorem ipsum dolor sit amet, consetetur sadipscing elitr." :color-type="InputColorType.info" skeleton/>
+          <AntCheckbox v-model="onValue" :size="AntCheckboxSize.sm" label="Label" value-label="Value" description="Lorem ipsum dolor sit amet, consetetur sadipscing elitr." :color-type="InputColorType.success" skeleton/>
+          <AntCheckbox v-model="onValue" :size="AntCheckboxSize.sm" label="Label" value-label="Value" description="Lorem ipsum dolor sit amet, consetetur sadipscing elitr." :color-type="InputColorType.warning" skeleton/>
+          <AntCheckbox v-model="onValue" :size="AntCheckboxSize.sm" label="Label" value-label="Value" description="Lorem ipsum dolor sit amet, consetetur sadipscing elitr." :color-type="InputColorType.danger" skeleton/>
         </div>
       </div>
     `
