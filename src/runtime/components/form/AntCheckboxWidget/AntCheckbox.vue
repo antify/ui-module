@@ -39,23 +39,28 @@ const hasAction = computed(() => (!props.skeleton && !props.readonly && !props.d
 const inputClasses = computed(() => {
   const classes: { [key: string]: boolean } = {
     'relative inline-flex flex-shrink-0 bg-neutral-100 border-0': true,
-    'outline outline-1 outline-offset-[-1px] outline-neutral-300 rounded': true,
+    'outline outline-1 outline-offset-[-1px] rounded': true,
     'focus:ring-offset-0': true,
     'invisible': props.skeleton,
     'cursor-pointer': hasAction.value,
     'focus:ring-2': props.size === AntCheckboxSize.sm && hasAction.value,
     'focus:ring-4': props.size === AntCheckboxSize.md && hasAction.value,
+    'outline-neutral-300': props.colorType === InputColorType.base,
+    'outline-info-500': props.colorType === InputColorType.info,
+    'outline-success-500': props.colorType === InputColorType.success,
+    'outline-warning-500': props.colorType === InputColorType.warning,
+    'outline-danger-500': props.colorType === InputColorType.danger,
     'h-5 w-5': props.size === AntCheckboxSize.md,
     'h-4 w-4': props.size === AntCheckboxSize.sm,
     'cursor-not-allowed opacity-50': props.disabled
   };
 
   const focusColorVariant = {
-    [InputColorType.base]: 'text-primary-500 focus:ring-primary-100',
-    [InputColorType.danger]: 'text-danger-500 focus:ring-danger-100',
-    [InputColorType.info]: 'text-info-500 focus:ring-info-100',
-    [InputColorType.success]: 'text-success-500 focus:ring-success-100',
-    [InputColorType.warning]: 'text-warning-500 focus:ring-warning-100',
+    [InputColorType.base]: 'text-primary-500 focus:ring-primary-200',
+    [InputColorType.danger]: 'text-danger-500 focus:ring-danger-200',
+    [InputColorType.info]: 'text-info-500 focus:ring-info-200',
+    [InputColorType.success]: 'text-success-500 focus:ring-success-200',
+    [InputColorType.warning]: 'text-warning-500 focus:ring-warning-200',
   };
 
   const activeColorVariant = {
@@ -74,6 +79,7 @@ const inputClasses = computed(() => {
 
 const valueClass = computed(() => {
   const classes = {
+    'text-for-white-bg-font': true,
     'cursor-not-allowed opacity-50': props.disabled,
     'text-sm': props.size === AntCheckboxSize.md,
     'text-xs': props.size === AntCheckboxSize.sm

@@ -46,7 +46,11 @@ const inputClasses = computed(() => {
     'relative inline-flex flex-shrink-0': true,
     'focus:ring-offset-0 outline outline-offset-[-1px] outline-1 focus:outline-offset-[-1px] focus:outline-1 rounded-full': true,
     'cursor-pointer': hasAction.value,
-    'outline-neutral-300 focus:outline-neutral-300': !isActive.value,
+    'outline-neutral-300 focus:outline-neutral-300': props.colorType === InputColorType.base,
+    'outline-info-500 focus:outline-info-500': props.colorType === InputColorType.info,
+    'outline-success-500 focus:outline-success-500': props.colorType === InputColorType.success,
+    'outline-warning-500 focus:outline-warning-500': props.colorType === InputColorType.warning,
+    'outline-danger-500 focus:outline-danger-500': props.colorType === InputColorType.danger,
     'rounded-full transition-colors ease-in-out duration-200 disabled:opacity-50 disabled:cursor-not-allowed': true,
     'focus:ring-2': props.size === AntRadioSize.sm && hasAction.value,
     'focus:ring-4': props.size === AntRadioSize.md && hasAction.value,
@@ -55,11 +59,11 @@ const inputClasses = computed(() => {
   };
 
   const focusColorVariant = {
-    [InputColorType.base]: 'focus:ring-primary-100',
-    [InputColorType.danger]: 'focus:ring-danger-100',
-    [InputColorType.info]: 'focus:ring-info-100',
-    [InputColorType.success]: 'focus:ring-success-100',
-    [InputColorType.warning]: 'focus:ring-warning-100',
+    [InputColorType.base]: 'focus:ring-primary-200',
+    [InputColorType.danger]: 'focus:ring-danger-200',
+    [InputColorType.info]: 'focus:ring-info-200',
+    [InputColorType.success]: 'focus:ring-success-200',
+    [InputColorType.warning]: 'focus:ring-warning-200',
   };
 
   const activeColorVariant = {
@@ -78,7 +82,7 @@ const inputClasses = computed(() => {
 
 const valueClass = computed(() => {
   const classes = {
-    'relative w-fit full-height': true,
+    'relative w-fit full-height text-for-white-bg-font': true,
     'cursor-pointer': hasAction.value,
     'cursor-not-allowed opacity-50': props.disabled,
     'text-sm': props.size === AntRadioSize.md,
