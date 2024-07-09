@@ -7,15 +7,15 @@ import AntTransitionCollapseHeight from '../transitions/AntTransitionCollapseHei
 
 const props = defineProps<{
   navbarItem: NavbarItem
-}>()
+}>();
 
 const itemClasses = computed(() => ({
   'w-full text-sm p-1.5 rounded-md cursor-pointer flex items-center flex-nowrap gap-1': true,
   'transition-colors hover:bg-neutral-100': true,
   'text-primary-500': props.navbarItem.active
-}))
+}));
 
-const open = ref(false)
+const open = ref(false);
 
 function itemClick(): void {
   if (props.navbarItem.click) {
