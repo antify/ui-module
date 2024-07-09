@@ -11,13 +11,13 @@ const props = withDefaults(defineProps<{
   size: AntKeycapSize
 
 }>(),{
-  size: AntKeycapSize.xs
+  size: AntKeycapSize.sm
 });
 
 const classes = computed(() => {
   return {
-    'text-sm min-w-5': props.size === AntKeycapSize.sm,
-    'text-2xs py-0.5 min-w-[18px]': props.size === AntKeycapSize.xs,
+    'text-sm px-px min-w-5': props.size === AntKeycapSize.sm,
+    'text-2xs px-px py-0.5 min-w-[18px]': props.size === AntKeycapSize.xs,
   };
 });
 const iconClasses = computed(() => {
