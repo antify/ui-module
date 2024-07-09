@@ -1,7 +1,7 @@
 import { type Meta, type StoryObj} from '@storybook/vue3';
 import {Size} from '../../../enums/Size.enum';
 import AntNumberInput from '../AntNumberInput.vue';
-import {ColorType} from '../../../enums/ColorType.enum';
+import {InputColorType} from '../../../enums/ColorType.enum';
 import {isRequiredRule, notBlankRule, useFieldValidator} from '@antify/validate';
 import {reactive} from 'vue';
 
@@ -16,7 +16,7 @@ const meta: Meta<typeof AntNumberInput> = {
     },
     colorType: {
       control: {type: 'select'},
-      options: Object.values(ColorType)
+      options: Object.values(InputColorType)
     },
     size: {
       control: {type: 'radio'},
@@ -40,7 +40,7 @@ export const Docs: Story = {
       const validator = reactive(useFieldValidator([
         isRequiredRule,
         (val) => typeof val !== 'number' || val <= 8 || 'Value should not be bigger than 8'
-      ]))
+      ]));
 
       return {args, validator};
     },
