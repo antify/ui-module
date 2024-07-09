@@ -11,8 +11,6 @@ import {BaseInputType} from './Elements/__types';
 
 defineOptions({inheritAttrs: false});
 
-//TODO #61:: Implement icon-right, should be able to turn it on and off
-
 const emit = defineEmits(['update:modelValue', 'update:skeleton', 'validate']);
 const props = withDefaults(defineProps<{
   modelValue: string | null;
@@ -66,7 +64,7 @@ onMounted(() => {
       :skeleton="skeleton"
       :disabled="disabled"
       :placeholder="placeholder !== undefined ? placeholder : label"
-      :show-icon="false"
+      :show-icon="true"
       v-bind="$attrs"
       :has-errors="errors.length > 0"
       @validate="val => $emit('validate', val)"

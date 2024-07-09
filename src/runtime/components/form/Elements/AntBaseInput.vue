@@ -101,10 +101,10 @@ const iconClasses = computed(() => ({
 const iconColorClass = computed(() => {
   const variants: Record<InputColorType, string> = {
     [InputColorType.base]: 'text-for-white-bg-font',
-    [InputColorType.danger]: 'text-danger-500',
-    [InputColorType.info]: 'text-info-500',
-    [InputColorType.success]: 'text-success-500',
-    [InputColorType.warning]: 'text-warning-500',
+    [InputColorType.danger]: 'text-danger-700',
+    [InputColorType.info]: 'text-info-700',
+    [InputColorType.success]: 'text-success-700',
+    [InputColorType.warning]: 'text-warning-700',
   };
 
   return variants[_colorType.value];
