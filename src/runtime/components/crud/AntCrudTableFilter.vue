@@ -29,14 +29,14 @@ const router = useRouter();
 const route = useRoute();
 
 const showDropdown = ref(false);
-const _fullWidth = ref(props.fullWidth)
+const _fullWidth = ref(props.fullWidth);
 const search = computed({
 	get: () => route.query[props.searchQuery] as string || '',
 	set: (value) => {
 		const query = {
 			...route.query,
 			[props.searchQuery]: value
-		}
+		};
 
 		if (!value) {
 			delete query[props.searchQuery];
@@ -46,23 +46,23 @@ const search = computed({
 			await router.replace({
 				...route,
 				query
-			})
+			});
 
-			emit('search', value)
-		})()
+			emit('search', value);
+		})();
 	}
-})
+});
 
 watch(() => props.fullWidth, (val) => {
 	setTimeout(() => {
-		_fullWidth.value = val
-	}, val ? 250 : 300)
-})
+		_fullWidth.value = val;
+	}, val ? 250 : 300);
+});
 </script>
 
 <template>
   <div
-    class="flex h-full items-center p-2.5 gap-2.5 bg-white"
+    class="flex h-full items-center p-2 gap-2 bg-white"
     data-e2e="crud-table-filter"
   >
     <div

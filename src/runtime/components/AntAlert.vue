@@ -54,7 +54,7 @@ const classes = computed(() => {
   };
 
   return {
-    'inline-flex flex-col gap-2.5 rounded-md p-2.5 transition-colors text-sm relative': true,
+    'inline-flex flex-col gap-2 rounded-md p-2 transition-colors text-sm relative': true,
     'w-full': props.expanded,
     [variants[props.colorType]]: true,
   };
@@ -91,10 +91,10 @@ onMounted(() => {
 
     <div
       v-if="icon || hasQuestionMark || dismissBtn || title"
-      class="inline-flex items-center justify-between w-content gap-2.5"
+      class="inline-flex items-center justify-between w-content gap-2"
       :class="{'invisible': skeleton}"
     >
-      <div class="inline-flex items-center gap-2.5">
+      <div class="inline-flex items-center gap-2">
         <AntIcon
           v-if="icon"
           :icon="_icon"
@@ -111,7 +111,7 @@ onMounted(() => {
         </div>
       </div>
 
-      <div class="flex gap-2.5">
+      <div class="flex gap-2">
         <div v-if="hasQuestionMark">
           <slot name="questionMarkText">
             <AntTooltip :position="Position.bottom">

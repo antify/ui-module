@@ -47,7 +47,7 @@ const contentWrapperClasses = computed(() => {
   };
 
   return {
-    'w-full p-2.5 flex gap-2.5 items-center justify-between': true,
+    'w-full p-2 flex gap-2 items-center justify-between': true,
     'hover:bg-neutral-950/25 cursor-pointer transition-colors': props.to !== undefined,
     [variants[props.colorType]]: props.to !== undefined
   };

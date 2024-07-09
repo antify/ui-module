@@ -36,7 +36,7 @@ const _dropdownClasses = computed(() => ({
 }));
 
 onMounted(() => {
-  handleEnumValidation(props.position, Position, 'Position')
+  handleEnumValidation(props.position, Position, 'Position');
 });
 onKeyStroke('Escape', (e: KeyboardEvent) => {
   if (props.showDropdown) {
@@ -65,7 +65,7 @@ function onClickOutside() {
       >
         <div
           class="shadow-lg border border-neutral-300 rounded-md text-sm relative inline-flex flex-col relative bg-white text-for-white-bg-font w-full"
-          :class="{'p-2.5': contentPadding}"
+          :class="{'p-2': contentPadding}"
         >
           <slot name="content" />
         </div>

@@ -38,7 +38,7 @@ const itemContainerClasses = computed(() => ({
 }));
 
 onMounted(() => {
-  handleEnumValidation(props.position, Position, 'Position')
+  handleEnumValidation(props.position, Position, 'Position');
 });
 </script>
 
@@ -92,13 +92,13 @@ onMounted(() => {
             </div>
 
             <div
-              class="border-neutral-300 border-b p-2.5 bg-neutral-100 rounded-t-md border-t border-l border-r text-neutral-100-font font-semibold"
+              class="border-neutral-300 border-b p-2 bg-neutral-100 rounded-t-md border-t border-l border-r text-neutral-100-font font-semibold"
             >
               {{ title }}
             </div>
 
             <div
-              class="p-2.5 rounded-b-md text-for-white-bg-font border-neutral-300 border-l border-b border-r bg-white"
+              class="p-2 rounded-b-md text-for-white-bg-font border-neutral-300 border-l border-b border-r bg-white"
             >
               <slot name="content" />
             </div>

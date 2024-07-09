@@ -23,7 +23,7 @@ const dialogOpen = ref(false);
 
 <template>
   <div
-    class="flex justify-between items-stretch gap-2.5 bg-white"
+    class="flex justify-between items-stretch gap-2 bg-white"
     data-e2e="crud-detail-nav"
   >
     <slot name="tabs">
@@ -32,7 +32,7 @@ const dialogOpen = ref(false);
       />
     </slot>
 
-    <div class="flex gap-2.5 pr-2.5 py-2.5">
+    <div class="flex gap-2 pr-2 py-2">
       <slot name="buttons">
         <slot name="before-delete-button" />
 

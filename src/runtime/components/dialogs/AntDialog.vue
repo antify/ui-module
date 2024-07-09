@@ -60,11 +60,11 @@ watch(() => props.open, (val) => {
 
   if (val) {
     openBackground.value = true;
-    setTimeout(() => openDialog.value = true, 100)
+    setTimeout(() => openDialog.value = true, 100);
     document.addEventListener('keydown', onKeydown);
   } else {
     openDialog.value = false;
-    setTimeout(() => openBackground.value = false, 100)
+    setTimeout(() => openBackground.value = false, 100);
     document.removeEventListener('keydown', onKeydown);
   }
 });
@@ -94,14 +94,14 @@ function confirmDialog() {
         >
           <div
             v-if="title || $slots['title']"
-            class="bg-neutral-100 p-2.5 flex items-center justify-between text-neutral-100-font text-sm font-semibold"
+            class="bg-neutral-100 p-2 flex items-center justify-between text-neutral-100-font text-sm font-semibold"
           >
             <slot name="title">
               {{ title }}
             </slot>
           </div>
 
-          <div class="bg-white p-2.5 grow flex items-center gap-2.5 text-sm">
+          <div class="bg-white p-2 grow flex items-center gap-2 text-sm">
             <slot name="icon">
               <AntIcon
                 v-if="icons[colorType]"
@@ -116,7 +116,7 @@ function confirmDialog() {
           </div>
 
           <div
-            class="bg-neutral-100 p-2.5 gap-2.5 text-for-white-bg-font flex w-full justify-end"
+            class="bg-neutral-100 p-2 gap-2 text-for-white-bg-font flex w-full justify-end"
           >
             <slot name="footer">
               <AntButton

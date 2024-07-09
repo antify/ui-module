@@ -4,14 +4,14 @@
  * TODO:: test me in storybook through vue router
  * TODO:: fix ts errors
  */
-import {useRouter, useRoute} from 'vue-router'
+import {useRouter, useRoute} from 'vue-router';
 import AntPagination from '../AntPagination.vue';
 import {computed, ref, watch} from 'vue';
 import AntSelect from '../form/AntSelect.vue';
 import AntSkeleton from '../AntSkeleton.vue';
 import {type SelectOption} from '../form/__types';
 
-const emit = defineEmits(['changeItemsPerPage', 'changePage'])
+const emit = defineEmits(['changeItemsPerPage', 'changePage']);
 const props = withDefaults(
   defineProps<{
     count: number | null,
@@ -28,47 +28,47 @@ const props = withDefaults(
     validItemsPerPage: () => [20, 50, 100, 200],
     skeleton: false
   }
-)
+);
 
-const route = useRoute()
-const router = useRouter()
+const route = useRoute();
+const router = useRouter();
 const itemsPerPageOptions = computed(() =>
   props.validItemsPerPage.map(item => ({
     label: `${item}`,
     value: item
   }) as SelectOption)
-)
+);
 const page = computed(() => {
-  const _page = route.query[props.pageQuery] >= 1 ? Number.parseInt(route.query[props.pageQuery]) : 1
+  const _page = route.query[props.pageQuery] >= 1 ? Number.parseInt(route.query[props.pageQuery]) : 1;
 
   if (_page <= 0 || _page > pages.value) {
-    return 1
+    return 1;
   }
 
-  return _page
-})
+  return _page;
+});
 const itemsPerPage = computed({
   get() {
     return route.query[props.itemsPerPageQuery] ?
       Number.parseInt(route.query[props.itemsPerPageQuery]) :
-      props.validItemsPerPage[0]
+      props.validItemsPerPage[0];
   },
   set(val) {
-    const query = {...route.query}
-    query[props.itemsPerPageQuery] = `${val}`
+    const query = {...route.query};
+    query[props.itemsPerPageQuery] = `${val}`;
     delete query[props.pageQuery];
 
     (async () => {
       await router.push({
         ...route,
         query
-      })
+      });
 
-      emit('changeItemsPerPage', val)
-    })()
+      emit('changeItemsPerPage', val);
+    })();
   }
-})
-const fromItems = computed(() => (itemsPerPage.value * (page.value - 1)) + 1)
+});
+const fromItems = computed(() => (itemsPerPage.value * (page.value - 1)) + 1);
 const toItems = computed(() => {
 	const items = itemsPerPage.value * page.value;
 
@@ -77,15 +77,15 @@ const toItems = computed(() => {
 	}
 
 	return itemsPerPage.value * page.value;
-})
-const pages = computed(() => Math.ceil(props.count / itemsPerPage.value))
-const _fullWidth = ref(props.fullWidth)
+});
+const pages = computed(() => Math.ceil(props.count / itemsPerPage.value));
+const _fullWidth = ref(props.fullWidth);
 
 watch(() => props.fullWidth, (val) => {
   setTimeout(() => {
-    _fullWidth.value = val
-  }, val ? 300 : 200)
-})
+    _fullWidth.value = val;
+  }, val ? 300 : 200);
+});
 </script>
 
 <template>
@@ -94,7 +94,7 @@ watch(() => props.fullWidth, (val) => {
     data-e2e="crud-table-nav"
   >
     <div
-      class="flex w-full items-center p-2.5"
+      class="flex w-full items-center p-2"
       :class="{'justify-end': !_fullWidth, 'justify-between': _fullWidth}"
     >
       <div

@@ -77,11 +77,11 @@ const arrowSvgPathClasses = computed(() => {
 });
 const timeout = ref<number | undefined>();
 const clickLock = ref(false);
-const uuid = ref(getCurrentInstance()?.uid)
+const uuid = ref(getCurrentInstance()?.uid);
 
 onMounted(() => {
-	handleEnumValidation(props.position, Position, 'Position')
-	handleEnumValidation(props.colorType, InputColorType, 'colorType')
+	handleEnumValidation(props.position, Position, 'Position');
+	handleEnumValidation(props.colorType, InputColorType, 'colorType');
 });
 
 function onMouseOver() {
@@ -89,21 +89,21 @@ function onMouseOver() {
 		return;
 	}
 
-	timeout.value = setTimeout(() => visible.value = true, props.delay) as unknown as number
+	timeout.value = setTimeout(() => visible.value = true, props.delay) as unknown as number;
 }
 
 function onMouseLeave() {
-	clearTimeout(timeout.value)
+	clearTimeout(timeout.value);
 
-	visible.value = false
-	clickLock.value = false
+	visible.value = false;
+	clickLock.value = false;
 }
 
 function onClick() {
-	clearTimeout(timeout.value)
+	clearTimeout(timeout.value);
 
-	visible.value = false
-	clickLock.value = true
+	visible.value = false;
+	clickLock.value = true;
 }
 </script>
 
@@ -172,7 +172,7 @@ function onClick() {
         </div>
 
         <div
-          class="p-2.5 rounded-md border"
+          class="p-2 rounded-md border"
           :class="contentClasses"
         >
           <slot name="content" />
