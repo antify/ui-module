@@ -4,7 +4,7 @@
  * TODO:: test me in storybook through vue router
  * TODO:: Fix ts errors
  */
-import {useRouter, useRoute} from 'vue-router'
+import {useRouter, useRoute} from 'vue-router';
 import {computed} from 'vue';
 import AntButton from './buttons/AntButton.vue';
 import {faChevronRight, faChevronLeft} from '@fortawesome/free-solid-svg-icons';
@@ -12,7 +12,7 @@ import {Grouped} from '../enums/Grouped.enum';
 import AntSkeleton from './AntSkeleton.vue';
 import {ColorType} from '../enums';
 
-const emit = defineEmits(['update:skeleton', 'input'])
+const emit = defineEmits(['update:skeleton', 'input']);
 const props = withDefaults(
   defineProps<{
     pages: number,
@@ -30,33 +30,33 @@ const props = withDefaults(
     skeleton: false,
     lightVersion: false
   }
-)
-const router = useRouter()
-const route = useRoute()
+);
+const router = useRouter();
+const route = useRoute();
 const page = computed({
   get() {
-    const _page = route.query[props.pageQuery] >= 1 ? Number.parseInt(route.query[props.pageQuery]) : 1
+    const _page = route.query[props.pageQuery] >= 1 ? Number.parseInt(route.query[props.pageQuery]) : 1;
 
     if (_page <= 0 || _page > props.pages) {
-      return 1
+      return 1;
     }
 
-    return _page
+    return _page;
   },
   set(val) {
-    const query = {...route.query}
+    const query = {...route.query};
     query[props.pageQuery] = val;
 
     (async () => {
       await router.push({
         ...route,
         query
-      })
+      });
 
-      emit('input', val)
-    })()
+      emit('input', val);
+    })();
   }
-})
+});
 
 /**
  * Build following constellations:
@@ -70,49 +70,49 @@ const page = computed({
  * 1 ... 8 9 [10]
  */
 const defaultPagination = computed(() => {
-  const pagination = []
+  const pagination = [];
 
   if (page.value > 2 && props.pages > 3) {
-    pagination.push(1)
+    pagination.push(1);
 
     if (page.value > 3) {
-      pagination.push('...')
+      pagination.push('...');
     }
   }
 
   if (page.value === 1) {
-    pagination.push(1)
+    pagination.push(1);
 
     if (props.pages >= 2) {
-      pagination.push(2)
+      pagination.push(2);
     }
 
     if (props.pages >= 3) {
-      pagination.push(3)
+      pagination.push(3);
     }
   } else if (page.value === props.pages) {
     if (props.pages - 2 >= 1) {
-      pagination.push(props.pages - 2)
+      pagination.push(props.pages - 2);
     }
     if (props.pages - 1 >= 1) {
-      pagination.push(props.pages - 1)
+      pagination.push(props.pages - 1);
     }
-    pagination.push(props.pages)
+    pagination.push(props.pages);
   } else {
-    pagination.push(page.value - 1)
-    pagination.push(page.value)
-    pagination.push(page.value + 1)
+    pagination.push(page.value - 1);
+    pagination.push(page.value);
+    pagination.push(page.value + 1);
   }
 
   if (page.value < props.pages - 1 && props.pages > 3) {
     if (page.value < props.pages - 2) {
-      pagination.push('...')
+      pagination.push('...');
     }
-    pagination.push(props.pages)
+    pagination.push(props.pages);
   }
 
-  return pagination
-})
+  return pagination;
+});
 
 /**
  * Build following constellations:
@@ -125,36 +125,36 @@ const defaultPagination = computed(() => {
  * 1 ... [10]
  */
 const lightPagination = computed(() => {
-  const pagination = []
+  const pagination = [];
 
-  pagination.push(1)
+  pagination.push(1);
 
   if (page.value > 2) {
-    pagination.push('...')
+    pagination.push('...');
   }
 
   if (page.value > 1) {
-    pagination.push(page.value)
+    pagination.push(page.value);
   }
 
   if (page.value < props.pages - 1) {
-    pagination.push('...')
+    pagination.push('...');
   }
 
   if (page.value < props.pages) {
-    pagination.push(props.pages)
+    pagination.push(props.pages);
   }
 
-  return pagination
-})
+  return pagination;
+});
 
 const pagination = computed(() => {
   if (props.lightVersion) {
-    return lightPagination.value
+    return lightPagination.value;
   }
 
-  return defaultPagination.value
-})
+  return defaultPagination.value;
+});
 </script>
 
 <template>
@@ -176,7 +176,7 @@ const pagination = computed(() => {
         :disabled="page === 1"
         :icon-left="faChevronLeft"
         :grouped="Grouped.left"
-        filled
+        :filled="false"
         @click="() => page = page - 1"
       />
 
@@ -187,7 +187,7 @@ const pagination = computed(() => {
         :class="{'text-primary-500 z-10': pageObj === page}"
         :disabled="pageObj === '...'"
         :grouped="Grouped.center"
-        :filled="pageObj !== page"
+        :filled="false"
         :readonly="pageObj === page"
         @click="() => page = pageObj"
       >
@@ -198,7 +198,7 @@ const pagination = computed(() => {
         :icon-left="faChevronRight"
         :grouped="Grouped.right"
         :disabled="page === pages"
-        filled
+        :filled="false"
         @click="() => page = page + 1"
       />
     </div>
