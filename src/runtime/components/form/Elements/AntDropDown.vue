@@ -114,9 +114,9 @@ function onKeyDownDropDown(e: KeyboardEvent) {
     const option = props.options[index + 1];
 
     if (index === -1) {
-      focusedDropDownItem.value = props.options[0].value
+      focusedDropDownItem.value = props.options[0].value;
     } else if (option !== undefined) {
-      focusedDropDownItem.value = option.value
+      focusedDropDownItem.value = option.value;
     }
   }
 
@@ -127,7 +127,7 @@ function onKeyDownDropDown(e: KeyboardEvent) {
     const option = props.options[index - 1];
 
     if (option !== undefined) {
-      focusedDropDownItem.value = option.value
+      focusedDropDownItem.value = option.value;
     }
   }
 
@@ -138,7 +138,7 @@ function onKeyDownDropDown(e: KeyboardEvent) {
 
 function getActiveDropDownItemClasses(option: SelectOption) {
   const variants: Record<InputColorType, string> = {
-    [InputColorType.base]: 'bg-neutral-50/25',
+    [InputColorType.base]: 'bg-neutral-100/25',
     [InputColorType.success]: 'bg-success-100/25',
     [InputColorType.info]: 'bg-info-100/25',
     [InputColorType.warning]: 'bg-warning-100/25',
