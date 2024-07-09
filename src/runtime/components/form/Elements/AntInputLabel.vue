@@ -16,7 +16,7 @@ const props = withDefaults(defineProps<{
 });
 
 const classes = computed(() => ({
-  'relative font-medium w-fit': true,
+  'relative font-medium w-fit text-for-white-bg-font': true,
   'text-2xs': props.size === Size.xs2,
   'text-xs': props.size === Size.xs,
   'text-sm': props.size === Size.sm,
