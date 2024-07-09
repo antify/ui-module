@@ -1,6 +1,6 @@
 import AntSpinner from '../AntSpinner.vue';
 import { type Meta, type StoryObj} from '@storybook/vue3';
-import {Size} from '../../enums/Size.enum';
+import {AntSpinnerSize} from '../__types/AntSpinner.types';
 import {ColorType} from '../../enums/ColorType.enum';
 
 const meta: Meta<typeof AntSpinner> = {
@@ -10,8 +10,8 @@ const meta: Meta<typeof AntSpinner> = {
     argTypes: {
         size: {
             control: {type: 'radio'},
-            options: Object.values(Size),
-            table: {defaultValue: {summary: Size.md}},
+            options: Object.values(AntSpinnerSize),
+            table: {defaultValue: {summary: AntSpinnerSize.md}},
         },
         colorType: {
             control: {type: 'select'},
