@@ -8,6 +8,7 @@ const props = withDefaults(defineProps<{
     label?: string;
     content?: string;
     isOpen?: boolean;
+    iconLeft?: boolean;
   }[];
   collapseStrategy?: CollapseStrategy;
 }>(), {
@@ -20,7 +21,7 @@ onMounted(() => {
   openItems.value = props.items
     .map((item, index) => item.isOpen ? index : -1)
     .filter((index) => index !== -1);
-})
+});
 
 function onOpen(index: number) {
   if (props.collapseStrategy === CollapseStrategy.single) {
@@ -44,14 +45,18 @@ function onClose(index: number) {
     <slot>
       <AntAccordionItem
         v-for="(item, index) in items"
+        :key="`accordion-item-${index}`"
         :label="item.label"
         :is-open="openItems.includes(index)"
-        :key="`accordion-item-${index}`"
+        :icon-left="item.iconLeft"
         @open="() => onOpen(index)"
         @close="() => onClose(index)"
       >
-        <slot name="item-content" v-bind="{item, index}">
-          <div v-html="item.content"/>
+        <slot
+          name="item-content"
+          v-bind="{item, index}"
+        >
+          <div v-html="item.content" />
         </slot>
       </AntAccordionItem>
     </slot>
