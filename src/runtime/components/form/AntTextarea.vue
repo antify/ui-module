@@ -56,11 +56,11 @@ const icons = {
 /*TODO #59:: If the scrollbar is showing than the pr is moving and the gap between icon and text is bigger and the icon is stuck in the scrollbar*/
 const inputClasses = computed(() => {
   const variants: Record<InputColorType, string> = {
-    [InputColorType.base]: 'outline-neutral-300 focus:outline-primary-500 focus:ring-primary/25 bg-white placeholder:text-neutral-500',
-    [InputColorType.danger]: 'outline-danger-500 focus:outline-danger-500 focus:ring-danger/25 bg-danger-100 placeholder:text-danger-700',
-    [InputColorType.info]: 'outline-info-500 focus:outline-info-500 focus:ring-info/25 bg-info-100 placeholder:text-info-700',
-    [InputColorType.success]: 'outline-success-500 focus:outline-success-500 focus:ring-success/25 bg-success-100 placeholder:text-success-700',
-    [InputColorType.warning]: 'outline-warning-500 focus:outline-warning-500 focus:ring-warning/25 bg-warning-100 placeholder:text-warning-700',
+    [InputColorType.base]: 'outline-neutral-300 focus:ring-primary-200 bg-white placeholder:text-neutral-500',
+    [InputColorType.danger]: 'outline-danger-500 focus:ring-danger-200 bg-danger-100 placeholder:text-danger-700',
+    [InputColorType.info]: 'outline-info-500 focus:ring-info-200 bg-info-100 placeholder:text-info-700',
+    [InputColorType.success]: 'outline-success-500 focus:ring-success-200 bg-success-100 placeholder:text-success-700',
+    [InputColorType.warning]: 'outline-warning-500 focus:ring-warning-200 bg-warning-100 placeholder:text-warning-700',
   };
   return {
     'block transition-colors relative border-none outline w-full focus:z-10': true,
@@ -166,7 +166,7 @@ function onBlur(e: FocusEvent) {
 
       <div
         v-if="showIcon && icon"
-        class="absolute flex h-full right-0 top-0 transition-all z-20"
+        class="absolute flex h-[95%] right-0 top-0 transition-all z-20"
         :class="{'p-1': size === Size.xs2, 'p-1.5': size === Size.sm || size === Size.xs, 'p-2': size === Size.md, 'p-2.5': size === Size.lg}"
       >
         <AntIcon

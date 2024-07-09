@@ -58,11 +58,11 @@ const icons = {
 
 const inputClasses = computed(() => {
   const variants: Record<InputColorType, string> = {
-    [InputColorType.base]: 'outline-neutral-300 focus:outline-primary-500 focus:ring-primary/25 bg-white placeholder:text-neutral-500',
-    [InputColorType.danger]: 'outline-danger-500 focus:outline-danger-500 focus:ring-danger/25 bg-danger-100 placeholder:text-danger-700',
-    [InputColorType.info]: 'outline-info-500 focus:outline-info-500 focus:ring-info/25 bg-info-100 placeholder:text-info-700',
-    [InputColorType.success]: 'outline-success-500 focus:outline-success-500 focus:ring-success/25 bg-success-100 placeholder:text-success-700',
-    [InputColorType.warning]: 'outline-warning-500 focus:outline-warning-500 focus:ring-warning/25 bg-warning-100 placeholder:text-warning-700',
+    [InputColorType.base]: 'outline-neutral-300 focus:ring-primary-200 bg-white placeholder:text-neutral-500',
+    [InputColorType.danger]: 'outline-danger-500 focus:ring-danger-200 bg-danger-100 placeholder:text-danger-700',
+    [InputColorType.info]: 'outline-info-500 focus:ring-info-200 bg-info-100 placeholder:text-info-700',
+    [InputColorType.success]: 'outline-success-500 focus:ring-success-200 bg-success-100 placeholder:text-success-700',
+    [InputColorType.warning]: 'outline-warning-500 focus:ring-warning-200 bg-warning-100 placeholder:text-warning-700',
   };
 
   return {

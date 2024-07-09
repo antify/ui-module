@@ -68,11 +68,11 @@ const _modelValue = computed({
 const valueLabel = computed(() => props.options.find(option => option.value === _modelValue.value)?.label || null);
 const inputClasses = computed(() => {
   const variants: Record<InputColorType, string> = {
-    [InputColorType.base]: 'outline-neutral-300 focus:outline-primary-500 bg-white focus:ring-primary/25',
-    [InputColorType.success]: 'outline-success-500 focus:outline-success-500 bg-success-100 focus:ring-success/25',
-    [InputColorType.info]: 'outline-info-500 focus:outline-info-500 bg-info-100 focus:ring-info/25',
-    [InputColorType.warning]: 'outline-warning-500 focus:outline-warning-500 bg-warning-100 focus:ring-warning/25',
-    [InputColorType.danger]: 'outline-danger-500 focus:outline-danger-500 bg-danger-100 focus:ring-danger/25',
+    [InputColorType.base]: 'outline-neutral-300 bg-white focus:ring-primary-200',
+    [InputColorType.success]: 'outline-success-500 bg-success-100 focus:ring-success-200',
+    [InputColorType.info]: 'outline-info-500 bg-info-100 focus:ring-info-200',
+    [InputColorType.warning]: 'outline-warning-500 bg-warning-100 focus:ring-warning-200',
+    [InputColorType.danger]: 'outline-danger-500  bg-danger-100 focus:ring-danger-200',
   };
 
   return {
@@ -182,7 +182,7 @@ function onClickSelectInput(e: MouseEvent) {
   }
 
   if (isOpen.value) {
-    inputRef.value?.focus()
+    inputRef.value?.focus();
   }
 
   isOpen.value = !isOpen.value;
