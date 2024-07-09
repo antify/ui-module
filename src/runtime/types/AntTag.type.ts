@@ -1,7 +1,9 @@
 export enum TagColorType {
-    danger = 'danger',
-    info = 'info',
-    base = 'base',
-    success = 'success',
-    warning = 'warning',
+  base = 'base',
+  primary = 'primary',
+  secondary = 'secondary',
+  info = 'info',
+  success = 'success',
+  warning = 'warning',
+  danger = 'danger',
 }
