@@ -55,7 +55,7 @@ function onClick() {
       <Transition name="bounce">
         <div
           v-show="isOpen"
-          class="p-2 text-sm bg-white"
+          class="p-2 text-sm bg-white text-for-white-bg-font"
         >
           <slot />
         </div>
