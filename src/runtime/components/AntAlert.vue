@@ -46,11 +46,11 @@ const icons = {
 const _icon = computed(() => icons[props.colorType]);
 const classes = computed(() => {
   const variants: Record<InputColorType, string> = {
-    [InputColorType.danger]: 'bg-danger-100 text-danger-500',
-    [InputColorType.info]: 'bg-info-100 text-info-500',
-    [InputColorType.base]: 'bg-neutral-100 text-neutral-500',
-    [InputColorType.success]: 'bg-success-100 text-success-500',
-    [InputColorType.warning]: 'bg-warning-100 text-warning-500',
+    [InputColorType.danger]: 'bg-danger-100 text-danger-700',
+    [InputColorType.info]: 'bg-info-100 text-info-700',
+    [InputColorType.base]: 'bg-neutral-100 text-neutral-100-font',
+    [InputColorType.success]: 'bg-success-100 text-success-700',
+    [InputColorType.warning]: 'bg-warning-100 text-warning-700',
   };
 
   return {
@@ -64,10 +64,10 @@ const hasQuestionMark = computed(() => (useSlots()['question-mark-text'] || fals
 const iconColor = computed(() => {
   const variants = {
     [InputColorType.base]: 'text-neutral-100-font',
-    [InputColorType.danger]: 'text-danger-500',
-    [InputColorType.info]: 'text-info-500',
-    [InputColorType.success]: 'text-success-500',
-    [InputColorType.warning]: 'text-warning-500',
+    [InputColorType.danger]: 'text-danger-700',
+    [InputColorType.info]: 'text-info-700',
+    [InputColorType.success]: 'text-success-700',
+    [InputColorType.warning]: 'text-warning-700',
   };
 
   return variants[props.colorType];
