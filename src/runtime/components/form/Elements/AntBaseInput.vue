@@ -77,6 +77,10 @@ const inputClasses = computed(() => {
     'focus:ring-2 p-1.5 text-sm': props.size === Size.sm,
     'focus:ring-4 p-2 text-sm': props.size === Size.md,
     'focus:ring-4 p-2.5 text-sm': props.size === Size.lg,
+    'p-[9px]': props.size === Size.lg && (props.type === BaseInputType.date || props.type === BaseInputType.datetimeLocal || props.type === BaseInputType.month || props.type === BaseInputType.time || props.type === BaseInputType.week),
+    'p-[7px]': props.size === Size.md && (props.type === BaseInputType.date || props.type === BaseInputType.datetimeLocal || props.type === BaseInputType.month || props.type === BaseInputType.time || props.type === BaseInputType.week),
+    'p-[5px]': (props.size === Size.sm || props.size === Size.xs) && (props.type === BaseInputType.date || props.type === BaseInputType.datetimeLocal || props.type === BaseInputType.month || props.type === BaseInputType.time || props.type === BaseInputType.week),
+    'p-[3px]': props.size === Size.xs2 && (props.type === BaseInputType.date || props.type === BaseInputType.datetimeLocal || props.type === BaseInputType.month || props.type === BaseInputType.time || props.type === BaseInputType.week),
     // Icon left
     'pl-6': props.size === Size.xs2 && props.iconLeft,
     'pl-7': props.size === Size.sm && props.iconLeft || props.size === Size.xs && props.iconLeft,
