@@ -12,7 +12,7 @@ const meta: Meta<typeof AntInputLabel> = {
             control: 'text'
         },
         size: {
-            control: {type: 'radio'},
+            control: {type: 'select'},
             options: Object.values(Size),
             table: {defaultValue: {summary: Size.md}},
         },

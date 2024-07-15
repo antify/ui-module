@@ -1,6 +1,5 @@
 import { type Meta, type StoryObj} from '@storybook/vue3';
 import AntFormGroupLabel from '../AntFormGroupLabel.vue';
-import {computed} from 'vue';
 
 const meta: Meta<typeof AntFormGroupLabel> = {
   title: 'Components/Forms/Form Group Label',

@@ -18,7 +18,7 @@ const meta: Meta<typeof AntTabItem> = {
       options: Object.values(ColorType)
     },
   }
-}
+};
 
 export default meta;
 
@@ -36,4 +36,4 @@ export const Docs: Story = {
     label: 'First tab',
     active: false
   }
-}
+};

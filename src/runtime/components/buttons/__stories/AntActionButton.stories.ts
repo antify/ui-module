@@ -13,7 +13,7 @@ const meta: Meta<typeof AntActionButton> = {
 			options: Object.values(ColorType),
 		},
     size: {
-      control: {type: 'radio'},
+      control: {type: 'select'},
       options: Object.values(Size)
     },
     grouped: {

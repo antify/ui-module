@@ -31,7 +31,7 @@ export const Docs: Story = {
     setup() {
       const value = computed<boolean>({
         get() {
-          return args.modelValue
+          return args.modelValue;
         },
         set(val) {
           // @ts-ignore
@@ -48,7 +48,7 @@ export const Docs: Story = {
       </div>
     `,
   }),
-}
+};
 
 export const WithValidator: Story = {
   render: (args: any) => ({
@@ -56,7 +56,7 @@ export const WithValidator: Story = {
     setup() {
       const value = computed<boolean>({
         get() {
-          return args.modelValue
+          return args.modelValue;
         },
         set(val) {
           // @ts-ignore
@@ -76,7 +76,7 @@ export const WithValidator: Story = {
       </div>
     `,
   }),
-}
+};
 
 export const Summary: Story = {
   parameters: {
@@ -301,4 +301,4 @@ export const Summary: Story = {
       </div>
     `
   })
-}
+};

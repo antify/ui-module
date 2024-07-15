@@ -8,7 +8,7 @@ const meta: Meta<typeof AntDuplicateButton> = {
 	parameters: {controls: {sort: 'requiredFirst'}},
 	argTypes: {
 		size: {
-			control: {type: 'radio'},
+			control: {type: 'select'},
 			options: Object.values(Size)
 		},
 		grouped: {

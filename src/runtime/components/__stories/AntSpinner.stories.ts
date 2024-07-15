@@ -9,7 +9,7 @@ const meta: Meta<typeof AntSpinner> = {
     parameters: {controls: {sort: 'requiredFirst'}},
     argTypes: {
         size: {
-            control: {type: 'radio'},
+            control: {type: 'select'},
             options: Object.values(AntSpinnerSize),
             table: {defaultValue: {summary: AntSpinnerSize.md}},
         },

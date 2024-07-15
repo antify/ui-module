@@ -67,7 +67,7 @@ export const Docs: Story = {
   args: {
     description: 'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. '
   }
-}
+};
 
 export const Disabled: Story = {
   render: Docs.render,
@@ -83,4 +83,4 @@ export const Loading: Story = {
     ...Docs.args,
     skeleton: true
   }
-}
+};

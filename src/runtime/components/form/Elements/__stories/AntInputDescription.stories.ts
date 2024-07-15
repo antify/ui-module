@@ -9,7 +9,7 @@ const meta: Meta<typeof AntInputDescription> = {
   parameters: {controls: {sort: 'requiredFirst'}},
   argTypes: {
     size: {
-      control: {type: 'radio'},
+      control: {type: 'select'},
       options: Object.values(Size),
       table: {defaultValue: {summary: Size.md}},
     },

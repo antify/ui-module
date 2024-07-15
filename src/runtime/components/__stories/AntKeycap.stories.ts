@@ -14,7 +14,7 @@ const meta: Meta<typeof AntKeycap> = {
         'Will be displayed instead of the default slot if given.<br>Use Font-awesome Icons.',
     },
     size: {
-      control: {type: 'radio'},
+      control: {type: 'select'},
       options: Object.values(AntKeycapSize),
     },
   },

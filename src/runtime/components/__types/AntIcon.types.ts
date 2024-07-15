@@ -1,8 +1,8 @@
 export enum IconSize {
-	xs2 = '2xs',
-	xs = 'xs',
-	sm = 'sm',
-	md = 'md',
-	lg = 'lg',
-	xl3 = '3xl',
+  xl3 = '3xl',
+  lg = 'lg',
+  md = 'md',
+  sm = 'sm',
+  xs = 'xs',
+  xs2 = '2xs',
 }

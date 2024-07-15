@@ -8,7 +8,7 @@ const meta: Meta<typeof AntEditButton> = {
 	parameters: {controls: {sort: 'requiredFirst'}},
 	argTypes: {
 		size: {
-			control: {type: 'radio'},
+			control: {type: 'select'},
 			options: Object.values(Size)
 		},
 		grouped: {

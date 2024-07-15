@@ -25,7 +25,7 @@ const meta: Meta<typeof AntUnitInput> = {
       options: Object.values(InputColorType),
     },
     size: {
-      control: {type: 'radio'},
+      control: {type: 'select'},
       options: Object.values(Size),
     },
     placeholder: {
@@ -51,7 +51,7 @@ export const Docs: Story = {
       const validator = reactive(useFieldValidator([
         isRequiredRule,
         (val) => typeof val !== 'number' || val <= 8 || 'Value should not be bigger than 8'
-      ]))
+      ]));
 
       return {args, validator};
     },

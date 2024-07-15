@@ -19,7 +19,7 @@ const meta: Meta<typeof AntTabs> = {
       }
     }
   }
-}
+};
 
 export default meta;
 
@@ -55,7 +55,7 @@ export const Docs: Story = {
       },
     ]
   }
-}
+};
 
 export const FixedHeight: Story = {
   render: (args) => ({
@@ -70,7 +70,7 @@ export const FixedHeight: Story = {
     `
   }),
   args: Docs.args
-}
+};
 
 export const DifferentStates: Story = {
   render: Docs.render,
@@ -96,7 +96,7 @@ export const DifferentStates: Story = {
       },
     ]
   }
-}
+};
 
 export const Overview: Story = {
   render: (args) => ({
@@ -111,7 +111,7 @@ export const Overview: Story = {
           id: '1',
           label: 'My account',
         },
-      ]
+      ];
 
       const tabItems_2 = [
         {
@@ -124,7 +124,7 @@ export const Overview: Story = {
           prependIcon: faUserCircle,
           label: 'Downloads',
         },
-      ]
+      ];
 
       const tabItems_3 = [
         {
@@ -148,7 +148,7 @@ export const Overview: Story = {
           label: 'Messages',
           to: '/#'
         },
-      ]
+      ];
 
       return {
         args,
@@ -158,7 +158,7 @@ export const Overview: Story = {
         tabItems_1,
         tabItems_2,
         tabItems_3,
-      }
+      };
     },
     template: `
       <div>Default:</div>
@@ -183,4 +183,4 @@ export const Overview: Story = {
     `
   }),
   args: {}
-}
+};

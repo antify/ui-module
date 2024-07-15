@@ -12,7 +12,7 @@ const meta: Meta<typeof AntField> = {
   parameters: {controls: {sort: 'requiredFirst'}},
   argTypes: {
     size: {
-      control: {type: 'radio'},
+      control: {type: 'select'},
       options: Object.values(Size),
     },
     colorType: {
@@ -41,7 +41,7 @@ export const Docs: Story = {
         set(val) {
           args.skeleton = val;
         }
-      })
+      });
       const size = computed({
         get() {
           return args.size;
@@ -49,7 +49,7 @@ export const Docs: Story = {
         set(val) {
           args.size = val;
         }
-      })
+      });
       const colorType = computed({
         get() {
           return args.colorType;
@@ -57,11 +57,11 @@ export const Docs: Story = {
         set(val) {
           args.colorType = val;
         }
-      })
-      const value = ref<string | null>(null)
-      const validator = reactive(useFieldValidator([isRequiredRule, notBlankRule]))
+      });
+      const value = ref<string | null>(null);
+      const validator = reactive(useFieldValidator([isRequiredRule, notBlankRule]));
 
-      return {args, value, validator, skeleton, size, colorType}
+      return {args, value, validator, skeleton, size, colorType};
     },
     template: `
       <AntField
