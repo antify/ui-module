@@ -20,7 +20,7 @@ const meta: Meta<typeof AntTextInput> = {
       options: Object.values(InputColorType)
     },
     size: {
-      control: {type: 'radio'},
+      control: {type: 'select'},
       options: Object.values(Size),
       table: {defaultValue: {summary: Size.md}},
     },
@@ -43,7 +43,7 @@ export const Docs: Story = {
   render: (args) => ({
     components: {AntTextInput},
     setup() {
-      const validator = reactive(useFieldValidator([isRequiredRule, notBlankRule]))
+      const validator = reactive(useFieldValidator([isRequiredRule, notBlankRule]));
 
       return {args, validator};
     },
@@ -72,5 +72,81 @@ export const limited: Story = {
     validator: useFieldValidator([
       (val: string) => val.length <= 10 || 'Max. 10 characters allowed'
     ])
+  },
+};
+
+export const Summary: Story = {
+  parameters: {
+    chromatic: { disableSnapshot: false },
+  },
+  render: (args) => ({
+    components: {AntTextInput},
+    setup() {
+      return {args, InputColorType};
+    },
+    template: `
+    <div class="flex gap-2.5">
+      <AntTextInput
+        v-bind="args"
+        v-model="args.modelValue"
+      />
+      <AntTextInput
+        v-bind="args"
+        v-model="args.modelValue"
+        :color-type="InputColorType.info"
+      />
+      <AntTextInput
+        v-bind="args"
+        v-model="args.modelValue"
+        :color-type="InputColorType.success"
+      />
+      <AntTextInput
+        v-bind="args"
+        v-model="args.modelValue"
+        :color-type="InputColorType.warning"
+      />
+      <AntTextInput
+        v-bind="args"
+        v-model="args.modelValue"
+        :color-type="InputColorType.danger"
+      />
+    </div>
+    <div class="flex gap-2.5">
+      <AntTextInput
+        v-bind="args"
+        v-model="args.modelValue"
+        :show-icon="true"
+      />
+      <AntTextInput
+        v-bind="args"
+        v-model="args.modelValue"
+        :color-type="InputColorType.info"
+        :show-icon="true"
+      />
+      <AntTextInput
+        v-bind="args"
+        v-model="args.modelValue"
+        :color-type="InputColorType.success"
+        :show-icon="true"
+      />
+      <AntTextInput
+        v-bind="args"
+        v-model="args.modelValue"
+        :color-type="InputColorType.warning"
+        :show-icon="true"
+      />
+      <AntTextInput
+        v-bind="args"
+        v-model="args.modelValue"
+        :color-type="InputColorType.danger"
+        :show-icon="true"
+      />
+    </div>
+    `,
+  }),
+  args: {
+    modelValue: null,
+    label: 'Label',
+    description: 'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod'
   },
 };
