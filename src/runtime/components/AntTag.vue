@@ -48,20 +48,21 @@ const getIconSize = computed(() => {
   }
 });
 const iconColorType = computed(() => {
-  if (props.colorType === TagColorType.info) {
-    return 'text-info-500-font';
-  }  else if (props.colorType === TagColorType.success) {
-    return 'text-success-500-font';
-  } else if (props.colorType === TagColorType.warning) {
-    return 'text-warning-500-font';
-  } else if (props.colorType === TagColorType.danger) {
-    return 'text-danger-500-font';
-  } else if (props.colorType === TagColorType.primary){
-    return 'text-primary-500-font';
-  } else if (props.colorType === TagColorType.secondary) {
-    return 'text-secondary-500-font';
-  } else {
-    return 'text-neutral-300-font';
+  switch (props.colorType) {
+    case TagColorType.info:
+      return 'text-info-500-font';
+    case TagColorType.success:
+      return 'text-success-500-font';
+    case TagColorType.warning:
+      return 'text-warning-500-font';
+    case TagColorType.danger:
+      return 'text-danger-500-font';
+    case TagColorType.primary:
+      return 'text-primary-500-font';
+    case TagColorType.secondary:
+      return 'text-secondary-500-font';
+    default:
+      return 'text-neutral-300-font';
   }
 });
 const iconWrapperClass = computed(() => {
