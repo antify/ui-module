@@ -14,7 +14,7 @@ import {
   type IconDefinition
 } from '@fortawesome/free-solid-svg-icons';
 import {handleEnumValidation} from '../../../handler';
-import {classesToObjectSyntax} from '../../../utils';
+import {classesToObjectSyntax, hasSlotContent} from '../../../utils';
 import {InputColorType} from '../../../enums';
 import {IconSize} from '../../__types';
 
@@ -193,31 +193,29 @@ function onBlur(e: FocusEvent) {
     >
 
     <div
-      v-if="nullable && _value !== null && _value !== ''"
+      v-if="(nullable && _value !== null && _value !== '') || (showIcon && icon) || hasSlotContent($slots['icon-right'])"
       class="absolute h-full flex items-center justify-center right-0 top-0 transition-all z-20"
       :class="{'w-6': size === Size.xs2, 'w-7': size === Size.xs || size === Size.sm, 'w-8': size === Size.md, 'w-9': size === Size.lg}"
     >
-      <AntIcon
-        :icon="faXmark"
-        :class="iconClasses"
-        class="cursor-pointer"
-        :color="iconColorClass"
-        :size="inputIconSize"
-        @click="() => _value = null"
-      />
-    </div>
+      <slot name="icon-right">
+        <AntIcon
+          v-if="nullable && _value !== null && _value !== ''"
+          :icon="faXmark"
+          :class="iconClasses"
+          class="cursor-pointer"
+          :color="iconColorClass"
+          :size="inputIconSize"
+          @click="() => _value = null"
+        />
 
-    <div
-      v-else-if="showIcon && icon"
-      class="absolute h-full flex items-center justify-center right-0 top-0 transition-all z-20"
-      :class="{'w-6': size === Size.xs2, 'w-7': size === Size.xs || size === Size.sm, 'w-8': size === Size.md, 'w-9': size === Size.lg}"
-    >
-      <AntIcon
-        :icon="icon"
-        :color="iconColorClass"
-        :class="iconClasses"
-        :size="inputIconSize"
-      />
+        <AntIcon
+          v-else-if="showIcon && icon"
+          :icon="icon"
+          :color="iconColorClass"
+          :class="iconClasses"
+          :size="inputIconSize"
+        />
+      </slot>
     </div>
 
     <AntSkeleton

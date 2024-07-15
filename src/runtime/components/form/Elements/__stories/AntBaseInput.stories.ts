@@ -3,12 +3,12 @@ import {Size} from '../../../../enums/Size.enum';
 import {BaseInputType} from '../__types/AntBaseInput.type';
 import AntBaseInput from '../AntBaseInput.vue';
 import AntButton from '../../../buttons/AntButton.vue';
+import AntIcon from '../../../AntIcon.vue';
 import {Grouped as _Grouped} from '../../../../enums/Grouped.enum';
 import {isRequiredRule, notBlankRule, useFieldValidator} from '@antify/validate';
 import {computed, reactive} from 'vue';
-import {faSearch} from '@fortawesome/free-solid-svg-icons';
+import {faSearch, faEye} from '@fortawesome/free-solid-svg-icons';
 import {InputColorType} from '../../../../enums';
-import AntTextInput from '../../AntTextInput.vue';
 
 const meta: Meta<typeof AntBaseInput> = {
   title: 'Components/Forms/Elements/Base Input',
@@ -29,7 +29,7 @@ const meta: Meta<typeof AntBaseInput> = {
       options: Object.values(InputColorType)
     },
     size: {
-      control: {type: 'radio'},
+      control: {type: 'select'},
       options: Object.values(Size),
       table: {defaultValue: {summary: Size.md}},
     },
@@ -58,7 +58,7 @@ const meta: Meta<typeof AntBaseInput> = {
       control: {type: 'none'},
       description:
         'Will be displayed left to the input text.<br>Use Font-awesome Icons.',
-    },
+    }
   },
 };
 
@@ -70,9 +70,9 @@ export const Docs: Story = {
   render: (args) => ({
     components: {AntBaseInput},
     setup: () => {
-      const validator = reactive(useFieldValidator([isRequiredRule, notBlankRule]))
+      const validator = reactive(useFieldValidator([isRequiredRule, notBlankRule]));
 
-      return {args, validator}
+      return {args, validator};
     },
     template: `
       <AntBaseInput
@@ -92,10 +92,10 @@ export const withValidator: Story = {
   render: (args) => ({
     components: {AntBaseInput},
     setup: () => {
-      setTimeout(() => { args.skeleton = false }, 1000);
-      const validator = reactive(useFieldValidator([isRequiredRule, notBlankRule]))
+      setTimeout(() => { args.skeleton = false; }, 1000);
+      const validator = reactive(useFieldValidator([isRequiredRule, notBlankRule]));
 
-      return {args, validator}
+      return {args, validator};
     },
     template: `
       <AntBaseInput
@@ -109,7 +109,6 @@ export const withValidator: Story = {
     ...Docs.args,
     value: null,
     skeleton: true,
-    description: undefined,
   },
 };
 
@@ -118,6 +117,34 @@ export const IconLeft: Story = {
   args: {
     ...Docs.args,
     iconLeft: faSearch,
+  },
+};
+
+export const IconRight: Story = {
+  render: (args) => ({
+    components: {AntBaseInput, AntIcon},
+    setup: () => {
+      const value = computed({
+        // @ts-ignore
+        get: () => args.value,
+        // @ts-ignore
+        set: (val) => args.value = val
+      });
+
+      return {args, value, faEye};
+    },
+    template: `
+      <AntBaseInput
+        v-bind="args"
+        v-model:value="args.value"
+      >
+        <template #icon-right>
+          <AntIcon :icon="faEye" />
+        </template>
+      </AntBaseInput>`,
+  }),
+  args: {
+    ...Docs.args
   },
 };
 
@@ -133,9 +160,9 @@ export const Summary: Story = {
         get: () => args.value,
         // @ts-ignore
         set: (val) => args.value = val
-      })
+      });
 
-      return {args, value, faSearch}
+      return {args, value, faSearch};
     },
     template: `
       <div class="p-4 pb-10 flex flex-col gap-2">
