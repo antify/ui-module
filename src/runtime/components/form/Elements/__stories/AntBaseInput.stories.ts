@@ -3,10 +3,11 @@ import {Size} from '../../../../enums/Size.enum';
 import {BaseInputType} from '../__types/AntBaseInput.type';
 import AntBaseInput from '../AntBaseInput.vue';
 import AntButton from '../../../buttons/AntButton.vue';
+import AntIcon from '../../../AntIcon.vue';
 import {Grouped as _Grouped} from '../../../../enums/Grouped.enum';
 import {isRequiredRule, notBlankRule, useFieldValidator} from '@antify/validate';
 import {computed, reactive} from 'vue';
-import {faSearch, faStar} from '@fortawesome/free-solid-svg-icons';
+import {faSearch, faEye} from '@fortawesome/free-solid-svg-icons';
 import {InputColorType} from '../../../../enums';
 
 const meta: Meta<typeof AntBaseInput> = {
@@ -57,12 +58,7 @@ const meta: Meta<typeof AntBaseInput> = {
       control: {type: 'none'},
       description:
         'Will be displayed left to the input text.<br>Use Font-awesome Icons.',
-    },
-    iconRight: {
-      control: {type: 'none'},
-      description:
-        'Will be displayed right to the input text.<br>Use Font-awesome Icons.',
-    },
+    }
   },
 };
 
@@ -125,10 +121,30 @@ export const IconLeft: Story = {
 };
 
 export const IconRight: Story = {
-  render: Docs.render,
+  render: (args) => ({
+    components: {AntBaseInput, AntIcon},
+    setup: () => {
+      const value = computed({
+        // @ts-ignore
+        get: () => args.value,
+        // @ts-ignore
+        set: (val) => args.value = val
+      });
+
+      return {args, value, faEye};
+    },
+    template: `
+      <AntBaseInput
+        v-bind="args"
+        v-model:value="args.value"
+      >
+        <template #icon-right>
+          <AntIcon :icon="faEye" />
+        </template>
+      </AntBaseInput>`,
+  }),
   args: {
-    ...Docs.args,
-    iconRight: faStar,
+    ...Docs.args
   },
 };
 
