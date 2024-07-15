@@ -20,7 +20,7 @@ import {IconSize} from '../../__types';
 
 defineOptions({inheritAttrs: false});
 
-const emit = defineEmits(['update:value', 'blur', 'validate']);
+const emit = defineEmits(['update:value', 'blur', 'validate', 'update:inputRef']);
 const props = withDefaults(defineProps<{
   value: string | number | null;
   size?: Size;
@@ -35,6 +35,7 @@ const props = withDefaults(defineProps<{
   iconLeft?: IconDefinition;
   nullable?: boolean;
   hasErrors?: boolean;
+  inputRef?: null | HTMLInputElement;
 }>(), {
   colorType: InputColorType.base,
   disabled: false,
@@ -45,7 +46,8 @@ const props = withDefaults(defineProps<{
   showIcon: true,
   default: false,
   nullable: false,
-  hasErrors: false
+  hasErrors: false,
+  inputRef: null
 });
 
 const icons = {
@@ -55,7 +57,6 @@ const icons = {
   [InputColorType.success]: faCircleCheck,
   [InputColorType.base]: null,
 };
-
 const inputClasses = computed(() => {
   const variants: Record<InputColorType, string> = {
     [InputColorType.base]: 'outline-neutral-300 focus:ring-primary-200 bg-white placeholder:text-neutral-500',
@@ -77,10 +78,6 @@ const inputClasses = computed(() => {
     'focus:ring-2 p-1.5 text-sm': props.size === Size.sm,
     'focus:ring-4 p-2 text-sm': props.size === Size.md,
     'focus:ring-4 p-2.5 text-sm': props.size === Size.lg,
-    'p-[9px]': props.size === Size.lg && (props.type === BaseInputType.date || props.type === BaseInputType.datetimeLocal || props.type === BaseInputType.month || props.type === BaseInputType.time || props.type === BaseInputType.week),
-    'p-[7px]': props.size === Size.md && (props.type === BaseInputType.date || props.type === BaseInputType.datetimeLocal || props.type === BaseInputType.month || props.type === BaseInputType.time || props.type === BaseInputType.week),
-    'p-[5px]': (props.size === Size.sm || props.size === Size.xs) && (props.type === BaseInputType.date || props.type === BaseInputType.datetimeLocal || props.type === BaseInputType.month || props.type === BaseInputType.time || props.type === BaseInputType.week),
-    'p-[3px]': props.size === Size.xs2 && (props.type === BaseInputType.date || props.type === BaseInputType.datetimeLocal || props.type === BaseInputType.month || props.type === BaseInputType.time || props.type === BaseInputType.week),
     // Icon left
     'pl-6': props.size === Size.xs2 && props.iconLeft,
     'pl-7': props.size === Size.sm && props.iconLeft || props.size === Size.xs && props.iconLeft,
@@ -131,6 +128,14 @@ const inputIconSize = computed(() => {
     return IconSize.xs;
   } else {
     return IconSize.sm;
+  }
+});
+const _inputRef = computed({
+  get() {
+    return props.inputRef;
+  },
+  set(val) {
+    emit('update:inputRef', val);
   }
 });
 
@@ -187,6 +192,7 @@ function onBlur(e: FocusEvent) {
     </div>
 
     <input
+      ref="_inputRef"
       v-model="_value"
       :class="inputClasses"
       :type="type"
@@ -262,6 +268,10 @@ input[type="search"]::-webkit-search-decoration,
 input[type="search"]::-webkit-search-cancel-button,
 input[type="search"]::-webkit-search-results-button,
 input[type="search"]::-webkit-search-results-decoration {
+  display: none;
+}
+
+input[type="date"]::-webkit-calendar-picker-indicator {
   display: none;
 }
 </style>
