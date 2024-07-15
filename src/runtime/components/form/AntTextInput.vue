@@ -17,6 +17,7 @@ const props = withDefaults(defineProps<{
   label?: string;
   placeholder?: string;
   description?: string;
+  showIcon?: boolean;
   size?: Size;
   colorType?: InputColorType;
   disabled?: boolean;
@@ -27,6 +28,7 @@ const props = withDefaults(defineProps<{
   errors?: string[];
 }>(), {
   colorType: InputColorType.base,
+  showIcon: false,
   disabled: false,
   skeleton: false,
   size: Size.md,
@@ -64,7 +66,7 @@ onMounted(() => {
       :skeleton="skeleton"
       :disabled="disabled"
       :placeholder="placeholder !== undefined ? placeholder : label"
-      :show-icon="true"
+      :show-icon="showIcon"
       v-bind="$attrs"
       :has-errors="errors.length > 0"
       @validate="val => $emit('validate', val)"
