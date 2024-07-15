@@ -114,9 +114,9 @@ function onKeyDownDropDown(e: KeyboardEvent) {
     const option = props.options[index + 1];
 
     if (index === -1) {
-      focusedDropDownItem.value = props.options[0].value
+      focusedDropDownItem.value = props.options[0].value;
     } else if (option !== undefined) {
-      focusedDropDownItem.value = option.value
+      focusedDropDownItem.value = option.value;
     }
   }
 
@@ -127,7 +127,7 @@ function onKeyDownDropDown(e: KeyboardEvent) {
     const option = props.options[index - 1];
 
     if (option !== undefined) {
-      focusedDropDownItem.value = option.value
+      focusedDropDownItem.value = option.value;
     }
   }
 

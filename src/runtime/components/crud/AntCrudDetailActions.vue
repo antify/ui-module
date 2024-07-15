@@ -18,7 +18,7 @@ withDefaults(defineProps<{
 
 <template>
   <div
-    class="flex justify-between p-2.5 gap-2.5 bg-white"
+    class="flex justify-between p-2 gap-2 bg-white"
     data-e2e="crud-detail-actions"
   >
     <div class="flex gap-2.5">

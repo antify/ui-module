@@ -17,9 +17,10 @@ export const Docs: Story = {
   render: (args) => ({
     components: {AntDeleteDialog, AntButton},
     setup() {
-      return {args}
+      return {args};
     },
     template: `
+    <div class="h-96">
       <AntButton @click="() => args.open = true" color-type="danger">Delete</AntButton>
 
       <AntDeleteDialog
@@ -27,10 +28,11 @@ export const Docs: Story = {
         :entity="args.entity"
         v-bind="args"
       />
+    </div>
     `,
   }),
   args: {
     open: false,
     entity: 'Lorem ipsum'
   },
-}
+};

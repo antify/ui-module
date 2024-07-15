@@ -10,16 +10,16 @@ defineProps<{
 
 const containerClasses = computed(() => ({
   'w-full h-full bg-white flex flex-col gap-1 p-1.5': true,
-}))
+}));
 
 </script>
 
 <template>
- <div :class="containerClasses">
-   <AntNavbarItem
-     v-for="(navbarItem, index) in navbarItems"
-     :key="`navbar-item-${index}`"
-     :navbar-item="navbarItem"
-   />
- </div>
+  <div :class="containerClasses">
+    <AntNavbarItem
+      v-for="(navbarItem, index) in navbarItems"
+      :key="`navbar-item-${index}`"
+      :navbar-item="navbarItem"
+    />
+  </div>
 </template>

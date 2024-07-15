@@ -10,7 +10,8 @@ import {
 } from '@fortawesome/free-solid-svg-icons';
 import AntIcon from './AntIcon.vue';
 import AntButton from './buttons/AntButton.vue';
-import {ColorType, InputColorType} from '../enums';
+import {ColorType, InputColorType, Size} from '../enums';
+import {IconSize} from './__types/AntIcon.types';
 
 const props = withDefaults(defineProps<{
   title?: string,
@@ -42,7 +43,7 @@ const classes = computed(() => {
   };
 
   return {
-    'inline-flex flex-col gap-2.5 rounded-md p-2.5 border transition-colors shadow-md': true,
+    'inline-flex flex-col gap-2 rounded-md p-2 border transition-colors shadow-md': true,
     [variants[props.colorType]]: true,
   };
 });
@@ -70,15 +71,19 @@ onMounted(() => {
     data-e2e="toast"
     :data-e2e-color-type="props.colorType"
   >
-    <div class="inline-flex items-center justify-between w-content gap-2.5">
-      <div class="inline-flex items-center gap-2.5">
+    <div class="inline-flex items-center justify-between w-content gap-2">
+      <div class="inline-flex items-center gap-2">
         <AntIcon
           v-if="icon"
           :icon="_icon"
           :color="iconColor"
+          :size="IconSize.sm"
         />
 
-        <div class="whitespace-pre" :class="{'font-semibold': hasDefaultSlot}">
+        <div
+          class="whitespace-pre text-sm"
+          :class="{'font-semibold': hasDefaultSlot}"
+        >
           <slot name="title">
             {{ title }}
           </slot>
@@ -94,12 +99,16 @@ onMounted(() => {
     </div>
 
     <div v-if="hasDefaultSlot">
-      <slot/>
+      <slot />
     </div>
 
-    <div v-if="showUndo" class="flex justify-end">
+    <div
+      v-if="showUndo"
+      class="flex justify-end"
+    >
       <AntButton
         :color-type="props.colorType as unknown as ColorType"
+        :size="Size.md"
         filled
         @click="() => $emit('undo')"
       >

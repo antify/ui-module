@@ -77,7 +77,7 @@ const inputContainerClasses = computed(() => {
   };
 
   return {
-    'flex gap-1 items-center flex-wrap': true,
+    'flex items-center flex-wrap': true,
     'transition-colors relative border-none outline w-full focus-within:z-10': true,
     'outline-offset-[-1px] outline-1 focus-within:outline-offset-[-1px] focus-within:outline-1': true,
     'opacity-50 cursor-not-allowed': props.disabled,
@@ -245,21 +245,25 @@ function filterDropDown() {
 
       <div
         :class="inputContainerClasses"
-        class="w-full flex gap-2.5 items-center"
+        class="w-full flex items-center"
       >
-        <AntTag
-          v-for="(tag, index) in _modelValue"
-          :key="`tag-input-tag-${index}`"
-          :size="AntTagSize.xs3"
-          :color-type="_colorType"
-          dismiss
-          @close="removeTag(tag)"
+        <div
+          class="flex gap-2.5 items-center"
         >
-          {{ options.find((option: SelectOption) => option.value === tag)?.label }}
-        </AntTag>
+          <AntTag
+            v-for="(tag, index) in _modelValue"
+            :key="`tag-input-tag-${index}`"
+            :size="AntTagSize.xs3"
+            :color-type="_colorType"
+            dismiss
+            @close="removeTag(tag)"
+          >
+            {{ options.find((option: SelectOption) => option.value === tag)?.label }}
+          </AntTag>
+        </div>
 
         <!-- Input -->
-        <div class="flex items-center gap-1 w-32 shrink grow">
+        <div class="flex items-center w-32 shrink grow">
           <AntIcon
             :icon="icon"
             :size="size === AntTagInputSize.sm ? IconSize.xs : IconSize.sm"

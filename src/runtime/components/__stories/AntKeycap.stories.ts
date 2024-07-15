@@ -1,5 +1,6 @@
 import AntKeycap from '../AntKeycap.vue';
 import { type Meta, type StoryObj } from '@storybook/vue3';
+import {AntKeycapSize} from '../__types/AntKeycap.types';
 import { faChevronUp, faChevronDown } from '@fortawesome/free-solid-svg-icons';
 
 const meta: Meta<typeof AntKeycap> = {
@@ -11,6 +12,10 @@ const meta: Meta<typeof AntKeycap> = {
       control: { type: 'none' },
       description:
         'Will be displayed instead of the default slot if given.<br>Use Font-awesome Icons.',
+    },
+    size: {
+      control: {type: 'radio'},
+      options: Object.values(AntKeycapSize),
     },
   },
 };
@@ -27,7 +32,9 @@ export const Docs: Story = {
     },
     template: '<div class="p-4"><AntKeycap v-bind="args">F</AntKeycap></div>',
   }),
-  args: {},
+  args: {
+    size: AntKeycapSize.sm
+  },
 };
 
 export const Text: Story = {

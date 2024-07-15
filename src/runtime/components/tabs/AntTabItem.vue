@@ -58,12 +58,12 @@ const containerClasses = computed(() => {
   };
 
   return {
-    'p-2.5 hover:cursor-pointer text-center flex items-center justify-center gap-2.5 bg-white transition-[background-color] relative': true,
+    'p-2 hover:cursor-pointer text-center flex items-center justify-center gap-2 bg-white transition-[background-color] relative text-sm': true,
     'grow': props.expanded,
     [variants[props.colorType]]: true,
     [activeVariants[props.colorType]]: _active.value,
     [notActiveVariants[props.colorType]]: !_active.value,
-  }
+  };
 });
 const borderBoxClasses = computed(() => {
   const variants: Record<ColorType, string> = {
@@ -75,7 +75,7 @@ const borderBoxClasses = computed(() => {
   return {
     'h-[2px] w-full bg-danger-500 absolute bottom-0': true,
     [variants[props.colorType]]: true,
-  }
+  };
 });
 const iconColor = computed(() => {
   const variants = {

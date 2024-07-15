@@ -17,7 +17,7 @@ const props = withDefaults(defineProps<{
 
 const classes = computed(() => {
   const variants: Record<InputColorType, string> = {
-    [InputColorType.base]: 'text-neutral-500',
+    [InputColorType.base]: 'text-for-white-bg-font',
     [InputColorType.danger]: 'text-danger-500',
     [InputColorType.info]: 'text-info-500',
     [InputColorType.success]: 'text-success-500',

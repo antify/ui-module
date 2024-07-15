@@ -23,11 +23,11 @@ watch(() => props.open, (val) => {
 
   if (val) {
     openBackground.value = true;
-    setTimeout(() => openModal.value = true, props.fullscreen ? 0 : 100)
+    setTimeout(() => openModal.value = true, props.fullscreen ? 0 : 100);
     document.addEventListener('keydown', onKeydown);
   } else {
     openModal.value = false;
-    setTimeout(() => openBackground.value = false, props.fullscreen ? 0 : 100)
+    setTimeout(() => openBackground.value = false, props.fullscreen ? 0 : 100);
     document.removeEventListener('keydown', onKeydown);
   }
 });
@@ -53,7 +53,7 @@ function closeModal() {
           :class="{'w-full h-full': fullscreen, 'border border-neutral-300 rounded-md shadow-md': !fullscreen}"
         >
           <div
-            class="bg-white p-2.5 flex items-center justify-between text-for-white-bg-font text-lg font-medium"
+            class="bg-white p-2 flex items-center justify-between text-for-white-bg-font text-lg font-medium"
           >
             <slot name="title">
               {{ title }}
@@ -67,13 +67,13 @@ function closeModal() {
             />
           </div>
 
-          <div class="bg-white p-2.5 grow overflow-y-auto">
+          <div class="bg-white p-2 text-for-white-bg-font grow overflow-y-auto">
             <slot />
           </div>
 
           <div
             v-if="useSlots()['footer'] || false"
-            class="bg-white p-2.5 text-for-white-bg-font"
+            class="bg-white p-2 text-for-white-bg-font"
           >
             <slot name="footer" />
           </div>

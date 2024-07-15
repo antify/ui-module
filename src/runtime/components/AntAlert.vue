@@ -46,15 +46,15 @@ const icons = {
 const _icon = computed(() => icons[props.colorType]);
 const classes = computed(() => {
   const variants: Record<InputColorType, string> = {
-    [InputColorType.danger]: 'bg-danger-100 text-danger-500',
-    [InputColorType.info]: 'bg-info-100 text-info-500',
-    [InputColorType.base]: 'bg-neutral-100 text-neutral-500',
-    [InputColorType.success]: 'bg-success-100 text-success-500',
-    [InputColorType.warning]: 'bg-warning-100 text-warning-500',
+    [InputColorType.danger]: 'bg-danger-100 text-danger-700',
+    [InputColorType.info]: 'bg-info-100 text-info-700',
+    [InputColorType.base]: 'bg-neutral-100 text-neutral-100-font',
+    [InputColorType.success]: 'bg-success-100 text-success-700',
+    [InputColorType.warning]: 'bg-warning-100 text-warning-700',
   };
 
   return {
-    'inline-flex flex-col gap-2.5 rounded-md p-2.5 transition-colors text-sm relative': true,
+    'inline-flex flex-col gap-2 rounded-md p-2 transition-colors text-sm relative': true,
     'w-full': props.expanded,
     [variants[props.colorType]]: true,
   };
@@ -64,10 +64,10 @@ const hasQuestionMark = computed(() => (useSlots()['question-mark-text'] || fals
 const iconColor = computed(() => {
   const variants = {
     [InputColorType.base]: 'text-neutral-100-font',
-    [InputColorType.danger]: 'text-danger-500',
-    [InputColorType.info]: 'text-info-500',
-    [InputColorType.success]: 'text-success-500',
-    [InputColorType.warning]: 'text-warning-500',
+    [InputColorType.danger]: 'text-danger-700',
+    [InputColorType.info]: 'text-info-700',
+    [InputColorType.success]: 'text-success-700',
+    [InputColorType.warning]: 'text-warning-700',
   };
 
   return variants[props.colorType];
@@ -91,10 +91,10 @@ onMounted(() => {
 
     <div
       v-if="icon || hasQuestionMark || dismissBtn || title"
-      class="inline-flex items-center justify-between w-content gap-2.5"
+      class="inline-flex items-center justify-between w-content gap-2"
       :class="{'invisible': skeleton}"
     >
-      <div class="inline-flex items-center gap-2.5">
+      <div class="inline-flex items-center gap-2">
         <AntIcon
           v-if="icon"
           :icon="_icon"
@@ -111,7 +111,7 @@ onMounted(() => {
         </div>
       </div>
 
-      <div class="flex gap-2.5">
+      <div class="flex gap-2">
         <div v-if="hasQuestionMark">
           <slot name="questionMarkText">
             <AntTooltip :position="Position.bottom">

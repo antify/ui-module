@@ -82,7 +82,7 @@ const itemClasses = computed(() => {
 
   const colorVariant = {
     [InputColorType.danger]: 'outline-danger-500 bg-danger-100 text-danger-100-font',
-    [InputColorType.base]: 'outline-neutral-300 bg-white text-for-white-bg-font',
+    [InputColorType.base]: 'outline-neutral-300 bg-white text-black',
     [InputColorType.info]: 'outline-info-500 bg-info-100 text-info-100-font',
     [InputColorType.success]: 'outline-success-500 bg-success-100 text-success-100-font',
     [InputColorType.warning]: 'outline-warning-500 bg-warning-100 text-warning-100-font',

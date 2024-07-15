@@ -38,8 +38,8 @@ const buttonClasses = computed(() => {
     'relative inline-flex flex-shrink-0': true,
     'focus:outline-none': true,
     'rounded-full transition-colors ease-in-out duration-200': true,
-    'focus-within:ring-2': props.size === AntSwitchSize.sm && hasAction.value,
-    'focus-within:ring-4': props.size === AntSwitchSize.md && hasAction.value,
+    'focus-within:ring-2': props.size === AntSwitchSize.sm,
+    'focus-within:ring-4': props.size === AntSwitchSize.md,
     'h-4 w-[30px]': props.size === AntSwitchSize.sm,
     'h-5 w-9': props.size === AntSwitchSize.md,
     'bg-neutral-300': !_value.value,
@@ -50,11 +50,11 @@ const buttonClasses = computed(() => {
   };
 
   const colorVariant = {
-    [InputColorType.base]: 'focus-within:ring-primary-100',
-    [InputColorType.danger]: 'focus-within:ring-danger-100',
-    [InputColorType.info]: 'focus-within:ring-info-100',
-    [InputColorType.success]: 'focus-within:ring-success-100',
-    [InputColorType.warning]: 'focus-within:ring-warning-100',
+    [InputColorType.base]: 'focus-within:ring-primary-200',
+    [InputColorType.danger]: 'focus-within:ring-danger-200 outline outline-1 -outline-offset-1 outline-danger-500',
+    [InputColorType.info]: 'focus-within:ring-info-200 outline outline-1 -outline-offset-1 outline-info-500',
+    [InputColorType.success]: 'focus-within:ring-success-200 outline outline-1 -outline-offset-1 outline-success-500',
+    [InputColorType.warning]: 'focus-within:ring-warning-200 outline outline-1 -outline-offset-1 outline-warning-500',
   };
   const activeColorVariant = {
     [InputColorType.base]: 'bg-primary-500',
@@ -64,7 +64,7 @@ const buttonClasses = computed(() => {
     [InputColorType.warning]: 'bg-warning-500',
   };
 
-  classes[colorVariant[_colorType.value]] = hasAction.value;
+  classes[colorVariant[_colorType.value]] = true;
   classes[activeColorVariant[_colorType.value]] = _value.value;
 
   return classes;
@@ -121,7 +121,7 @@ function changeValue() {
           role="switch"
           :aria-checked="_value"
           :disabled="disabled"
-          :tabindex="readonly ? -1 : 1"
+          :tabindex="hasAction ? 1 : -1"
           @click="changeValue"
           @blur="validator?.validate(_value)"
         >

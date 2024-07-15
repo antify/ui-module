@@ -1,8 +1,8 @@
 export enum AntTagSize {
-	xs3 = '3xs',
-	xs2 = '2xs',
-	xs = 'xs',
-	sm = 'sm',
-	md = 'md',
-	lg = 'lg',
+  lg = 'lg',
+  md = 'md',
+  sm = 'sm',
+  xs = 'xs',
+  xs2 = '2xs',
+  xs3 = '3xs',
 }
