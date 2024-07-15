@@ -1,14 +1,17 @@
 <script lang="ts" setup>
-import {faAngleDown, faAngleUp} from '@fortawesome/free-solid-svg-icons';
+import {faAngleDown, faAngleUp, faQuestionCircle} from '@fortawesome/free-solid-svg-icons';
 import AntIcon from './AntIcon.vue';
 import AntTransitionCollapseHeight from './transitions/AntTransitionCollapseHeight.vue';
+import {IconSize} from './__types/AntIcon.types';
 
 const props = withDefaults(defineProps<{
   isOpen: boolean;
   label?: string;
   collapseTransition?: string;
+  iconLeft: boolean;
 }>(), {
-  collapseTransition: 'slide'
+  collapseTransition: 'slide',
+  iconLeft: false,
 });
 const emit = defineEmits(['close', 'open']);
 
@@ -35,9 +38,18 @@ function onClick() {
       <div
         class="hover:text-gray-800 flex justify-between items-center"
       >
-        <span class="text-sm font-semibold">
-          {{ label }}
-        </span>
+        <div class="flex items-center gap-2">
+          <AntIcon
+            v-if="iconLeft"
+            :size="IconSize.sm"
+            :icon="faQuestionCircle"
+            :color="isOpen ? 'text-primary-500-font' : 'text-for-white-bg-font'"
+          />
+
+          <span class="text-sm font-semibold">
+            {{ label }}
+          </span>
+        </div>
 
         <AntIcon
           :icon="isOpen ? faAngleUp : faAngleDown"
