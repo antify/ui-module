@@ -76,6 +76,9 @@ export const limited: Story = {
 };
 
 export const Summary: Story = {
+  parameters: {
+    chromatic: { disableSnapshot: false },
+  },
   render: (args) => ({
     components: {AntTextInput},
     setup() {
