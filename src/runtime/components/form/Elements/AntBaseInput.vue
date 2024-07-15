@@ -33,6 +33,7 @@ const props = withDefaults(defineProps<{
   wrapperClass?: string | Record<string, boolean>;
   showIcon?: boolean;
   iconLeft?: IconDefinition;
+  iconRight?: IconDefinition;
   nullable?: boolean;
   hasErrors?: boolean;
 }>(), {
@@ -208,12 +209,25 @@ function onBlur(e: FocusEvent) {
     </div>
 
     <div
-      v-else-if="showIcon && icon"
+      v-else-if="showIcon && icon && !iconRight"
       class="absolute h-full flex items-center justify-center right-0 top-0 transition-all z-20"
       :class="{'w-6': size === Size.xs2, 'w-7': size === Size.xs || size === Size.sm, 'w-8': size === Size.md, 'w-9': size === Size.lg}"
     >
       <AntIcon
         :icon="icon"
+        :color="iconColorClass"
+        :class="iconClasses"
+        :size="inputIconSize"
+      />
+    </div>
+
+    <div
+      v-else-if="iconRight"
+      class="absolute h-full flex items-center justify-center right-0 top-0 transition-all z-20"
+      :class="{'w-6': size === Size.xs2, 'w-7': size === Size.xs || size === Size.sm, 'w-8': size === Size.md, 'w-9': size === Size.lg}"
+    >
+      <AntIcon
+        :icon="iconRight"
         :color="iconColorClass"
         :class="iconClasses"
         :size="inputIconSize"
