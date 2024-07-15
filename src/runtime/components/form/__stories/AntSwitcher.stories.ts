@@ -1,10 +1,10 @@
-import { type Meta, type StoryObj } from '@storybook/vue3';
-import { computed, ref } from 'vue';
-import { Size } from '../../../enums';
-import { useFieldValidator } from '@antify/validate';
-import { type SwitcherOption } from '../__types/AntSwitcher.type';
-import { InputColorType } from '../../../enums';
-import { AntSwitcher } from '../index';
+import {type Meta, type StoryObj} from '@storybook/vue3';
+import {computed, ref} from 'vue';
+import {Size} from '../../../enums';
+import {useFieldValidator} from '@antify/validate';
+import {type SwitcherOption} from '../__types/AntSwitcher.type';
+import {InputColorType} from '../../../enums';
+import {AntSwitcher} from '../index';
 
 const meta: Meta<typeof AntSwitcher> = {
   title: 'Components/Forms/Switcher',
@@ -28,15 +28,15 @@ type SwitcherOption = {
       }
     },
     colorType: {
-      control: { type: 'select' },
+      control: {type: 'select'},
       options: Object.values(InputColorType),
     },
     size: {
-      control: { type: 'select' },
+      control: {type: 'select'},
       options: Object.values(Size),
     },
   }
-}
+};
 
 export default meta;
 
@@ -44,16 +44,16 @@ type Story = StoryObj<typeof AntSwitcher>;
 
 export const Docs: Story = {
   render: (args) => ({
-    components: { AntSwitcher },
+    components: {AntSwitcher},
     setup() {
       const modelValue = computed({
         // @ts-ignore
         get: () => args.modelValue,
         // @ts-ignore
         set: (val) => args.modelValue = val
-      })
+      });
 
-      return { args, modelValue }
+      return {args, modelValue};
     },
     template: `
       <AntSwitcher v-bind="args" v-model="modelValue"/>
@@ -88,7 +88,7 @@ export const withValidator: Story = {
     ...Docs.args,
     validator: useFieldValidator([
       (val: SwitcherOption) => {
-        return val.value !== 'entry-1' || 'Select something else'
+        return val.value !== 'entry-1' || 'Select something else';
       }
     ])
   },
@@ -96,10 +96,10 @@ export const withValidator: Story = {
 
 export const Summary: Story = {
   parameters: {
-    chromatic: { disableSnapshot: false },
+    chromatic: {disableSnapshot: false},
   },
   render: (args) => ({
-    components: { AntSwitcher },
+    components: {AntSwitcher},
     setup() {
       const modelValue = computed({
         // @ts-ignore
@@ -110,7 +110,7 @@ export const Summary: Story = {
 
       const skeleton = ref(true);
 
-      return { args, modelValue, InputColorType, skeleton }
+      return {args, modelValue, InputColorType, skeleton};
     },
     template: `
       <div class="flex flex-col gap-5 ">
@@ -237,4 +237,4 @@ export const Summary: Story = {
     ],
     modelValue: 'entry-1'
   }
-}
+};

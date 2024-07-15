@@ -16,7 +16,7 @@ const meta: Meta<typeof AntTextarea> = {
       options: Object.values(InputColorType)
     },
     size: {
-      control: {type: 'radio'},
+      control: {type: 'select'},
       options: Object.values(Size),
     },
     placeholder: {
@@ -75,7 +75,7 @@ export const limited: Story = {
     components: {AntTextarea},
     setup: () => {
       const validator = reactive(useFieldValidator(
-        (val) => val?.length <= 10 || 'Max. 10 characters allowed'))
+        (val) => val?.length <= 10 || 'Max. 10 characters allowed'));
 
       return {args, validator};
     },

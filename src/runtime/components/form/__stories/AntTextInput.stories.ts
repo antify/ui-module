@@ -20,7 +20,7 @@ const meta: Meta<typeof AntTextInput> = {
       options: Object.values(InputColorType)
     },
     size: {
-      control: {type: 'radio'},
+      control: {type: 'select'},
       options: Object.values(Size),
       table: {defaultValue: {summary: Size.md}},
     },
@@ -43,7 +43,7 @@ export const Docs: Story = {
   render: (args) => ({
     components: {AntTextInput},
     setup() {
-      const validator = reactive(useFieldValidator([isRequiredRule, notBlankRule]))
+      const validator = reactive(useFieldValidator([isRequiredRule, notBlankRule]));
 
       return {args, validator};
     },

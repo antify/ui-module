@@ -2,7 +2,7 @@ import { type Meta, type StoryObj} from '@storybook/vue3';
 import {Size} from '../../../enums/Size.enum';
 import AntNumberInput from '../AntNumberInput.vue';
 import {InputColorType} from '../../../enums/ColorType.enum';
-import {isRequiredRule, notBlankRule, useFieldValidator} from '@antify/validate';
+import {isRequiredRule, useFieldValidator} from '@antify/validate';
 import {reactive} from 'vue';
 
 const meta: Meta<typeof AntNumberInput> = {
@@ -19,7 +19,7 @@ const meta: Meta<typeof AntNumberInput> = {
       options: Object.values(InputColorType)
     },
     size: {
-      control: {type: 'radio'},
+      control: {type: 'select'},
       options: Object.values(Size),
       table: {defaultValue: {summary: Size.md}},
     },

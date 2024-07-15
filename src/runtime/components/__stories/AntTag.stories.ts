@@ -10,7 +10,7 @@ const meta: Meta<typeof AntTag> = {
     parameters: {controls: {sort: 'requiredFirst'}},
     argTypes: {
         size: {
-            control: {type: 'radio'},
+            control: {type: 'select'},
             options: Object.values(AntTagSize),
         },
         colorType: {
@@ -34,7 +34,7 @@ export const Docs: Story = {
         components: {AntTag},
         setup() {
             function logClick() {
-                console.log('Clicked close icon')
+                console.log('Clicked close icon');
             }
 
             return {args, logClick};

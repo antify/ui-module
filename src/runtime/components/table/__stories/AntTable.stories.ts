@@ -44,7 +44,7 @@ const meta: Meta<typeof AntTable> = {
       description: 'If true will display skeleton rows instead of an empty table if there is no data provided, otherwise it will display an overlay.'
     },
 		size: {
-			control: {type: 'radio'},
+			control: {type: 'select'},
 			options: Object.values(AntTableSize),
 			table: {defaultValue: {summary: AntTableSize.md}},
 		},

@@ -27,7 +27,7 @@ const meta: Meta<typeof AntSelect> = {
       options: Object.values(InputColorType),
     },
     size: {
-      control: {type: 'radio'},
+      control: {type: 'select'},
       options: Object.values(Size),
       table: {defaultValue: {summary: Size.md}},
     },
@@ -69,7 +69,7 @@ export const Docs: Story = {
         get: () => args.modelValue,
         // @ts-ignore
         set: (val) => args.modelValue = val
-      })
+      });
 
       return {args, modelValue};
     },

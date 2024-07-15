@@ -12,7 +12,7 @@ const meta: Meta<typeof AntSearch> = {
       table: {type: {summary: 'string|null'}},
     },
     size: {
-      control: {type: 'radio'},
+      control: {type: 'select'},
       options: Object.values(Size),
     },
     inputTimeout: {

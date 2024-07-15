@@ -23,7 +23,7 @@ const meta: Meta<typeof AntButton> = {
 			description: 'Where is this fields position in a group',
 		},
 		size: {
-			control: {type: 'radio'},
+			control: {type: 'select'},
 			options: Object.values(Size),
 			description: 'Defines the size of the button',
 		},

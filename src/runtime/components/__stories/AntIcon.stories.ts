@@ -9,7 +9,7 @@ const meta: Meta<typeof AntIcon> = {
   parameters: {controls: {sort: 'requiredFirst'}},
   argTypes: {
     size: {
-      control: {type: 'radio'},
+      control: {type: 'select'},
       options: Object.values(IconSize),
     },
     icon: {

@@ -30,7 +30,7 @@ const meta: Meta<typeof AntCheckboxGroup> = {
       options: Object.values(Direction)
     }
   }
-}
+};
 
 export default meta;
 
@@ -53,7 +53,7 @@ export const Docs: Story = {
       return {
         args,
         value
-      }
+      };
     },
     template: `
       <AntCheckboxGroup v-bind="args" v-model="value" />
@@ -75,7 +75,7 @@ export const Docs: Story = {
       value: 'checkbox-4'
     }]
   }
-}
+};
 
 export const WithValidator: Story = {
   render: (args) => ({
@@ -98,7 +98,7 @@ export const WithValidator: Story = {
         args,
         value,
         validator
-      }
+      };
     },
     template: `
       <AntCheckboxGroup v-bind="args" v-model="value" :validator="validator"/>
@@ -107,4 +107,4 @@ export const WithValidator: Story = {
   args: {
     ...Docs.args,
   }
-}
+};

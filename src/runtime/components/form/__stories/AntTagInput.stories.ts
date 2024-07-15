@@ -19,7 +19,7 @@ const meta: Meta<typeof AntTagInput> = {
       options: Object.values(InputColorType)
     },
     size: {
-      control: { type: 'radio' },
+      control: { type: 'select' },
       options: Object.values(AntTagInputSize),
       table: { defaultValue: { summary: AntTagInputSize.md } },
     },
@@ -101,7 +101,7 @@ export const AllowCreate: Story = {
       });
     },
   }
-}
+};
 
 export const Disabled: Story = {
   render: Docs.render,
@@ -109,7 +109,7 @@ export const Disabled: Story = {
     options,
     disabled: true,
   }
-}
+};
 
 export const Skeleton: Story = {
   render: Docs.render,
@@ -117,4 +117,4 @@ export const Skeleton: Story = {
     options,
     skeleton: true,
   }
-}
+};

@@ -105,7 +105,7 @@ export const Docs: Story = {
     description: 'Message',
     radioButtons: simpleButtons
   }
-}
+};
 
 export const WithValidator: Story = {
   render: (args) => ({
@@ -119,7 +119,7 @@ export const WithValidator: Story = {
 
       validator.value.validate(value.value);
 
-      return { args, value, validator }
+      return { args, value, validator };
     },
     template: `
       <AntRadioGroup v-bind="args" v-model="value" :validator="validator"/>
@@ -128,7 +128,7 @@ export const WithValidator: Story = {
   args: {
     ...Docs.args,
   }
-}
+};
 
 export const Skeleton: Story = {
   render: Docs.render,
