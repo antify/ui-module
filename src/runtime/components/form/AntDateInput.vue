@@ -10,6 +10,7 @@ import {BaseInputType} from './Elements/__types';
 import {handleEnumValidation} from '../../handler';
 import {AntDateInputType} from './__types/AntDateInput.type';
 import {faCalendar} from '@fortawesome/free-solid-svg-icons';
+import {IconSize} from '../__types/AntIcon.types';
 
 defineOptions({inheritAttrs: false});
 
@@ -37,6 +38,21 @@ const _modelValue = useVModel(props, 'modelValue', emit);
 const _colorType = computed(() => hasErrors.value ? InputColorType.danger : props.colorType);
 const hasErrors = computed(() => props.errors.length > 0);
 const inputRef = ref<null | HTMLInputElement>(null);
+const iconColor = computed(() => {
+  switch (_colorType.value) {
+    case InputColorType.info:
+      return 'text-info-700';
+    case InputColorType.success:
+      return 'text-success-700';
+    case InputColorType.warning:
+      return 'text-warning-700';
+    case InputColorType.danger:
+      return 'text-danger-700';
+    default:
+      return 'text-for-white-bg';
+  }
+});
+const iconSize = computed(() => props.size === Size.xs || props.size === Size.xs2 ? IconSize.xs : IconSize.sm);
 
 onMounted(() => {
   handleEnumValidation(props.colorType, InputColorType, 'colorType');
@@ -77,6 +93,8 @@ function onClickCalendar() {
         <template #icon-right>
           <AntIcon
             :icon="faCalendar"
+            :color="iconColor"
+            :size="iconSize"
             class="cursor-pointer"
             @click="onClickCalendar"
           />
