@@ -9,15 +9,15 @@ import {InputColorType} from '../../enums';
 import {BaseInputType} from './Elements/__types';
 import {handleEnumValidation} from '../../handler';
 import {AntDateInputType} from './__types/AntDateInput.type';
-import {faCalendar} from '@fortawesome/free-solid-svg-icons';
+import {faCalendar, faClock} from '@fortawesome/free-solid-svg-icons';
 import {IconSize} from '../__types/AntIcon.types';
 
 defineOptions({inheritAttrs: false});
 
 const props = withDefaults(defineProps<{
-  modelValue: number | null;
+  modelValue: string | null;
   label?: string;
-  type: AntDateInputType
+  type?: AntDateInputType
   placeholder?: string;
   description?: string;
   size?: Size;
@@ -53,6 +53,7 @@ const iconColor = computed(() => {
   }
 });
 const iconSize = computed(() => props.size === Size.xs || props.size === Size.xs2 ? IconSize.xs : IconSize.sm);
+const _icon = computed(() => props.type === AntDateInputType.time ? faClock : faCalendar);
 
 onMounted(() => {
   handleEnumValidation(props.colorType, InputColorType, 'colorType');
@@ -92,7 +93,7 @@ function onClickCalendar() {
       >
         <template #icon-right>
           <AntIcon
-            :icon="faCalendar"
+            :icon="_icon"
             :color="iconColor"
             :size="iconSize"
             class="cursor-pointer"

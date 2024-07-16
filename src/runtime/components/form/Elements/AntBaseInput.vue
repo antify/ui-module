@@ -271,18 +271,19 @@ input[type="search"]::-webkit-search-results-decoration {
   display: none;
 }
 
-input[type="date"]::-webkit-calendar-picker-indicator {
-  display: none;
+/* Remove calendar icon in Chrome */
+input[type="date"]::-webkit-datetime-edit-fields-wrapper,
+input[type="datetime-local"]::-webkit-datetime-edit-fields-wrapper,
+input[type="month"]::-webkit-datetime-edit-fields-wrapper,
+input[type="time"]::-webkit-datetime-edit-fields-wrapper,
+input[type="week"]::-webkit-datetime-edit-fields-wrapper {
+  padding: 0;
 }
-input[type="datetime-local"]::-webkit-calendar-picker-indicator {
-  display: none;
-}
-input[type="month"]::-webkit-calendar-picker-indicator {
-  display: none;
-}
-input[type="time"]::-webkit-calendar-picker-indicator {
-  display: none;
-}
+
+input[type="date"]::-webkit-calendar-picker-indicator,
+input[type="datetime-local"]::-webkit-calendar-picker-indicator,
+input[type="month"]::-webkit-calendar-picker-indicator,
+input[type="time"]::-webkit-calendar-picker-indicator,
 input[type="week"]::-webkit-calendar-picker-indicator {
   display: none;
 }
