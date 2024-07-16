@@ -274,4 +274,16 @@ input[type="search"]::-webkit-search-results-decoration {
 input[type="date"]::-webkit-calendar-picker-indicator {
   display: none;
 }
+input[type="datetime-local"]::-webkit-calendar-picker-indicator {
+  display: none;
+}
+input[type="month"]::-webkit-calendar-picker-indicator {
+  display: none;
+}
+input[type="time"]::-webkit-calendar-picker-indicator {
+  display: none;
+}
+input[type="week"]::-webkit-calendar-picker-indicator {
+  display: none;
+}
 </style>
