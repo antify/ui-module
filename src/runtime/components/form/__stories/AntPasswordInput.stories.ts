@@ -75,6 +75,29 @@ export const WithValidator: Story = {
   },
 };
 
+export const limited: Story = {
+  render: (args) => ({
+    components: {AntPasswordInput},
+    setup() {
+      const validator = reactive(useFieldValidator([isRequiredRule, notBlankRule, (val) => val?.length <= 10 || 'Max. 10 characters allowed']));
+
+      return {args, validator};
+    },
+    template: `
+      <AntPasswordInput
+        v-bind="args"
+        v-model="args.modelValue"
+        :errors="Array.isArray(args.errors) ? args.errors : validator.getErrors()"
+        @validate="(val) => validator.validate(val)"
+      />`,
+  }),
+  args: {
+    modelValue: 'PasswordIsTooLong',
+    label: 'Label',
+    description: 'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod'
+  },
+};
+
 export const Summary: Story = {
   parameters: {
     chromatic: { disableSnapshot: false },

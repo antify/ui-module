@@ -50,6 +50,26 @@ export const Docs: Story = {
   render: (args) => ({
     components: {AntTextarea},
     setup: () => {
+      return {args};
+    },
+    template: `
+      <AntTextarea
+        v-bind="args"
+        v-model="args.modelValue"
+      />
+    `,
+  }),
+  args: {
+    modelValue: null,
+    label: 'Label',
+    description: 'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod'
+  },
+};
+
+export const withValidator: Story = {
+  render: (args) => ({
+    components: {AntTextarea},
+    setup: () => {
       const validator = reactive(useFieldValidator([isRequiredRule, notBlankRule]));
 
       return {args, validator};

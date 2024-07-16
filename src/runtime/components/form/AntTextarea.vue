@@ -43,7 +43,7 @@ const props = withDefaults(defineProps<{
   grouped: Grouped.none,
   showIcon: true,
   limiter: false,
-  errors: []
+  errors: () => []
 });
 const _modelValue = useVModel(props, 'modelValue', emit);
 const icons = {

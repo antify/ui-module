@@ -1,9 +1,9 @@
 <script lang="ts" setup>
 import {computed, onMounted, watch} from 'vue';
-import AntButton from '../buttons/AntButton.vue'
-import AntField from './Elements/AntField.vue'
-import AntBaseInput from './Elements/AntBaseInput.vue'
-import {Size} from '../../enums/Size.enum'
+import AntButton from '../buttons/AntButton.vue';
+import AntField from './Elements/AntField.vue';
+import AntBaseInput from './Elements/AntBaseInput.vue';
+import {Size} from '../../enums/Size.enum';
 import {faPlus, faMinus} from '@fortawesome/free-solid-svg-icons';
 import {ColorType, InputColorType} from '../../enums/ColorType.enum';
 import {handleEnumValidation} from '../../handler';
@@ -35,7 +35,7 @@ const props = withDefaults(defineProps<{
   size: Size.md,
   steps: 1,
   limiter: false,
-  errors: [],
+  errors: () => [],
 	indicators: false
 });
 const emit = defineEmits(['update:modelValue', 'validate']);
@@ -78,7 +78,7 @@ onMounted(() => {
 
 watch(_modelValue, (val) => {
   if (hasErrors.value) {
-    emit('validate', val)
+    emit('validate', val);
   }
 });
 
@@ -92,7 +92,7 @@ function subtract() {
   }
 
   if (hasErrors.value) {
-    emit('validate', _modelValue.value)
+    emit('validate', _modelValue.value);
   }
 }
 
@@ -106,11 +106,11 @@ function add() {
   }
 
   if (hasErrors.value) {
-    emit('validate', _modelValue.value)
+    emit('validate', _modelValue.value);
   }
 }
 function onButtonBlur() {
-  emit('validate', _modelValue.value)
+  emit('validate', _modelValue.value);
 }
 </script>
 

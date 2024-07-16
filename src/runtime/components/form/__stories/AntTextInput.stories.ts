@@ -43,6 +43,25 @@ export const Docs: Story = {
   render: (args) => ({
     components: {AntTextInput},
     setup() {
+      return {args};
+    },
+    template: `
+      <AntTextInput
+        v-bind="args"
+        v-model="args.modelValue"
+      />`,
+  }),
+  args: {
+    modelValue: null,
+    label: 'Label',
+    description: 'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod'
+  },
+};
+
+export const withValidator: Story = {
+  render: (args) => ({
+    components: {AntTextInput},
+    setup() {
       const validator = reactive(useFieldValidator([isRequiredRule, notBlankRule]));
 
       return {args, validator};
@@ -63,15 +82,26 @@ export const Docs: Story = {
 };
 
 export const limited: Story = {
-  render: Docs.render,
+  render: (args) => ({
+    components: {AntTextInput},
+    setup() {
+      const validator = reactive(useFieldValidator([(val: string) => val.length <= 10 || 'Max. 10 characters allowed']));
+
+      return {args, validator};
+    },
+    template: `
+      <AntTextInput
+        v-bind="args"
+        v-model="args.modelValue"
+        :errors="Array.isArray(args.errors) ? args.errors : validator.getErrors()"
+        @validate="(val) => validator.validate(val)"
+      />`
+  }),
   args: {
     ...Docs.args,
     modelValue: 'A to long value',
     max: 10,
     limiter: true,
-    validator: useFieldValidator([
-      (val: string) => val.length <= 10 || 'Max. 10 characters allowed'
-    ])
   },
 };
 
