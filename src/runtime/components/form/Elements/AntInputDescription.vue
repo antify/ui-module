@@ -3,25 +3,25 @@ import {computed, onMounted} from 'vue';
 import {Size} from '../../../enums/Size.enum';
 import AntSkeleton from '../../AntSkeleton.vue';
 import {handleEnumValidation} from '../../../handler';
-import {InputColorType} from '../../../enums';
+import {InputState} from '../../../enums';
 
 const props = withDefaults(defineProps<{
-  colorType?: InputColorType,
+  state?: InputState,
   size?: Size;
   skeleton?: boolean;
 }>(), {
   skeleton: false,
   size: Size.md,
-  colorType: InputColorType.base
+  state: InputState.base
 });
 
 const classes = computed(() => {
-  const variants: Record<InputColorType, string> = {
-    [InputColorType.base]: 'text-for-white-bg-font',
-    [InputColorType.danger]: 'text-danger-500',
-    [InputColorType.info]: 'text-info-500',
-    [InputColorType.success]: 'text-success-500',
-    [InputColorType.warning]: 'text-warning-500',
+  const variants: Record<InputState, string> = {
+    [InputState.base]: 'text-for-white-bg-font',
+    [InputState.danger]: 'text-danger-500',
+    [InputState.info]: 'text-info-500',
+    [InputState.success]: 'text-success-500',
+    [InputState.warning]: 'text-warning-500',
   };
 
   return {
@@ -31,13 +31,13 @@ const classes = computed(() => {
     'text-sm': props.size === Size.sm,
     'text-md': props.size === Size.md,
     'text-lg': props.size === Size.lg,
-    [variants[props.colorType]]: true
+    [variants[props.state]]: true
   };
 });
 
 onMounted(() => {
   handleEnumValidation(props.size, Size, 'size');
-  handleEnumValidation(props.colorType, InputColorType, 'colorType');
+  handleEnumValidation(props.state, InputState, 'state');
 });
 </script>
 

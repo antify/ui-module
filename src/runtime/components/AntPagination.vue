@@ -10,7 +10,7 @@ import AntButton from './buttons/AntButton.vue';
 import {faChevronRight, faChevronLeft} from '@fortawesome/free-solid-svg-icons';
 import {Grouped} from '../enums/Grouped.enum';
 import AntSkeleton from './AntSkeleton.vue';
-import {ColorType} from '../enums';
+import {State} from '../enums';
 
 const emit = defineEmits(['update:skeleton', 'input']);
 const props = withDefaults(
@@ -183,7 +183,7 @@ const pagination = computed(() => {
       <AntButton
         v-for="(pageObj) in pagination"
         :key="`pagination-button-${pageObj}`"
-        :color-type="pageObj === page ? ColorType.primary : ColorType.base"
+        :state="pageObj === page ? State.primary : State.base"
         :class="{'text-primary-500 z-10': pageObj === page}"
         :disabled="pageObj === '...'"
         :grouped="Grouped.center"

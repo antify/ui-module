@@ -5,17 +5,17 @@ import {faCaretRight, faCaretLeft} from '@fortawesome/free-solid-svg-icons';
 import {type Meta, type StoryObj} from '@storybook/vue3';
 import {Size} from '../../../enums/Size.enum';
 import {Grouped as _Grouped} from '../../../enums/Grouped.enum';
-import {ColorType, InputColorType, Position} from '../../../enums';
-import {userEvent, within, expect, waitFor} from '@storybook/test';
+import {State, InputState, Position} from '../../../enums';
+import {within} from '@storybook/test';
 
 const meta: Meta<typeof AntButton> = {
 	component: AntButton,
 	title: 'Components/Buttons/Button',
 	parameters: {controls: {sort: 'requiredFirst'}},
 	argTypes: {
-		colorType: {
+		state: {
 			control: {type: 'select'},
-			options: Object.values(ColorType),
+			options: Object.values(State),
 		},
 		grouped: {
 			control: {type: 'select'},
@@ -50,9 +50,9 @@ const meta: Meta<typeof AntButton> = {
 			options: Object.values(Position),
 			description: 'The tooltips position. Tooltip is only shown if a tooltip-content slot is provided.'
 		},
-		tooltipColorType: {
+		tooltipState: {
 			control: {type: 'select'},
-			options: Object.values(InputColorType),
+			options: Object.values(InputState),
 			description: 'The tooltips color type. Tooltip is only shown if a tooltip-content slot is provided.'
 		},
 	},
@@ -239,100 +239,100 @@ export const Summary: Story = {
 						Grouped | Filled | Outlined combinations
 					</AntFormGroupLabel>
 					<div class="flex">
-						<AntButton v-bind="args" color-type="base" grouped="left" :filled="true" :outlined="false">
+						<AntButton v-bind="args" state="base" grouped="left" :filled="true" :outlined="false">
 							Button
 						</AntButton>
-						<AntButton v-bind="args" color-type="base" grouped="center" :filled="false" :outlined="false">
+						<AntButton v-bind="args" state="base" grouped="center" :filled="false" :outlined="false">
 							Button
 						</AntButton>
-						<AntButton v-bind="args" color-type="base" grouped="center" :filled="true" :outlined="true">
+						<AntButton v-bind="args" state="base" grouped="center" :filled="true" :outlined="true">
 							Button
 						</AntButton>
-						<AntButton v-bind="args" color-type="base" grouped="right" :filled="false" :outlined="true">
-							Button
-						</AntButton>
-					</div>
-					<div class="flex">
-						<AntButton v-bind="args" color-type="primary" grouped="left" :filled="true" :outlined="false">
-							Button
-						</AntButton>
-						<AntButton v-bind="args" color-type="primary" grouped="center" :filled="false" :outlined="false">
-							Button
-						</AntButton>
-						<AntButton v-bind="args" color-type="primary" grouped="center" :filled="true" :outlined="true">
-							Button
-						</AntButton>
-						<AntButton v-bind="args" color-type="primary" grouped="right" :filled="false" :outlined="true">
+						<AntButton v-bind="args" state="base" grouped="right" :filled="false" :outlined="true">
 							Button
 						</AntButton>
 					</div>
 					<div class="flex">
-						<AntButton v-bind="args" color-type="secondary" grouped="left" :filled="true" :outlined="false">
+						<AntButton v-bind="args" state="primary" grouped="left" :filled="true" :outlined="false">
 							Button
 						</AntButton>
-						<AntButton v-bind="args" color-type="secondary" grouped="center" :filled="false" :outlined="false">
+						<AntButton v-bind="args" state="primary" grouped="center" :filled="false" :outlined="false">
 							Button
 						</AntButton>
-						<AntButton v-bind="args" color-type="secondary" grouped="center" :filled="true" :outlined="true">
+						<AntButton v-bind="args" state="primary" grouped="center" :filled="true" :outlined="true">
 							Button
 						</AntButton>
-						<AntButton v-bind="args" color-type="secondary" grouped="right" :filled="false" :outlined="true">
-							Button
-						</AntButton>
-					</div>
-					<div class="flex">
-						<AntButton v-bind="args" color-type="success" grouped="left" :filled="true" :outlined="false">
-							Button
-						</AntButton>
-						<AntButton v-bind="args" color-type="success" grouped="center" :filled="false" :outlined="false">
-							Button
-						</AntButton>
-						<AntButton v-bind="args" color-type="success" grouped="center" :filled="true" :outlined="true">
-							Button
-						</AntButton>
-						<AntButton v-bind="args" color-type="success" grouped="right" :filled="false" :outlined="true">
+						<AntButton v-bind="args" state="primary" grouped="right" :filled="false" :outlined="true">
 							Button
 						</AntButton>
 					</div>
 					<div class="flex">
-						<AntButton v-bind="args" color-type="info" grouped="left" :filled="true" :outlined="false">
+						<AntButton v-bind="args" state="secondary" grouped="left" :filled="true" :outlined="false">
 							Button
 						</AntButton>
-						<AntButton v-bind="args" color-type="info" grouped="center" :filled="false" :outlined="false">
+						<AntButton v-bind="args" state="secondary" grouped="center" :filled="false" :outlined="false">
 							Button
 						</AntButton>
-						<AntButton v-bind="args" color-type="info" grouped="center" :filled="true" :outlined="true">
+						<AntButton v-bind="args" state="secondary" grouped="center" :filled="true" :outlined="true">
 							Button
 						</AntButton>
-						<AntButton v-bind="args" color-type="info" grouped="right" :filled="false" :outlined="true">
-							Button
-						</AntButton>
-					</div>
-					<div class="flex">
-						<AntButton v-bind="args" color-type="warning" grouped="left" :filled="true" :outlined="false">
-							Button
-						</AntButton>
-						<AntButton v-bind="args" color-type="warning" grouped="center" :filled="false" :outlined="false">
-							Button
-						</AntButton>
-						<AntButton v-bind="args" color-type="warning" grouped="center" :filled="true" :outlined="true">
-							Button
-						</AntButton>
-						<AntButton v-bind="args" color-type="warning" grouped="right" :filled="false" :outlined="true">
+						<AntButton v-bind="args" state="secondary" grouped="right" :filled="false" :outlined="true">
 							Button
 						</AntButton>
 					</div>
 					<div class="flex">
-						<AntButton v-bind="args" color-type="danger" grouped="left" :filled="true" :outlined="false">
+						<AntButton v-bind="args" state="success" grouped="left" :filled="true" :outlined="false">
 							Button
 						</AntButton>
-						<AntButton v-bind="args" color-type="danger" grouped="center" :filled="false" :outlined="false">
+						<AntButton v-bind="args" state="success" grouped="center" :filled="false" :outlined="false">
 							Button
 						</AntButton>
-						<AntButton v-bind="args" color-type="danger" grouped="center" :filled="true" :outlined="true">
+						<AntButton v-bind="args" state="success" grouped="center" :filled="true" :outlined="true">
 							Button
 						</AntButton>
-						<AntButton v-bind="args" color-type="danger" grouped="right" :filled="false" :outlined="true">
+						<AntButton v-bind="args" state="success" grouped="right" :filled="false" :outlined="true">
+							Button
+						</AntButton>
+					</div>
+					<div class="flex">
+						<AntButton v-bind="args" state="info" grouped="left" :filled="true" :outlined="false">
+							Button
+						</AntButton>
+						<AntButton v-bind="args" state="info" grouped="center" :filled="false" :outlined="false">
+							Button
+						</AntButton>
+						<AntButton v-bind="args" state="info" grouped="center" :filled="true" :outlined="true">
+							Button
+						</AntButton>
+						<AntButton v-bind="args" state="info" grouped="right" :filled="false" :outlined="true">
+							Button
+						</AntButton>
+					</div>
+					<div class="flex">
+						<AntButton v-bind="args" state="warning" grouped="left" :filled="true" :outlined="false">
+							Button
+						</AntButton>
+						<AntButton v-bind="args" state="warning" grouped="center" :filled="false" :outlined="false">
+							Button
+						</AntButton>
+						<AntButton v-bind="args" state="warning" grouped="center" :filled="true" :outlined="true">
+							Button
+						</AntButton>
+						<AntButton v-bind="args" state="warning" grouped="right" :filled="false" :outlined="true">
+							Button
+						</AntButton>
+					</div>
+					<div class="flex">
+						<AntButton v-bind="args" state="danger" grouped="left" :filled="true" :outlined="false">
+							Button
+						</AntButton>
+						<AntButton v-bind="args" state="danger" grouped="center" :filled="false" :outlined="false">
+							Button
+						</AntButton>
+						<AntButton v-bind="args" state="danger" grouped="center" :filled="true" :outlined="true">
+							Button
+						</AntButton>
+						<AntButton v-bind="args" state="danger" grouped="right" :filled="false" :outlined="true">
 							Button
 						</AntButton>
 					</div>

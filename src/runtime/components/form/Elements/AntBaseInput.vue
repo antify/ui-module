@@ -15,7 +15,7 @@ import {
 } from '@fortawesome/free-solid-svg-icons';
 import {handleEnumValidation} from '../../../handler';
 import {classesToObjectSyntax, hasSlotContent} from '../../../utils';
-import {InputColorType} from '../../../enums';
+import {InputState} from '../../../enums';
 import {IconSize} from '../../__types';
 
 defineOptions({inheritAttrs: false});
@@ -24,7 +24,7 @@ const emit = defineEmits(['update:value', 'blur', 'validate', 'update:inputRef']
 const props = withDefaults(defineProps<{
   value: string | number | null;
   size?: Size;
-  colorType?: InputColorType;
+  state?: InputState;
   disabled?: boolean;
   placeholder?: string;
   skeleton?: boolean;
@@ -37,7 +37,7 @@ const props = withDefaults(defineProps<{
   hasErrors?: boolean;
   inputRef?: null | HTMLInputElement;
 }>(), {
-  colorType: InputColorType.base,
+  state: InputState.base,
   disabled: false,
   size: Size.md,
   skeleton: false,
@@ -52,19 +52,19 @@ const props = withDefaults(defineProps<{
 const slot = useSlots();
 
 const icons = {
-  [InputColorType.info]: faCircleInfo,
-  [InputColorType.warning]: faExclamationTriangle,
-  [InputColorType.danger]: faExclamationCircle,
-  [InputColorType.success]: faCircleCheck,
-  [InputColorType.base]: null,
+  [InputState.info]: faCircleInfo,
+  [InputState.warning]: faExclamationTriangle,
+  [InputState.danger]: faExclamationCircle,
+  [InputState.success]: faCircleCheck,
+  [InputState.base]: null,
 };
 const inputClasses = computed(() => {
-  const variants: Record<InputColorType, string> = {
-    [InputColorType.base]: 'outline-neutral-300 focus:ring-primary-200 bg-white placeholder:text-neutral-500',
-    [InputColorType.danger]: 'outline-danger-500 focus:ring-danger-200 bg-danger-100 placeholder:text-danger-700',
-    [InputColorType.info]: 'outline-info-500 focus:ring-info-200 bg-info-100 placeholder:text-info-700',
-    [InputColorType.success]: 'outline-success-500 focus:ring-success-200 bg-success-100 placeholder:text-success-700',
-    [InputColorType.warning]: 'outline-warning-500 focus:ring-warning-200 bg-warning-100 placeholder:text-warning-700',
+  const variants: Record<InputState, string> = {
+    [InputState.base]: 'outline-neutral-300 focus:ring-primary-200 bg-white placeholder:text-neutral-500',
+    [InputState.danger]: 'outline-danger-500 focus:ring-danger-200 bg-danger-100 placeholder:text-danger-700',
+    [InputState.info]: 'outline-info-500 focus:ring-info-200 bg-info-100 placeholder:text-info-700',
+    [InputState.success]: 'outline-success-500 focus:ring-success-200 bg-success-100 placeholder:text-success-700',
+    [InputState.warning]: 'outline-warning-500 focus:ring-warning-200 bg-warning-100 placeholder:text-warning-700',
   };
 
   return {
@@ -72,7 +72,7 @@ const inputClasses = computed(() => {
     'outline-offset-[-1px] outline-1 focus:outline-offset-[-1px] focus:outline-1': true,
     'disabled:opacity-50 disabled:cursor-not-allowed': props.disabled,
     'text-right': props.type === BaseInputType.number,
-    [variants[_colorType.value]]: true,
+    [variants[_state.value]]: true,
     // Size
     'focus:ring-2 p-1 text-xs': props.size === Size.xs2,
     'focus:ring-2 p-1.5 text-xs': props.size === Size.xs,
@@ -112,18 +112,18 @@ const iconClasses = computed(() => ({
   'transition-[height]': true,
 }));
 const iconColorClass = computed(() => {
-  const variants: Record<InputColorType, string> = {
-    [InputColorType.base]: 'text-for-white-bg-font',
-    [InputColorType.danger]: 'text-danger-700',
-    [InputColorType.info]: 'text-info-700',
-    [InputColorType.success]: 'text-success-700',
-    [InputColorType.warning]: 'text-warning-700',
+  const variants: Record<InputState, string> = {
+    [InputState.base]: 'text-for-white-bg-font',
+    [InputState.danger]: 'text-danger-700',
+    [InputState.info]: 'text-info-700',
+    [InputState.success]: 'text-success-700',
+    [InputState.warning]: 'text-warning-700',
   };
 
-  return variants[_colorType.value];
+  return variants[_state.value];
 });
 const _wrapperClass = computed(() => classesToObjectSyntax(props.wrapperClass));
-const icon = computed(() => icons[_colorType.value]);
+const icon = computed(() => icons[_state.value]);
 const _value = computed<string | number | null>({
   get: () => props.value,
   set: (val: string | number | null) => {
@@ -134,7 +134,7 @@ const _value = computed<string | number | null>({
     emit('update:value', val);
   },
 });
-const _colorType = computed(() => props.hasErrors ? InputColorType.danger : props.colorType);
+const _state = computed(() => props.hasErrors ? InputState.danger : props.state);
 const inputIconSize = computed(() => {
   if (props.size === Size.xs || props.size === Size.xs2) {
     return IconSize.xs;
@@ -168,7 +168,7 @@ watch(() => props.skeleton, (val) => {
 
 onMounted(() => {
   handleEnumValidation(props.size, Size, 'size');
-  handleEnumValidation(props.colorType, InputColorType, 'colorType');
+  handleEnumValidation(props.state, InputState, 'state');
   handleEnumValidation(props.type, BaseInputType, 'Type');
   handleEnumValidation(props.grouped, Grouped, 'grouped');
 

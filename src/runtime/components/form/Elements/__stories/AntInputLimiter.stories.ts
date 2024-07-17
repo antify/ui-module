@@ -1,7 +1,7 @@
 import AntInputLimiter from '../AntInputLimiter.vue';
 import { type Meta, type StoryObj} from '@storybook/vue3';
 import {Size} from '../../../../enums/Size.enum';
-import {InputColorType} from '../../../../enums';
+import {InputState} from '../../../../enums';
 
 const meta: Meta<typeof AntInputLimiter> = {
     title: 'Components/Forms/Elements/Ant Input Limiter',
@@ -17,9 +17,9 @@ const meta: Meta<typeof AntInputLimiter> = {
             control: 'boolean',
             table: {defaultValue: {summary: false}},
         },
-        colorType: {
+        state: {
             control: {type: 'select'},
-            options: Object.values(InputColorType)
+            options: Object.values(InputState)
         },
     },
 };

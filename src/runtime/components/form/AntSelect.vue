@@ -24,7 +24,7 @@ import {faChevronDown, faChevronUp, faMultiply} from '@fortawesome/free-solid-sv
 import AntSkeleton from '../AntSkeleton.vue';
 import {vOnClickOutside} from '@vueuse/components';
 import AntButton from '../buttons/AntButton.vue';
-import {ColorType, InputColorType} from '../../enums';
+import {State, InputState} from '../../enums';
 import {IconSize} from '../__types';
 import AntDropDown from './Elements/AntDropDown.vue';
 
@@ -37,7 +37,7 @@ const props = withDefaults(
       description?: string;
       placeholder?: string;
       size?: Size;
-      colorType?: InputColorType;
+      state?: InputState;
       disabled?: boolean;
       skeleton?: boolean;
       validator?: FieldValidator;
@@ -47,7 +47,7 @@ const props = withDefaults(
       wrapperClass?: string | Record<string, boolean>;
       expanded?: boolean;
     }>(), {
-      colorType: InputColorType.base,
+      state: InputState.base,
       grouped: Grouped.none,
       size: Size.md,
       disabled: false,
@@ -67,18 +67,18 @@ const _modelValue = computed({
 });
 const valueLabel = computed(() => props.options.find(option => option.value === _modelValue.value)?.label || null);
 const inputClasses = computed(() => {
-  const variants: Record<InputColorType, string> = {
-    [InputColorType.base]: 'outline-neutral-300 bg-white focus:ring-primary-200',
-    [InputColorType.success]: 'outline-success-500 bg-success-100 focus:ring-success-200',
-    [InputColorType.info]: 'outline-info-500 bg-info-100 focus:ring-info-200',
-    [InputColorType.warning]: 'outline-warning-500 bg-warning-100 focus:ring-warning-200',
-    [InputColorType.danger]: 'outline-danger-500  bg-danger-100 focus:ring-danger-200',
+  const variants: Record<InputState, string> = {
+    [InputState.base]: 'outline-neutral-300 bg-white focus:ring-primary-200',
+    [InputState.success]: 'outline-success-500 bg-success-100 focus:ring-success-200',
+    [InputState.info]: 'outline-info-500 bg-info-100 focus:ring-info-200',
+    [InputState.warning]: 'outline-warning-500 bg-warning-100 focus:ring-warning-200',
+    [InputState.danger]: 'outline-danger-500  bg-danger-100 focus:ring-danger-200',
   };
 
   return {
     'flex items-center transition-colors border-none outline relative focus:z-10': true,
     'outline-offset-[-1px] outline-1 focus:outline-offset-[-1px] focus:outline-1': true,
-    [variants[_colorType.value]]: true,
+    [variants[_state.value]]: true,
     // Skeleton
     'invisible': props.skeleton,
     // Disabled
@@ -100,44 +100,44 @@ const inputClasses = computed(() => {
   };
 });
 const placeholderClasses = computed(() => {
-  const variants: Record<InputColorType, string> = {
-    [InputColorType.base]: 'text-neutral-500',
-    [InputColorType.success]: 'text-success-700',
-    [InputColorType.info]: 'text-info-700',
-    [InputColorType.warning]: 'text-warning-700',
-    [InputColorType.danger]: 'text-danger-700',
+  const variants: Record<InputState, string> = {
+    [InputState.base]: 'text-neutral-500',
+    [InputState.success]: 'text-success-700',
+    [InputState.info]: 'text-info-700',
+    [InputState.warning]: 'text-warning-700',
+    [InputState.danger]: 'text-danger-700',
   };
 
   return {
     'select-none text-ellipsis overflow-hidden whitespace-nowrap w-full': true,
-    [variants[_colorType.value]]: true,
+    [variants[_state.value]]: true,
   };
 });
 const inputValueClasses = computed(() => {
-  const variants: Record<InputColorType, string> = {
-    [InputColorType.base]: 'text-for-white-bg-font',
-    [InputColorType.success]: 'text-success-100-font',
-    [InputColorType.info]: 'text-info-100-font',
-    [InputColorType.warning]: 'text-warning-100-font',
-    [InputColorType.danger]: 'text-danger-100-font',
+  const variants: Record<InputState, string> = {
+    [InputState.base]: 'text-for-white-bg-font',
+    [InputState.success]: 'text-success-100-font',
+    [InputState.info]: 'text-info-100-font',
+    [InputState.warning]: 'text-warning-100-font',
+    [InputState.danger]: 'text-danger-100-font',
   };
   return {
     'select-none text-ellipsis overflow-hidden whitespace-nowrap w-full': true,
-    [variants[_colorType.value]]: true,
+    [variants[_state.value]]: true,
   };
 });
 const arrowClasses = computed(() => {
-  const variants: Record<InputColorType, string> = {
-    [InputColorType.base]: 'text-for-white-bg-font',
-    [InputColorType.success]: 'text-success-100-font',
-    [InputColorType.info]: 'text-info-100-font',
-    [InputColorType.warning]: 'text-warning-100-font',
-    [InputColorType.danger]: 'text-danger-100-font',
+  const variants: Record<InputState, string> = {
+    [InputState.base]: 'text-for-white-bg-font',
+    [InputState.success]: 'text-success-100-font',
+    [InputState.info]: 'text-info-100-font',
+    [InputState.warning]: 'text-warning-100-font',
+    [InputState.danger]: 'text-danger-100-font',
   };
 
-  return {[variants[_colorType.value]]: true};
+  return {[variants[_state.value]]: true};
 });
-const _colorType = computed(() => props.validator?.hasErrors() ? InputColorType.danger : props.colorType);
+const _state = computed(() => props.validator?.hasErrors() ? InputState.danger : props.state);
 const skeletonGrouped = computed(() => {
   if (!props.nullable || (props.nullable && _modelValue.value === null)) {
     return props.grouped;
@@ -157,7 +157,7 @@ const dropDownFocused = ref(null);
 
 onMounted(() => {
   handleEnumValidation(props.size, Size, 'size');
-  handleEnumValidation(props.colorType, InputColorType, 'colorType');
+  handleEnumValidation(props.state, InputState, 'state');
   handleEnumValidation(props.grouped, Grouped, 'grouped');
 
   props.validator?.validate(_modelValue.value);
@@ -200,7 +200,7 @@ function onClickRemoveButton() {
     :size="size"
     :skeleton="skeleton"
     :description="description"
-    :color-type="colorType"
+    :state="state"
     :validator="validator"
     :class="wrapperClass"
     :expanded="expanded"
@@ -283,7 +283,7 @@ function onClickRemoveButton() {
           :options="options"
           :input-ref="inputRef"
           :size="size"
-          :color-type="_colorType"
+          :state="_state"
           close-on-enter
           @select-element="(e) => _modelValue = e"
         />
@@ -292,7 +292,7 @@ function onClickRemoveButton() {
       <AntButton
         v-if="nullable && _modelValue !== null"
         :icon-left="faMultiply"
-        :color-type="_colorType as unknown as ColorType"
+        :state="_state as unknown as State"
         :grouped="[Grouped.left, Grouped.center].some(item => item === grouped) ? Grouped.center : Grouped.right"
         :size="size"
         :skeleton="skeleton"

@@ -6,7 +6,7 @@ import {Size} from '../../enums/Size.enum';
 import {TextInputType} from './__types/AntTextInput.type';
 import {handleEnumValidation} from '../../handler';
 import {useVModel} from '@vueuse/core';
-import {InputColorType} from '../../enums';
+import {InputState} from '../../enums';
 import {BaseInputType} from './Elements/__types';
 
 defineOptions({inheritAttrs: false});
@@ -19,7 +19,7 @@ const props = withDefaults(defineProps<{
   description?: string;
   showIcon?: boolean;
   size?: Size;
-  colorType?: InputColorType;
+  state?: InputState;
   disabled?: boolean;
   skeleton?: boolean;
   type?: TextInputType;
@@ -27,7 +27,7 @@ const props = withDefaults(defineProps<{
   max?: number;
   errors?: string[];
 }>(), {
-  colorType: InputColorType.base,
+  state: InputState.base,
   showIcon: false,
   disabled: false,
   skeleton: false,
@@ -41,7 +41,7 @@ const _value = useVModel(props, 'modelValue', emit);
 
 onMounted(() => {
   handleEnumValidation(props.size, Size, 'size');
-  handleEnumValidation(props.colorType, InputColorType, 'colorType');
+  handleEnumValidation(props.state, InputState, 'state');
   handleEnumValidation(props.type, TextInputType, 'Type');
 });
 </script>
@@ -52,7 +52,7 @@ onMounted(() => {
     :size="size"
     :skeleton="skeleton"
     :description="description"
-    :color-type="colorType"
+    :state="state"
     :limiter-max-value="limiter && max !== undefined ? max : undefined"
     :limiter-value="limiter ? _value?.length : undefined"
     :errors="errors"
@@ -61,7 +61,7 @@ onMounted(() => {
       v-model:value="_value"
       :type="type as unknown as BaseInputType"
       wrapper-class="flex-grow"
-      :color-type="colorType"
+      :state="state"
       :size="size"
       :skeleton="skeleton"
       :disabled="disabled"

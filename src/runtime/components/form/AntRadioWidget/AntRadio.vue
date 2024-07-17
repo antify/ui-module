@@ -1,6 +1,6 @@
 <script lang="ts" setup>
 import {AntField} from '../Elements';
-import {InputColorType, Size} from '../../../enums';
+import {InputState, Size} from '../../../enums';
 import AntSkeleton from '../../AntSkeleton.vue';
 import {computed, onMounted} from 'vue';
 import {AntRadioSize, type AntRadioType} from './__types/AntRadio.type';
@@ -13,15 +13,14 @@ const props = withDefaults(
   defineProps<{
     modelValue: string | null;
     value: AntRadioType;
-
     description?: string;
     skeleton?: boolean;
-    colorType?: InputColorType;
+    state?: InputState;
     size?: AntRadioSize
     readonly?: boolean;
     disabled?: boolean;
   }>(), {
-    colorType: InputColorType.base,
+    state: InputState.base,
     size: AntRadioSize.md,
     readonly: false,
     disabled: false,
@@ -46,11 +45,11 @@ const inputClasses = computed(() => {
     'relative inline-flex flex-shrink-0': true,
     'focus:ring-offset-0 outline outline-offset-[-1px] outline-1 focus:outline-offset-[-1px] focus:outline-1 rounded-full': true,
     'cursor-pointer': hasAction.value,
-    'outline-neutral-300 focus:outline-neutral-300': props.colorType === InputColorType.base,
-    'outline-info-500 focus:outline-info-500': props.colorType === InputColorType.info,
-    'outline-success-500 focus:outline-success-500': props.colorType === InputColorType.success,
-    'outline-warning-500 focus:outline-warning-500': props.colorType === InputColorType.warning,
-    'outline-danger-500 focus:outline-danger-500': props.colorType === InputColorType.danger,
+    'outline-neutral-300 focus:outline-neutral-300': props.state === InputState.base,
+    'outline-info-500 focus:outline-info-500': props.state === InputState.info,
+    'outline-success-500 focus:outline-success-500': props.state === InputState.success,
+    'outline-warning-500 focus:outline-warning-500': props.state === InputState.warning,
+    'outline-danger-500 focus:outline-danger-500': props.state === InputState.danger,
     'rounded-full transition-colors ease-in-out duration-200 disabled:opacity-50 disabled:cursor-not-allowed': true,
     'focus:ring-2': props.size === AntRadioSize.sm && hasAction.value,
     'focus:ring-4': props.size === AntRadioSize.md && hasAction.value,
@@ -59,23 +58,23 @@ const inputClasses = computed(() => {
   };
 
   const focusColorVariant = {
-    [InputColorType.base]: 'focus:ring-primary-200',
-    [InputColorType.danger]: 'focus:ring-danger-200',
-    [InputColorType.info]: 'focus:ring-info-200',
-    [InputColorType.success]: 'focus:ring-success-200',
-    [InputColorType.warning]: 'focus:ring-warning-200',
+    [InputState.base]: 'focus:ring-primary-200',
+    [InputState.danger]: 'focus:ring-danger-200',
+    [InputState.info]: 'focus:ring-info-200',
+    [InputState.success]: 'focus:ring-success-200',
+    [InputState.warning]: 'focus:ring-warning-200',
   };
 
   const activeColorVariant = {
-    [InputColorType.base]: 'text-primary-500 outline-primary-500 focus:outline-primary-500',
-    [InputColorType.danger]: 'text-danger-500 outline-danger-500 focus:outline-danger-500',
-    [InputColorType.info]: 'text-info-500 outline-info-500 focus:outline-info-500',
-    [InputColorType.success]: 'text-success-500 outline-success-500 focus:outline-success-500',
-    [InputColorType.warning]: 'text-warning-500 outline-warning-500 focus:outline-warning-500',
+    [InputState.base]: 'text-primary-500 outline-primary-500 focus:outline-primary-500',
+    [InputState.danger]: 'text-danger-500 outline-danger-500 focus:outline-danger-500',
+    [InputState.info]: 'text-info-500 outline-info-500 focus:outline-info-500',
+    [InputState.success]: 'text-success-500 outline-success-500 focus:outline-success-500',
+    [InputState.warning]: 'text-warning-500 outline-warning-500 focus:outline-warning-500',
   };
 
-  classes[focusColorVariant[props.colorType]] = hasAction.value;
-  classes[activeColorVariant[props.colorType]] = isActive.value;
+  classes[focusColorVariant[props.state]] = hasAction.value;
+  classes[activeColorVariant[props.state]] = isActive.value;
 
   return classes;
 });
@@ -94,14 +93,14 @@ const valueClass = computed(() => {
 
 onMounted(() => {
   handleEnumValidation(props.size, Size, 'size');
-  handleEnumValidation(props.colorType, InputColorType, 'colorType');
+  handleEnumValidation(props.state, InputState, 'state');
 });
 </script>
 
 <template>
   <AntField
     :description="description"
-    :color-type="colorType"
+    :state="state"
     class="cursor-pointer"
     :skeleton="skeleton"
     :size="size as unknown as Size"

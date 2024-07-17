@@ -1,4 +1,4 @@
-export enum TagColorType {
+export enum TagState {
   base = 'base',
   primary = 'primary',
   secondary = 'secondary',

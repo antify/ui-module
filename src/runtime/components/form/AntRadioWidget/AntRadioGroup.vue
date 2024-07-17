@@ -3,7 +3,7 @@ import AntRadio from './AntRadio.vue';
 import { useVModel } from '@vueuse/core';
 import { AntField } from '../Elements';
 import { type AntRadioType, AntRadioSize } from './__types/AntRadio.type';
-import { InputColorType, Size } from '../../../enums';
+import { InputState, Size } from '../../../enums';
 import { FieldValidator } from '@antify/validate';
 import { computed, type Ref, watch } from 'vue';
 import { Direction } from '../../../enums/Direction.enum';
@@ -18,7 +18,7 @@ const props = withDefaults(
     label?: string;
     description?: string;
     direction?: Direction;
-    colorType?: InputColorType;
+    state?: InputState;
     size?: AntRadioSize;
     skeleton?: boolean;
     disabled?: boolean;
@@ -26,7 +26,7 @@ const props = withDefaults(
     validator?: FieldValidator;
   }>(), {
     direction: Direction.column,
-    colorType: InputColorType.base,
+    state: InputState.base,
     size: AntRadioSize.md,
     skeleton: false,
     disabled: false,
@@ -34,7 +34,7 @@ const props = withDefaults(
   });
 
 const _value = useVModel(props, 'modelValue', emits);
-const _colorType: Ref<InputColorType | undefined> = computed(() => props.validator?.hasErrors() ? InputColorType.danger : undefined);
+const _state: Ref<InputState | undefined> = computed(() => props.validator?.hasErrors() ? InputState.danger : undefined);
 const containerClasses = computed(() => {
   const classes = {
     'flex gap-2.5 justify-start': true,
@@ -43,7 +43,7 @@ const containerClasses = computed(() => {
   };
 
   return classes;
-})
+});
 
 watch(_value, () => {
   props.validator?.validate(_value.value);
@@ -56,7 +56,7 @@ watch(_value, () => {
   <AntField
     :label="label"
     :description="description"
-    :color-type="colorType"
+    :state="state"
     :skeleton="skeleton"
     :validator="validator"
     :size="size as unknown as Size"
@@ -73,7 +73,7 @@ watch(_value, () => {
         :skeleton="skeleton"
         :disabled="disabled || radio.disabled"
         :readonly="readonly || radio.readonly"
-        :color-type="_colorType || radio.colorType || colorType"
+        :state="_state || radio.state || state"
         :size="size"
       />
     </div>

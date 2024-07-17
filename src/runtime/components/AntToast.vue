@@ -10,58 +10,58 @@ import {
 } from '@fortawesome/free-solid-svg-icons';
 import AntIcon from './AntIcon.vue';
 import AntButton from './buttons/AntButton.vue';
-import {ColorType, InputColorType, Size} from '../enums';
+import {State, InputState, Size} from '../enums';
 import {IconSize} from './__types/AntIcon.types';
 
 const props = withDefaults(defineProps<{
   title?: string,
-  colorType?: InputColorType,
+  state?: InputState,
   showUndo?: boolean,
   icon?: boolean
 }>(), {
-  colorType: InputColorType.base,
+  state: InputState.base,
   showUndo: false,
   icon: true
 });
 
 const icons = {
-  [InputColorType.base]: faInfoCircle,
-  [InputColorType.info]: faInfoCircle,
-  [InputColorType.danger]: faExclamationCircle,
-  [InputColorType.warning]: faExclamationTriangle,
-  [InputColorType.success]: faCheckCircle,
+  [InputState.base]: faInfoCircle,
+  [InputState.info]: faInfoCircle,
+  [InputState.danger]: faExclamationCircle,
+  [InputState.warning]: faExclamationTriangle,
+  [InputState.success]: faCheckCircle,
 };
 
-const _icon = computed(() => icons[props.colorType]);
+const _icon = computed(() => icons[props.state]);
 const classes = computed(() => {
-  const variants: Record<InputColorType, string> = {
-    [InputColorType.base]: 'bg-neutral-100 border-neutral-500 text-neutral-500',
-    [InputColorType.danger]: 'bg-danger-100 border-danger-500 text-danger-500',
-    [InputColorType.info]: 'bg-info-100 border-info-500 text-info-500',
-    [InputColorType.success]: 'bg-success-100 border-success-500 text-success-500',
-    [InputColorType.warning]: 'bg-warning-100 border-warning-500 text-warning-500',
+  const variants: Record<InputState, string> = {
+    [InputState.base]: 'bg-neutral-100 border-neutral-500 text-neutral-500',
+    [InputState.danger]: 'bg-danger-100 border-danger-500 text-danger-500',
+    [InputState.info]: 'bg-info-100 border-info-500 text-info-500',
+    [InputState.success]: 'bg-success-100 border-success-500 text-success-500',
+    [InputState.warning]: 'bg-warning-100 border-warning-500 text-warning-500',
   };
 
   return {
     'inline-flex flex-col gap-2 rounded-md p-2 border transition-colors shadow-md': true,
-    [variants[props.colorType]]: true,
+    [variants[props.state]]: true,
   };
 });
 const hasDefaultSlot = computed(() => useSlots()['default'] || false);
 const iconColor = computed(() => {
   const variants = {
-    [InputColorType.base]: 'text-neutral-100-font',
-    [InputColorType.danger]: 'text-danger-500',
-    [InputColorType.info]: 'text-info-500',
-    [InputColorType.success]: 'text-success-500',
-    [InputColorType.warning]: 'text-warning-500',
+    [InputState.base]: 'text-neutral-100-font',
+    [InputState.danger]: 'text-danger-500',
+    [InputState.info]: 'text-info-500',
+    [InputState.success]: 'text-success-500',
+    [InputState.warning]: 'text-warning-500',
   };
 
-  return variants[props.colorType];
+  return variants[props.state];
 });
 
 onMounted(() => {
-  handleEnumValidation(props.colorType, InputColorType, 'colorType');
+  handleEnumValidation(props.state, InputState, 'state');
 });
 </script>
 
@@ -69,7 +69,7 @@ onMounted(() => {
   <div
     :class="classes"
     data-e2e="toast"
-    :data-e2e-color-type="props.colorType"
+    :data-e2e-state="props.state"
   >
     <div class="inline-flex items-center justify-between w-content gap-2">
       <div class="inline-flex items-center gap-2">
@@ -107,7 +107,7 @@ onMounted(() => {
       class="flex justify-end"
     >
       <AntButton
-        :color-type="props.colorType as unknown as ColorType"
+        :state="props.state as unknown as State"
         :size="Size.md"
         filled
         @click="() => $emit('undo')"

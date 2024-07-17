@@ -2,7 +2,7 @@
 
 import {AntField} from './Elements';
 import type {SelectOption} from './__types';
-import {Grouped, InputColorType, Size} from '../../enums';
+import {Grouped, InputState, Size} from '../../enums';
 import type {FieldValidator} from '@antify/validate';
 import {useVModel} from '@vueuse/core';
 import {faChevronRight, type IconDefinition} from '@fortawesome/free-solid-svg-icons';
@@ -24,7 +24,7 @@ const props = withDefaults(
     description?: string;
     placeholder?: string;
     size?: AntTagInputSize;
-    colorType?: InputColorType;
+    state?: InputState;
     disabled?: boolean;
     skeleton?: boolean;
     validator?: FieldValidator;
@@ -42,7 +42,7 @@ const props = withDefaults(
     createCallback?: (item: string) => Promise<SelectOption>;
   }>(), {
     size: AntTagInputSize.md,
-    colorType: InputColorType.base,
+    state: InputState.base,
     icon: () => faChevronRight,
     grouped: Grouped.none,
 
@@ -65,15 +65,15 @@ const filteredOptions = ref(props.options);
 
 const inputRef: Ref<HTMLElement | null> = ref(null);
 
-const _colorType = computed(() => props.validator?.hasErrors() ? InputColorType.danger : props.colorType);
+const _state = computed(() => props.validator?.hasErrors() ? InputState.danger : props.state);
 
 const inputContainerClasses = computed(() => {
-  const variants: Record<InputColorType, string> = {
-    [InputColorType.base]: 'outline-neutral-300 focus-within:outline-primary-500 focus-within:ring-primary-200 bg-white',
-    [InputColorType.danger]: 'outline-danger-500 focus-within:outline-danger-500 focus-within:ring-danger-200 bg-danger-100',
-    [InputColorType.info]: 'outline-info-500 focus-within:outline-info-500 focus-within:ring-info-200 bg-info-100',
-    [InputColorType.success]: 'outline-success-500 focus-within:outline-success-500 focus-within:ring-success-200 bg-success-100',
-    [InputColorType.warning]: 'outline-warning-500 focus-within:outline-warning-500 focus-within:ring-warning-200 bg-warning-100',
+  const variants: Record<InputState, string> = {
+    [InputState.base]: 'outline-neutral-300 focus-within:outline-primary-500 focus-within:ring-primary-200 bg-white',
+    [InputState.danger]: 'outline-danger-500 focus-within:outline-danger-500 focus-within:ring-danger-200 bg-danger-100',
+    [InputState.info]: 'outline-info-500 focus-within:outline-info-500 focus-within:ring-info-200 bg-info-100',
+    [InputState.success]: 'outline-success-500 focus-within:outline-success-500 focus-within:ring-success-200 bg-success-100',
+    [InputState.warning]: 'outline-warning-500 focus-within:outline-warning-500 focus-within:ring-warning-200 bg-warning-100',
   };
 
   return {
@@ -81,7 +81,7 @@ const inputContainerClasses = computed(() => {
     'transition-colors relative border-none outline w-full focus-within:z-10': true,
     'outline-offset-[-1px] outline-1 focus-within:outline-offset-[-1px] focus-within:outline-1': true,
     'opacity-50 cursor-not-allowed': props.disabled,
-    [variants[_colorType.value]]: true,
+    [variants[_state.value]]: true,
     // Size
     'focus-within:ring-2 p-1.5 text-sm': props.size === AntTagInputSize.sm,
     'focus-within:ring-4 p-2 text-sm': props.size === AntTagInputSize.md,
@@ -97,18 +97,18 @@ const inputContainerClasses = computed(() => {
 });
 
 const inputClasses = computed(() => {
-  const variants: Record<InputColorType, string> = {
-    [InputColorType.base]: 'placeholder:text-neutral-500',
-    [InputColorType.danger]: 'placeholder:text-danger-700',
-    [InputColorType.info]: 'placeholder:text-info-700',
-    [InputColorType.success]: 'placeholder:text-success-700',
-    [InputColorType.warning]: 'placeholder:text-warning-700',
+  const variants: Record<InputState, string> = {
+    [InputState.base]: 'placeholder:text-neutral-500',
+    [InputState.danger]: 'placeholder:text-danger-700',
+    [InputState.info]: 'placeholder:text-info-700',
+    [InputState.success]: 'placeholder:text-success-700',
+    [InputState.warning]: 'placeholder:text-warning-700',
   };
 
   return {
     'outline-0 border:none ring:none bg-transparent w-full': true,
     'opacity-50 cursor-not-allowed': props.disabled,
-    [variants[_colorType.value]]: true,
+    [variants[_state.value]]: true,
   };
 });
 
@@ -228,7 +228,7 @@ function filterDropDown() {
     :size="Size.sm"
     :skeleton="_skeleton"
     :description="description"
-    :color-type="colorType"
+    :state="state"
     :validator="validator"
     :expanded="expanded"
   >
@@ -254,7 +254,7 @@ function filterDropDown() {
             v-for="(tag, index) in _modelValue"
             :key="`tag-input-tag-${index}`"
             :size="AntTagSize.xs3"
-            :color-type="_colorType"
+            :state="_state"
             dismiss
             @close="removeTag(tag)"
           >
@@ -294,7 +294,7 @@ function filterDropDown() {
         :options="filteredOptions"
         :input-ref="inputRef"
         :size="size as unknown as Size"
-        :color-type="_colorType"
+        :state="_state"
         :focus-on-open="false"
         @select-element="addTagFromOptions"
       >

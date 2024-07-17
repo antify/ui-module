@@ -1,6 +1,6 @@
 <script lang="ts" setup>
 import AntActionButton from './AntActionButton.vue';
-import {Position, Size, Grouped, ColorType} from '../../enums';
+import {Position, Size, Grouped, State} from '../../enums';
 import {faPencil} from '@fortawesome/free-solid-svg-icons';
 
 defineEmits(['click', 'blur']);
@@ -22,7 +22,7 @@ withDefaults(defineProps<{
 <template>
   <AntActionButton
     :filled="false"
-    :color-type="ColorType.base"
+    :state="State.base"
     :size="size"
     :disabled="disabled"
     :icon-left="iconVariant ? faPencil : undefined"

@@ -1,7 +1,7 @@
 import { type Meta, type StoryObj} from '@storybook/vue3';
 import {Size} from '../../../enums/Size.enum';
 import AntNumberInput from '../AntNumberInput.vue';
-import {InputColorType} from '../../../enums/ColorType.enum';
+import {InputState} from '../../../enums/State.enum';
 import {isRequiredRule, useFieldValidator} from '@antify/validate';
 import {reactive} from 'vue';
 
@@ -14,9 +14,9 @@ const meta: Meta<typeof AntNumberInput> = {
       control: {type: 'number'},
       table: {type: {summary: 'number|null'}},
     },
-    colorType: {
+    state: {
       control: {type: 'select'},
-      options: Object.values(InputColorType)
+      options: Object.values(InputState)
     },
     size: {
       control: {type: 'select'},

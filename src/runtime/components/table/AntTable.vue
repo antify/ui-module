@@ -2,7 +2,7 @@
 import {AntTableSize, AntTableSortDirection, type TableHeader} from './__types/TableHeader.type';
 import {computed, ref, type Ref, watch} from 'vue';
 import {useVModel} from '@vueuse/core';
-import {ColorType} from '../../enums';
+import {State} from '../../enums';
 import AntTh from './AntTh.vue';
 import AntTd from './AntTd.vue';
 import AntSpinner from '../AntSpinner.vue';
@@ -201,7 +201,7 @@ function rowClick(elem: Record<string, unknown>): void {
     >
       <AntSpinner
         class="!w-24 !h-24"
-        :color-type="ColorType.primary"
+        :state="State.primary"
       />
     </div>
 

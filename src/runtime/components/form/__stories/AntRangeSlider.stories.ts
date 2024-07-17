@@ -1,7 +1,7 @@
 import {type Meta, type StoryObj} from '@storybook/vue3';
 import AntRangeSlider from '../AntRangeSlider.vue';
 import {ref} from 'vue';
-import {InputColorType} from '../../../enums';
+import {InputState} from '../../../enums';
 
 const meta: Meta<typeof AntRangeSlider> = {
   title: 'Components/Forms/Range Slider',
@@ -21,9 +21,9 @@ const meta: Meta<typeof AntRangeSlider> = {
       control: 'number',
       description: 'Reactive value'
     },
-    colorType: {
+    state: {
       control: {type: 'select'},
-      options: Object.values(InputColorType)
+      options: Object.values(InputState)
     },
   }
 };

@@ -7,7 +7,7 @@ import AntSpinner from '../AntSpinner.vue';
 import {Grouped} from '../../enums/Grouped.enum';
 import {Size} from '../../enums/Size.enum';
 import {handleEnumValidation} from '../../handler';
-import {ColorType, InputColorType, Position} from '../../enums';
+import {State, InputState, Position} from '../../enums';
 import {ButtonType} from './__types';
 import AntIcon from '../AntIcon.vue';
 import AntTooltip from '../AntTooltip.vue';
@@ -18,7 +18,7 @@ defineEmits(['click', 'blur']);
 const props = withDefaults(defineProps<{
 	filled?: boolean;
 	size?: Size;
-	colorType?: ColorType;
+	state?: State;
 	iconLeft?: IconDefinition;
 	iconRight?: IconDefinition;
 	to?: RouteLocationRaw;
@@ -32,10 +32,10 @@ const props = withDefaults(defineProps<{
 	outlined?: boolean;
 	noFocus?: boolean;
 	tooltipPosition?: Position;
-	tooltipColorType?: InputColorType;
+	tooltipState?: InputState;
 	tooltipDelay?: number;
 }>(), {
-	colorType: ColorType.base,
+	state: State.base,
 	disabled: false,
 	filled: false,
 	skeleton: false,
@@ -48,11 +48,11 @@ const props = withDefaults(defineProps<{
 	outlined: true,
 	noFocus: false,
 	tooltipPosition: Position.bottom,
-	tooltipColorType: InputColorType.base,
+	tooltipState: InputState.base,
 	tooltipDelay: 800
 });
 
-const hasAction = computed(() => (props.skeleton || props.readonly || props.disabled))
+const hasAction = computed(() => (props.skeleton || props.readonly || props.disabled));
 const groupedClassList = computed(() => ({
 	'rounded-tl-md rounded-bl-md rounded-tr-none rounded-br-none -mr-px': props.grouped === Grouped.left,
 	'rounded-none -mx-px': props.grouped === Grouped.center,
@@ -61,49 +61,49 @@ const groupedClassList = computed(() => ({
 }));
 const classes = computed(() => {
 	const variants = {
-		[ColorType.base]: 'ring-primary-200 outline-neutral-300',
-		[ColorType.danger]: 'ring-danger-200 outline-danger-500',
-		[ColorType.info]: 'ring-info-200 outline-info-500',
-		[ColorType.primary]: 'ring-primary-200 outline-primary-500',
-		[ColorType.secondary]: 'ring-secondary-200 outline-secondary-500',
-		[ColorType.success]: 'ring-success-200 outline-success-500',
-		[ColorType.warning]: 'ring-warning-200 outline-warning-500',
+		[State.base]: 'ring-primary-200 outline-neutral-300',
+		[State.danger]: 'ring-danger-200 outline-danger-500',
+		[State.info]: 'ring-info-200 outline-info-500',
+		[State.primary]: 'ring-primary-200 outline-primary-500',
+		[State.secondary]: 'ring-secondary-200 outline-secondary-500',
+		[State.success]: 'ring-success-200 outline-success-500',
+		[State.warning]: 'ring-warning-200 outline-warning-500',
 	};
 	const notFilledVariants = {
-		[ColorType.base]: 'bg-white text-for-white-bg-font',
-		[ColorType.danger]: 'bg-white text-danger-500',
-		[ColorType.info]: 'bg-white text-info-500',
-		[ColorType.primary]: 'bg-white text-primary-500',
-		[ColorType.secondary]: 'bg-white text-secondary-500',
-		[ColorType.success]: 'bg-white text-success-500',
-		[ColorType.warning]: 'bg-white text-warning-500',
+		[State.base]: 'bg-white text-for-white-bg-font',
+		[State.danger]: 'bg-white text-danger-500',
+		[State.info]: 'bg-white text-info-500',
+		[State.primary]: 'bg-white text-primary-500',
+		[State.secondary]: 'bg-white text-secondary-500',
+		[State.success]: 'bg-white text-success-500',
+		[State.warning]: 'bg-white text-warning-500',
 	};
 	const notFilledHoverVariants = {
-		[ColorType.base]: 'hover:bg-neutral-100',
-		[ColorType.danger]: 'hover:bg-danger-100',
-		[ColorType.info]: 'hover:bg-info-100',
-		[ColorType.primary]: 'hover:bg-primary-100',
-		[ColorType.secondary]: 'hover:bg-secondary-100',
-		[ColorType.success]: 'hover:bg-success-100',
-		[ColorType.warning]: 'hover:bg-warning-100',
+		[State.base]: 'hover:bg-neutral-100',
+		[State.danger]: 'hover:bg-danger-100',
+		[State.info]: 'hover:bg-info-100',
+		[State.primary]: 'hover:bg-primary-100',
+		[State.secondary]: 'hover:bg-secondary-100',
+		[State.success]: 'hover:bg-success-100',
+		[State.warning]: 'hover:bg-warning-100',
 	};
 	const filledVariants = {
-		[ColorType.base]: 'bg-neutral-50 text-neutral-50-font',
-		[ColorType.danger]: 'bg-danger-500 text-danger-500-font',
-		[ColorType.info]: 'bg-info-500 text-info-500-font',
-		[ColorType.primary]: 'bg-primary-500 text-primary-500-font',
-		[ColorType.secondary]: 'bg-secondary-500 text-secondary-500-font',
-		[ColorType.success]: 'bg-success-500 text-success-500-font',
-		[ColorType.warning]: 'bg-warning-500 text-warning-500-font',
+		[State.base]: 'bg-neutral-50 text-neutral-50-font',
+		[State.danger]: 'bg-danger-500 text-danger-500-font',
+		[State.info]: 'bg-info-500 text-info-500-font',
+		[State.primary]: 'bg-primary-500 text-primary-500-font',
+		[State.secondary]: 'bg-secondary-500 text-secondary-500-font',
+		[State.success]: 'bg-success-500 text-success-500-font',
+		[State.warning]: 'bg-warning-500 text-warning-500-font',
 	};
 	const filledHoverVariants = {
-		[ColorType.base]: 'hover:bg-neutral-200',
-		[ColorType.danger]: 'hover:bg-danger-600',
-		[ColorType.info]: 'hover:bg-info-600',
-		[ColorType.primary]: 'hover:bg-primary-600',
-		[ColorType.secondary]: 'hover:bg-secondary-600',
-		[ColorType.success]: 'hover:bg-success-600',
-		[ColorType.warning]: 'hover:bg-warning-600',
+		[State.base]: 'hover:bg-neutral-200',
+		[State.danger]: 'hover:bg-danger-600',
+		[State.info]: 'hover:bg-info-600',
+		[State.primary]: 'hover:bg-primary-600',
+		[State.secondary]: 'hover:bg-secondary-600',
+		[State.success]: 'hover:bg-success-600',
+		[State.warning]: 'hover:bg-warning-600',
 	};
 
 	return {
@@ -123,34 +123,34 @@ const classes = computed(() => {
 		'invisible': props.skeleton,
 		'outline outline-1 outline-offset-[-1px]': props.outlined,
 		...groupedClassList.value,
-		[variants[props.colorType]]: true,
-		[notFilledVariants[props.colorType]]: !props.filled,
-		[notFilledHoverVariants[props.colorType]]: !props.filled && !hasAction.value,
-		[filledVariants[props.colorType]]: props.filled,
-		[filledHoverVariants[props.colorType]]: props.filled && !hasAction.value,
+		[variants[props.state]]: true,
+		[notFilledVariants[props.state]]: !props.filled,
+		[notFilledHoverVariants[props.state]]: !props.filled && !hasAction.value,
+		[filledVariants[props.state]]: props.filled,
+		[filledHoverVariants[props.state]]: props.filled && !hasAction.value,
 	};
 });
 const iconColor = computed(() => {
 	const notFilledVariants = {
-		[ColorType.base]: 'text-for-white-bg-font',
-		[ColorType.danger]: 'text-danger-500',
-		[ColorType.info]: 'text-info-500',
-		[ColorType.primary]: 'text-primary-500',
-		[ColorType.secondary]: 'text-secondary-500',
-		[ColorType.success]: 'text-success-500',
-		[ColorType.warning]: 'text-warning-500',
+		[State.base]: 'text-for-white-bg-font',
+		[State.danger]: 'text-danger-500',
+		[State.info]: 'text-info-500',
+		[State.primary]: 'text-primary-500',
+		[State.secondary]: 'text-secondary-500',
+		[State.success]: 'text-success-500',
+		[State.warning]: 'text-warning-500',
 	};
 	const filledVariants = {
-		[ColorType.base]: 'text-for-white-bg-font',
-		[ColorType.danger]: 'text-danger-500-font',
-		[ColorType.info]: 'text-info-500-font',
-		[ColorType.primary]: 'text-primary-500-font',
-		[ColorType.secondary]: 'text-secondary-500-font',
-		[ColorType.success]: 'text-success-500-font',
-		[ColorType.warning]: 'text-warning-500-font',
+		[State.base]: 'text-for-white-bg-font',
+		[State.danger]: 'text-danger-500-font',
+		[State.info]: 'text-info-500-font',
+		[State.primary]: 'text-primary-500-font',
+		[State.secondary]: 'text-secondary-500-font',
+		[State.success]: 'text-success-500-font',
+		[State.warning]: 'text-warning-500-font',
 	};
 
-	return props.filled ? filledVariants[props.colorType] : notFilledVariants[props.colorType];
+	return props.filled ? filledVariants[props.state] : notFilledVariants[props.state];
 });
 const type = computed(() => {
 	if (props.to !== undefined) {
@@ -164,19 +164,19 @@ const is = computed(() => {
 		return 'div';
 	}
 
-	return props.to !== undefined ? 'router-link' : 'button'
-})
+	return props.to !== undefined ? 'router-link' : 'button';
+});
 const getIconSize = computed(() => {
 	if (props.size === Size.xs || props.size === Size.xs2) {
-		return IconSize.xs
+		return IconSize.xs;
 	} else {
-		return IconSize.sm
+		return IconSize.sm;
 	}
-})
+});
 
 onMounted(() => {
 	handleEnumValidation(props.size, Size, 'size');
-	handleEnumValidation(props.colorType, ColorType, 'colorType');
+	handleEnumValidation(props.state, State, 'state');
 	handleEnumValidation(props.grouped, Grouped, 'grouped');
 });
 </script>
@@ -186,7 +186,7 @@ onMounted(() => {
     class="relative inline-flex h-fit"
     :class="{'w-full': props.expanded}"
     data-e2e="button"
-    :data-e2e-color-type="props.colorType"
+    :data-e2e-state="props.state"
   >
     <AntSkeleton
       v-if="skeleton"
@@ -198,7 +198,7 @@ onMounted(() => {
     <AntTooltip
       :expanded="expanded"
       :position="tooltipPosition"
-      :color-type="tooltipColorType"
+      :state="tooltipState"
       :delay="tooltipDelay"
     >
       <template #default>
@@ -215,7 +215,7 @@ onMounted(() => {
           <AntSpinner
             v-if="spinner"
             :size="size"
-            :color-type="colorType"
+            :state="state"
             :inverted="!filled"
           />
 

@@ -1,20 +1,20 @@
 <script lang="ts" setup>
 import {computed, onMounted, ref, getCurrentInstance} from 'vue';
 import {handleEnumValidation} from '../handler';
-import {InputColorType, Position} from '../enums';
+import {InputState, Position} from '../enums';
 import {classesToObjectSyntax} from '../utils';
 import {hasSlotContent} from '../utils';
 
 const props = withDefaults(defineProps<{
 	position?: Position
 	tooltipClasses?: string | Record<string, boolean>
-	colorType?: InputColorType
+	state?: InputState
 	expanded?: boolean
 	delay?: number
 }>(), {
 	position: Position.left,
 	tooltipClasses: '',
-	colorType: InputColorType.base,
+	state: InputState.base,
 	expanded: false,
 	delay: 800
 });
@@ -43,37 +43,37 @@ const itemContainerClasses = computed(() => ({
 	'justify-center rotate-90': props.position === Position.left,
 }));
 const contentClasses = computed(() => {
-	const variants: Record<InputColorType, string> = {
-		[InputColorType.base]: 'text-for-white-bg-font bg-white border-neutral-300',
-		[InputColorType.danger]: 'text-danger-500-font bg-danger-500 border-danger-500',
-		[InputColorType.info]: 'text-info-500-font bg-info-500 border-info-500',
-		[InputColorType.success]: 'text-success-500-font bg-success-500 border-success-500',
-		[InputColorType.warning]: 'text-warning-500-font bg-warning-500 border-warning-500',
+	const variants: Record<InputState, string> = {
+		[InputState.base]: 'text-for-white-bg-font bg-white border-neutral-300',
+		[InputState.danger]: 'text-danger-500-font bg-danger-500 border-danger-500',
+		[InputState.info]: 'text-info-500-font bg-info-500 border-info-500',
+		[InputState.success]: 'text-success-500-font bg-success-500 border-success-500',
+		[InputState.warning]: 'text-warning-500-font bg-warning-500 border-warning-500',
 	};
 
-	return {[variants[props.colorType]]: true};
+	return {[variants[props.state]]: true};
 });
 const svgPathClasses = computed(() => {
-	const variants: Record<InputColorType, string> = {
-		[InputColorType.base]: 'fill-white stroke-white',
-		[InputColorType.danger]: 'fill-danger-500 stroke-danger-500',
-		[InputColorType.info]: 'fill-info-500 stroke-info-500',
-		[InputColorType.success]: 'fill-success-500 stroke-success-500',
-		[InputColorType.warning]: 'fill-warning-500 stroke-warning-500',
+	const variants: Record<InputState, string> = {
+		[InputState.base]: 'fill-white stroke-white',
+		[InputState.danger]: 'fill-danger-500 stroke-danger-500',
+		[InputState.info]: 'fill-info-500 stroke-info-500',
+		[InputState.success]: 'fill-success-500 stroke-success-500',
+		[InputState.warning]: 'fill-warning-500 stroke-warning-500',
 	};
 
-	return {[variants[props.colorType]]: true};
+	return {[variants[props.state]]: true};
 });
 const arrowSvgPathClasses = computed(() => {
-	const variants: Record<InputColorType, string> = {
-		[InputColorType.base]: 'stroke-neutral-300',
-		[InputColorType.danger]: 'stroke-danger-500',
-		[InputColorType.info]: 'stroke-info-500',
-		[InputColorType.success]: 'stroke-success-500',
-		[InputColorType.warning]: 'stroke-warning-500',
+	const variants: Record<InputState, string> = {
+		[InputState.base]: 'stroke-neutral-300',
+		[InputState.danger]: 'stroke-danger-500',
+		[InputState.info]: 'stroke-info-500',
+		[InputState.success]: 'stroke-success-500',
+		[InputState.warning]: 'stroke-warning-500',
 	};
 
-	return {[variants[props.colorType]]: true};
+	return {[variants[props.state]]: true};
 });
 const timeout = ref<number | undefined>();
 const clickLock = ref(false);
@@ -81,7 +81,7 @@ const uuid = ref(getCurrentInstance()?.uid);
 
 onMounted(() => {
 	handleEnumValidation(props.position, Position, 'Position');
-	handleEnumValidation(props.colorType, InputColorType, 'colorType');
+	handleEnumValidation(props.state, InputState, 'state');
 });
 
 function onMouseOver() {

@@ -2,15 +2,15 @@
 import {computed, onMounted} from 'vue';
 import {AntSpinnerSize} from './__types/AntSpinner.types';
 import {handleEnumValidation} from '../handler';
-import {ColorType} from '../enums/ColorType.enum';
+import {State} from '../enums/State.enum';
 
 const props = withDefaults(defineProps<{
-  colorType?: ColorType,
+  state?: State,
   size?: AntSpinnerSize;
   inverted?: boolean;
 }>(), {
   size: AntSpinnerSize.md,
-  colorType: ColorType.base,
+  state: State.base,
   inverted: false
 });
 
@@ -27,56 +27,56 @@ const classes = computed(() => ({
 }));
 onMounted(() => {
   handleEnumValidation(props.size, AntSpinnerSize, 'size');
-  handleEnumValidation(props.colorType, ColorType, 'colorType');
+  handleEnumValidation(props.state, State, 'state');
 });
 const circleClass = computed(() => {
-  const invertedVariants: Record<ColorType, string> = {
-    [ColorType.base]: 'fill-neutral-500',
-    [ColorType.primary]: 'fill-primary-700',
-    [ColorType.secondary]: 'fill-secondary-700',
-    [ColorType.danger]: 'fill-danger-700',
-    [ColorType.info]: 'fill-info-700',
-    [ColorType.success]: 'fill-success-700',
-    [ColorType.warning]: 'fill-warning-700',
+  const invertedVariants: Record<State, string> = {
+    [State.base]: 'fill-neutral-500',
+    [State.primary]: 'fill-primary-700',
+    [State.secondary]: 'fill-secondary-700',
+    [State.danger]: 'fill-danger-700',
+    [State.info]: 'fill-info-700',
+    [State.success]: 'fill-success-700',
+    [State.warning]: 'fill-warning-700',
   };
-  const notInvertedVariants: Record<ColorType, string> = {
-    [ColorType.base]: 'fill-neutral-100',
-    [ColorType.primary]: 'fill-primary-100',
-    [ColorType.secondary]: 'fill-secondary-100',
-    [ColorType.danger]: 'fill-danger-100',
-    [ColorType.info]: 'fill-info-100',
-    [ColorType.success]: 'fill-success-100',
-    [ColorType.warning]: 'fill-warning-100',
+  const notInvertedVariants: Record<State, string> = {
+    [State.base]: 'fill-neutral-100',
+    [State.primary]: 'fill-primary-100',
+    [State.secondary]: 'fill-secondary-100',
+    [State.danger]: 'fill-danger-100',
+    [State.info]: 'fill-info-100',
+    [State.success]: 'fill-success-100',
+    [State.warning]: 'fill-warning-100',
   };
 
   return {
-    [invertedVariants[props.colorType]]: props.inverted,
-    [notInvertedVariants[props.colorType]]: !props.inverted,
+    [invertedVariants[props.state]]: props.inverted,
+    [notInvertedVariants[props.state]]: !props.inverted,
   };
 });
 const spinningElementClass = computed(() => {
-  const invertedVariants: Record<ColorType, string> = {
-    [ColorType.base]: 'fill-neutral-100',
-    [ColorType.primary]: 'fill-primary-100',
-    [ColorType.secondary]: 'fill-secondary-100',
-    [ColorType.danger]: 'fill-danger-100',
-    [ColorType.info]: 'fill-info-100',
-    [ColorType.success]: 'fill-success-100',
-    [ColorType.warning]: 'fill-warning-100',
+  const invertedVariants: Record<State, string> = {
+    [State.base]: 'fill-neutral-100',
+    [State.primary]: 'fill-primary-100',
+    [State.secondary]: 'fill-secondary-100',
+    [State.danger]: 'fill-danger-100',
+    [State.info]: 'fill-info-100',
+    [State.success]: 'fill-success-100',
+    [State.warning]: 'fill-warning-100',
   };
-  const notInvertedVariants: Record<ColorType, string> = {
-    [ColorType.base]: 'fill-neutral-500',
-    [ColorType.primary]: 'fill-primary-500',
-    [ColorType.secondary]: 'fill-secondary-500',
-    [ColorType.danger]: 'fill-danger-500',
-    [ColorType.info]: 'fill-info-500',
-    [ColorType.success]: 'fill-success-500',
-    [ColorType.warning]: 'fill-warning-500',
+  const notInvertedVariants: Record<State, string> = {
+    [State.base]: 'fill-neutral-500',
+    [State.primary]: 'fill-primary-500',
+    [State.secondary]: 'fill-secondary-500',
+    [State.danger]: 'fill-danger-500',
+    [State.info]: 'fill-info-500',
+    [State.success]: 'fill-success-500',
+    [State.warning]: 'fill-warning-500',
   };
 
   return {
-    [invertedVariants[props.colorType]]: props.inverted,
-    [notInvertedVariants[props.colorType]]: !props.inverted,
+    [invertedVariants[props.state]]: props.inverted,
+    [notInvertedVariants[props.state]]: !props.inverted,
   };
 });
 </script>

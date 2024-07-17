@@ -3,7 +3,7 @@ import AntField from './Elements/AntField.vue';
 import {computed, type Ref} from 'vue';
 import {FieldValidator} from '@antify/validate';
 import AntSkeleton from '../AntSkeleton.vue';
-import {InputColorType, Size} from '../../enums';
+import {InputState, Size} from '../../enums';
 import {AntSwitchSize} from './__types/AntSwitchTypes';
 
 const emits = defineEmits(['update:modelValue', 'input']);
@@ -17,10 +17,10 @@ const props = withDefaults(defineProps<{
   disabled?: boolean;
   validator?: FieldValidator;
   size?: AntSwitchSize;
-  colorType?: InputColorType
+  state?: InputState
 }>(), {
   size: AntSwitchSize.md,
-  colorType: InputColorType.base
+  state: InputState.base
 });
 
 const _value = computed({
@@ -31,7 +31,7 @@ const _value = computed({
   }
 });
 const hasAction = computed(() => (!props.skeleton && !props.readonly && !props.disabled));
-const _colorType: Ref<InputColorType> = computed(() => props.validator?.hasErrors() ? InputColorType.danger : props.colorType);
+const _state: Ref<InputState> = computed(() => props.validator?.hasErrors() ? InputState.danger : props.state);
 
 const buttonClasses = computed(() => {
   const classes: { [key: string]: boolean } = {
@@ -50,22 +50,22 @@ const buttonClasses = computed(() => {
   };
 
   const colorVariant = {
-    [InputColorType.base]: 'focus-within:ring-primary-200',
-    [InputColorType.danger]: 'focus-within:ring-danger-200 outline outline-1 -outline-offset-1 outline-danger-500',
-    [InputColorType.info]: 'focus-within:ring-info-200 outline outline-1 -outline-offset-1 outline-info-500',
-    [InputColorType.success]: 'focus-within:ring-success-200 outline outline-1 -outline-offset-1 outline-success-500',
-    [InputColorType.warning]: 'focus-within:ring-warning-200 outline outline-1 -outline-offset-1 outline-warning-500',
+    [InputState.base]: 'focus-within:ring-primary-200',
+    [InputState.danger]: 'focus-within:ring-danger-200 outline outline-1 -outline-offset-1 outline-danger-500',
+    [InputState.info]: 'focus-within:ring-info-200 outline outline-1 -outline-offset-1 outline-info-500',
+    [InputState.success]: 'focus-within:ring-success-200 outline outline-1 -outline-offset-1 outline-success-500',
+    [InputState.warning]: 'focus-within:ring-warning-200 outline outline-1 -outline-offset-1 outline-warning-500',
   };
   const activeColorVariant = {
-    [InputColorType.base]: 'bg-primary-500',
-    [InputColorType.danger]: 'bg-danger-500',
-    [InputColorType.info]: 'bg-info-500',
-    [InputColorType.success]: 'bg-success-500',
-    [InputColorType.warning]: 'bg-warning-500',
+    [InputState.base]: 'bg-primary-500',
+    [InputState.danger]: 'bg-danger-500',
+    [InputState.info]: 'bg-info-500',
+    [InputState.success]: 'bg-success-500',
+    [InputState.warning]: 'bg-warning-500',
   };
 
-  classes[colorVariant[_colorType.value]] = true;
-  classes[activeColorVariant[_colorType.value]] = _value.value;
+  classes[colorVariant[_state.value]] = true;
+  classes[activeColorVariant[_state.value]] = _value.value;
 
   return classes;
 });
@@ -110,7 +110,7 @@ function changeValue() {
     :description="description"
     :skeleton="skeleton"
     :validator="validator"
-    :color-type="colorType"
+    :state="state"
   >
     <div class="relative w-fit flex items-center gap-1.5">
       <div class="relative w-fit flex items-center">

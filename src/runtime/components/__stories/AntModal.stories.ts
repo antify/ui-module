@@ -47,7 +47,7 @@ export const Docs: Story = {
           sed diam voluptua. At vero eos et accusam et <br/>
           justo duo dolores et ea rebum. Stet clita kasd
         </div>
-        <AntButton @click="() => open = true" color-type="primary">Open Modal</AntButton>
+        <AntButton @click="() => open = true" state="primary">Open Modal</AntButton>
 
         <AntModal v-bind="args" v-model:open="open">
           Lorem ipsum dolor sit amet, consetetur sadipscing elitr, <br/>
@@ -64,7 +64,7 @@ export const Docs: Story = {
                 to close modal
               </div>
 
-              <AntButton color-type="primary">Save</AntButton>
+              <AntButton state="primary">Save</AntButton>
             </div>
           </template>
         </AntModal>

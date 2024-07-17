@@ -31,7 +31,7 @@ export const Docs: Story = {
       <AntFormGroup v-bind="args">
         <AntFormGroupLabel>Example label</AntFormGroupLabel>
         <AntTextInput label="Example"/>
-        <AntButton color-type="primary">Submit</AntButton>
+        <AntButton state="primary">Submit</AntButton>
       </AntFormGroup>
     `,
   }),

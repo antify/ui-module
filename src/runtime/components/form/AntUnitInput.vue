@@ -6,7 +6,7 @@ import AntBaseInput from './Elements/AntBaseInput.vue';
 import {Size} from '../../enums/Size.enum';
 import {type IconDefinition} from '@fortawesome/free-solid-svg-icons';
 import {useVModel} from '@vueuse/core';
-import {ColorType, InputColorType} from '../../enums';
+import {State, InputState} from '../../enums';
 import {Grouped} from '../../enums/Grouped.enum';
 import {BaseInputType} from './Elements/__types';
 import {handleEnumValidation} from '../../handler';
@@ -24,13 +24,13 @@ const props = withDefaults(defineProps<{
   min?: number;
   max?: number;
   size?: Size;
-  colorType?: InputColorType;
+  state?: InputState;
   disabled?: boolean;
   skeleton?: boolean;
   wrapperClass?: string | Record<string, boolean>;
   errors?: string[];
 }>(), {
-  colorType: InputColorType.base,
+  state: InputState.base,
   disabled: false,
   skeleton: false,
   size: Size.md,
@@ -39,11 +39,11 @@ const props = withDefaults(defineProps<{
 });
 const emit = defineEmits(['update:modelValue', 'validate']);
 const _modelValue = useVModel(props, 'modelValue', emit);
-const _colorType = computed(() => hasErrors.value ? InputColorType.danger : props.colorType);
+const _state = computed(() => hasErrors.value ? InputState.danger : props.state);
 const hasErrors = computed(() => props.errors.length > 0);
 
 onMounted(() => {
-  handleEnumValidation(props.colorType, InputColorType, 'colorType');
+  handleEnumValidation(props.state, InputState, 'state');
   handleEnumValidation(props.size, Size, 'size');
 });
 </script>
@@ -54,7 +54,7 @@ onMounted(() => {
     :size="size"
     :skeleton="skeleton"
     :description="description"
-    :color-type="colorType"
+    :state="state"
     :validator="validator"
     :limiter-max-value="limiter && max !== undefined ? max : undefined"
     :limiter-value="limiter && _modelValue !== undefined && _modelValue !== null ? _modelValue : undefined"
@@ -68,7 +68,7 @@ onMounted(() => {
         :type="BaseInputType.number"
         :grouped="Grouped.left"
         wrapper-class="flex-grow"
-        :color-type="colorType"
+        :state="state"
         :size="size"
         :min="min"
         :max="max"
@@ -84,7 +84,7 @@ onMounted(() => {
       <AntButton
         :icon-left="typeof unit === 'object' ? unit : undefined"
         :grouped="Grouped.right"
-        :color-type="_colorType as unknown as ColorType"
+        :state="_state as unknown as State"
         :size="size"
         :skeleton="skeleton"
         :readonly="true"

@@ -1,60 +1,60 @@
 <script lang="ts" setup>
 import {computed, onMounted} from 'vue';
 import {type IconDefinition} from '@fortawesome/free-solid-svg-icons';
-import {ListGroupItemColorType} from '../types/AntListGroupItem.type';
+import {ListGroupItemState} from '../types/AntListGroupItem.type';
 import {handleEnumValidation} from '../handler';
 import {type RouteLocationRaw} from 'vue-router';
 import AntIcon from './AntIcon.vue';
 
 const props = withDefaults(defineProps<{
   to?: RouteLocationRaw | string;
-  colorType?: ListGroupItemColorType;
+  state?: ListGroupItemState;
   iconLeft?: IconDefinition;
   iconRight?: IconDefinition;
 }>(), {
-  colorType: ListGroupItemColorType.base,
+  state: ListGroupItemState.base,
 });
 
 const classes = computed(() => {
-  const variants: Record<ListGroupItemColorType, string> = {
-    [ListGroupItemColorType.danger]: 'bg-danger-500 text-danger-500-font hover:bg-danger-700',
-    [ListGroupItemColorType.info]: 'bg-info-500 text-info-500-font hover:bg-info-700',
-    [ListGroupItemColorType.neutral700]: 'bg-neutral-700 text-neutral-700-font hover:bg-neutral-800',
-    [ListGroupItemColorType.neutral300]: 'bg-neutral-300 text-neutral-300-font hover:bg-neutral-400',
-    [ListGroupItemColorType.base]: 'bg-white text-for-white-bg-font hover:bg-neutral-200',
-    [ListGroupItemColorType.primary]: 'bg-primary-500 text-primary-500-font hover:bg-primary-700',
-    [ListGroupItemColorType.secondary]: 'bg-secondary-500 text-secondary-500-font hover:bg-secondary-700',
-    [ListGroupItemColorType.success]: 'bg-success-500 text-success-500-font hover:bg-success-700',
-    [ListGroupItemColorType.warning]: 'bg-warning-500 text-warning-500-font hover:bg-warning-700',
+  const variants: Record<ListGroupItemState, string> = {
+    [ListGroupItemState.danger]: 'bg-danger-500 text-danger-500-font hover:bg-danger-700',
+    [ListGroupItemState.info]: 'bg-info-500 text-info-500-font hover:bg-info-700',
+    [ListGroupItemState.neutral700]: 'bg-neutral-700 text-neutral-700-font hover:bg-neutral-800',
+    [ListGroupItemState.neutral300]: 'bg-neutral-300 text-neutral-300-font hover:bg-neutral-400',
+    [ListGroupItemState.base]: 'bg-white text-for-white-bg-font hover:bg-neutral-200',
+    [ListGroupItemState.primary]: 'bg-primary-500 text-primary-500-font hover:bg-primary-700',
+    [ListGroupItemState.secondary]: 'bg-secondary-500 text-secondary-500-font hover:bg-secondary-700',
+    [ListGroupItemState.success]: 'bg-success-500 text-success-500-font hover:bg-success-700',
+    [ListGroupItemState.warning]: 'bg-warning-500 text-warning-500-font hover:bg-warning-700',
   };
 
   return {
     'text-sm transition-colors inline-block w-full': true,
-    [variants[props.colorType]]: true,
+    [variants[props.state]]: true,
   };
 });
 const contentWrapperClasses = computed(() => {
-  const variants: Record<ListGroupItemColorType, string> = {
-   [ListGroupItemColorType.danger]: 'text-danger-500-font',
-   [ListGroupItemColorType.info]: 'text-info-500-font',
-   [ListGroupItemColorType.neutral700]: 'text-neutral-700-font',
-   [ListGroupItemColorType.neutral300]: 'text-neutral-300-font',
-   [ListGroupItemColorType.base]: 'text-for-white-bg-font',
-   [ListGroupItemColorType.primary]: 'text-primary-500-font',
-   [ListGroupItemColorType.secondary]: 'text-secondary-500-font',
-   [ListGroupItemColorType.success]: 'text-success-500-font',
-   [ListGroupItemColorType.warning]: 'text-warning-500-font',
+  const variants: Record<ListGroupItemState, string> = {
+   [ListGroupItemState.danger]: 'text-danger-500-font',
+   [ListGroupItemState.info]: 'text-info-500-font',
+   [ListGroupItemState.neutral700]: 'text-neutral-700-font',
+   [ListGroupItemState.neutral300]: 'text-neutral-300-font',
+   [ListGroupItemState.base]: 'text-for-white-bg-font',
+   [ListGroupItemState.primary]: 'text-primary-500-font',
+   [ListGroupItemState.secondary]: 'text-secondary-500-font',
+   [ListGroupItemState.success]: 'text-success-500-font',
+   [ListGroupItemState.warning]: 'text-warning-500-font',
   };
 
   return {
     'w-full p-2 flex gap-2 items-center justify-between': true,
     'cursor-pointer transition-colors': props.to !== undefined,
-    [variants[props.colorType]]: props.to !== undefined
+    [variants[props.state]]: props.to !== undefined
   };
 });
 
 onMounted(() => {
-  handleEnumValidation(props.colorType, ListGroupItemColorType, 'colorType');
+  handleEnumValidation(props.state, ListGroupItemState, 'state');
 });
 </script>
 

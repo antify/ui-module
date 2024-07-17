@@ -6,7 +6,7 @@ import AntIcon from '../AntIcon.vue';
 import {Size} from '../../enums/Size.enum';
 import {faEye, faEyeSlash} from '@fortawesome/free-solid-svg-icons';
 import {useVModel} from '@vueuse/core';
-import {InputColorType} from '../../enums';
+import {InputState} from '../../enums';
 import {BaseInputType} from './Elements/__types';
 import {handleEnumValidation} from '../../handler';
 import {IconSize} from '../__types/AntIcon.types';
@@ -19,12 +19,12 @@ const props = withDefaults(defineProps<{
   placeholder?: string;
   description?: string;
   size?: Size;
-  colorType?: InputColorType;
+  state?: InputState;
   disabled?: boolean;
   skeleton?: boolean;
   errors?: string[];
 }>(), {
-  colorType: InputColorType.base,
+  state: InputState.base,
   disabled: false,
   skeleton: false,
   size: Size.md,
@@ -32,11 +32,11 @@ const props = withDefaults(defineProps<{
 });
 const emit = defineEmits(['update:modelValue', 'validate']);
 const _modelValue = useVModel(props, 'modelValue', emit);
-const _colorType = computed(() => hasErrors.value ? InputColorType.danger : props.colorType);
+const _state = computed(() => hasErrors.value ? InputState.danger : props.state);
 const hasErrors = computed(() => props.errors.length > 0);
 
 onMounted(() => {
-  handleEnumValidation(props.colorType, InputColorType, 'colorType');
+  handleEnumValidation(props.state, InputState, 'state');
   handleEnumValidation(props.size, Size, 'size');
 });
 
@@ -49,14 +49,14 @@ const iconSize = computed(() => {
   }
 });
 const iconColor = computed(() => {
-  switch (_colorType.value) {
-    case InputColorType.info:
+  switch (_state.value) {
+    case InputState.info:
       return 'text-info-700';
-    case InputColorType.success:
+    case InputState.success:
       return 'text-success-700';
-    case InputColorType.warning:
+    case InputState.warning:
       return 'text-warning-700';
-    case InputColorType.danger:
+    case InputState.danger:
       return 'text-danger-700';
     default:
       return 'text-neutral-500';
@@ -70,7 +70,7 @@ const iconColor = computed(() => {
     :size="size"
     :skeleton="skeleton"
     :description="description"
-    :color-type="_colorType"
+    :state="_state"
     :errors="errors"
   >
     <div
@@ -79,7 +79,7 @@ const iconColor = computed(() => {
       <AntBaseInput
         v-model:value="_modelValue"
         :type="isVisible ? BaseInputType.text : BaseInputType.password"
-        :color-type="colorType"
+        :state="state"
         :size="size"
         :skeleton="skeleton"
         :disabled="disabled"

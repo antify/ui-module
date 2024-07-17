@@ -3,17 +3,17 @@ import AntField from './Elements/AntField.vue';
 import {FieldValidator} from '@antify/validate';
 import {useVModel} from '@vueuse/core';
 import {computed, onMounted} from 'vue';
-import {InputColorType, Size} from '../../enums';
+import {InputState, Size} from '../../enums';
 import {handleEnumValidation} from '../../handler';
 
 defineOptions({ inheritAttrs: false });
 
-const emits = defineEmits(['update:modelValue', 'update:skeleton'])
+const emits = defineEmits(['update:modelValue', 'update:skeleton']);
 const props = withDefaults(defineProps<{
   modelValue: number | number[] | undefined;
   label?: string;
   description?: string;
-  colorType?: InputColorType;
+  state?: InputState;
   size?: Size,
   disabled?: boolean;
   skeleton?: boolean;
@@ -21,7 +21,7 @@ const props = withDefaults(defineProps<{
   min?: number;
   max?: number;
 }>(), {
-  colorType: InputColorType.base,
+  state: InputState.base,
   size: Size.md,
   disabled: false,
   skeleton: false,
@@ -29,26 +29,26 @@ const props = withDefaults(defineProps<{
 });
 
 const value = useVModel(props, 'modelValue', emits);
-const _colorType = computed(() => props.validator?.hasErrors() ? InputColorType.danger : props.colorType);
+const _state = computed(() => props.validator?.hasErrors() ? InputState.danger : props.state);
 const inputClasses = computed(() => {
-  const variants: Record<InputColorType, string> = {
-    [InputColorType.base]: 'text-neutral-base',
-    [InputColorType.danger]: 'text-danger-base',
-    [InputColorType.info]: 'text-info-base',
-    [InputColorType.success]: 'text-success-base',
-    [InputColorType.warning]: 'text-warning-base',
+  const variants: Record<InputState, string> = {
+    [InputState.base]: 'text-neutral-base',
+    [InputState.danger]: 'text-danger-base',
+    [InputState.info]: 'text-info-base',
+    [InputState.success]: 'text-success-base',
+    [InputState.warning]: 'text-warning-base',
   };
 
   return {
     'ant-range-slider transition-colors relative border-none w-full focus:z-10 h-2 bg-neutral-300 rounded-md outline-none': true,
     'disabled:opacity-50 disabled:cursor-not-allowed': props.disabled,
     'invisible': props.skeleton,
-    [variants[_colorType.value]]: true
+    [variants[_state.value]]: true
   };
 });
 
 onMounted(() => {
-  handleEnumValidation(props.colorType, InputColorType, 'colorType');
+  handleEnumValidation(props.state, InputState, 'state');
   handleEnumValidation(props.size, Size, 'size');
 
   props.validator?.validate(props.modelValue);
@@ -61,7 +61,7 @@ onMounted(() => {
     :size="size"
     :skeleton="skeleton"
     :description="description"
-    :color-type="colorType"
+    :state="state"
     :validator="validator"
   >
     <input

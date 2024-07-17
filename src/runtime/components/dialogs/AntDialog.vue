@@ -11,7 +11,7 @@ import {
   faInfoCircle,
   type IconDefinition,
 } from '@fortawesome/free-solid-svg-icons';
-import {ColorType, InputColorType} from '../../enums';
+import {State, InputState} from '../../enums';
 import {IconSize} from '../__types';
 
 const emit = defineEmits(['update:open', 'close', 'confirm']);
@@ -21,9 +21,9 @@ const props = withDefaults(defineProps<{
   confirmText?: string,
   cancelText?: string,
   showCancel?: boolean,
-  colorType?: InputColorType
+  state?: InputState
 }>(), {
-  colorType: InputColorType.base,
+  state: InputState.base,
   confirmText: 'Confirm',
   cancelText: 'Cancel',
   showCancel: true,
@@ -32,23 +32,23 @@ const props = withDefaults(defineProps<{
 const openDialog = ref(props.open);
 const openBackground = ref(props.open);
 const icons = {
-  [InputColorType.base]: null,
-  [InputColorType.info]: faInfoCircle,
-  [InputColorType.danger]: faExclamationCircle,
-  [InputColorType.warning]: faExclamationTriangle,
-  [InputColorType.success]: faCheckCircle,
+  [InputState.base]: null,
+  [InputState.info]: faInfoCircle,
+  [InputState.danger]: faExclamationCircle,
+  [InputState.warning]: faExclamationTriangle,
+  [InputState.success]: faCheckCircle,
 };
 
 const iconColor = computed(() => {
   const variants = {
-    [InputColorType.base]: 'text-neutral-100-font',
-    [InputColorType.danger]: 'text-danger-500',
-    [InputColorType.info]: 'text-info-500',
-    [InputColorType.success]: 'text-success-500',
-    [InputColorType.warning]: 'text-warning-500',
+    [InputState.base]: 'text-neutral-100-font',
+    [InputState.danger]: 'text-danger-500',
+    [InputState.info]: 'text-info-500',
+    [InputState.success]: 'text-success-500',
+    [InputState.warning]: 'text-warning-500',
   };
 
-  return variants[props.colorType];
+  return variants[props.state];
 });
 
 watch(() => props.open, (val) => {
@@ -104,9 +104,9 @@ function confirmDialog() {
           <div class="bg-white p-2 grow flex items-center gap-2 text-sm text-for-white-bg-font">
             <slot name="icon">
               <AntIcon
-                v-if="icons[colorType]"
+                v-if="icons[state]"
                 :size="IconSize.xl3"
-                :icon="icons[colorType] as unknown as IconDefinition"
+                :icon="icons[state] as unknown as IconDefinition"
                 :color="iconColor"
                 class="px-2.5 w-8 h-8"
               />
@@ -121,14 +121,14 @@ function confirmDialog() {
             <slot name="footer">
               <AntButton
                 v-if="showCancel"
-                :color-type="ColorType.base"
+                :state="State.base"
                 @click="closeDialog()"
               >
                 {{ cancelText }}
               </AntButton>
 
               <AntButton
-                :color-type="colorType === ColorType.base ? ColorType.primary : colorType as unknown as ColorType"
+                :state="state === State.base ? State.primary : state as unknown as State"
                 filled
                 @click="confirmDialog()"
               >
