@@ -20,7 +20,7 @@ import {IconSize} from '../../__types';
 
 defineOptions({inheritAttrs: false});
 
-const emit = defineEmits(['update:value', 'blur', 'validate']);
+const emit = defineEmits(['update:value', 'blur', 'validate', 'update:inputRef']);
 const props = withDefaults(defineProps<{
   value: string | number | null;
   size?: Size;
@@ -35,6 +35,7 @@ const props = withDefaults(defineProps<{
   iconLeft?: IconDefinition;
   nullable?: boolean;
   hasErrors?: boolean;
+  inputRef?: null | HTMLInputElement;
 }>(), {
   colorType: InputColorType.base,
   disabled: false,
@@ -45,7 +46,8 @@ const props = withDefaults(defineProps<{
   showIcon: true,
   default: false,
   nullable: false,
-  hasErrors: false
+  hasErrors: false,
+  inputRef: null
 });
 const slot = useSlots();
 
@@ -56,7 +58,6 @@ const icons = {
   [InputColorType.success]: faCircleCheck,
   [InputColorType.base]: null,
 };
-
 const inputClasses = computed(() => {
   const variants: Record<InputColorType, string> = {
     [InputColorType.base]: 'outline-neutral-300 focus:ring-primary-200 bg-white placeholder:text-neutral-500',
@@ -141,6 +142,14 @@ const inputIconSize = computed(() => {
     return IconSize.sm;
   }
 });
+const _inputRef = computed({
+  get() {
+    return props.inputRef;
+  },
+  set(val) {
+    emit('update:inputRef', val);
+  }
+});
 
 watch(_value, (val) => {
   if (props.hasErrors) {
@@ -195,6 +204,7 @@ function onBlur(e: FocusEvent) {
     </div>
 
     <input
+      ref="_inputRef"
       v-model="_value"
       :class="inputClasses"
       :type="type"
@@ -270,6 +280,23 @@ input[type="search"]::-webkit-search-decoration,
 input[type="search"]::-webkit-search-cancel-button,
 input[type="search"]::-webkit-search-results-button,
 input[type="search"]::-webkit-search-results-decoration {
+  display: none;
+}
+
+/* Remove calendar icon in Chrome */
+input[type="date"]::-webkit-datetime-edit-fields-wrapper,
+input[type="datetime-local"]::-webkit-datetime-edit-fields-wrapper,
+input[type="month"]::-webkit-datetime-edit-fields-wrapper,
+input[type="time"]::-webkit-datetime-edit-fields-wrapper,
+input[type="week"]::-webkit-datetime-edit-fields-wrapper {
+  padding: 0;
+}
+
+input[type="date"]::-webkit-calendar-picker-indicator,
+input[type="datetime-local"]::-webkit-calendar-picker-indicator,
+input[type="month"]::-webkit-calendar-picker-indicator,
+input[type="time"]::-webkit-calendar-picker-indicator,
+input[type="week"]::-webkit-calendar-picker-indicator {
   display: none;
 }
 </style>
