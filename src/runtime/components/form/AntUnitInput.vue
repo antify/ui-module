@@ -55,7 +55,6 @@ onMounted(() => {
     :skeleton="skeleton"
     :description="description"
     :state="state"
-    :validator="validator"
     :limiter-max-value="limiter && max !== undefined ? max : undefined"
     :limiter-value="limiter && _modelValue !== undefined && _modelValue !== null ? _modelValue : undefined"
     :errors="errors"

@@ -3,7 +3,7 @@ import {Size} from '../../../enums/Size.enum';
 import AntUnitInput from '../AntUnitInput.vue';
 import {faEuroSign} from '@fortawesome/free-solid-svg-icons';
 import {InputState} from '../../../enums';
-import {isRequiredRule, useFieldValidator} from '@antify/validate';
+import {isRequiredRule, notBlankRule, useFieldValidator} from '@antify/validate';
 import {reactive} from 'vue';
 
 const meta: Meta<typeof AntUnitInput> = {
@@ -69,7 +69,9 @@ export const withValidator: Story = {
   render: (args) => ({
     components: {AntUnitInput},
     setup() {
-      return {args};
+      const validator = reactive(useFieldValidator([isRequiredRule, notBlankRule]));
+
+      return {args, validator};
     },
     template: `
       <AntUnitInput
@@ -77,7 +79,7 @@ export const withValidator: Story = {
         v-model="args.modelValue"
         :unit="args.unit"
         :errors="Array.isArray(args.errors) ? args.errors : validator.getErrors()"
-        @validate="(val) => validator.validate(val)"
+        @validate="val => validator.validate(val)"
       />`,
   }),
   args: {
