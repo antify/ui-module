@@ -37,9 +37,28 @@ export const Docs: Story = {
   render: (args) => ({
     components: {AntNumberInput},
     setup() {
+      return {args};
+    },
+    template: `
+      <AntNumberInput
+        v-bind="args"
+        v-model="args.modelValue"
+      />`
+  }),
+  args: {
+    modelValue: null,
+    steps: 1,
+    label: 'Label',
+    description: 'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod'
+  },
+};
+
+export const withValidator: Story = {
+  render: (args) => ({
+    components: {AntNumberInput},
+    setup() {
       const validator = reactive(useFieldValidator([
-        isRequiredRule,
-        (val) => typeof val !== 'number' || val <= 8 || 'Value should not be bigger than 8'
+        isRequiredRule
       ]));
 
       return {args, validator};
@@ -61,23 +80,37 @@ export const Docs: Story = {
 };
 
 export const Limited: Story = {
-  render: Docs.render,
+  render: (args) => ({
+    components: {AntNumberInput},
+    setup() {
+      const validator = reactive(useFieldValidator([
+        isRequiredRule,
+        (val: number) => val <= 10 || 'Value should not be bigger than 10',
+        (val: number) => val <= 11 || 'It should be really not bigger than 10!!!!'
+      ]));
+
+      return {args, validator};
+    },
+    template: `
+      <AntNumberInput
+        v-bind="args"
+        v-model="args.modelValue"
+        :errors="Array.isArray(args.errors) ? args.errors : validator.getErrors()"
+        @validate="(val) => validator.validate(val)"
+      />`
+  }),
   args: {
     ...Docs.args,
     modelValue: 50,
     limiter: true,
     max: 10,
-    validator: useFieldValidator([
-      (val: number) => val <= 10 || 'Value should not be bigger than 10',
-      (val: number) => val <= 11 || 'It should be really not bigger than 10!!!!'
-    ])
   },
 };
 
-export const WithoutIndicators: Story = {
+export const WithIndicators: Story = {
   render: Docs.render,
   args: {
     ...Docs.args,
-    indicators: false
+    indicators: true
   },
 };

@@ -34,7 +34,7 @@ const props = withDefaults(defineProps<{
   size: Size.md,
   type: TextInputType.text,
   limiter: false,
-  errors: []
+  errors: () => []
 });
 
 const _value = useVModel(props, 'modelValue', emit);

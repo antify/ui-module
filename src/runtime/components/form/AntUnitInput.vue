@@ -1,9 +1,9 @@
 <script lang="ts" setup>
 import {computed, onMounted} from 'vue';
-import AntButton from '../buttons/AntButton.vue'
-import AntField from './Elements/AntField.vue'
-import AntBaseInput from './Elements/AntBaseInput.vue'
-import {Size} from '../../enums/Size.enum'
+import AntButton from '../buttons/AntButton.vue';
+import AntField from './Elements/AntField.vue';
+import AntBaseInput from './Elements/AntBaseInput.vue';
+import {Size} from '../../enums/Size.enum';
 import {type IconDefinition} from '@fortawesome/free-solid-svg-icons';
 import {useVModel} from '@vueuse/core';
 import {ColorType, InputColorType} from '../../enums';
@@ -23,7 +23,6 @@ const props = withDefaults(defineProps<{
   limiter?: boolean;
   min?: number;
   max?: number;
-  validator?: FieldValidator;
   size?: Size;
   colorType?: InputColorType;
   disabled?: boolean;
@@ -36,7 +35,7 @@ const props = withDefaults(defineProps<{
   skeleton: false,
   size: Size.md,
   limiter: false,
-  errors: []
+  errors: () => []
 });
 const emit = defineEmits(['update:modelValue', 'validate']);
 const _modelValue = useVModel(props, 'modelValue', emit);
