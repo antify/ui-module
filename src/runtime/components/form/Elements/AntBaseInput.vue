@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import {computed, onMounted, watch} from 'vue';
+import {computed, onMounted, watch, useSlots} from 'vue';
 import {Size} from '../../../enums/Size.enum';
 import AntSkeleton from '../../AntSkeleton.vue';
 import AntIcon from '../../AntIcon.vue';
@@ -47,6 +47,7 @@ const props = withDefaults(defineProps<{
   nullable: false,
   hasErrors: false
 });
+const slot = useSlots();
 
 const icons = {
   [InputColorType.info]: faCircleInfo,
@@ -83,10 +84,21 @@ const inputClasses = computed(() => {
     'pl-8': props.size === Size.md && props.iconLeft,
     'pl-9': props.size === Size.lg && props.iconLeft,
     // Icon right
-    'pr-6': props.size === Size.xs2 && props.showIcon && icon.value || props.size === Size.xs2 && props.nullable,
-    'pr-7': props.size === Size.sm && props.showIcon && icon.value || props.size === Size.xs && props.showIcon && icon.value || props.size === Size.sm && props.nullable || props.size === Size.xs && props.nullable,
-    'pr-8': props.size === Size.md && props.showIcon && icon.value || props.size === Size.md && props.nullable,
-    'pr-9': props.size === Size.lg && props.showIcon && icon.value || props.size === Size.lg && props.nullable,
+    'pr-6': props.size === Size.xs2 && props.showIcon && icon.value ||
+            props.size === Size.xs2 && props.nullable ||
+            props.size === Size.xs2 && hasSlotContent(slot['icon-right']),
+    'pr-7': props.size === Size.xs && props.showIcon && icon.value ||
+            props.size === Size.xs && props.nullable ||
+            props.size === Size.xs && hasSlotContent(slot['icon-right']),
+    'pr-8': props.size === Size.sm && props.showIcon && icon.value ||
+            props.size === Size.sm && props.nullable ||
+            props.size === Size.sm && hasSlotContent(slot['icon-right']),
+    'pr-9': props.size === Size.md && props.showIcon && icon.value ||
+            props.size === Size.md && props.nullable ||
+            props.size === Size.md && hasSlotContent(slot['icon-right']),
+    'pr-10': props.size === Size.lg && props.showIcon && icon.value ||
+            props.size === Size.lg && props.nullable ||
+            props.size === Size.lg && hasSlotContent(slot['icon-right']),
     // Grouped
     'rounded-tl-md rounded-bl-md rounded-tr-none rounded-br-none': props.grouped === Grouped.left,
     'rounded-none': props.grouped === Grouped.center,
@@ -193,7 +205,7 @@ function onBlur(e: FocusEvent) {
     >
 
     <div
-      v-if="(nullable && _value !== null && _value !== '') || (showIcon && icon) || hasSlotContent($slots['icon-right'])"
+      v-if="(nullable && _value !== null && _value !== '') || (showIcon && icon) || hasSlotContent(slot['icon-right'])"
       class="absolute h-full flex items-center justify-center right-0 top-0 transition-all z-20"
       :class="{'w-6': size === Size.xs2, 'w-7': size === Size.xs || size === Size.sm, 'w-8': size === Size.md, 'w-9': size === Size.lg}"
     >
