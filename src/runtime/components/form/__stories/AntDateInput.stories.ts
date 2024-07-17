@@ -1,10 +1,13 @@
 import {type Meta, type StoryObj} from '@storybook/vue3';
 import {Size} from '../../../enums/Size.enum';
+import {Direction} from '../../../enums/Direction.enum';
 import AntDateInput from '../AntDateInput.vue';
 import {InputColorType} from '../../../enums';
 import {AntDateInputType} from '../__types/AntDateInput.type';
 import {isRequiredRule, useFieldValidator} from '@antify/validate';
 import {reactive} from 'vue';
+import AntFormGroup from '../AntFormGroup.vue';
+import AntFormGroupLabel from '../AntFormGroupLabel.vue';
 
 const meta: Meta<typeof AntDateInput> = {
   title: 'Components/Forms/Date Input',
@@ -12,7 +15,7 @@ const meta: Meta<typeof AntDateInput> = {
   parameters: {controls: {sort: 'requiredFirst'}},
   argTypes: {
     modelValue: {
-      table: {type: {summary: 'number|null'}},
+      table: {type: {summary: 'string|null'}},
     },
     type: {
       control: {type: 'select'},
@@ -26,9 +29,6 @@ const meta: Meta<typeof AntDateInput> = {
       control: {type: 'select'},
       options: Object.values(Size),
     },
-    placeholder: {
-      table: {defaultValue: {summary: 'this.label'}},
-    }
   },
 };
 
@@ -89,16 +89,16 @@ export const Summary: Story = {
     chromatic: { disableSnapshot: false },
   },
   render: (args) => ({
-    components: {AntDateInput},
+    components: {AntDateInput, AntFormGroup, AntFormGroupLabel},
     setup() {
-      return {args, InputColorType, Size, AntDateInputType};
+      return {args, InputColorType, Size, AntDateInputType, Direction};
     },
     template: `
-      <div class="flex flex-col gap-2.5">
-        <div class="font-bold">
+      <AntFormGroup>
+        <AntFormGroupLabel>
           Color types:
-        </div>
-        <div class="flex gap-2.5">
+        </AntFormGroupLabel>
+        <AntFormGroup :direction="Direction.row">
           <AntDateInput
             v-bind="args"
             v-model="args.modelValue"
@@ -127,11 +127,11 @@ export const Summary: Story = {
             :color-type="InputColorType.danger"
             :type="AntDateInputType.week"
           />
-        </div>
-        <div class="font-bold">
+        </AntFormGroup>
+        <AntFormGroupLabel>
           Sizes:
-        </div>
-        <div class="flex gap-2.5">
+        </AntFormGroupLabel>
+        <AntFormGroup :direction="Direction.row">
           <AntDateInput
             v-bind="args"
             value="2024-01-01"
@@ -166,8 +166,8 @@ export const Summary: Story = {
             :type="AntDateInputType.week"
             :size="Size.xs2"
           />
-        </div>
-      </div>
+        </AntFormGroup>
+      </AntFormGroup>
     `,
   }),
   args: {

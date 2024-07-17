@@ -17,10 +17,9 @@ defineOptions({inheritAttrs: false});
 const props = withDefaults(defineProps<{
   modelValue: string | null;
   label?: string;
-  type?: AntDateInputType
-  placeholder?: string;
   description?: string;
   size?: Size;
+  type?: AntDateInputType;
   colorType?: InputColorType;
   disabled?: boolean;
   skeleton?: boolean;
@@ -74,33 +73,28 @@ function onClickCalendar() {
     :color-type="colorType"
     :errors="errors"
   >
-    <div
-      class="flex relative"
+    <AntBaseInput
+      v-model:value="_modelValue"
+      v-model:input-ref="inputRef"
+      :type="type as unknown as BaseInputType"
+      :color-type="_colorType"
+      :size="size"
+      :skeleton="skeleton"
+      :disabled="disabled"
+      :show-icon="false"
+      :has-errors="hasErrors"
+      v-bind="$attrs"
+      @validate="val => $emit('validate', val)"
     >
-      <AntBaseInput
-        v-model:value="_modelValue"
-        v-model:input-ref="inputRef"
-        :type="type as unknown as BaseInputType"
-        :color-type="_colorType"
-        :size="size"
-        :skeleton="skeleton"
-        :disabled="disabled"
-        :placeholder="placeholder || label"
-        :show-icon="false"
-        :has-errors="hasErrors"
-        v-bind="$attrs"
-        @validate="val => $emit('validate', val)"
-      >
-        <template #icon-right>
-          <AntIcon
-            :icon="_icon"
-            :color="iconColor"
-            :size="iconSize"
-            class="cursor-pointer"
-            @click="onClickCalendar"
-          />
-        </template>
-      </AntBaseInput>
-    </div>
+      <template #icon-right>
+        <AntIcon
+          :icon="_icon"
+          :color="iconColor"
+          :size="iconSize"
+          class="cursor-pointer"
+          @click="onClickCalendar"
+        />
+      </template>
+    </AntBaseInput>
   </AntField>
 </template>
