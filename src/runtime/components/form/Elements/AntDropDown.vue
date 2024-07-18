@@ -8,7 +8,7 @@
  */
 
 import { computed, nextTick, onMounted, onUnmounted, ref, watch } from 'vue';
-import { InputColorType, Size } from '../../../enums';
+import { InputState, Size } from '../../../enums';
 import type { SelectOption } from '../__types';
 import { useVModel } from '@vueuse/core';
 import type { Validator } from '@antify/validate';
@@ -19,14 +19,14 @@ const props = withDefaults(defineProps<{
   focused: string | number | null;
   open: boolean;
   options: SelectOption[];
-  colorType?: InputColorType;
+  state?: InputState;
   validator?: Validator;
   size?: Size;
   inputRef?: HTMLElement | null;
   closeOnEnter?: boolean;
   autoSelectFirstOnOpen?: boolean;
 }>(), {
-  colorType: InputColorType.base,
+  state: InputState.base,
   focusOnOpen: true,
   closeOnEnter: false,
   autoSelectFirstOnOpen: true
@@ -37,34 +37,34 @@ const isOpen = useVModel(props, 'open', emit);
 const focusedDropDownItem = useVModel(props, 'focused', emit);
 
 const dropdownClasses = computed(() => {
-  const variants: Record<InputColorType, string> = {
-    [InputColorType.base]: 'bg-neutral-300 border-neutral-300',
-    [InputColorType.success]: 'bg-success-500 border-success-500',
-    [InputColorType.info]: 'bg-info-500 border-info-500',
-    [InputColorType.warning]: 'bg-warning-500 border-warning-500',
-    [InputColorType.danger]: 'bg-danger-500 border-danger-500',
+  const variants: Record<InputState, string> = {
+    [InputState.base]: 'bg-neutral-300 border-neutral-300',
+    [InputState.success]: 'bg-success-500 border-success-500',
+    [InputState.info]: 'bg-info-500 border-info-500',
+    [InputState.warning]: 'bg-warning-500 border-warning-500',
+    [InputState.danger]: 'bg-danger-500 border-danger-500',
   };
 
   return {
     'absolute w-full border flex flex-col gap-px outline-none -mt-px overflow-hidden shadow-md z-40': true,
     'rounded-bl-md rounded-br-md': true,
-    [variants[props.colorType]]: true,
+    [variants[props.state]]: true,
     // Size
     'text-sm': props.size === Size.sm ||  props.size === Size.md
   };
 });
 const dropDownItemClasses = computed(() => {
-  const variants: Record<InputColorType, string> = {
-    [InputColorType.base]: 'bg-white text-for-white-bg-font',
-    [InputColorType.success]: 'bg-success-100 border-success-100-font',
-    [InputColorType.info]: 'bg-info-100 border-info-100-font',
-    [InputColorType.warning]: 'bg-warning-100 border-warning-100-font',
-    [InputColorType.danger]: 'bg-danger-100 border-danger-100-font',
+  const variants: Record<InputState, string> = {
+    [InputState.base]: 'bg-white text-for-white-bg-font',
+    [InputState.success]: 'bg-success-100 border-success-100-font',
+    [InputState.info]: 'bg-info-100 border-info-100-font',
+    [InputState.warning]: 'bg-warning-100 border-warning-100-font',
+    [InputState.danger]: 'bg-danger-100 border-danger-100-font',
   };
 
   return {
     'select-none text-ellipsis overflow-hidden whitespace-nowrap': true,
-    [variants[props.colorType]]: true,
+    [variants[props.state]]: true,
     // Size
     'p-1.5': props.size === Size.sm,
     'p-2': props.size === Size.md,
@@ -137,15 +137,15 @@ function onKeyDownDropDown(e: KeyboardEvent) {
 }
 
 function getActiveDropDownItemClasses(option: SelectOption) {
-  const variants: Record<InputColorType, string> = {
-    [InputColorType.base]: 'bg-neutral-50/25',
-    [InputColorType.success]: 'bg-success-100/25',
-    [InputColorType.info]: 'bg-info-100/25',
-    [InputColorType.warning]: 'bg-warning-100/25',
-    [InputColorType.danger]: 'bg-danger-100/25',
+  const variants: Record<InputState, string> = {
+    [InputState.base]: 'bg-neutral-50/25',
+    [InputState.success]: 'bg-success-100/25',
+    [InputState.info]: 'bg-info-100/25',
+    [InputState.warning]: 'bg-warning-100/25',
+    [InputState.danger]: 'bg-danger-100/25',
   };
 
-  return option.value === focusedDropDownItem.value ? { [variants[props.colorType]]: true } : {};
+  return option.value === focusedDropDownItem.value ? { [variants[props.state]]: true } : {};
 }
 
 function onClickDropDownItem(e: MouseEvent, value: string | number | null) {

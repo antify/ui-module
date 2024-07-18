@@ -2,7 +2,7 @@ import {type Meta, type StoryObj} from '@storybook/vue3';
 import {Size} from '../../../enums/Size.enum';
 import {Direction} from '../../../enums/Direction.enum';
 import AntDateInput from '../AntDateInput.vue';
-import {InputColorType} from '../../../enums';
+import {InputState} from '../../../enums';
 import {AntDateInputType} from '../__types/AntDateInput.type';
 import {isRequiredRule, useFieldValidator} from '@antify/validate';
 import {reactive} from 'vue';
@@ -21,9 +21,9 @@ const meta: Meta<typeof AntDateInput> = {
       control: {type: 'select'},
       options: Object.values(AntDateInputType),
     },
-    colorType: {
+    state: {
       control: {type: 'select'},
-      options: Object.values(InputColorType),
+      options: Object.values(InputState),
     },
     size: {
       control: {type: 'select'},
@@ -91,7 +91,7 @@ export const Summary: Story = {
   render: (args) => ({
     components: {AntDateInput, AntFormGroup, AntFormGroupLabel},
     setup() {
-      return {args, InputColorType, Size, AntDateInputType, Direction};
+      return {args, InputState, Size, AntDateInputType, Direction};
     },
     template: `
       <AntFormGroup>
@@ -106,25 +106,25 @@ export const Summary: Story = {
           <AntDateInput
             v-bind="args"
             v-model="args.modelValue"
-            :color-type="InputColorType.info"
+            :state="InputState.info"
             :type="AntDateInputType.datetimeLocal"
           />
           <AntDateInput
             v-bind="args"
             v-model="args.modelValue"
-            :color-type="InputColorType.success"
+            :state="InputState.success"
             :type="AntDateInputType.month"
           />
           <AntDateInput
             v-bind="args"
             v-model="args.modelValue"
-            :color-type="InputColorType.warning"
+            :state="InputState.warning"
             :type="AntDateInputType.time"
           />
           <AntDateInput
             v-bind="args"
             v-model="args.modelValue"
-            :color-type="InputColorType.danger"
+            :state="InputState.danger"
             :type="AntDateInputType.week"
           />
         </AntFormGroup>
@@ -141,28 +141,28 @@ export const Summary: Story = {
           <AntDateInput
             v-bind="args"
             value="2018-06-12T19:30"
-            :color-type="InputColorType.info"
+            :state="InputState.info"
             :type="AntDateInputType.datetimeLocal"
             :size="Size.md"
           />
           <AntDateInput
             v-bind="args"
             value="2024-12"
-            :color-type="InputColorType.success"
+            :state="InputState.success"
             :type="AntDateInputType.month"
             :size="Size.sm"
           />
           <AntDateInput
             v-bind="args"
             value="14:28"
-            :color-type="InputColorType.warning"
+            :state="InputState.warning"
             :type="AntDateInputType.time"
             :size="Size.xs"
           />
           <AntDateInput
             v-bind="args"
             value="2024-W18"
-            :color-type="InputColorType.danger"
+            :state="InputState.danger"
             :type="AntDateInputType.week"
             :size="Size.xs2"
           />

@@ -1,6 +1,6 @@
 <script lang="ts" setup>
 import {computed, onMounted} from 'vue';
-import {TagColorType} from '../types/AntTag.type';
+import {TagState} from '../types/AntTag.type';
 import {handleEnumValidation} from '../handler';
 import {faCircleXmark, type IconDefinition} from '@fortawesome/free-solid-svg-icons';
 import {AntTagSize} from './__types/AntTag.types';
@@ -9,25 +9,25 @@ import {IconSize} from './__types/AntIcon.types';
 
 defineEmits(['close']);
 const props = withDefaults(defineProps<{
-  colorType?: TagColorType,
+  state?: TagState,
   size?: AntTagSize;
   iconLeft?: IconDefinition;
   dismiss?: boolean
 }>(), {
   size: AntTagSize.md,
-  colorType: TagColorType.base,
+  state: TagState.base,
   dismiss: false
 });
 
 const classes = computed(() => {
-  const variants: Record<TagColorType, string> = {
-    [TagColorType.danger]: 'bg-danger-500 text-danger-500-font',
-    [TagColorType.info]: 'bg-info-500 text-info-500-font',
-    [TagColorType.primary]: 'bg-primary-500 text-primary-500-font',
-    [TagColorType.secondary]: 'bg-secondary-500 text-secondary-500-font',
-    [TagColorType.base]: 'bg-neutral-300 text-neutral-300-font',
-    [TagColorType.success]: 'bg-success-500 text-success-500-font',
-    [TagColorType.warning]: 'bg-warning-500 text-warning-500-font',
+  const variants: Record<TagState, string> = {
+    [TagState.danger]: 'bg-danger-500 text-danger-500-font',
+    [TagState.info]: 'bg-info-500 text-info-500-font',
+    [TagState.primary]: 'bg-primary-500 text-primary-500-font',
+    [TagState.secondary]: 'bg-secondary-500 text-secondary-500-font',
+    [TagState.base]: 'bg-neutral-300 text-neutral-300-font',
+    [TagState.success]: 'bg-success-500 text-success-500-font',
+    [TagState.warning]: 'bg-warning-500 text-warning-500-font',
   };
   return {
     'rounded-md inline-flex items-center': true,
@@ -37,7 +37,7 @@ const classes = computed(() => {
     'px-2 py-1.5 text-sm gap-1.5': props.size === AntTagSize.sm,
     'px-2.5 py-2 text-sm gap-2': props.size === AntTagSize.md,
     'px-3 py-2.5 text-sm gap-2.5': props.size === AntTagSize.lg,
-    [variants[props.colorType]]: true,
+    [variants[props.state]]: true,
   };
 });
 const getIconSize = computed(() => {
@@ -47,19 +47,19 @@ const getIconSize = computed(() => {
     return IconSize.sm;
   }
 });
-const iconColorType = computed(() => {
-  switch (props.colorType) {
-    case TagColorType.info:
+const iconState = computed(() => {
+  switch (props.state) {
+    case TagState.info:
       return 'text-info-500-font';
-    case TagColorType.success:
+    case TagState.success:
       return 'text-success-500-font';
-    case TagColorType.warning:
+    case TagState.warning:
       return 'text-warning-500-font';
-    case TagColorType.danger:
+    case TagState.danger:
       return 'text-danger-500-font';
-    case TagColorType.primary:
+    case TagState.primary:
       return 'text-primary-500-font';
-    case TagColorType.secondary:
+    case TagState.secondary:
       return 'text-secondary-500-font';
     default:
       return 'text-neutral-300-font';
@@ -74,7 +74,7 @@ const iconWrapperClass = computed(() => {
 
 onMounted(() => {
   handleEnumValidation(props.size, AntTagSize, 'size');
-  handleEnumValidation(props.colorType, TagColorType, 'colorType');
+  handleEnumValidation(props.state, TagState, 'state');
 });
 </script>
 
@@ -91,7 +91,7 @@ onMounted(() => {
       <AntIcon
         :icon="iconLeft"
         :size="getIconSize"
-        :color="iconColorType"
+        :color="iconState"
       >
       </anticon>
     </span>
@@ -106,7 +106,7 @@ onMounted(() => {
       <AntIcon
         :icon="faCircleXmark"
         :size="getIconSize"
-        :color="iconColorType"
+        :color="iconState"
         class="cursor-pointer"
         @click="() => $emit('close')"
       />

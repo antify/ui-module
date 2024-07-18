@@ -3,7 +3,7 @@
  * This button is used for everything what is the primary
  * action like save, confirm, create, etc.
  */
-import {Position, ColorType, InputColorType, Size, Grouped} from '../../enums';
+import {Position, State, InputState, Size, Grouped} from '../../enums';
 import AntButton from './AntButton.vue';
 import type {IconDefinition} from '@fortawesome/free-solid-svg-icons';
 import {computed, useSlots} from 'vue';
@@ -17,20 +17,20 @@ const props = withDefaults(
 		size?: Size;
 		disabled?: boolean;
 		grouped?: Grouped;
-		colorType?: ColorType;
+		state?: State;
 		skeleton?: boolean;
 		expanded?: boolean;
 		filled?: boolean;
 		hasPermission?: boolean;
 		tooltipPosition?: Position;
-		tooltipColorType?: InputColorType;
+		tooltipState?: InputState;
 		tooltipDelay?: number;
 	}>(), {
-		colorType: ColorType.primary,
+		state: State.primary,
 		hasPermission: true,
 		filled: true
 	}
-)
+);
 const slots = useSlots();
 const hasTooltip = computed(() => !props.skeleton && !props.disabled && props.hasPermission && hasSlotContent(slots['tooltipContent']));
 const hasPermissionTooltip = computed(() => !props.skeleton && !props.disabled && !props.hasPermission && hasSlotContent(slots['invalidPermissionTooltipContent']));
@@ -45,10 +45,10 @@ const hasPermissionTooltip = computed(() => !props.skeleton && !props.disabled &
     :grouped="grouped"
     :skeleton="skeleton"
     :expanded="expanded"
-    :color-type="colorType"
+    :state="state"
     :filled="filled"
     :tooltip-position="tooltipPosition"
-    :tooltip-color-type="hasPermissionTooltip ? InputColorType.info : tooltipColorType"
+    :tooltip-state="hasPermissionTooltip ? InputState.info : tooltipState"
     :tooltip-delay="hasPermissionTooltip ? 300 : tooltipDelay"
     data-e2e="action-button"
     @click="$emit('click')"

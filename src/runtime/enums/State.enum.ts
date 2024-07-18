@@ -1,4 +1,4 @@
-export enum ColorType {
+export enum State {
     base = 'base',
     primary = 'primary',
     secondary = 'secondary',
@@ -7,7 +7,7 @@ export enum ColorType {
     success = 'success',
     warning = 'warning',
 }
-export enum InputColorType {
+export enum InputState {
     base = 'base',
     danger = 'danger',
     info = 'info',

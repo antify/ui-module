@@ -1,7 +1,7 @@
 import AntTag from '../AntTag.vue';
 import { type Meta, type StoryObj} from '@storybook/vue3';
 import {AntTagSize} from '../__types/AntTag.types';
-import {TagColorType} from '../../types/AntTag.type';
+import {TagState} from '../../types/AntTag.type';
 import {faTag} from '@fortawesome/free-solid-svg-icons';
 
 const meta: Meta<typeof AntTag> = {
@@ -13,9 +13,9 @@ const meta: Meta<typeof AntTag> = {
             control: {type: 'select'},
             options: Object.values(AntTagSize),
         },
-        colorType: {
+        state: {
             control: {type: 'select'},
-            options: Object.values(TagColorType),
+            options: Object.values(TagState),
         },
         iconLeft: {
             control: {type: 'none'},

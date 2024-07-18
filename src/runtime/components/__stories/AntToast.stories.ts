@@ -1,15 +1,15 @@
 import AntToast from '../AntToast.vue';
 import { type Meta, type StoryObj} from '@storybook/vue3';
-import {InputColorType} from '../../enums';
+import {InputState} from '../../enums';
 
 const meta: Meta<typeof AntToast> = {
   title: 'Components/Toast',
   component: AntToast,
   parameters: {controls: {sort: 'requiredFirst'}},
   argTypes: {
-    colorType: {
+    state: {
       control: {type: 'select'},
-      options: Object.values(InputColorType),
+      options: Object.values(InputState),
     }
   },
 };
@@ -23,11 +23,11 @@ export const Docs: Story = {
     components: {AntToast},
     setup() {
       function logClick() {
-        console.log('Clicked close icon')
+        console.log('Clicked close icon');
       }
 
       function logUndoClick() {
-        console.log('Clicked undo button')
+        console.log('Clicked undo button');
       }
 
       return {args, logClick, logUndoClick};

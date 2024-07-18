@@ -1,6 +1,6 @@
 import AntRadioGroup from '../AntRadioGroup.vue';
 import { ref } from 'vue';
-import { InputColorType } from '../../../../enums';
+import { InputState } from '../../../../enums';
 import {AntRadioSize} from '../__types/AntRadio.type';
 import { type Meta, type StoryObj } from '@storybook/vue3';
 import { useFieldValidator } from '@antify/validate';
@@ -28,7 +28,7 @@ const meta: Meta<typeof AntRadioGroup> = {
   value: string;
   label?: string;
   disabled?: boolean;
-  colorType?: InputColorType;
+  state?: InputState;
   validator?: FieldValidator;
 }
 `
@@ -48,9 +48,9 @@ const meta: Meta<typeof AntRadioGroup> = {
       control: { type: 'select' },
       options: Object.values(Direction)
     },
-    colorType: {
+    state: {
       control: { type: 'select' },
-      options: Object.values(InputColorType),
+      options: Object.values(InputState),
     },
     size: {
       control: { type: 'select' },

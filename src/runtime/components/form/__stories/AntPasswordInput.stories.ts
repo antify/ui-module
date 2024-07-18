@@ -1,7 +1,7 @@
 import {type Meta, type StoryObj} from '@storybook/vue3';
 import {Size} from '../../../enums/Size.enum';
 import {isRequiredRule, notBlankRule, useFieldValidator} from '@antify/validate';
-import {InputColorType} from '../../../enums';
+import {InputState} from '../../../enums';
 import {reactive} from 'vue';
 import AntPasswordInput from '../AntPasswordInput.vue';
 
@@ -14,9 +14,9 @@ const meta: Meta<typeof AntPasswordInput> = {
       control: 'text',
       table: {type: {summary: 'string|null'}},
     },
-    colorType: {
+    state: {
       control: {type: 'select'},
-      options: Object.values(InputColorType)
+      options: Object.values(InputState)
     },
     size: {
       control: {type: 'select'},
@@ -105,7 +105,7 @@ export const Summary: Story = {
   render: (args) => ({
     components: {AntPasswordInput},
     setup() {
-      return {args, InputColorType, Size};
+      return {args, InputState, Size};
     },
     template: `
       <div class="flex flex-col gap-2.5">
@@ -120,22 +120,22 @@ export const Summary: Story = {
           <AntPasswordInput
             v-bind="args"
             v-model="args.modelValue"
-            :color-type="InputColorType.info"
+            :state="InputState.info"
           />
           <AntPasswordInput
             v-bind="args"
             v-model="args.modelValue"
-            :color-type="InputColorType.success"
+            :state="InputState.success"
           />
           <AntPasswordInput
             v-bind="args"
             v-model="args.modelValue"
-            :color-type="InputColorType.warning"
+            :state="InputState.warning"
           />
           <AntPasswordInput
             v-bind="args"
             v-model="args.modelValue"
-            :color-type="InputColorType.danger"
+            :state="InputState.danger"
           />
         </div>
         <div class="font-bold">
@@ -150,25 +150,25 @@ export const Summary: Story = {
           <AntPasswordInput
             v-bind="args"
             v-model="args.modelValue"
-            :color-type="InputColorType.info"
+            :state="InputState.info"
             :size="Size.md"
           />
           <AntPasswordInput
             v-bind="args"
             value="1234"
-            :color-type="InputColorType.success"
+            :state="InputState.success"
             :size="Size.sm"
           />
           <AntPasswordInput
             v-bind="args"
             v-model="args.modelValue"
-            :color-type="InputColorType.warning"
+            :state="InputState.warning"
             :size="Size.xs"
           />
           <AntPasswordInput
             v-bind="args"
             value="1234"
-            :color-type="InputColorType.danger"
+            :state="InputState.danger"
             :size="Size.xs2"
           />
         </div>

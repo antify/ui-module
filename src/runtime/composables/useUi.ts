@@ -1,9 +1,9 @@
 import {
-  ColorType,
-  InputColorType
-} from '../enums/ColorType.enum';
+  State,
+  InputState
+} from '../enums/State.enum';
 import {
-  ColorType as TabItemColorType
+  State as TabItemState
 } from '../components/tabs/__types/AntTabItem.types';
 import {Direction} from '../enums/Direction.enum';
 import {Grouped} from '../enums/Grouped.enum';
@@ -18,9 +18,9 @@ import {
 export const useUi = () => {
   return {
     Direction,
-    ColorType,
-    InputColorType,
-    TabItemColorType,
+    State,
+    InputState,
+    TabItemState,
     Grouped,
     Position,
     CornerPosition,
@@ -28,5 +28,5 @@ export const useUi = () => {
     AntTableRowTypes,
     AntTableAlign,
     AntTableSortDirection,
-  }
-}
+  };
+};

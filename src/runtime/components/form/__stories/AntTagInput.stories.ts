@@ -2,7 +2,7 @@ import { AntTagInput } from '../index';
 import type { Meta, StoryObj } from '@storybook/vue3';
 import type { Ref } from 'vue';
 import { ref } from 'vue';
-import { InputColorType } from '../../../enums';
+import { InputState } from '../../../enums';
 import type { SelectOption } from '../__types';
 import {AntTagInputSize} from '../__types/AntTagInput.types';
 
@@ -14,9 +14,9 @@ const meta: Meta<typeof AntTagInput> = {
       control: 'text',
       table: { type: { summary: 'string|null' } },
     },
-    colorType: {
+    state: {
       control: { type: 'select' },
-      options: Object.values(InputColorType)
+      options: Object.values(InputState)
     },
     size: {
       control: { type: 'select' },

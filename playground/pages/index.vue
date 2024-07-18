@@ -2,7 +2,7 @@
 import {faXmark} from '@fortawesome/free-solid-svg-icons';
 import {ref} from "vue";
 import {useNuxtApp} from '#imports';
-import {InputColorType} from "../../src/runtime/enums";
+import {InputState} from "../../src/runtime/enums";
 
 const {$uiModule} = useNuxtApp();
 
@@ -10,7 +10,7 @@ const validator = ref(useValidator((val) => val === 'asdf' || 'Value must be "as
 const filled = ref(false);
 const modalOpen = ref(false);
 
-const addToast = (type: InputColorType) => {
+const addToast = (type: InputState) => {
   $uiModule.toaster.toast({
     id: Math.random().toString(36).substring(7),
     title: `${type} message here`,
@@ -21,7 +21,7 @@ const addToast = (type: InputColorType) => {
 
 <template>
   <AntFormGroup class="p-4">
-    <div>{{ useUi().ColorType }}</div>
+    <div>{{ useUi().State }}</div>
 
     <AntField label="Button">
       <AntButton
@@ -54,9 +54,9 @@ const addToast = (type: InputColorType) => {
       <AntFormGroupLabel>Toaster</AntFormGroupLabel>
       <AntFormGroup direction="row">
         <AntButton
-          v-for="colorType in Object.values(InputColorType)"
-          @click="addToast(colorType)">
-          Toast {{ colorType }}
+          v-for="state in Object.values(InputState)"
+          @click="addToast(state)">
+          Toast {{ state }}
         </AntButton>
       </AntFormGroup>
     </AntFormGroup>

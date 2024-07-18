@@ -1,6 +1,6 @@
 import { type Meta, type StoryObj} from '@storybook/vue3';
 import AntTabItem from '../AntTabItem.vue';
-import {ColorType} from '../__types/AntTabItem.types';
+import {State} from '../__types/AntTabItem.types';
 
 const meta: Meta<typeof AntTabItem> = {
   title: 'Components/Tab Item',
@@ -11,11 +11,11 @@ const meta: Meta<typeof AntTabItem> = {
     showIcon: {
       control: 'boolean',
       description:
-        'Some InputColorTypes can have an icon. Control with this property if it gets shown or not.',
+        'Some InputStates can have an icon. Control with this property if it gets shown or not.',
     },
-    colorType: {
+    state: {
       control: {type: 'select'},
-      options: Object.values(ColorType)
+      options: Object.values(State)
     },
   }
 };

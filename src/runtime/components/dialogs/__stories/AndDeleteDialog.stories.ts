@@ -21,7 +21,7 @@ export const Docs: Story = {
     },
     template: `
     <div class="h-96">
-      <AntButton @click="() => args.open = true" color-type="danger">Delete</AntButton>
+      <AntButton @click="() => args.open = true" state="danger">Delete</AntButton>
 
       <AntDeleteDialog
         v-model:open="args.open"

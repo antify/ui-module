@@ -8,7 +8,7 @@ import {Grouped as _Grouped} from '../../../../enums/Grouped.enum';
 import {isRequiredRule, notBlankRule, useFieldValidator} from '@antify/validate';
 import {computed, reactive} from 'vue';
 import {faSearch, faEye} from '@fortawesome/free-solid-svg-icons';
-import {InputColorType} from '../../../../enums';
+import {InputState} from '../../../../enums';
 
 const meta: Meta<typeof AntBaseInput> = {
   title: 'Components/Forms/Elements/Base Input',
@@ -24,9 +24,9 @@ const meta: Meta<typeof AntBaseInput> = {
       options: Object.values(BaseInputType),
       table: {defaultValue: {summary: BaseInputType.text}},
     },
-    colorType: {
+    state: {
       control: {type: 'select'},
-      options: Object.values(InputColorType)
+      options: Object.values(InputState)
     },
     size: {
       control: {type: 'select'},
@@ -52,7 +52,7 @@ const meta: Meta<typeof AntBaseInput> = {
     showIcon: {
       control: 'boolean',
       description:
-        'Some InputColorTypes can have an icon. Control with this property if it gets shown or not.',
+        'Some InputStates can have an icon. Control with this property if it gets shown or not.',
     },
     iconLeft: {
       control: {type: 'none'},
@@ -167,41 +167,41 @@ export const Summary: Story = {
     template: `
       <div class="p-4 pb-10 flex flex-col gap-2">
         <div class="flex gap-2">
-          <AntBaseInput v-bind="args" v-model:value="value" color-type="base"/>
-          <AntBaseInput v-bind="args" v-model:value="value" color-type="info"/>
-          <AntBaseInput v-bind="args" v-model:value="value" color-type="success"/>
-          <AntBaseInput v-bind="args" v-model:value="value" color-type="warning"/>
-          <AntBaseInput v-bind="args" v-model:value="value" color-type="danger"/>
+          <AntBaseInput v-bind="args" v-model:value="value" state="base"/>
+          <AntBaseInput v-bind="args" v-model:value="value" state="info"/>
+          <AntBaseInput v-bind="args" v-model:value="value" state="success"/>
+          <AntBaseInput v-bind="args" v-model:value="value" state="warning"/>
+          <AntBaseInput v-bind="args" v-model:value="value" state="danger"/>
         </div>
 
         <div class="flex gap-2">
-          <AntBaseInput v-bind="args" value="A value" nullable color-type="base"/>
-          <AntBaseInput v-bind="args" value="A value" nullable color-type="info"/>
-          <AntBaseInput v-bind="args" value="A value" nullable color-type="success"/>
-          <AntBaseInput v-bind="args" value="A value" nullable color-type="warning"/>
-          <AntBaseInput v-bind="args" value="A value" nullable color-type="danger"/>
+          <AntBaseInput v-bind="args" value="A value" nullable state="base"/>
+          <AntBaseInput v-bind="args" value="A value" nullable state="info"/>
+          <AntBaseInput v-bind="args" value="A value" nullable state="success"/>
+          <AntBaseInput v-bind="args" value="A value" nullable state="warning"/>
+          <AntBaseInput v-bind="args" value="A value" nullable state="danger"/>
         </div>
 
         <div class="flex gap-2">
-          <AntBaseInput v-bind="args" v-model:value="value" :show-icon="false" color-type="base"/>
-          <AntBaseInput v-bind="args" v-model:value="value" :show-icon="false" color-type="info"/>
-          <AntBaseInput v-bind="args" v-model:value="value" :show-icon="false" color-type="success"/>
-          <AntBaseInput v-bind="args" v-model:value="value" :show-icon="false" color-type="warning"/>
-          <AntBaseInput v-bind="args" v-model:value="value" :show-icon="false" color-type="danger"/>
+          <AntBaseInput v-bind="args" v-model:value="value" :show-icon="false" state="base"/>
+          <AntBaseInput v-bind="args" v-model:value="value" :show-icon="false" state="info"/>
+          <AntBaseInput v-bind="args" v-model:value="value" :show-icon="false" state="success"/>
+          <AntBaseInput v-bind="args" v-model:value="value" :show-icon="false" state="warning"/>
+          <AntBaseInput v-bind="args" v-model:value="value" :show-icon="false" state="danger"/>
         </div>
 
         <div class="flex gap-2">
-          <AntBaseInput v-bind="args" v-model:value="value" :icon-left="faSearch" color-type="base"/>
-          <AntBaseInput v-bind="args" v-model:value="value" :icon-left="faSearch" color-type="info"/>
-          <AntBaseInput v-bind="args" v-model:value="value" :icon-left="faSearch" color-type="success"/>
-          <AntBaseInput v-bind="args" v-model:value="value" :icon-left="faSearch" color-type="warning"/>
-          <AntBaseInput v-bind="args" v-model:value="value" :icon-left="faSearch" color-type="danger"/>
+          <AntBaseInput v-bind="args" v-model:value="value" :icon-left="faSearch" state="base"/>
+          <AntBaseInput v-bind="args" v-model:value="value" :icon-left="faSearch" state="info"/>
+          <AntBaseInput v-bind="args" v-model:value="value" :icon-left="faSearch" state="success"/>
+          <AntBaseInput v-bind="args" v-model:value="value" :icon-left="faSearch" state="warning"/>
+          <AntBaseInput v-bind="args" v-model:value="value" :icon-left="faSearch" state="danger"/>
         </div>
 
         <div class="flex gap-[-2px]">
           <AntBaseInput v-bind="args" v-model:value="value" grouped="left"/>
-          <AntBaseInput v-bind="args" v-model:value="value" grouped="center" color-type="danger"/>
-          <AntBaseInput v-bind="args" v-model:value="value" grouped="right" color-type="info"/>
+          <AntBaseInput v-bind="args" v-model:value="value" grouped="center" state="danger"/>
+          <AntBaseInput v-bind="args" v-model:value="value" grouped="right" state="info"/>
         </div>
       </div>`,
   }),

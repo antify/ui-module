@@ -5,7 +5,7 @@ import AntField from './Elements/AntField.vue';
 import AntBaseInput from './Elements/AntBaseInput.vue';
 import {Size} from '../../enums/Size.enum';
 import {faPlus, faMinus} from '@fortawesome/free-solid-svg-icons';
-import {ColorType, InputColorType} from '../../enums/ColorType.enum';
+import {State, InputState} from '../../enums/State.enum';
 import {handleEnumValidation} from '../../handler';
 import {useVModel} from '@vueuse/core';
 import {Grouped} from '../../enums/Grouped.enum';
@@ -19,7 +19,7 @@ const props = withDefaults(defineProps<{
   placeholder?: string;
   description?: string;
   size?: Size;
-  colorType?: InputColorType;
+  state?: InputState;
   disabled?: boolean;
   skeleton?: boolean;
   steps?: number;
@@ -29,7 +29,7 @@ const props = withDefaults(defineProps<{
   errors?: string[];
 	indicators?: boolean;
 }>(), {
-  colorType: InputColorType.base,
+  state: InputState.base,
   disabled: false,
   skeleton: false,
   size: Size.md,
@@ -63,17 +63,17 @@ const isNextButtonDisabled = computed(() => {
   return false;
 });
 const hasErrors = computed(() => props.errors.length > 0);
-const buttonColorType = computed(() => {
+const buttonState = computed(() => {
   if (hasErrors.value) {
-    return ColorType.danger;
+    return State.danger;
   }
 
-  return props.colorType;
+  return props.state;
 });
 
 onMounted(() => {
   handleEnumValidation(props.size, Size, 'size');
-  handleEnumValidation(props.colorType, InputColorType, 'colorType');
+  handleEnumValidation(props.state, InputState, 'state');
 });
 
 watch(_modelValue, (val) => {
@@ -120,7 +120,7 @@ function onButtonBlur() {
     :size="size"
     :skeleton="skeleton"
     :description="description"
-    :color-type="colorType"
+    :state="state"
     :limiter-max-value="limiter && max !== undefined ? max : undefined"
     :limiter-value="limiter && _modelValue !== undefined && _modelValue !== null ? _modelValue : undefined"
     :errors="errors"
@@ -132,7 +132,7 @@ function onButtonBlur() {
         v-if="indicators"
         :icon-left="faMinus"
         :grouped="Grouped.left"
-        :color-type="buttonColorType"
+        :state="buttonState"
         :size="size"
         :skeleton="skeleton"
         :disabled="isPrevButtonDisabled"
@@ -145,7 +145,7 @@ function onButtonBlur() {
         :type="BaseInputType.number"
         :grouped="indicators ? Grouped.center : Grouped.none"
         wrapper-class="flex-grow"
-        :color-type="colorType"
+        :state="state"
         :size="size"
         :skeleton="skeleton"
         :min="min"
@@ -162,7 +162,7 @@ function onButtonBlur() {
         v-if="indicators"
         :icon-left="faPlus"
         :grouped="Grouped.right"
-        :color-type="buttonColorType"
+        :state="buttonState"
         :size="size"
         :skeleton="skeleton"
         :disabled="isNextButtonDisabled"

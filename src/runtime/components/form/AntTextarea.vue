@@ -14,7 +14,7 @@ import {handleEnumValidation} from '../../handler';
 import {classesToObjectSyntax} from '../../utils';
 import AntField from './Elements/AntField.vue';
 import {useVModel} from '@vueuse/core';
-import {InputColorType} from '../../enums';
+import {InputState} from '../../enums';
 import {IconSize} from '../__types';
 
 defineOptions({inheritAttrs: false});
@@ -23,7 +23,7 @@ const emit = defineEmits(['update:modelValue', 'validate', 'blur']);
 const props = withDefaults(defineProps<{
   modelValue: string | null;
   size?: Size;
-  colorType?: InputColorType;
+  state?: InputState;
   disabled?: boolean;
   skeleton?: boolean;
   grouped?: Grouped;
@@ -36,7 +36,7 @@ const props = withDefaults(defineProps<{
   max?: number;
   errors?: string[];
 }>(), {
-  colorType: InputColorType.base,
+  state: InputState.base,
   disabled: false,
   size: Size.md,
   skeleton: false,
@@ -47,26 +47,26 @@ const props = withDefaults(defineProps<{
 });
 const _modelValue = useVModel(props, 'modelValue', emit);
 const icons = {
-  [InputColorType.info]: faCircleInfo,
-  [InputColorType.warning]: faExclamationTriangle,
-  [InputColorType.danger]: faExclamationCircle,
-  [InputColorType.success]: faCircleCheck,
-  [InputColorType.base]: null,
+  [InputState.info]: faCircleInfo,
+  [InputState.warning]: faExclamationTriangle,
+  [InputState.danger]: faExclamationCircle,
+  [InputState.success]: faCircleCheck,
+  [InputState.base]: null,
 };
 /*TODO #59:: If the scrollbar is showing than the pr is moving and the gap between icon and text is bigger and the icon is stuck in the scrollbar*/
 const inputClasses = computed(() => {
-  const variants: Record<InputColorType, string> = {
-    [InputColorType.base]: 'outline-neutral-300 focus:ring-primary-200 bg-white placeholder:text-neutral-500',
-    [InputColorType.danger]: 'outline-danger-500 focus:ring-danger-200 bg-danger-100 placeholder:text-danger-700',
-    [InputColorType.info]: 'outline-info-500 focus:ring-info-200 bg-info-100 placeholder:text-info-700',
-    [InputColorType.success]: 'outline-success-500 focus:ring-success-200 bg-success-100 placeholder:text-success-700',
-    [InputColorType.warning]: 'outline-warning-500 focus:ring-warning-200 bg-warning-100 placeholder:text-warning-700',
+  const variants: Record<InputState, string> = {
+    [InputState.base]: 'outline-neutral-300 focus:ring-primary-200 bg-white placeholder:text-neutral-500',
+    [InputState.danger]: 'outline-danger-500 focus:ring-danger-200 bg-danger-100 placeholder:text-danger-700',
+    [InputState.info]: 'outline-info-500 focus:ring-info-200 bg-info-100 placeholder:text-info-700',
+    [InputState.success]: 'outline-success-500 focus:ring-success-200 bg-success-100 placeholder:text-success-700',
+    [InputState.warning]: 'outline-warning-500 focus:ring-warning-200 bg-warning-100 placeholder:text-warning-700',
   };
   return {
     'block transition-colors relative border-none outline w-full focus:z-10': true,
     'outline-offset-[-1px] outline-1 focus:outline-offset-[-1px] focus:outline-1': true,
     'disabled:opacity-50 disabled:cursor-not-allowed': props.disabled,
-    [variants[_colorType.value]]: true,
+    [variants[_state.value]]: true,
     // Size
     'focus:ring-2 p-1 text-xs': props.size === Size.xs2,
     'focus:ring-2 p-1.5 text-xs': props.size === Size.xs,
@@ -98,12 +98,12 @@ const iconColor = computed(() => {
     'warning': 'text-warning-500',
   };
 
-  return variants[_colorType.value];
+  return variants[_state.value];
 });
 const _wrapperClass = computed(() => classesToObjectSyntax(props.wrapperClass));
-const icon = computed(() => icons[_colorType.value]);
+const icon = computed(() => icons[_state.value]);
 const hasErrors = computed(() => props.errors.length > 0);
-const _colorType = computed(() => hasErrors.value ? InputColorType.danger : props.colorType);
+const _state = computed(() => hasErrors.value ? InputState.danger : props.state);
 const getIconSize = computed(() => {
   if (props.size === Size.xs || props.size === Size.xs2) {
     return IconSize.xs;
@@ -115,7 +115,7 @@ const getIconSize = computed(() => {
 onMounted(() => {
   handleEnumValidation(props.size, Size, 'size');
   handleEnumValidation(props.grouped, Grouped, 'grouped');
-  handleEnumValidation(props.colorType, InputColorType, 'colorType');
+  handleEnumValidation(props.state, InputState, 'state');
 
   if (!props.skeleton && props.modelValue !== null) {
     emit('validate', props.modelValue);
@@ -146,7 +146,7 @@ function onBlur(e: FocusEvent) {
     :size="size"
     :skeleton="skeleton"
     :description="description"
-    :color-type="colorType"
+    :state="state"
     :limiter-max-value="limiter && max !== undefined ? max : undefined"
     :limiter-value="limiter ? _modelValue.length : undefined"
     :errors="errors"

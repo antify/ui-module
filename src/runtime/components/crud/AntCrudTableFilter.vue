@@ -6,7 +6,7 @@ import AntDropdown from '../AntDropdown.vue';
 import {computed, ref, watch} from 'vue';
 import AntButton from '../buttons/AntButton.vue';
 import {faFilter, faMultiply} from '@fortawesome/free-solid-svg-icons';
-import {ColorType, Grouped, Position} from '../../enums';
+import {State, Grouped, Position} from '../../enums';
 import {useRoute, useRouter} from 'vue-router';
 
 const props = withDefaults(defineProps<{
@@ -83,7 +83,7 @@ watch(() => props.fullWidth, (val) => {
       >
         <div class="flex">
           <AntButton
-            :color-type="hasFilter ? ColorType.info : ColorType.base"
+            :state="hasFilter ? State.info : State.base"
             :grouped="hasFilter ? Grouped.left : Grouped.none"
             :skeleton="skeleton"
             :icon-left="faFilter"
@@ -92,7 +92,7 @@ watch(() => props.fullWidth, (val) => {
 
           <AntButton
             v-if="hasFilter"
-            :color-type="ColorType.info"
+            :state="State.info"
             :grouped="Grouped.right"
             :skeleton="skeleton"
             :icon-left="faMultiply"

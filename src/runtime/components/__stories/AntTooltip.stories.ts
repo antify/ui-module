@@ -3,7 +3,7 @@ import AntFormGroup from '../form/AntFormGroup.vue';
 import AntFormGroupLabel from '../form/AntFormGroupLabel.vue';
 import {type Meta, type StoryObj} from '@storybook/vue3';
 import {Position} from '../../enums/Position.enum';
-import {InputColorType} from '../../enums';
+import {InputState} from '../../enums';
 import {expect, userEvent, waitFor, within} from '@storybook/test';
 
 // TODO:: Test delay
@@ -19,9 +19,9 @@ const meta: Meta<typeof AntTooltip> = {
 			control: {type: 'select'},
 			options: Object.values(Position),
 		},
-		colorType: {
+		state: {
 			control: {type: 'select'},
-			options: Object.values(InputColorType),
+			options: Object.values(InputState),
 		}
 	},
 };
@@ -63,7 +63,7 @@ export const Docs: Story = {
 		await step('Leave hover state and expect not showing the tooltip anymore', async () => {
 			await userEvent.unhover(target);
 
-			expect(queryTooltip()).not.toBeInTheDocument()
+			expect(queryTooltip()).not.toBeInTheDocument();
 		});
 
 		await step('Hover over the target, wait until the tooltip is visible, click the target and expect not showing the tooltip', async () => {
@@ -71,7 +71,7 @@ export const Docs: Story = {
 			await waitFor(() => expect(queryTooltip()).toBeInTheDocument(), {timeout: 600});
 			await userEvent.click(target);
 
-			expect(queryTooltip()).not.toBeInTheDocument()
+			expect(queryTooltip()).not.toBeInTheDocument();
 		});
 
 		await step('Hover over the target, click it while delay and expect not showing the tooltip', async () => {
@@ -79,7 +79,7 @@ export const Docs: Story = {
 			await waitFor(() => expect(queryTooltip()).not.toBeInTheDocument(), {timeout: 200});
 			await userEvent.click(target);
 
-			expect(queryTooltip()).not.toBeInTheDocument()
+			expect(queryTooltip()).not.toBeInTheDocument();
 		});
 	},
 	args: {
@@ -131,7 +131,7 @@ export const Summary: Story = {
 			AntFormGroupLabel
 		},
 		setup() {
-			return {args, Position, InputColorType};
+			return {args, Position, InputState};
 		},
 		template: `
 			<AntFormGroup>
@@ -164,31 +164,31 @@ export const Summary: Story = {
 
 				<AntFormGroupLabel>Color type</AntFormGroupLabel>
 				<AntFormGroup direction="row" class="pb-16 dashed">
-					<AntTooltip :position="Position.bottom" :color-type="InputColorType.base">
+					<AntTooltip :position="Position.bottom" :state="InputState.base">
 						<div class="box">Hover me</div>
 
 						<template #content>Lorem</template>
 					</AntTooltip>
 
-					<AntTooltip :position="Position.bottom" :color-type="InputColorType.info">
+					<AntTooltip :position="Position.bottom" :state="InputState.info">
 						<div class="box">Hover me</div>
 
 						<template #content>Lorem</template>
 					</AntTooltip>
 
-					<AntTooltip :position="Position.bottom" :color-type="InputColorType.success">
+					<AntTooltip :position="Position.bottom" :state="InputState.success">
 						<div class="box">Hover me</div>
 
 						<template #content>Lorem</template>
 					</AntTooltip>
 
-					<AntTooltip :position="Position.bottom" :color-type="InputColorType.warning">
+					<AntTooltip :position="Position.bottom" :state="InputState.warning">
 						<div class="box">Hover me</div>
 
 						<template #content>Lorem</template>
 					</AntTooltip>
 
-					<AntTooltip :position="Position.bottom" :color-type="InputColorType.danger">
+					<AntTooltip :position="Position.bottom" :state="InputState.danger">
 						<div class="box">Hover me</div>
 
 						<template #content>Lorem</template>

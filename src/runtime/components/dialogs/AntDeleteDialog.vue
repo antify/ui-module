@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import {InputColorType} from '../../enums';
+import {InputState} from '../../enums';
 import AntDialog from './AntDialog.vue';
 import {useVModel} from '@vueuse/core';
 
@@ -15,7 +15,7 @@ const _open = useVModel(props, 'open', emit);
 <template>
   <AntDialog
     v-model:open="_open"
-    :color-type="InputColorType.danger"
+    :state="InputState.danger"
     title="Delete"
     confirm-text="Delete"
     data-e2e="delete-dialog"
@@ -23,7 +23,7 @@ const _open = useVModel(props, 'open', emit);
     @close="() => $emit('close')"
   >
     <div>
-      Do you really want to delete <span class="font-semibold">{{entity}}</span>?
+      Do you really want to delete <span class="font-semibold">{{ entity }}</span>?
     </div>
   </AntDialog>
 </template>

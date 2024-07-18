@@ -4,7 +4,7 @@ import AntSelect from '../AntSelect.vue';
 import {computed} from 'vue';
 import {useFieldValidator} from '@antify/validate';
 import {type SelectOption} from '../__types/AntSelect.type';
-import {InputColorType} from '../../../enums';
+import {InputState} from '../../../enums';
 const meta: Meta<typeof AntSelect> = {
   title: 'Components/Forms/Select',
   component: AntSelect,
@@ -22,9 +22,9 @@ const meta: Meta<typeof AntSelect> = {
         },
       },
     },
-    colorType: {
+    state: {
       control: {type: 'select'},
-      options: Object.values(InputColorType),
+      options: Object.values(InputState),
     },
     size: {
       control: {type: 'select'},
@@ -168,39 +168,39 @@ export const summary: Story = {
           <AntSelect v-bind="args" value="5"/>
         </div>
         <div class="flex gap-2.5">
-          <AntSelect v-bind="args" :value="null" size="md" color-type="base"/>
-          <AntSelect v-bind="args" :value="null" size="md" color-type="info"/>
-          <AntSelect v-bind="args" :value="null" size="md" color-type="success"/>
-          <AntSelect v-bind="args" :value="null" size="md" color-type="warning"/>
-          <AntSelect v-bind="args" :value="null" size="md" color-type="danger"/>
+          <AntSelect v-bind="args" :value="null" size="md" state="base"/>
+          <AntSelect v-bind="args" :value="null" size="md" state="info"/>
+          <AntSelect v-bind="args" :value="null" size="md" state="success"/>
+          <AntSelect v-bind="args" :value="null" size="md" state="warning"/>
+          <AntSelect v-bind="args" :value="null" size="md" state="danger"/>
         </div>
         <div class="flex gap-2.5">
-          <AntSelect v-bind="args" :value="null" size="sm" color-type="base"/>
-          <AntSelect v-bind="args" :value="null" size="sm" color-type="info"/>
-          <AntSelect v-bind="args" :value="null" size="sm" color-type="success"/>
-          <AntSelect v-bind="args" :value="null" size="sm" color-type="warning"/>
-          <AntSelect v-bind="args" :value="null" size="sm" color-type="danger"/>
+          <AntSelect v-bind="args" :value="null" size="sm" state="base"/>
+          <AntSelect v-bind="args" :value="null" size="sm" state="info"/>
+          <AntSelect v-bind="args" :value="null" size="sm" state="success"/>
+          <AntSelect v-bind="args" :value="null" size="sm" state="warning"/>
+          <AntSelect v-bind="args" :value="null" size="sm" state="danger"/>
         </div>
         <div class="flex gap-2.5">
-          <AntSelect v-bind="args" value="1" size="md" color-type="base"/>
-          <AntSelect v-bind="args" value="1" size="md" color-type="info"/>
-          <AntSelect v-bind="args" value="1" size="md" color-type="success"/>
-          <AntSelect v-bind="args" value="1" size="md" color-type="warning"/>
-          <AntSelect v-bind="args" value="1" size="md" color-type="danger"/>
+          <AntSelect v-bind="args" value="1" size="md" state="base"/>
+          <AntSelect v-bind="args" value="1" size="md" state="info"/>
+          <AntSelect v-bind="args" value="1" size="md" state="success"/>
+          <AntSelect v-bind="args" value="1" size="md" state="warning"/>
+          <AntSelect v-bind="args" value="1" size="md" state="danger"/>
         </div>
         <div class="flex gap-2.5">
-          <AntSelect v-bind="args" value="1" size="sm" color-type="base"/>
-          <AntSelect v-bind="args" value="1" size="sm" color-type="info"/>
-          <AntSelect v-bind="args" value="1" size="sm" color-type="success"/>
-          <AntSelect v-bind="args" value="1" size="sm" color-type="warning"/>
-          <AntSelect v-bind="args" value="1" size="sm" color-type="danger"/>
+          <AntSelect v-bind="args" value="1" size="sm" state="base"/>
+          <AntSelect v-bind="args" value="1" size="sm" state="info"/>
+          <AntSelect v-bind="args" value="1" size="sm" state="success"/>
+          <AntSelect v-bind="args" value="1" size="sm" state="warning"/>
+          <AntSelect v-bind="args" value="1" size="sm" state="danger"/>
         </div>
         <div class="flex gap-2.5">
-          <AntSelect v-bind="args" value="1" size="sm" color-type="base" disabled/>
-          <AntSelect v-bind="args" value="1" size="sm" color-type="info" disabled/>
-          <AntSelect v-bind="args" value="1" size="sm" color-type="success" disabled/>
-          <AntSelect v-bind="args" value="1" size="sm" color-type="warning" disabled/>
-          <AntSelect v-bind="args" value="1" size="sm" color-type="danger" disabled/>
+          <AntSelect v-bind="args" value="1" size="sm" state="base" disabled/>
+          <AntSelect v-bind="args" value="1" size="sm" state="info" disabled/>
+          <AntSelect v-bind="args" value="1" size="sm" state="success" disabled/>
+          <AntSelect v-bind="args" value="1" size="sm" state="warning" disabled/>
+          <AntSelect v-bind="args" value="1" size="sm" state="danger" disabled/>
         </div>
         <div class="flex gap-2.5">
           <AntSelect v-bind="args" :value="null" grouped="none"/>
@@ -209,18 +209,18 @@ export const summary: Story = {
           <AntSelect v-bind="args" :value="null" grouped="left"/>
         </div>
         <div class="flex gap-2.5">
-          <AntSelect v-bind="args" value="1" size="md" nullable color-type="base"/>
-          <AntSelect v-bind="args" value="1" size="md" nullable color-type="info"/>
-          <AntSelect v-bind="args" value="1" size="md" nullable color-type="success"/>
-          <AntSelect v-bind="args" value="1" size="md" nullable color-type="warning"/>
-          <AntSelect v-bind="args" value="1" size="md" nullable color-type="danger"/>
+          <AntSelect v-bind="args" value="1" size="md" nullable state="base"/>
+          <AntSelect v-bind="args" value="1" size="md" nullable state="info"/>
+          <AntSelect v-bind="args" value="1" size="md" nullable state="success"/>
+          <AntSelect v-bind="args" value="1" size="md" nullable state="warning"/>
+          <AntSelect v-bind="args" value="1" size="md" nullable state="danger"/>
         </div>
         <div class="flex gap-2.5">
-          <AntSelect v-bind="args" value="1" size="sm" nullable color-type="base"/>
-          <AntSelect v-bind="args" value="1" size="sm" nullable color-type="info"/>
-          <AntSelect v-bind="args" value="1" size="sm" nullable color-type="success"/>
-          <AntSelect v-bind="args" value="1" size="sm" nullable color-type="warning"/>
-          <AntSelect v-bind="args" value="1" size="sm" nullable color-type="danger"/>
+          <AntSelect v-bind="args" value="1" size="sm" nullable state="base"/>
+          <AntSelect v-bind="args" value="1" size="sm" nullable state="info"/>
+          <AntSelect v-bind="args" value="1" size="sm" nullable state="success"/>
+          <AntSelect v-bind="args" value="1" size="sm" nullable state="warning"/>
+          <AntSelect v-bind="args" value="1" size="sm" nullable state="danger"/>
         </div>
       </div>
     `,

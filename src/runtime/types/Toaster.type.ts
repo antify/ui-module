@@ -1,7 +1,7 @@
-import {InputColorType} from '../enums';
+import {InputState} from '../enums';
 
 export type Toaster = {
   id: string;
   message: string;
-  type?: InputColorType;
+  type?: InputState;
 };

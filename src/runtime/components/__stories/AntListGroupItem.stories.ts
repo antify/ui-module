@@ -1,16 +1,16 @@
 import AntListGroupItem from '../AntListGroupItem.vue';
 import { type Meta, type StoryObj} from '@storybook/vue3';
 import {faUser, faChevronRight} from '@fortawesome/free-solid-svg-icons';
-import {ListGroupItemColorType} from '../../types/AntListGroupItem.type';
+import {ListGroupItemState} from '../../types/AntListGroupItem.type';
 
 const meta: Meta<typeof AntListGroupItem> = {
     title: 'Components/List Group Item',
     component: AntListGroupItem,
     parameters: {controls: {sort: 'requiredFirst'}},
     argTypes: {
-        colorType: {
+        state: {
             control: {type: 'select'},
-            options: Object.values(ListGroupItemColorType),
+            options: Object.values(ListGroupItemState),
         },
         iconLeft: {
             control: {type: 'none'},

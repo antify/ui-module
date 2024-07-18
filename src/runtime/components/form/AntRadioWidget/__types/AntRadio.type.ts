@@ -1,4 +1,4 @@
-import {InputColorType} from '../../../../enums';
+import {InputState} from '../../../../enums';
 
 export enum AntRadioSize {
   md = 'md',
@@ -10,7 +10,7 @@ export type AntRadioType = {
   label?: string;
   disabled?: boolean;
   readonly?: boolean;
-  colorType?: InputColorType;
+  state?: InputState;
 
   [key: string]: unknown;
 }
