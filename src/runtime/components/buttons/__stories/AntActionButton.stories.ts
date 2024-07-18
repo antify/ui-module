@@ -1,16 +1,16 @@
 import AntActionButton from '../AntActionButton.vue';
 import {type Meta, type StoryObj} from '@storybook/vue3';
 import {Grouped as _Grouped} from '../../../enums/Grouped.enum';
-import {ColorType, InputColorType, Position, Size} from '../../../enums';
+import {State, InputState, Position, Size} from '../../../enums';
 
 const meta: Meta<typeof AntActionButton> = {
   title: 'Components/Buttons/Action Button',
   component: AntActionButton,
   parameters: {controls: {sort: 'requiredFirst'}},
   argTypes: {
-		colorType: {
+		state: {
 			control: {type: 'select'},
-			options: Object.values(ColorType),
+			options: Object.values(State),
 		},
     size: {
       control: {type: 'select'},
@@ -24,9 +24,9 @@ const meta: Meta<typeof AntActionButton> = {
       control: {type: 'select'},
       options: Object.values(Position),
     },
-		tooltipColorType: {
+		tooltipState: {
       control: {type: 'select'},
-      options: Object.values(InputColorType),
+      options: Object.values(InputState),
     },
   },
 };

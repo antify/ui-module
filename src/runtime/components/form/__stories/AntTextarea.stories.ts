@@ -3,7 +3,7 @@ import {Grouped as _Grouped} from '../../../enums/Grouped.enum';
 import {type Meta, type StoryObj} from '@storybook/vue3';
 import {Size} from '../../../enums/Size.enum';
 import AntTextarea from '../AntTextarea.vue';
-import {InputColorType} from '../../../enums';
+import {InputState} from '../../../enums';
 import {reactive} from 'vue';
 
 const meta: Meta<typeof AntTextarea> = {
@@ -11,9 +11,9 @@ const meta: Meta<typeof AntTextarea> = {
   component: AntTextarea,
   parameters: {controls: {sort: 'requiredFirst'}},
   argTypes: {
-    colorType: {
+    state: {
       control: {type: 'select'},
-      options: Object.values(InputColorType)
+      options: Object.values(InputState)
     },
     size: {
       control: {type: 'select'},
@@ -36,7 +36,7 @@ const meta: Meta<typeof AntTextarea> = {
     showIcon: {
       control: 'boolean',
       description:
-        'Some InputColorTypes can has an icon. Control with this property if it get shown or not.',
+        'Some InputStates can has an icon. Control with this property if it get shown or not.',
       table: {type: {summary: 'Type'}},
     },
   },
@@ -128,25 +128,25 @@ export const summary: Story = {
     template: `
       <div class="pb-10 flex flex-col gap-2">
         <div class="flex gap-2">
-          <AntTextarea v-bind="args" v-model:value="modelValue" color-type="base"/>
-          <AntTextarea v-bind="args" v-model:value="modelValue" color-type="info"/>
-          <AntTextarea v-bind="args" v-model:value="modelValue" color-type="success"/>
-          <AntTextarea v-bind="args" v-model:value="modelValue" color-type="warning"/>
-          <AntTextarea v-bind="args" v-model:value="modelValue" color-type="danger"/>
+          <AntTextarea v-bind="args" v-model:value="modelValue" state="base"/>
+          <AntTextarea v-bind="args" v-model:value="modelValue" state="info"/>
+          <AntTextarea v-bind="args" v-model:value="modelValue" state="success"/>
+          <AntTextarea v-bind="args" v-model:value="modelValue" state="warning"/>
+          <AntTextarea v-bind="args" v-model:value="modelValue" state="danger"/>
         </div>
 
         <div class="flex gap-2">
-          <AntTextarea v-bind="args" v-model:value="modelValue" :show-icon="false" color-type="base"/>
-          <AntTextarea v-bind="args" v-model:value="modelValue" :show-icon="false" color-type="info"/>
-          <AntTextarea v-bind="args" v-model:value="modelValue" :show-icon="false" color-type="success"/>
-          <AntTextarea v-bind="args" v-model:value="modelValue" :show-icon="false" color-type="warning"/>
-          <AntTextarea v-bind="args" v-model:value="modelValue" :show-icon="false" color-type="danger"/>
+          <AntTextarea v-bind="args" v-model:value="modelValue" :show-icon="false" state="base"/>
+          <AntTextarea v-bind="args" v-model:value="modelValue" :show-icon="false" state="info"/>
+          <AntTextarea v-bind="args" v-model:value="modelValue" :show-icon="false" state="success"/>
+          <AntTextarea v-bind="args" v-model:value="modelValue" :show-icon="false" state="warning"/>
+          <AntTextarea v-bind="args" v-model:value="modelValue" :show-icon="false" state="danger"/>
         </div>
 
         <div class="flex gap-[-2px]">
           <AntTextarea v-bind="args" v-model:value="modelValue" grouped="left"/>
-          <AntTextarea v-bind="args" v-model:value="modelValue" grouped="center" color-type="danger"/>
-          <AntTextarea v-bind="args" v-model:value="modelValue" grouped="right" color-type="info"/>
+          <AntTextarea v-bind="args" v-model:value="modelValue" grouped="center" state="danger"/>
+          <AntTextarea v-bind="args" v-model:value="modelValue" grouped="right" state="info"/>
         </div>
       </div>`,
   }),

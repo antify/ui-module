@@ -2,7 +2,7 @@ import { type Meta, type StoryObj} from '@storybook/vue3';
 import {Size} from '../../../enums/Size.enum';
 import AntUnitInput from '../AntUnitInput.vue';
 import {faEuroSign} from '@fortawesome/free-solid-svg-icons';
-import {InputColorType} from '../../../enums';
+import {InputState} from '../../../enums';
 import {isRequiredRule, useFieldValidator} from '@antify/validate';
 import {reactive} from 'vue';
 
@@ -20,9 +20,9 @@ const meta: Meta<typeof AntUnitInput> = {
         'Will be displayed right to the input.<br>Use text or Font-awesome Icons.',
       table: {type: {summary: 'string|IconDefinition'}},
     },
-    colorType: {
+    state: {
       control: {type: 'select'},
-      options: Object.values(InputColorType),
+      options: Object.values(InputState),
     },
     size: {
       control: {type: 'select'},

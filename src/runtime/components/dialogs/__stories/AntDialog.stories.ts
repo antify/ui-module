@@ -1,7 +1,7 @@
 import AntDialog from '../AntDialog.vue';
 import {type Meta, type StoryObj} from '@storybook/vue3';
 import AntButton from '../../buttons/AntButton.vue';
-import {InputColorType} from '../../../enums';
+import {InputState} from '../../../enums';
 
 const meta: Meta<typeof AntDialog> = {
   title: 'Components/Dialogs/Dialog',
@@ -9,9 +9,9 @@ const meta: Meta<typeof AntDialog> = {
   parameters: {controls: {sort: 'requiredFirst'}},
   decorators: [() => ({template: '<div class="border border-dashed border-neutral-300"><story/></div>'})],
   argTypes: {
-    colorType: {
+    state: {
       control: {type: 'select'},
-      options: Object.values(InputColorType),
+      options: Object.values(InputState),
     },
     title: {
       control: 'text',
@@ -50,7 +50,7 @@ export const Docs: Story = {
           justo duo dolores et ea rebum. Stet clita kasd
         </div>
 
-        <AntButton @click="args.open = true" color-type="primary">Open Dialog</AntButton>
+        <AntButton @click="args.open = true" state="primary">Open Dialog</AntButton>
 
         <AntDialog v-bind="args" v-model:open="args.open">
           Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et

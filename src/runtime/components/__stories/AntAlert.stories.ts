@@ -1,15 +1,15 @@
 import AntAlert from '../AntAlert.vue';
 import { type Meta, type StoryObj} from '@storybook/vue3';
-import {InputColorType} from '../../enums';
+import {InputState} from '../../enums';
 
 const meta: Meta<typeof AntAlert> = {
   title: 'Components/Alert',
   component: AntAlert,
   parameters: {controls: {sort: 'requiredFirst'}},
   argTypes: {
-    colorType: {
+    state: {
       control: {type: 'select'},
-      options: Object.values(InputColorType),
+      options: Object.values(InputState),
     }
   },
 };
@@ -23,7 +23,7 @@ export const Docs: Story = {
     components: {AntAlert},
     setup() {
       function logClick() {
-        console.log('Clicked close icon')
+        console.log('Clicked close icon');
       }
 
       return {args, logClick};

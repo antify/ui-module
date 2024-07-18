@@ -29,13 +29,18 @@ const classes = computed(() => ({
     <TransitionGroup name="list">
       <AntToast
         v-for="toast of $uiModule.toaster.getToasts()"
+        :key="`ant-toast-${toast.id}`"
         :title="toast.title"
-        :color-type="toast.type"
+        :state="toast.type"
         :icon="toast.hasIcon"
         @close="$uiModule.toaster.removeToast(toast)"
-        v-bind:key="`ant-toast-${toast.id}`"
       >
-        <template v-if="toast.content" #default>{{ toast.content }}</template>
+        <template
+          v-if="toast.content"
+          #default
+        >
+          {{ toast.content }}
+        </template>
       </AntToast>
     </TransitionGroup>
   </div>

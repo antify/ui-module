@@ -1,5 +1,5 @@
 import AntButton from '../buttons/AntButton.vue';
-import {CornerPosition, InputColorType} from '../../enums';
+import {CornerPosition, InputState} from '../../enums';
 import {enumToPlainText} from '../../utils';
 
 export default {
@@ -24,7 +24,7 @@ export default {
 export const Simple = (args: any) => ({
   components: { AntButton },
   setup() {
-    return { args, InputColorType };
+    return { args, InputState };
   },
   template: `
     <div class="flex flex-col m-4 space-y-2">
@@ -35,9 +35,9 @@ export const Simple = (args: any) => ({
       </p>
 
       <AntButton
-          v-for="colorType in Object.values(InputColorType)"
+          v-for="state in Object.values(InputState)"
       >
-        Toast {{ colorType }}
+        Toast {{ state }}
       </AntButton>
     </div>
   `,

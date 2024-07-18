@@ -4,7 +4,7 @@ import { type RouteLocationRaw } from 'vue-router';
 export type TabItem = {
   id: string;
   label: string;
-  colorType?: ColorType;
+  state?: State;
   showIcon?: boolean;
   icon?: IconDefinition;
   to?: string | RouteLocationRaw;
@@ -12,7 +12,7 @@ export type TabItem = {
   [key: string]: unknown;
 }
 
-export enum ColorType {
+export enum State {
   base = 'base',
   warning = 'warning',
   danger = 'danger',

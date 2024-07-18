@@ -1,9 +1,9 @@
-import {InputColorType} from '../../enums';
+import {InputState} from '../../enums';
 
 export type Toast = {
   id?: string;
   title: string;
   content?: string;
-  type: InputColorType;
+  type: InputState;
   hasIcon?: boolean;
 };

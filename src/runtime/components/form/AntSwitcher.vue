@@ -5,7 +5,7 @@ import {faChevronLeft, faChevronRight} from '@fortawesome/free-solid-svg-icons';
 import AntSkeleton from '../AntSkeleton.vue';
 import {FieldValidator} from '@antify/validate';
 import {type SwitcherOption} from './__types/AntSwitcher.type';
-import {ColorType, Grouped, InputColorType, Size} from '../../enums';
+import {State, Grouped, InputState, Size} from '../../enums';
 import {computed, onMounted, watch} from 'vue';
 
 const emits = defineEmits(['update:modelValue']);
@@ -17,11 +17,11 @@ const props = withDefaults(defineProps<{
   skeleton?: boolean;
   readonly?: boolean;
   disabled?: boolean;
-  colorType?: InputColorType;
+  state?: InputState;
   validator?: FieldValidator;
   size?: Size,
 }>(), {
-  colorType: InputColorType.base,
+  state: InputState.base,
   size: Size.md
 });
 
@@ -41,7 +41,7 @@ const _value = computed({
 });
 
 const hasAction = computed(() => (!props.skeleton && !props.readonly && !props.disabled));
-const _colorType = computed(() => props.validator?.hasErrors() ? InputColorType.danger : props.colorType);
+const _state = computed(() => props.validator?.hasErrors() ? InputState.danger : props.state);
 
 watch(_value, () => props.validator?.validate(_value.value));
 
@@ -56,14 +56,14 @@ const containerClasses = computed(() => {
     'focus-within:ring-4': props.size === Size.md || props.size === Size.lg && hasAction.value,
   };
   const colorVariant = {
-    [InputColorType.base]: 'focus-within:ring-primary-100',
-    [InputColorType.danger]: 'focus-within:ring-danger-100',
-    [InputColorType.info]: 'focus-within:ring-info-100',
-    [InputColorType.success]: 'focus-within:ring-success-100',
-    [InputColorType.warning]: 'focus-within:ring-warning-100',
+    [InputState.base]: 'focus-within:ring-primary-100',
+    [InputState.danger]: 'focus-within:ring-danger-100',
+    [InputState.info]: 'focus-within:ring-info-100',
+    [InputState.success]: 'focus-within:ring-success-100',
+    [InputState.warning]: 'focus-within:ring-warning-100',
   };
 
-  classes[colorVariant[_colorType.value]] = true;
+  classes[colorVariant[_state.value]] = true;
 
   return classes;
 });
@@ -81,14 +81,14 @@ const itemClasses = computed(() => {
   };
 
   const colorVariant = {
-    [InputColorType.danger]: 'outline-danger-500 bg-danger-100 text-danger-100-font',
-    [InputColorType.base]: 'outline-neutral-300 bg-white text-black',
-    [InputColorType.info]: 'outline-info-500 bg-info-100 text-info-100-font',
-    [InputColorType.success]: 'outline-success-500 bg-success-100 text-success-100-font',
-    [InputColorType.warning]: 'outline-warning-500 bg-warning-100 text-warning-100-font',
+    [InputState.danger]: 'outline-danger-500 bg-danger-100 text-danger-100-font',
+    [InputState.base]: 'outline-neutral-300 bg-white text-black',
+    [InputState.info]: 'outline-info-500 bg-info-100 text-info-100-font',
+    [InputState.success]: 'outline-success-500 bg-success-100 text-success-100-font',
+    [InputState.warning]: 'outline-warning-500 bg-warning-100 text-warning-100-font',
   };
 
-  classes[colorVariant[_colorType.value]] = true;
+  classes[colorVariant[_state.value]] = true;
 
   return classes;
 });
@@ -128,7 +128,7 @@ function nextOption() {
     :size="size"
     :skeleton="skeleton"
     :description="description"
-    :color-type="colorType"
+    :state="state"
     :validator="validator"
     label-for="noop"
   >
@@ -142,7 +142,7 @@ function nextOption() {
         :icon-left="faChevronLeft"
         :grouped="Grouped.left"
         no-focus
-        :color-type="_colorType as unknown as ColorType"
+        :state="_state as unknown as State"
         :size="size"
         :skeleton="skeleton"
         :readonly="readonly"
@@ -167,7 +167,7 @@ function nextOption() {
         :icon-left="faChevronRight"
         :grouped="Grouped.right"
         no-focus
-        :color-type="_colorType as unknown as ColorType"
+        :state="_state as unknown as State"
         :size="size"
         :skeleton="skeleton"
         :readonly="readonly"

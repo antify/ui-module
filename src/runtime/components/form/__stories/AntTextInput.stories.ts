@@ -3,7 +3,7 @@ import {Size} from '../../../enums/Size.enum';
 import AntTextInput from '../AntTextInput.vue';
 import {isRequiredRule, notBlankRule, useFieldValidator} from '@antify/validate';
 import {TextInputType} from '../__types/AntTextInput.type';
-import {InputColorType} from '../../../enums';
+import {InputState} from '../../../enums';
 import {reactive} from 'vue';
 
 const meta: Meta<typeof AntTextInput> = {
@@ -15,9 +15,9 @@ const meta: Meta<typeof AntTextInput> = {
       control: 'text',
       table: {type: {summary: 'string|null'}},
     },
-    colorType: {
+    state: {
       control: {type: 'select'},
-      options: Object.values(InputColorType)
+      options: Object.values(InputState)
     },
     size: {
       control: {type: 'select'},
@@ -112,7 +112,7 @@ export const Summary: Story = {
   render: (args) => ({
     components: {AntTextInput},
     setup() {
-      return {args, InputColorType};
+      return {args, InputState};
     },
     template: `
     <div class="flex gap-2.5">
@@ -123,22 +123,22 @@ export const Summary: Story = {
       <AntTextInput
         v-bind="args"
         v-model="args.modelValue"
-        :color-type="InputColorType.info"
+        :state="InputState.info"
       />
       <AntTextInput
         v-bind="args"
         v-model="args.modelValue"
-        :color-type="InputColorType.success"
+        :state="InputState.success"
       />
       <AntTextInput
         v-bind="args"
         v-model="args.modelValue"
-        :color-type="InputColorType.warning"
+        :state="InputState.warning"
       />
       <AntTextInput
         v-bind="args"
         v-model="args.modelValue"
-        :color-type="InputColorType.danger"
+        :state="InputState.danger"
       />
     </div>
     <div class="flex gap-2.5">
@@ -150,25 +150,25 @@ export const Summary: Story = {
       <AntTextInput
         v-bind="args"
         v-model="args.modelValue"
-        :color-type="InputColorType.info"
+        :state="InputState.info"
         :show-icon="true"
       />
       <AntTextInput
         v-bind="args"
         v-model="args.modelValue"
-        :color-type="InputColorType.success"
+        :state="InputState.success"
         :show-icon="true"
       />
       <AntTextInput
         v-bind="args"
         v-model="args.modelValue"
-        :color-type="InputColorType.warning"
+        :state="InputState.warning"
         :show-icon="true"
       />
       <AntTextInput
         v-bind="args"
         v-model="args.modelValue"
-        :color-type="InputColorType.danger"
+        :state="InputState.danger"
         :show-icon="true"
       />
     </div>

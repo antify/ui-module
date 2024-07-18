@@ -1,7 +1,7 @@
 <script lang="ts" setup>
 import {useVModel} from '@vueuse/core';
 import {AntField} from '../Elements';
-import {InputColorType, Size} from '../../../enums';
+import {InputState, Size} from '../../../enums';
 import AntSkeleton from '../../AntSkeleton.vue';
 import {computed, onMounted, watch} from 'vue';
 import {handleEnumValidation} from '../../../handler';
@@ -20,14 +20,14 @@ const props =
       valueLabel?: string;
       label?: string;
       description?: string;
-      colorType?: InputColorType;
+      state?: InputState;
       size?: AntCheckboxSize,
       skeleton?: boolean;
       disabled?: boolean;
       readonly?: boolean;
       validator?: FieldValidator;
     }>(), {
-      colorType: InputColorType.base,
+      state: InputState.base,
       size: AntCheckboxSize.md,
       skeleton: false,
       disabled: false,
@@ -45,34 +45,34 @@ const inputClasses = computed(() => {
     'cursor-pointer': hasAction.value,
     'focus:ring-2': props.size === AntCheckboxSize.sm && hasAction.value,
     'focus:ring-4': props.size === AntCheckboxSize.md && hasAction.value,
-    'outline-neutral-300': props.colorType === InputColorType.base,
-    'outline-info-500': props.colorType === InputColorType.info,
-    'outline-success-500': props.colorType === InputColorType.success,
-    'outline-warning-500': props.colorType === InputColorType.warning,
-    'outline-danger-500': props.colorType === InputColorType.danger,
+    'outline-neutral-300': props.state === InputState.base,
+    'outline-info-500': props.state === InputState.info,
+    'outline-success-500': props.state === InputState.success,
+    'outline-warning-500': props.state === InputState.warning,
+    'outline-danger-500': props.state === InputState.danger,
     'h-5 w-5': props.size === AntCheckboxSize.md,
     'h-4 w-4': props.size === AntCheckboxSize.sm,
     'cursor-not-allowed opacity-50': props.disabled
   };
 
   const focusColorVariant = {
-    [InputColorType.base]: 'text-primary-500 focus:ring-primary-200',
-    [InputColorType.danger]: 'text-danger-500 focus:ring-danger-200',
-    [InputColorType.info]: 'text-info-500 focus:ring-info-200',
-    [InputColorType.success]: 'text-success-500 focus:ring-success-200',
-    [InputColorType.warning]: 'text-warning-500 focus:ring-warning-200',
+    [InputState.base]: 'text-primary-500 focus:ring-primary-200',
+    [InputState.danger]: 'text-danger-500 focus:ring-danger-200',
+    [InputState.info]: 'text-info-500 focus:ring-info-200',
+    [InputState.success]: 'text-success-500 focus:ring-success-200',
+    [InputState.warning]: 'text-warning-500 focus:ring-warning-200',
   };
 
   const activeColorVariant = {
-    [InputColorType.base]: 'text-primary-500 outline-primary-500 focus:outline-primary-500',
-    [InputColorType.danger]: 'text-danger-500 outline-danger-500 focus:outline-danger-500',
-    [InputColorType.info]: 'text-info-500 outline-info-500 focus:outline-info-500',
-    [InputColorType.success]: 'text-success-500 outline-success-500 focus:outline-success-500',
-    [InputColorType.warning]: 'text-warning-500 outline-warning-500 focus:outline-warning-500',
+    [InputState.base]: 'text-primary-500 outline-primary-500 focus:outline-primary-500',
+    [InputState.danger]: 'text-danger-500 outline-danger-500 focus:outline-danger-500',
+    [InputState.info]: 'text-info-500 outline-info-500 focus:outline-info-500',
+    [InputState.success]: 'text-success-500 outline-success-500 focus:outline-success-500',
+    [InputState.warning]: 'text-warning-500 outline-warning-500 focus:outline-warning-500',
   };
 
-  classes[focusColorVariant[props.colorType]] = hasAction.value;
-  classes[activeColorVariant[props.colorType]] = _value.value;
+  classes[focusColorVariant[props.state]] = hasAction.value;
+  classes[activeColorVariant[props.state]] = _value.value;
 
   return classes;
 });
@@ -102,7 +102,7 @@ watch(_value, () => {
 
 onMounted(() => {
   handleEnumValidation(props.size, AntCheckboxSize, 'size');
-  handleEnumValidation(props.colorType, InputColorType, 'colorType');
+  handleEnumValidation(props.state, InputState, 'state');
 });
 </script>
 
@@ -111,7 +111,7 @@ onMounted(() => {
     :label="label"
     :description="description"
     :skeleton="skeleton"
-    :color-type="colorType"
+    :state="state"
     :validator="validator"
     :size="fieldSize"
     :expanded="false"

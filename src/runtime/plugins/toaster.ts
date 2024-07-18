@@ -1,5 +1,5 @@
 import {type Toast} from '../components/__types/AntToaster.types';
-import {InputColorType} from '../enums';
+import {InputState} from '../enums';
 import {ref} from 'vue';
 
 export default () => {
@@ -33,16 +33,16 @@ export default () => {
       }
     },
     toastSuccess(message: string) {
-      this.toast({title: message, type: InputColorType.success});
+      this.toast({title: message, type: InputState.success});
     },
     toastError(message: string) {
-      this.toast({title: message, type: InputColorType.danger});
+      this.toast({title: message, type: InputState.danger});
     },
     toastWarning(message: string) {
-      this.toast({title: message, type: InputColorType.warning});
+      this.toast({title: message, type: InputState.warning});
     },
     toastInfo(message: string) {
-      this.toast({title: message, type: InputColorType.info});
+      this.toast({title: message, type: InputState.info});
     },
     toastDeleted() {
       // TODO:: translate
@@ -60,5 +60,5 @@ export default () => {
       // TODO:: translate
       this.toastSuccess('Duplicated');
     },
-  }
+  };
 };

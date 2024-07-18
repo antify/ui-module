@@ -5,10 +5,10 @@ import { useVModel } from '@vueuse/core';
 import AntCheckbox from './AntCheckbox.vue';
 import { computed, watch } from 'vue';
 import { Direction } from '../../../enums/Direction.enum';
-import { InputColorType } from '../../../enums';
+import { InputState } from '../../../enums';
 import { FieldValidator } from '@antify/validate';
 
-const emits = defineEmits(['update:modelValue'])
+const emits = defineEmits(['update:modelValue']);
 const props = withDefaults(
   defineProps<{
     modelValue: string[];
@@ -16,7 +16,7 @@ const props = withDefaults(
     label?: string;
     description?: string;
     direction?: Direction;
-    colorType?: InputColorType;
+    state?: InputState;
     size?: AntCheckboxSize,
     skeleton?: boolean;
     readonly?: boolean;
@@ -25,16 +25,16 @@ const props = withDefaults(
   }>(),
   {
     direction: Direction.column,
-    colorType: InputColorType.base,
+    state: InputState.base,
     size: AntCheckboxSize.md,
     skeleton: false,
     readonly: false,
     disabled: false
   }
-)
+);
 
 const _value = useVModel(props, 'modelValue', emits);
-const _colorType = computed(() => props.validator?.hasErrors() ? InputColorType.danger : props.colorType);
+const _state = computed(() => props.validator?.hasErrors() ? InputState.danger : props.state);
 const containerClasses = computed(() => {
   const classes = {
     'flex gap-2.5': true,
@@ -43,7 +43,7 @@ const containerClasses = computed(() => {
   };
 
   return classes;
-})
+});
 
 function updateValue(value: string) {
   const index = _value.value.indexOf(value);
@@ -69,7 +69,7 @@ watch(_value, () => {
     :description="description"
     :skeleton="skeleton"
     :validator="validator"
-    :color-type="_colorType"
+    :state="_state"
     :size="size"
     label-for="noop"
   >
@@ -80,7 +80,7 @@ watch(_value, () => {
         :model-value="_value.indexOf(checkbox.value) !== -1"
         :value-label="checkbox.label"
         :size="size"
-        :color-type="_colorType"
+        :state="_state"
         :skeleton="skeleton"
         :disabled="disabled || checkbox.disabled"
         :readonly="readonly || checkbox.readonly"

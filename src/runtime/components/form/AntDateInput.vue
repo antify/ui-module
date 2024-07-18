@@ -5,7 +5,7 @@ import AntBaseInput from './Elements/AntBaseInput.vue';
 import AntIcon from '../AntIcon.vue';
 import {Size} from '../../enums/Size.enum';
 import {useVModel} from '@vueuse/core';
-import {InputColorType} from '../../enums';
+import {InputState} from '../../enums';
 import {BaseInputType} from './Elements/__types';
 import {handleEnumValidation} from '../../handler';
 import {AntDateInputType} from './__types/AntDateInput.type';
@@ -20,12 +20,12 @@ const props = withDefaults(defineProps<{
   description?: string;
   size?: Size;
   type?: AntDateInputType;
-  colorType?: InputColorType;
+  state?: InputState;
   disabled?: boolean;
   skeleton?: boolean;
   errors?: string[];
 }>(), {
-  colorType: InputColorType.base,
+  state: InputState.base,
   type: AntDateInputType.date,
   disabled: false,
   skeleton: false,
@@ -34,18 +34,18 @@ const props = withDefaults(defineProps<{
 });
 const emit = defineEmits(['update:modelValue', 'validate']);
 const _modelValue = useVModel(props, 'modelValue', emit);
-const _colorType = computed(() => hasErrors.value ? InputColorType.danger : props.colorType);
+const _state = computed(() => hasErrors.value ? InputState.danger : props.state);
 const hasErrors = computed(() => props.errors.length > 0);
 const inputRef = ref<null | HTMLInputElement>(null);
 const iconColor = computed(() => {
-  switch (_colorType.value) {
-    case InputColorType.info:
+  switch (_state.value) {
+    case InputState.info:
       return 'text-info-700';
-    case InputColorType.success:
+    case InputState.success:
       return 'text-success-700';
-    case InputColorType.warning:
+    case InputState.warning:
       return 'text-warning-700';
-    case InputColorType.danger:
+    case InputState.danger:
       return 'text-danger-700';
     default:
       return 'text-for-white-bg';
@@ -55,7 +55,7 @@ const iconSize = computed(() => props.size === Size.xs || props.size === Size.xs
 const _icon = computed(() => props.type === AntDateInputType.time ? faClock : faCalendar);
 
 onMounted(() => {
-  handleEnumValidation(props.colorType, InputColorType, 'colorType');
+  handleEnumValidation(props.state, InputState, 'state');
   handleEnumValidation(props.size, Size, 'size');
 });
 
@@ -70,14 +70,14 @@ function onClickCalendar() {
     :size="size"
     :skeleton="skeleton"
     :description="description"
-    :color-type="colorType"
+    :state="state"
     :errors="errors"
   >
     <AntBaseInput
       v-model:value="_modelValue"
       v-model:input-ref="inputRef"
       :type="type as unknown as BaseInputType"
-      :color-type="_colorType"
+      :state="_state"
       :size="size"
       :skeleton="skeleton"
       :disabled="disabled"

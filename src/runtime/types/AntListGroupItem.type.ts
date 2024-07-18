@@ -1,4 +1,4 @@
-export enum ListGroupItemColorType {
+export enum ListGroupItemState {
   base = 'base',
   primary = 'primary',
   secondary = 'secondary',

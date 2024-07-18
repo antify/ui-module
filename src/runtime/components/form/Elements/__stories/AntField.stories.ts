@@ -3,7 +3,7 @@ import AntBaseInput from '../AntBaseInput.vue';
 import {type Meta, type StoryObj} from '@storybook/vue3';
 import {Size} from '../../../../enums/Size.enum';
 import {computed, reactive, ref} from 'vue';
-import {InputColorType} from '../../../../enums';
+import {InputState} from '../../../../enums';
 import {isRequiredRule, notBlankRule, useFieldValidator} from '@antify/validate';
 
 const meta: Meta<typeof AntField> = {
@@ -15,9 +15,9 @@ const meta: Meta<typeof AntField> = {
       control: {type: 'select'},
       options: Object.values(Size),
     },
-    colorType: {
+    state: {
       control: {type: 'select'},
-      options: Object.values(InputColorType)
+      options: Object.values(InputState)
     },
     skeleton: {
       control: 'boolean',
@@ -50,18 +50,18 @@ export const Docs: Story = {
           args.size = val;
         }
       });
-      const colorType = computed({
+      const state = computed({
         get() {
-          return args.colorType;
+          return args.state;
         },
         set(val) {
-          args.colorType = val;
+          args.state = val;
         }
       });
       const value = ref<string | null>(null);
       const validator = reactive(useFieldValidator([isRequiredRule, notBlankRule]));
 
-      return {args, value, validator, skeleton, size, colorType};
+      return {args, value, validator, skeleton, size, state};
     },
     template: `
       <AntField
@@ -72,7 +72,7 @@ export const Docs: Story = {
           v-model:value="value"
           :skeleton="skeleton"
           :size="size"
-          :color-type="colorType"
+          :state="state"
           placeholder="Placeholder"
           :has-errors="Array.isArray(args.errors) ? args.errors.length > 0 : validator.hasErrors()"
           @validate="(val) => validator.validate(val)"

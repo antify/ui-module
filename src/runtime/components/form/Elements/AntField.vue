@@ -5,14 +5,14 @@ import AntInputLabel from './AntInputLabel.vue';
 import AntInputDescription from './AntInputDescription.vue';
 import {handleEnumValidation} from '../../../handler';
 import AntInputLimiter from './AntInputLimiter.vue';
-import {InputColorType} from '../../../enums';
+import {InputState} from '../../../enums';
 
 defineEmits(['clickLabel', 'validate']);
 const props = withDefaults(defineProps<{
   label?: string;
   description?: string;
   size?: Size;
-  colorType?: InputColorType;
+  state?: InputState;
   skeleton?: boolean;
   limiterValue?: number;
   limiterMaxValue?: number;
@@ -20,7 +20,7 @@ const props = withDefaults(defineProps<{
   errors?: string[];
   expanded?: boolean;
 }>(), {
-  colorType: InputColorType.base,
+  state: InputState.base,
   skeleton: false,
   size: Size.md,
   errors: () => [],
@@ -29,11 +29,11 @@ const props = withDefaults(defineProps<{
 
 onMounted(() => {
   handleEnumValidation(props.size, Size, 'size');
-  handleEnumValidation(props.colorType, InputColorType, 'colorType');
+  handleEnumValidation(props.state, InputState, 'state');
 });
 
 const _errors = computed(() => props.skeleton ? [] : props.errors);
-const _colorType = computed(() => _errors.value.length > 0 ? InputColorType.danger : props.colorType);
+const _state = computed(() => _errors.value.length > 0 ? InputState.danger : props.state);
 const fontSize = computed(() => {
   if (props.size === Size.xs2 || props.size === Size.xs) {
     return Size.xs;
@@ -68,7 +68,7 @@ const fontSize = computed(() => {
         v-if="description || _errors.length > 0"
         :size="fontSize"
         :skeleton="skeleton"
-        :color-type="_colorType"
+        :state="_state"
       >
         <slot name="description">
           <template v-if="_errors.length === 1">
@@ -100,7 +100,7 @@ const fontSize = computed(() => {
         <AntInputLimiter
           :value="limiterValue"
           :max-value="limiterMaxValue"
-          :color-type="_colorType"
+          :state="_state"
           :size="fontSize"
           :skeleton="skeleton"
         >
