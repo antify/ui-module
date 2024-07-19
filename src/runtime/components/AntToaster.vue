@@ -13,16 +13,16 @@ const props = withDefaults(defineProps<{
 });
 
 const classes = computed(() => ({
-  'left-0 top-0': props.position === CornerPosition.topLeft,
-  'right-0 top-0': props.position === CornerPosition.topRight,
-  'left-0 bottom-0': props.position === CornerPosition.bottomLeft,
-  'right-0 bottom-0': props.position === CornerPosition.bottomRight,
+  'left-0 top-0 items-start': props.position === CornerPosition.topLeft,
+  'right-0 top-0 items-end': props.position === CornerPosition.topRight,
+  'left-0 bottom-0 items-start': props.position === CornerPosition.bottomLeft,
+  'right-0 bottom-0 items-end': props.position === CornerPosition.bottomRight,
 }));
 </script>
 
 <template>
   <div
-    class="absolute flex flex-col items-baseline space-y-2.5 p-2.5"
+    class="absolute flex flex-col space-y-2.5 p-2.5"
     :class="classes"
     data-e2e="toaster"
   >
@@ -52,24 +52,18 @@ const classes = computed(() => ({
 }
 
 .list-enter-active{
-  animation: bounce-in-left .6s;
+  animation: fade-in .6s;
 }
 
 .list-leave-active {
-  animation: bounce-in-left .4s reverse;
+  animation: fade-in .4s reverse;
 }
 
-@keyframes bounce-in-left {
+@keyframes fade-in {
   0% {
-    transform: translateX(-10rem);
     opacity: 0;
   }
-  50% {
-    transform: translateX(.5rem);
-    opacity: 1;
-  }
   100% {
-    transform: translateX(0);
     opacity: 1;
   }
 }
