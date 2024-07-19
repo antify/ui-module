@@ -61,11 +61,9 @@ const classes = computed(() => ({
 
 @keyframes fade-in {
   0% {
-    /*transform: translateX(-10rem);*/
     opacity: 0;
   }
   100% {
-    /*transform: translateX(0);*/
     opacity: 1;
   }
 }
