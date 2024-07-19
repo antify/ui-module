@@ -19,8 +19,6 @@ const classes = computed(() => {
   const variants: Record<ListGroupItemState, string> = {
     [ListGroupItemState.danger]: 'bg-danger-500 text-danger-500-font hover:bg-danger-700',
     [ListGroupItemState.info]: 'bg-info-500 text-info-500-font hover:bg-info-700',
-    [ListGroupItemState.neutral700]: 'bg-neutral-700 text-neutral-700-font hover:bg-neutral-800',
-    [ListGroupItemState.neutral300]: 'bg-neutral-300 text-neutral-300-font hover:bg-neutral-400',
     [ListGroupItemState.base]: 'bg-white text-for-white-bg-font hover:bg-neutral-200',
     [ListGroupItemState.primary]: 'bg-primary-500 text-primary-500-font hover:bg-primary-700',
     [ListGroupItemState.secondary]: 'bg-secondary-500 text-secondary-500-font hover:bg-secondary-700',
@@ -37,8 +35,6 @@ const contentWrapperClasses = computed(() => {
   const variants: Record<ListGroupItemState, string> = {
    [ListGroupItemState.danger]: 'text-danger-500-font',
    [ListGroupItemState.info]: 'text-info-500-font',
-   [ListGroupItemState.neutral700]: 'text-neutral-700-font',
-   [ListGroupItemState.neutral300]: 'text-neutral-300-font',
    [ListGroupItemState.base]: 'text-for-white-bg-font',
    [ListGroupItemState.primary]: 'text-primary-500-font',
    [ListGroupItemState.secondary]: 'text-secondary-500-font',
