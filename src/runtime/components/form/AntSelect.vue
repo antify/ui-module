@@ -14,9 +14,8 @@
  */
 import AntField from './Elements/AntField.vue';
 import {type SelectOption} from './__types/AntSelect.type';
-import {computed, onMounted, ref} from 'vue';
+import {computed, onMounted, ref, watch} from 'vue';
 import {Size} from '../../enums/Size.enum';
-import {FieldValidator} from '@antify/validate';
 import {handleEnumValidation} from '../../handler';
 import {Grouped} from '../../enums/Grouped.enum';
 import AntIcon from '../AntIcon.vue';
@@ -40,12 +39,12 @@ const props = withDefaults(
       state?: InputState;
       disabled?: boolean;
       skeleton?: boolean;
-      validator?: FieldValidator;
       nullable?: boolean;
       grouped?: Grouped;
       name?: string;
       wrapperClass?: string | Record<string, boolean>;
       expanded?: boolean;
+      errors: string[]
     }>(), {
       state: InputState.base,
       grouped: Grouped.none,
@@ -53,15 +52,15 @@ const props = withDefaults(
       disabled: false,
       skeleton: false,
       nullable: false,
-      expanded: true
+      expanded: true,
+      errors: () => []
     }
 );
-const emit = defineEmits(['update:modelValue']);
+const emit = defineEmits(['update:modelValue', 'blur', 'validate']);
 const isOpen = ref(false);
 const _modelValue = computed({
   get: () => props.modelValue,
   set: (val: string | number | null) => {
-    props.validator?.validate(val);
     emit('update:modelValue', val);
   },
 });
@@ -137,7 +136,7 @@ const arrowClasses = computed(() => {
 
   return {[variants[_state.value]]: true};
 });
-const _state = computed(() => props.validator?.hasErrors() ? InputState.danger : props.state);
+const _state = computed(() => props.errors.length > 0 ? InputState.danger : props.state);
 const skeletonGrouped = computed(() => {
   if (!props.nullable || (props.nullable && _modelValue.value === null)) {
     return props.grouped;
@@ -160,10 +159,27 @@ onMounted(() => {
   handleEnumValidation(props.state, InputState, 'state');
   handleEnumValidation(props.grouped, Grouped, 'grouped');
 
-  props.validator?.validate(_modelValue.value);
-
   focusedDropDownItem.value = _modelValue.value;
 });
+
+/**
+ * Validate default value if given after delayed data fetching.
+ */
+watch(() => props.skeleton, (val) => {
+  if (!val && props.modelValue !== null) {
+    emit('validate', props.modelValue);
+  }
+});
+watch(_modelValue, () => {
+  if (props.errors.length > 0) {
+    emit('validate', props.modelValue);
+  }
+});
+
+function onBlur(e: FocusEvent) {
+  emit('validate', props.modelValue);
+  emit('blur', e);
+}
 
 function onClickOutside() {
   if (!isOpen.value) {
@@ -201,9 +217,9 @@ function onClickRemoveButton() {
     :skeleton="skeleton"
     :description="description"
     :state="state"
-    :validator="validator"
     :class="wrapperClass"
     :expanded="expanded"
+    :errors="errors"
     label-for="noop"
     data-e2e="select"
     @click-label="() => inputRef?.focus()"
@@ -237,6 +253,7 @@ function onClickRemoveButton() {
           v-bind="$attrs"
           @mousedown="onClickSelectInput"
           @click="inputRef?.focus()"
+          @blur="onBlur"
         >
           <div
             v-if="_modelValue === null && placeholder !== undefined"

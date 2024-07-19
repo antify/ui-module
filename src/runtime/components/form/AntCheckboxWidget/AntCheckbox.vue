@@ -3,20 +3,18 @@ import {useVModel} from '@vueuse/core';
 import {AntField} from '../Elements';
 import {InputState, Size} from '../../../enums';
 import AntSkeleton from '../../AntSkeleton.vue';
-import {computed, onMounted, watch} from 'vue';
+import {computed, onMounted, ref, watch} from 'vue';
 import {handleEnumValidation} from '../../../handler';
-
 import {faCheck} from '@fortawesome/free-solid-svg-icons';
 import AntIcon from '../../AntIcon.vue';
 import {IconSize} from '../../__types';
-import {FieldValidator} from '@antify/validate';
 import {AntCheckboxSize} from './__types/AntCheckbox';
 
-const emits = defineEmits(['update:modelValue', 'update:skeleton']);
+const emit = defineEmits(['update:modelValue', 'update:skeleton', 'validate', 'blur']);
 const props =
   withDefaults(
     defineProps<{
-      modelValue: boolean;
+      modelValue: boolean | null;
       valueLabel?: string;
       label?: string;
       description?: string;
@@ -25,19 +23,44 @@ const props =
       skeleton?: boolean;
       disabled?: boolean;
       readonly?: boolean;
-      validator?: FieldValidator;
+      errors?: string[];
     }>(), {
       state: InputState.base,
       size: AntCheckboxSize.md,
       skeleton: false,
       disabled: false,
       readonly: false,
+      errors: () => []
     });
 
-const _value = useVModel(props, 'modelValue', emits);
+const _value = useVModel(props, 'modelValue', emit);
+const delayedValue = ref(_value.value);
 const hasAction = computed(() => (!props.skeleton && !props.readonly && !props.disabled));
+const _state = computed(() => props.errors.length > 0 ? InputState.danger : props.state);
 const inputClasses = computed(() => {
-  const classes: { [key: string]: boolean } = {
+  const focusColorVariant: Record<InputState, string> = {
+    [InputState.base]: 'focus:ring-primary-200',
+    [InputState.danger]: 'focus:ring-danger-200',
+    [InputState.info]: 'focus:ring-info-200',
+    [InputState.success]: 'focus:ring-success-200',
+    [InputState.warning]: 'focus:ring-warning-200',
+  };
+  const activeColorVariant: Record<InputState, string> = {
+    [InputState.base]: 'text-primary-500',
+    [InputState.danger]: 'text-danger-500',
+    [InputState.info]: 'text-info-500',
+    [InputState.success]: 'text-success-500',
+    [InputState.warning]: 'text-warning-500',
+  };
+  const inactiveColorVariant: Record<InputState, string> = {
+    [InputState.base]: 'outline-neutral-300',
+    [InputState.danger]: 'outline-danger-500',
+    [InputState.info]: 'outline-info-500',
+    [InputState.success]: 'outline-success-500',
+    [InputState.warning]: 'outline-warning-500',
+  };
+
+  return {
     'relative inline-flex flex-shrink-0 bg-neutral-100 border-0': true,
     'outline outline-1 outline-offset-[-1px] rounded': true,
     'focus:ring-offset-0': true,
@@ -45,48 +68,21 @@ const inputClasses = computed(() => {
     'cursor-pointer': hasAction.value,
     'focus:ring-2': props.size === AntCheckboxSize.sm && hasAction.value,
     'focus:ring-4': props.size === AntCheckboxSize.md && hasAction.value,
-    'outline-neutral-300': props.state === InputState.base,
-    'outline-info-500': props.state === InputState.info,
-    'outline-success-500': props.state === InputState.success,
-    'outline-warning-500': props.state === InputState.warning,
-    'outline-danger-500': props.state === InputState.danger,
     'h-5 w-5': props.size === AntCheckboxSize.md,
     'h-4 w-4': props.size === AntCheckboxSize.sm,
-    'cursor-not-allowed opacity-50': props.disabled
-  };
-
-  const focusColorVariant = {
-    [InputState.base]: 'text-primary-500 focus:ring-primary-200',
-    [InputState.danger]: 'text-danger-500 focus:ring-danger-200',
-    [InputState.info]: 'text-info-500 focus:ring-info-200',
-    [InputState.success]: 'text-success-500 focus:ring-success-200',
-    [InputState.warning]: 'text-warning-500 focus:ring-warning-200',
-  };
-
-  const activeColorVariant = {
-    [InputState.base]: 'text-primary-500 outline-primary-500 focus:outline-primary-500',
-    [InputState.danger]: 'text-danger-500 outline-danger-500 focus:outline-danger-500',
-    [InputState.info]: 'text-info-500 outline-info-500 focus:outline-info-500',
-    [InputState.success]: 'text-success-500 outline-success-500 focus:outline-success-500',
-    [InputState.warning]: 'text-warning-500 outline-warning-500 focus:outline-warning-500',
-  };
-
-  classes[focusColorVariant[props.state]] = hasAction.value;
-  classes[activeColorVariant[props.state]] = _value.value;
-
-  return classes;
-});
-
-const valueClass = computed(() => {
-  const classes = {
-    'text-for-white-bg-font': true,
     'cursor-not-allowed opacity-50': props.disabled,
-    'text-sm': props.size === AntCheckboxSize.md,
-    'text-xs': props.size === AntCheckboxSize.sm
+    [focusColorVariant[_state.value]]: hasAction.value,
+    [activeColorVariant[_state.value]]: delayedValue.value,
+    [inactiveColorVariant[_state.value]]: !_value.value,
   };
-
-  return classes;
 });
+
+const valueClass = computed(() => ({
+  'text-for-white-bg-font': true,
+  'cursor-not-allowed opacity-50': props.disabled,
+  'text-sm': props.size === AntCheckboxSize.md,
+  'text-xs': props.size === AntCheckboxSize.sm
+}));
 
 const fieldSize = computed(() => {
   if (props.size === AntCheckboxSize.md) {
@@ -96,9 +92,36 @@ const fieldSize = computed(() => {
   }
 });
 
-watch(_value, () => {
-  props.validator?.validate(_value.value);
+/**
+ * Delay value to change the checkboxes background color after
+ * animation is finished.
+ */
+watch(_value, (val) => {
+  if (val === false) {
+    setTimeout(() => delayedValue.value = false, 120);
+  } else {
+    delayedValue.value = true;
+  }
 });
+
+/**
+ * Validate default value if given after delayed data fetching.
+ */
+watch(() => props.skeleton, (val) => {
+  if (!val && props.modelValue !== null) {
+    emit('validate', props.modelValue);
+  }
+});
+watch(_value, () => {
+  if (props.errors.length > 0) {
+    emit('validate', props.modelValue);
+  }
+});
+
+function onBlur(e: FocusEvent) {
+  emit('validate', props.modelValue);
+  emit('blur', e);
+}
 
 onMounted(() => {
   handleEnumValidation(props.size, AntCheckboxSize, 'size');
@@ -112,9 +135,9 @@ onMounted(() => {
     :description="description"
     :skeleton="skeleton"
     :state="state"
-    :validator="validator"
     :size="fieldSize"
     :expanded="false"
+    :errors="errors"
   >
     <div class="flex items-center gap-1.5">
       <div class="relative full-height flex items-center">
@@ -124,6 +147,7 @@ onMounted(() => {
           type="checkbox"
           :aria-checked="_value"
           :disabled="disabled || readonly"
+          @blur="onBlur"
         />
 
         <AntIcon

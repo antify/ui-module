@@ -1,6 +1,6 @@
 import { type Meta, type StoryObj } from '@storybook/vue3';
 import AntCheckboxGroup from '../AntCheckboxGroup.vue';
-import { computed, ref } from 'vue';
+import {computed, reactive, ref} from 'vue';
 import { InputState } from '../../../../enums';
 import { Direction } from '../../../../enums/Direction.enum';
 import { useFieldValidator } from '@antify/validate';
@@ -90,9 +90,7 @@ export const WithValidator: Story = {
           args.modelValue = val;
         }
       });
-      const validator = ref(useFieldValidator((val) => val.length >= 2 || 'Select at least 2'));
-
-      validator.value.validate(value.value);
+      const validator = reactive(useFieldValidator((val) => val.length >= 2 || 'Select at least 2'));
 
       return {
         args,
@@ -101,7 +99,12 @@ export const WithValidator: Story = {
       };
     },
     template: `
-      <AntCheckboxGroup v-bind="args" v-model="value" :validator="validator"/>
+      <AntCheckboxGroup
+        v-bind="args"
+        v-model="value"
+        :errors="validator.getErrors()"
+        @validate="(val) => validator.validate(val)"
+      />
     `
   }),
   args: {

@@ -1,12 +1,11 @@
 <script setup lang="ts">
 import AntField from './Elements/AntField.vue';
-import {computed, type Ref} from 'vue';
-import {FieldValidator} from '@antify/validate';
+import {computed, type Ref, watch} from 'vue';
 import AntSkeleton from '../AntSkeleton.vue';
 import {InputState, Size} from '../../enums';
 import {AntSwitchSize} from './__types/AntSwitchTypes';
 
-const emits = defineEmits(['update:modelValue', 'input']);
+const emit = defineEmits(['update:modelValue', 'input', 'blur', 'validate']);
 const props = withDefaults(defineProps<{
   modelValue: boolean;
   label?: string;
@@ -15,23 +14,24 @@ const props = withDefaults(defineProps<{
   skeleton?: boolean;
   readonly?: boolean;
   disabled?: boolean;
-  validator?: FieldValidator;
   size?: AntSwitchSize;
   state?: InputState
+  errors?: string[]
 }>(), {
   size: AntSwitchSize.md,
-  state: InputState.base
+  state: InputState.base,
+  errors: () => []
 });
 
 const _value = computed({
   get: () => props.modelValue,
   set: (value: boolean) => {
-    emits('update:modelValue', value);
-    emits('input', value);
+    emit('update:modelValue', value);
+    emit('input', value);
   }
 });
 const hasAction = computed(() => (!props.skeleton && !props.readonly && !props.disabled));
-const _state: Ref<InputState> = computed(() => props.validator?.hasErrors() ? InputState.danger : props.state);
+const _state: Ref<InputState> = computed(() => props.errors.length > 0 ? InputState.danger : props.state);
 
 const buttonClasses = computed(() => {
   const classes: { [key: string]: boolean } = {
@@ -96,10 +96,29 @@ const fieldSize = computed(() => {
   }
 });
 
+/**
+ * Validate default value if given after delayed data fetching.
+ */
+watch(() => props.skeleton, (val) => {
+  if (!val && props.modelValue !== null) {
+    emit('validate', props.modelValue);
+  }
+});
+watch(_value, () => {
+  if (props.errors.length > 0) {
+    emit('validate', props.modelValue);
+  }
+});
+
 function changeValue() {
   if (!props.readonly && !props.disabled) {
     _value.value = !_value.value;
   }
+}
+
+function onBlur(e: FocusEvent) {
+  emit('validate', props.modelValue);
+  emit('blur', e);
 }
 </script>
 
@@ -109,8 +128,9 @@ function changeValue() {
     :size="fieldSize"
     :description="description"
     :skeleton="skeleton"
-    :validator="validator"
     :state="state"
+    :errors="errors"
+    :expanded="false"
   >
     <div class="relative w-fit flex items-center gap-1.5">
       <div class="relative w-fit flex items-center">
@@ -123,7 +143,7 @@ function changeValue() {
           :disabled="disabled"
           :tabindex="hasAction ? 1 : -1"
           @click="changeValue"
-          @blur="validator?.validate(_value)"
+          @blur="onBlur"
         >
           <span
             aria-hidden="true"

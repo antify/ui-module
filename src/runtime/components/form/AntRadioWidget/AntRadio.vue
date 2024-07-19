@@ -2,13 +2,14 @@
 import {AntField} from '../Elements';
 import {InputState, Size} from '../../../enums';
 import AntSkeleton from '../../AntSkeleton.vue';
-import {computed, onMounted} from 'vue';
+import {computed, onMounted, ref, watch} from 'vue';
 import {AntRadioSize, type AntRadioType} from './__types/AntRadio.type';
 import {handleEnumValidation} from '../../../handler';
+import {AntCheckboxSize} from '../AntCheckboxWidget/__types/AntCheckbox';
 
 defineOptions({inheritAttrs: false});
 
-const emits = defineEmits(['update:modelValue', 'update:skeleton']);
+const emit = defineEmits(['update:modelValue', 'update:skeleton', 'validate', 'blur']);
 const props = withDefaults(
   defineProps<{
     modelValue: string | null;
@@ -19,11 +20,13 @@ const props = withDefaults(
     size?: AntRadioSize
     readonly?: boolean;
     disabled?: boolean;
+    errors?: string[];
   }>(), {
     state: InputState.base,
     size: AntRadioSize.md,
     readonly: false,
     disabled: false,
+    errors: () => []
   }
 );
 
@@ -32,27 +35,30 @@ const _value = computed({
     return props.modelValue;
   },
   set(val: string | null | AntRadioType) {
-    emits('update:modelValue', val ? typeof val === 'string' ? val : val.value : null);
+    emit('update:modelValue', val ? typeof val === 'string' ? val : val.value : null);
   }
 });
 const hasAction = computed(() => (!props.skeleton && !props.readonly && !props.disabled));
 const isActive = computed(() => {
   return _value.value === props.value.value;
 });
+const _state = computed(() => props.errors.length > 0 ? InputState.danger : props.state);
 
 const inputClasses = computed(() => {
   const classes: { [key: string]: boolean } = {
     'relative inline-flex flex-shrink-0': true,
     'focus:ring-offset-0 outline outline-offset-[-1px] outline-1 focus:outline-offset-[-1px] focus:outline-1 rounded-full': true,
+    'flex items-center justify-center rounded-full appearance-none': true,
     'cursor-pointer': hasAction.value,
-    'outline-neutral-300 focus:outline-neutral-300': props.state === InputState.base,
-    'outline-info-500 focus:outline-info-500': props.state === InputState.info,
-    'outline-success-500 focus:outline-success-500': props.state === InputState.success,
-    'outline-warning-500 focus:outline-warning-500': props.state === InputState.warning,
-    'outline-danger-500 focus:outline-danger-500': props.state === InputState.danger,
-    'rounded-full transition-colors ease-in-out duration-200 disabled:opacity-50 disabled:cursor-not-allowed': true,
+    'rounded-full transition-colors ease-in-out duration-200 disabled:opacity-50': true,
     'focus:ring-2': props.size === AntRadioSize.sm && hasAction.value,
     'focus:ring-4': props.size === AntRadioSize.md && hasAction.value,
+    'outline-neutral-300': props.state === InputState.base,
+    'outline-primary-500': props.state === InputState.base && isActive.value,
+    'outline-info-500': props.state === InputState.info,
+    'outline-success-500': props.state === InputState.success,
+    'outline-warning-500': props.state === InputState.warning,
+    'outline-danger-500': props.state === InputState.danger,
     'h-4 w-4 small': props.size === AntRadioSize.sm,
     'h-5 w-5': props.size === AntRadioSize.md,
   };
@@ -65,56 +71,96 @@ const inputClasses = computed(() => {
     [InputState.warning]: 'focus:ring-warning-200',
   };
 
-  const activeColorVariant = {
-    [InputState.base]: 'text-primary-500 outline-primary-500 focus:outline-primary-500',
-    [InputState.danger]: 'text-danger-500 outline-danger-500 focus:outline-danger-500',
-    [InputState.info]: 'text-info-500 outline-info-500 focus:outline-info-500',
-    [InputState.success]: 'text-success-500 outline-success-500 focus:outline-success-500',
-    [InputState.warning]: 'text-warning-500 outline-warning-500 focus:outline-warning-500',
-  };
-
-  classes[focusColorVariant[props.state]] = hasAction.value;
-  classes[activeColorVariant[props.state]] = isActive.value;
+  classes[focusColorVariant[_state.value]] = hasAction.value;
 
   return classes;
 });
 
-const valueClass = computed(() => {
-  const classes = {
-    'relative w-fit full-height text-for-white-bg-font': true,
-    'cursor-pointer': hasAction.value,
-    'cursor-not-allowed opacity-50': props.disabled,
-    'text-sm': props.size === AntRadioSize.md,
-    'text-xs': props.size === AntRadioSize.sm
-  };
+const valueClass = computed(() => ({
+  'relative w-fit full-height text-for-white-bg-font': true,
+  'cursor-pointer': hasAction.value,
+  'cursor-not-allowed opacity-50': props.disabled,
+  'text-sm': props.size === AntRadioSize.md,
+  'text-xs': props.size === AntRadioSize.sm
+}));
 
-  return classes;
+const fieldSize = computed(() => {
+  if (props.size === AntRadioSize.md) {
+    return Size.sm;
+  } else {
+    return Size.xs;
+  }
 });
+
+const innerRadioColor = computed(() => {
+  switch (props.state) {
+    case InputState.info:
+      return 'bg-info-500';
+    case InputState.success:
+      return 'bg-success-500';
+    case InputState.warning:
+      return 'bg-warning-500';
+    case InputState.danger:
+      return 'bg-danger-500';
+    default:
+      return 'bg-primary-500';
+  }
+});
+
+/**
+ * Validate default value if given after delayed data fetching.
+ */
+watch(() => props.skeleton, (val) => {
+  if (!val && props.modelValue !== null) {
+    emit('validate', props.modelValue);
+  }
+});
+watch(_value, () => {
+  if (props.errors.length > 0) {
+    emit('validate', props.modelValue);
+  }
+});
+
+function onBlur(e: FocusEvent) {
+  emit('validate', props.modelValue);
+  emit('blur', e);
+}
 
 onMounted(() => {
   handleEnumValidation(props.size, Size, 'size');
   handleEnumValidation(props.state, InputState, 'state');
 });
 </script>
-
 <template>
   <AntField
     :description="description"
     :state="state"
     class="cursor-pointer"
     :skeleton="skeleton"
-    :size="size as unknown as Size"
+    :size="fieldSize"
     :expanded="false"
+    :errors="errors"
   >
     <div class="flex items-center gap-1.5">
       <div class="relative full-height flex items-center">
+        <div class="absolute flex items-center justify-center w-full h-full">
+          <Transition name="fade-radio">
+            <div
+              v-if="isActive"
+              class="w-3 h-3 rounded-full transition-all"
+              :class="innerRadioColor"
+            />
+          </Transition>
+        </div>
+
         <input
           v-model="_value"
           :value="value.value"
           :class="inputClasses"
           type="radio"
           :aria-checked="isActive"
-          :disabled="disabled"
+          :disabled="disabled || readonly"
+          @blur="onBlur"
         />
 
         <AntSkeleton
@@ -143,30 +189,13 @@ onMounted(() => {
 </template>
 
 <style scoped>
-input[type="radio"] {
-  appearance: none;
-  border-radius: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+.fade-radio-enter-active,
+.fade-radio-leave-active {
+  @apply transition-opacity;
 }
 
-input[type="radio"]::before {
-  content: "";
-  width: 12px;
-  height: 12px;
-  border-radius: 100%;
-  transform: scale(0);
-  transition: 120ms transform;
-  background: currentColor;
-}
-
-input[type="radio"].small::before {
-  width: 8px;
-  height: 8px;
-}
-
-input[type="radio"]:checked::before {
-  transform: scale(1);
+.fade-radio-enter-from,
+.fade-radio-leave-to {
+  opacity: 0;
 }
 </style>
