@@ -1,10 +1,11 @@
 import {type Meta, type StoryObj} from '@storybook/vue3';
-import {computed, ref} from 'vue';
+import {computed, reactive, ref} from 'vue';
 import {Size} from '../../../enums';
 import {useFieldValidator} from '@antify/validate';
-import {type SwitcherOption} from '../__types/AntSwitcher.type';
 import {InputState} from '../../../enums';
 import {AntSwitcher} from '../index';
+import AntFormGroup from '../AntFormGroup.vue';
+import AntFormGroupLabel from '../AntFormGroupLabel.vue';
 
 const meta: Meta<typeof AntSwitcher> = {
   title: 'Components/Forms/Switcher',
@@ -83,21 +84,6 @@ export const Docs: Story = {
 };
 
 export const withValidator: Story = {
-  render: Docs.render,
-  args: {
-    ...Docs.args,
-    validator: useFieldValidator([
-      (val: SwitcherOption) => {
-        return val.value !== 'entry-1' || 'Select something else';
-      }
-    ])
-  },
-};
-
-export const Summary: Story = {
-  parameters: {
-    chromatic: {disableSnapshot: false},
-  },
   render: (args) => ({
     components: {AntSwitcher},
     setup() {
@@ -107,45 +93,65 @@ export const Summary: Story = {
         // @ts-ignore
         set: (val) => args.modelValue = val
       });
+      const validator = reactive(useFieldValidator(
+        (val: string | number) => val === 'entry-1' ? 'Select something else' : true
+      ));
 
-      const skeleton = ref(true);
-
-      return {args, modelValue, InputState, skeleton};
+      return {args, modelValue, validator};
     },
     template: `
-      <div class="flex flex-col gap-5 ">
-        <div class="flex gap-2.5">
-          <AntSwitcher v-bind="args" v-model="modelValue" :state="InputState.base"/>
-          <AntSwitcher v-bind="args" v-model="modelValue" :state="InputState.info"/>
-          <AntSwitcher v-bind="args" v-model="modelValue" :state="InputState.success"/>
-          <AntSwitcher v-bind="args" v-model="modelValue" :state="InputState.warning"/>
-          <AntSwitcher v-bind="args" v-model="modelValue" :state="InputState.danger"/>
-        </div>
-        <div class="flex gap-2.5">
-          <AntSwitcher v-bind="args" v-model="modelValue" label="Label" :state="InputState.base"/>
-          <AntSwitcher v-bind="args" v-model="modelValue" label="Label" :state="InputState.info"/>
-          <AntSwitcher v-bind="args" v-model="modelValue" label="Label" :state="InputState.success"/>
-          <AntSwitcher v-bind="args" v-model="modelValue" label="Label" :state="InputState.warning"/>
-          <AntSwitcher v-bind="args" v-model="modelValue" label="Label" :state="InputState.danger"/>
-        </div>
-        <div class="flex gap-2.5">
-          <AntSwitcher v-bind="args" v-model="modelValue"
-                       description="Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod"
-                       :state="InputState.base"/>
-          <AntSwitcher v-bind="args" v-model="modelValue"
-                       description="Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod"
-                       :state="InputState.info"/>
-          <AntSwitcher v-bind="args" v-model="modelValue"
-                       description="Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod"
-                       :state="InputState.success"/>
-          <AntSwitcher v-bind="args" v-model="modelValue"
-                       description="Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod"
-                       :state="InputState.warning"/>
-          <AntSwitcher v-bind="args" v-model="modelValue"
-                       description="Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod"
-                       :state="InputState.danger"/>
-        </div>
-        <div class="flex gap-2.5">
+      <AntSwitcher
+        v-bind="args"
+        v-model="modelValue"
+        :errors="Array.isArray(args.errors) ? args.errors : validator.getErrors()"
+        @validate="(val) => validator.validate(val)"
+      />
+    `
+  }),
+  args: {
+    options: [
+      {
+        label: 'Entry 1',
+        value: 'entry-1'
+      },
+      {
+        label: 'Entry 2',
+        value: 'entry-2'
+      },
+      {
+        label: 'Entry 3',
+        value: 'entry-3'
+      },
+      {
+        label: 'Entry 4',
+        value: 'entry-4'
+      }
+    ],
+    modelValue: 'entry-1'
+  }
+};
+
+export const Summary: Story = {
+  parameters: {
+    chromatic: {disableSnapshot: false},
+  },
+  render: (args) => ({
+    components: {AntSwitcher, AntFormGroup, AntFormGroupLabel},
+    setup() {
+      const modelValue = computed({
+        // @ts-ignore
+        get: () => args.modelValue,
+        // @ts-ignore
+        set: (val) => args.modelValue = val
+      });
+      const skeleton = ref(true);
+
+      return {args, modelValue, InputState, skeleton, Size};
+    },
+    template: `
+      <AntFormGroup>
+        <AntFormGroupLabel>States</AntFormGroupLabel>
+        <AntFormGroup direction="row">
           <AntSwitcher v-bind="args" v-model="modelValue" label="Label"
                        description="Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod"
                        :state="InputState.base"/>
@@ -161,59 +167,56 @@ export const Summary: Story = {
           <AntSwitcher v-bind="args" v-model="modelValue" label="Label"
                        description="Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod"
                        :state="InputState.danger"/>
-        </div>
-        <div class="flex gap-2.5">
-          <AntSwitcher v-bind="args" v-model="modelValue" readonly label="Label"
+        </AntFormGroup>
+        <AntFormGroupLabel>Sizes</AntFormGroupLabel>
+        <AntFormGroup direction="row">
+          <AntSwitcher v-bind="args" v-model="modelValue" label="Label" :size="Size.lg"
                        description="Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod"
-                       :state="InputState.base"/>
-          <AntSwitcher v-bind="args" v-model="modelValue" readonly label="Label"
+          />
+          <AntSwitcher v-bind="args" v-model="modelValue" label="Label" :size="Size.md"
                        description="Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod"
-                       :state="InputState.info"/>
-          <AntSwitcher v-bind="args" v-model="modelValue" readonly label="Label"
+          />
+          <AntSwitcher v-bind="args" v-model="modelValue" label="Label" :size="Size.sm"
                        description="Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod"
-                       :state="InputState.success"/>
-          <AntSwitcher v-bind="args" v-model="modelValue" readonly label="Label"
+          />
+          <AntSwitcher v-bind="args" v-model="modelValue" label="Label" :size="Size.xs"
                        description="Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod"
-                       :state="InputState.warning"/>
-          <AntSwitcher v-bind="args" v-model="modelValue" readonly label="Label"
+          />
+          <AntSwitcher v-bind="args" v-model="modelValue" label="Label" :size="Size.xs2"
                        description="Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod"
-                       :state="InputState.danger"/>
-        </div>
-        <div class="flex gap-2.5">
-          <AntSwitcher v-bind="args" v-model="modelValue" disabled label="Label"
-                       description="Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod"
-                       :state="InputState.base"/>
-          <AntSwitcher v-bind="args" v-model="modelValue" disabled label="Label"
-                       description="Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod"
-                       :state="InputState.info"/>
-          <AntSwitcher v-bind="args" v-model="modelValue" disabled label="Label"
-                       description="Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod"
-                       :state="InputState.success"/>
-          <AntSwitcher v-bind="args" v-model="modelValue" disabled label="Label"
-                       description="Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod"
-                       :state="InputState.warning"/>
-          <AntSwitcher v-bind="args" v-model="modelValue" disabled label="Label"
-                       description="Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod"
-                       :state="InputState.danger"/>
-        </div>
-        <div class="flex gap-2.5">
-          <AntSwitcher v-bind="args" v-model="modelValue" :skeleton="true" label="Label"
-                       description="Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod"
-                       :state="InputState.base"/>
-          <AntSwitcher v-bind="args" v-model="modelValue" :skeleton="true" label="Label"
-                       description="Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod"
-                       :state="InputState.info"/>
-          <AntSwitcher v-bind="args" v-model="modelValue" :skeleton="true" label="Label"
-                       description="Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod"
-                       :state="InputState.success"/>
-          <AntSwitcher v-bind="args" v-model="modelValue" :skeleton="true" label="Label"
-                       description="Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod"
-                       :state="InputState.warning"/>
-          <AntSwitcher v-bind="args" v-model="modelValue" :skeleton="true" label="Label"
-                       description="Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod"
-                       :state="InputState.danger"/>
-        </div>
-      </div>
+          />
+        </AntFormGroup>
+        <AntFormGroup direction="row">
+          <AntFormGroup>
+            <AntFormGroupLabel>Disabled</AntFormGroupLabel>
+            <AntSwitcher v-bind="args" v-model="modelValue" :disabled="true" label="Label" class="w-60"
+                         description="Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod"
+            />
+          </AntFormGroup>
+          <AntFormGroup>
+            <AntFormGroupLabel>Readonly</AntFormGroupLabel>
+            <AntSwitcher v-bind="args" v-model="modelValue" :readonly="true" label="Label" class="w-60"
+                         description="Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod"
+            />
+          </AntFormGroup>
+          <AntFormGroup>
+            <AntFormGroupLabel>Skeleton</AntFormGroupLabel>
+            <AntSwitcher v-bind="args" v-model="modelValue" :skeleton="true" label="Label" class="w-60"
+                         description="Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod"
+            />
+          </AntFormGroup>
+        </AntFormGroup>
+        <AntFormGroupLabel>Plain</AntFormGroupLabel>
+        <AntSwitcher v-bind="args" v-model="modelValue" class="w-60"/>
+        <AntFormGroupLabel>With label</AntFormGroupLabel>
+        <AntSwitcher v-bind="args" v-model="modelValue" label="Label" class="w-60"/>
+        <AntFormGroupLabel>With description</AntFormGroupLabel>
+        <AntSwitcher v-bind="args" v-model="modelValue" class="w-60"
+                     description="Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod"/>
+        <AntFormGroupLabel>With label + description</AntFormGroupLabel>
+        <AntSwitcher v-bind="args" v-model="modelValue" label="Label" class="w-60"
+                     description="Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod"/>
+      </AntFormGroup>
     `
   }),
   args: {

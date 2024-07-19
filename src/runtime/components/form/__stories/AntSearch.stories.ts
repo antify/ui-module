@@ -1,6 +1,10 @@
 import { type Meta, type StoryObj} from '@storybook/vue3';
 import {Size} from '../../../enums/Size.enum';
 import AntSearch from '../AntSearch.vue';
+import AntFormGroup from '../AntFormGroup.vue';
+import AntFormGroupLabel from '../AntFormGroupLabel.vue';
+import {ref} from 'vue';
+
 
 const meta: Meta<typeof AntSearch> = {
   title: 'Components/Forms/Search',
@@ -46,6 +50,60 @@ export const Docs: Story = {
   }),
   args: {
     modelValue: '',
+    placeholder: 'Search',
+  },
+};
+
+export const summary: Story = {
+  render: (args) => ({
+    components: {AntSearch, AntFormGroup, AntFormGroupLabel},
+    setup() {
+      const value = ref('Keyword');
+      const noValue = ref('');
+
+      return {args, Size, value, noValue};
+    },
+    template: `
+        <AntFormGroup>
+          <AntFormGroupLabel>Sizes
+          </AntFormGroupLabel>
+          <AntFormGroup direction="row">
+            <AntSearch v-bind="args" v-model="value" :size="Size.lg" class="w-48"/>
+            <AntSearch v-bind="args" v-model="value" :size="Size.md" class="w-48"/>
+            <AntSearch v-bind="args" v-model="value" :size="Size.sm" class="w-48"/>
+            <AntSearch v-bind="args" v-model="value" :size="Size.xs" class="w-48"/>
+            <AntSearch v-bind="args" v-model="value" :size="Size.xs2" class="w-48"/>
+          </AntFormGroup>
+          <AntFormGroup direction="row">
+            <AntSearch v-bind="args" v-model="noValue" :size="Size.lg" class="w-48"/>
+            <AntSearch v-bind="args" v-model="noValue" :size="Size.md" class="w-48"/>
+            <AntSearch v-bind="args" v-model="noValue" :size="Size.sm" class="w-48"/>
+            <AntSearch v-bind="args" v-model="noValue" :size="Size.xs" class="w-48"/>
+            <AntSearch v-bind="args" v-model="noValue" :size="Size.xs2" class="w-48"/>
+          </AntFormGroup>
+          <AntFormGroup direction="row">
+            <AntFormGroup>
+              <AntFormGroupLabel>Disabled</AntFormGroupLabel>
+              <AntSearch v-model="noValue" disabled class="w-48"/>
+              <AntSearch v-model="value" disabled class="w-48"/>
+            </AntFormGroup>
+            <AntFormGroup>
+              <AntFormGroupLabel>Skeleton</AntFormGroupLabel>
+              <AntSearch v-model="value" skeleton class="w-48"/>
+            </AntFormGroup>
+          </AntFormGroup>
+          <AntFormGroupLabel>Plain</AntFormGroupLabel>
+          <AntSearch v-model="value" class="w-48"/>
+          <AntFormGroupLabel>With label</AntFormGroupLabel>
+          <AntSearch v-model="value" class="w-48" label="Label"/>
+          <AntFormGroupLabel>With description</AntFormGroupLabel>
+          <AntSearch v-model="value" class="w-48" description="Lorem ipsum dolor sit amet"/>
+          <AntFormGroupLabel>With label + description</AntFormGroupLabel>
+          <AntSearch v-model="value" class="w-48" label="Label" description="Lorem ipsum dolor sit amet"/>
+        </AntFormGroup>
+    `,
+  }),
+  args: {
     placeholder: 'Search',
   },
 };

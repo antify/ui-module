@@ -1,14 +1,13 @@
 <script setup lang="ts">
 import AntField from './Elements/AntField.vue';
-import {FieldValidator} from '@antify/validate';
 import {useVModel} from '@vueuse/core';
-import {computed, onMounted} from 'vue';
+import {computed, onMounted, watch} from 'vue';
 import {InputState, Size} from '../../enums';
 import {handleEnumValidation} from '../../handler';
 
 defineOptions({ inheritAttrs: false });
 
-const emits = defineEmits(['update:modelValue', 'update:skeleton']);
+const emit = defineEmits(['update:modelValue', 'update:skeleton', 'validate', 'blur']);
 const props = withDefaults(defineProps<{
   modelValue: number | number[] | undefined;
   label?: string;
@@ -17,19 +16,20 @@ const props = withDefaults(defineProps<{
   size?: Size,
   disabled?: boolean;
   skeleton?: boolean;
-  validator?: FieldValidator;
   min?: number;
   max?: number;
+  errors?: string[];
 }>(), {
   state: InputState.base,
   size: Size.md,
   disabled: false,
   skeleton: false,
-  limiter: false
+  limiter: false,
+  errors: () => []
 });
 
-const value = useVModel(props, 'modelValue', emits);
-const _state = computed(() => props.validator?.hasErrors() ? InputState.danger : props.state);
+const value = useVModel(props, 'modelValue', emit);
+const _state = computed(() => props.errors.length > 0 ? InputState.danger : props.state);
 const inputClasses = computed(() => {
   const variants: Record<InputState, string> = {
     [InputState.base]: 'text-neutral-base',
@@ -47,11 +47,28 @@ const inputClasses = computed(() => {
   };
 });
 
+/**
+ * Validate default value if given after delayed data fetching.
+ */
+watch(() => props.skeleton, (val) => {
+  if (!val && props.modelValue !== null) {
+    emit('validate', props.modelValue);
+  }
+});
+watch(value, () => {
+  if (props.errors.length > 0) {
+    emit('validate', props.modelValue);
+  }
+});
+
+function onBlur(e: FocusEvent) {
+  emit('validate', props.modelValue);
+  emit('blur', e);
+}
+
 onMounted(() => {
   handleEnumValidation(props.state, InputState, 'state');
   handleEnumValidation(props.size, Size, 'size');
-
-  props.validator?.validate(props.modelValue);
 });
 </script>
 
@@ -62,7 +79,7 @@ onMounted(() => {
     :skeleton="skeleton"
     :description="description"
     :state="state"
-    :validator="validator"
+    :errors="errors"
   >
     <input
       v-model="value"
@@ -72,6 +89,7 @@ onMounted(() => {
       :min="min"
       :max="max"
       v-bind="$attrs"
+      @blur="onBlur"
     >
   </AntField>
 </template>

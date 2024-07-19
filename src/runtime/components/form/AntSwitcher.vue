@@ -3,12 +3,11 @@ import AntField from './Elements/AntField.vue';
 import AntButton from '../buttons/AntButton.vue';
 import {faChevronLeft, faChevronRight} from '@fortawesome/free-solid-svg-icons';
 import AntSkeleton from '../AntSkeleton.vue';
-import {FieldValidator} from '@antify/validate';
 import {type SwitcherOption} from './__types/AntSwitcher.type';
 import {State, Grouped, InputState, Size} from '../../enums';
-import {computed, onMounted, watch} from 'vue';
+import {computed, watch} from 'vue';
 
-const emits = defineEmits(['update:modelValue']);
+const emit = defineEmits(['update:modelValue', 'validate', 'blur']);
 const props = withDefaults(defineProps<{
   modelValue: string;
   options: string[] | SwitcherOption[];
@@ -18,11 +17,12 @@ const props = withDefaults(defineProps<{
   readonly?: boolean;
   disabled?: boolean;
   state?: InputState;
-  validator?: FieldValidator;
   size?: Size,
+  errors?: string[];
 }>(), {
   state: InputState.base,
-  size: Size.md
+  size: Size.md,
+  errors: () => []
 });
 
 const _value = computed({
@@ -36,18 +36,12 @@ const _value = computed({
     return found;
   },
   set(val: string | SwitcherOption) {
-    emits('update:modelValue', typeof val === 'string' ? val : val.value);
+    emit('update:modelValue', typeof val === 'string' ? val : val.value);
   }
 });
 
 const hasAction = computed(() => (!props.skeleton && !props.readonly && !props.disabled));
-const _state = computed(() => props.validator?.hasErrors() ? InputState.danger : props.state);
-
-watch(_value, () => props.validator?.validate(_value.value));
-
-onMounted(() => {
-  props.validator?.validate(_value.value);
-});
+const _state = computed(() => props.errors.length > 0 ? InputState.danger : props.state);
 
 const containerClasses = computed(() => {
   const classes: { [key: string]: boolean } = {
@@ -56,11 +50,11 @@ const containerClasses = computed(() => {
     'focus-within:ring-4': props.size === Size.md || props.size === Size.lg && hasAction.value,
   };
   const colorVariant = {
-    [InputState.base]: 'focus-within:ring-primary-100',
-    [InputState.danger]: 'focus-within:ring-danger-100',
-    [InputState.info]: 'focus-within:ring-info-100',
-    [InputState.success]: 'focus-within:ring-success-100',
-    [InputState.warning]: 'focus-within:ring-warning-100',
+    [InputState.base]: 'focus-within:ring-primary-200',
+    [InputState.danger]: 'focus-within:ring-danger-200',
+    [InputState.info]: 'focus-within:ring-info-200',
+    [InputState.success]: 'focus-within:ring-success-200',
+    [InputState.warning]: 'focus-within:ring-warning-200',
   };
 
   classes[colorVariant[_state.value]] = true;
@@ -70,7 +64,7 @@ const containerClasses = computed(() => {
 
 const itemClasses = computed(() => {
   const classes: { [key: string]: boolean } = {
-    'grow text-center relative outline outline-1 -outline-offset-1': true,
+    'grow text-center text-black relative outline outline-1 -outline-offset-1': true,
     'p-1 text-xs ': props.size === Size.xs2,
     'p-1.5 text-xs ': props.size === Size.xs,
     'p-1.5 text-sm ': props.size === Size.sm,
@@ -81,17 +75,36 @@ const itemClasses = computed(() => {
   };
 
   const colorVariant = {
-    [InputState.danger]: 'outline-danger-500 bg-danger-100 text-danger-100-font',
-    [InputState.base]: 'outline-neutral-300 bg-white text-black',
-    [InputState.info]: 'outline-info-500 bg-info-100 text-info-100-font',
-    [InputState.success]: 'outline-success-500 bg-success-100 text-success-100-font',
-    [InputState.warning]: 'outline-warning-500 bg-warning-100 text-warning-100-font',
+    [InputState.danger]: 'outline-danger-500 bg-danger-100',
+    [InputState.base]: 'outline-neutral-300 bg-white',
+    [InputState.info]: 'outline-info-500 bg-info-100',
+    [InputState.success]: 'outline-success-500 bg-success-100',
+    [InputState.warning]: 'outline-warning-500 bg-warning-100',
   };
 
   classes[colorVariant[_state.value]] = true;
 
   return classes;
 });
+
+/**
+ * Validate default value if given after delayed data fetching.
+ */
+watch(() => props.skeleton, (val) => {
+  if (!val && props.modelValue !== null) {
+    emit('validate', props.modelValue);
+  }
+});
+watch(_value, () => {
+  if (props.errors.length > 0) {
+    emit('validate', props.modelValue);
+  }
+});
+
+function onBlur(e: FocusEvent) {
+  emit('validate', props.modelValue);
+  emit('blur', e);
+}
 
 function prevOption() {
   if (props.readonly || props.disabled) {
@@ -129,12 +142,13 @@ function nextOption() {
     :skeleton="skeleton"
     :description="description"
     :state="state"
-    :validator="validator"
+    :errors="errors"
     label-for="noop"
   >
     <div
       :class="containerClasses"
       tabindex="0"
+      @blur="onBlur"
       @keydown.left.prevent="prevOption()"
       @keydown.right.prevent="nextOption()"
     >
@@ -148,8 +162,8 @@ function nextOption() {
         :readonly="readonly"
         :disabled="disabled"
         @click="prevOption"
+        @blur="onBlur"
       />
-
       <div class="grow relative">
         <div :class="itemClasses">
           {{ typeof _value === 'string' ? _value : _value.label }}
@@ -173,6 +187,7 @@ function nextOption() {
         :readonly="readonly"
         :disabled="disabled"
         @click="nextOption"
+        @blur="onBlur"
       />
     </div>
   </AntField>

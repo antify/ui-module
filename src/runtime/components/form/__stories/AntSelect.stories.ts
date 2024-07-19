@@ -1,7 +1,7 @@
 import { type Meta, type StoryObj} from '@storybook/vue3';
 import {Size} from '../../../enums/Size.enum';
 import AntSelect from '../AntSelect.vue';
-import {computed} from 'vue';
+import {computed, reactive} from 'vue';
 import {useFieldValidator} from '@antify/validate';
 import {type SelectOption} from '../__types/AntSelect.type';
 import {InputState} from '../../../enums';
@@ -84,13 +84,30 @@ export const Docs: Story = {
   },
 };
 export const withValidator: Story = {
-  render: Docs.render,
+  render: (args) => ({
+    components: {AntSelect},
+    setup() {
+      const modelValue = computed({
+        // @ts-ignore
+        get: () => args.modelValue,
+        // @ts-ignore
+        set: (val) => args.modelValue = val
+      });
+      const validator = reactive(useFieldValidator((val: string) => val !== null || 'This field should not be empty'));
+
+      return {args, modelValue, validator};
+    },
+    template: `
+      <AntSelect
+        v-bind="args"
+        v-model="modelValue"
+        :errors="Array.isArray(args.errors) ? args.errors : validator.getErrors()"
+        @validate="(val) => validator.validate(val)"
+      />`,
+  }),
   args: {
     ...Docs.args,
     nullable: true,
-    validator: useFieldValidator([
-      (val: string) => val !== null || 'This field should not be empty'
-    ])
   },
 };
 export const nullable: Story = {

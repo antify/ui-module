@@ -3,12 +3,11 @@ import { type AntCheckboxType, AntCheckboxSize } from './__types/AntCheckbox';
 import { AntField } from '../Elements';
 import { useVModel } from '@vueuse/core';
 import AntCheckbox from './AntCheckbox.vue';
-import { computed, watch } from 'vue';
+import {computed, nextTick, ref, watch} from 'vue';
 import { Direction } from '../../../enums/Direction.enum';
-import { InputState } from '../../../enums';
-import { FieldValidator } from '@antify/validate';
+import { InputState, Size } from '../../../enums';
 
-const emits = defineEmits(['update:modelValue']);
+const emit = defineEmits(['update:modelValue', 'validate', 'blur']);
 const props = withDefaults(
   defineProps<{
     modelValue: string[];
@@ -21,7 +20,7 @@ const props = withDefaults(
     skeleton?: boolean;
     readonly?: boolean;
     disabled?: boolean;
-    validator?: FieldValidator;
+    errors?: string[]
   }>(),
   {
     direction: Direction.column,
@@ -29,12 +28,13 @@ const props = withDefaults(
     size: AntCheckboxSize.md,
     skeleton: false,
     readonly: false,
-    disabled: false
+    disabled: false,
+    errors: () => []
   }
 );
 
-const _value = useVModel(props, 'modelValue', emits);
-const _state = computed(() => props.validator?.hasErrors() ? InputState.danger : props.state);
+const _value = useVModel(props, 'modelValue', emit);
+const _state = computed(() => props.errors.length > 0 ? InputState.danger : props.state);
 const containerClasses = computed(() => {
   const classes = {
     'flex gap-2.5': true,
@@ -43,6 +43,15 @@ const containerClasses = computed(() => {
   };
 
   return classes;
+});
+const containerRef = ref<null | HTMLElement>(null);
+
+watch(_value, () => {
+  if (props.errors.length > 0) {
+    emit('validate', _value.value);
+  }
+}, {
+  deep: true,
 });
 
 function updateValue(value: string) {
@@ -55,12 +64,17 @@ function updateValue(value: string) {
   }
 }
 
-watch(_value, () => {
-  props.validator?.validate(_value.value);
-}, {
-  deep: true,
-});
+function hasFocusedCheckbox() {
+  return !!containerRef.value?.querySelector('input[type="checkbox"]:focus');
+}
 
+function onBlurCheckbox() {
+  setTimeout(() => {
+    if (!hasFocusedCheckbox()) {
+      emit('validate', _value.value);
+    }
+  }, 100);
+}
 </script>
 
 <template>
@@ -68,12 +82,15 @@ watch(_value, () => {
     :label="label"
     :description="description"
     :skeleton="skeleton"
-    :validator="validator"
     :state="_state"
-    :size="size"
+    :size="size as unknown as Size"
+    :errors="errors"
     label-for="noop"
   >
-    <div :class="containerClasses">
+    <div
+      ref="containerRef"
+      :class="containerClasses"
+    >
       <AntCheckbox
         v-for="(checkbox, index) in checkboxes"
         :key="`checkbox-group-${index}`"
@@ -85,6 +102,7 @@ watch(_value, () => {
         :disabled="disabled || checkbox.disabled"
         :readonly="readonly || checkbox.readonly"
         @update:model-value="updateValue(checkbox.value)"
+        @blur="() => onBlurCheckbox()"
       />
     </div>
   </AntField>

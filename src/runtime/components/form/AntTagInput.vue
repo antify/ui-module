@@ -3,10 +3,9 @@
 import {AntField} from './Elements';
 import type {SelectOption} from './__types';
 import {Grouped, InputState, Size} from '../../enums';
-import type {FieldValidator} from '@antify/validate';
 import {useVModel} from '@vueuse/core';
 import {faChevronRight, type IconDefinition} from '@fortawesome/free-solid-svg-icons';
-import {computed, type Ref, ref} from 'vue';
+import {computed, type Ref, ref, watch} from 'vue';
 import AntTag from '../AntTag.vue';
 import AntIcon from '../AntIcon.vue';
 import {AntTagSize, IconSize} from '../__types';
@@ -14,8 +13,9 @@ import AntDropDown from './Elements/AntDropDown.vue';
 import AntSkeleton from '../AntSkeleton.vue';
 import {vOnClickOutside} from '@vueuse/components';
 import {AntTagInputSize} from './__types/AntTagInput.types';
+import type {TagState} from '#ui-module/AntTag.type';
 
-const emit = defineEmits(['update:modelValue']);
+const emit = defineEmits(['update:modelValue', 'blur', 'validate']);
 const props = withDefaults(
   defineProps<{
     modelValue: (string | number)[] | null;
@@ -27,30 +27,27 @@ const props = withDefaults(
     state?: InputState;
     disabled?: boolean;
     skeleton?: boolean;
-    validator?: FieldValidator;
     name?: string;
     expanded?: boolean;
     icon?: IconDefinition;
     grouped?: Grouped;
     nullable?: boolean;
-
+    errors?: string[];
     allowCreate?: boolean;
     allowDuplicates?: boolean;
     openOnFocus?: boolean;
     autoCloseAfterSelection?: boolean;
-
     createCallback?: (item: string) => Promise<SelectOption>;
   }>(), {
     size: AntTagInputSize.md,
     state: InputState.base,
     icon: () => faChevronRight,
+    errors: () => [],
     grouped: Grouped.none,
-
     allowCreate: false,
     allowDuplicates: false,
     openOnFocus: true,
     autoCloseAfterSelection: false,
-
     placeholder: 'Add new tag'
   }
 );
@@ -65,7 +62,7 @@ const filteredOptions = ref(props.options);
 
 const inputRef: Ref<HTMLElement | null> = ref(null);
 
-const _state = computed(() => props.validator?.hasErrors() ? InputState.danger : props.state);
+const _state = computed(() => props.errors.length > 0 ? InputState.danger : props.state);
 
 const inputContainerClasses = computed(() => {
   const variants: Record<InputState, string> = {
@@ -220,6 +217,25 @@ function filterDropDown() {
     focusedDropDownItem.value = filteredOptions.value[0]?.value;
   }
 }
+
+/**
+ * Validate default value if given after delayed data fetching.
+ */
+watch(() => props.skeleton, (val) => {
+  if (!val && props.modelValue !== null) {
+    emit('validate', props.modelValue);
+  }
+});
+watch(_modelValue, () => {
+  if (props.errors.length > 0) {
+    emit('validate', props.modelValue);
+  }
+}, {deep: true});
+
+function onBlur(e: FocusEvent) {
+  emit('validate', props.modelValue);
+  emit('blur', e);
+}
 </script>
 
 <template>
@@ -229,8 +245,8 @@ function filterDropDown() {
     :skeleton="_skeleton"
     :description="description"
     :state="state"
-    :validator="validator"
     :expanded="expanded"
+    :errors="errors"
   >
     <div
       v-on-click-outside="onClickOutside"
@@ -254,7 +270,7 @@ function filterDropDown() {
             v-for="(tag, index) in _modelValue"
             :key="`tag-input-tag-${index}`"
             :size="AntTagSize.xs3"
-            :state="_state"
+            :state="_state as unknown as TagState"
             dismiss
             @close="removeTag(tag)"
           >
@@ -280,6 +296,7 @@ function filterDropDown() {
             @input="filterDropDown"
             @keydown.delete="removeLastTag"
             @keydown.enter.prevent="checkCreateTag(tagInput)"
+            @blur="onBlur"
           />
         </div>
       </div>

@@ -5,12 +5,12 @@ import { AntField } from '../Elements';
 import { type AntRadioType, AntRadioSize } from './__types/AntRadio.type';
 import { InputState, Size } from '../../../enums';
 import { FieldValidator } from '@antify/validate';
-import { computed, type Ref, watch } from 'vue';
+import {computed, ref, type Ref, watch} from 'vue';
 import { Direction } from '../../../enums/Direction.enum';
 
 defineOptions({ inheritAttrs: false });
 
-const emits = defineEmits([ 'update:modelValue', 'update:skeleton' ]);
+const emit = defineEmits([ 'update:modelValue', 'update:skeleton', 'validate' ]);
 const props = withDefaults(
   defineProps<{
     modelValue: string | null;
@@ -23,18 +23,19 @@ const props = withDefaults(
     skeleton?: boolean;
     disabled?: boolean;
     readonly?: boolean;
-    validator?: FieldValidator;
+    errors?: string[];
   }>(), {
     direction: Direction.column,
     state: InputState.base,
     size: AntRadioSize.md,
     skeleton: false,
     disabled: false,
-    readonly: false
+    readonly: false,
+    errors: () => []
   });
 
-const _value = useVModel(props, 'modelValue', emits);
-const _state: Ref<InputState | undefined> = computed(() => props.validator?.hasErrors() ? InputState.danger : undefined);
+const _value = useVModel(props, 'modelValue', emit);
+const _state: Ref<InputState | undefined> = computed(() => props.errors?.length > 0 ? InputState.danger : props.state);
 const containerClasses = computed(() => {
   const classes = {
     'flex gap-2.5 justify-start': true,
@@ -44,12 +45,35 @@ const containerClasses = computed(() => {
 
   return classes;
 });
+const containerRef = ref<null | HTMLElement>(null);
+
+const fieldSize = computed(() => {
+  if (props.size === AntRadioSize.md) {
+    return Size.sm;
+  } else {
+    return Size.xs;
+  }
+});
 
 watch(_value, () => {
-  props.validator?.validate(_value.value);
+  if (props.errors.length > 0) {
+    emit('validate', props.modelValue);
+  }
 }, {
-  deep: true
+  deep: true,
 });
+
+function hasFocusedRadio() {
+  return !!containerRef.value?.querySelector('input[type="radio"]:focus');
+}
+
+function onBlurRadio() {
+  setTimeout(() => {
+    if (!hasFocusedRadio()) {
+      emit('validate', _value.value);
+    }
+  }, 100);
+}
 </script>
 
 <template>
@@ -58,11 +82,12 @@ watch(_value, () => {
     :description="description"
     :state="state"
     :skeleton="skeleton"
-    :validator="validator"
-    :size="size as unknown as Size"
+    :errors="errors"
+    :size="fieldSize"
     label-for="noop"
   >
     <div
+      ref="containerRef"
       :class="containerClasses"
     >
       <AntRadio
@@ -75,6 +100,7 @@ watch(_value, () => {
         :readonly="readonly || radio.readonly"
         :state="_state || radio.state || state"
         :size="size"
+        @blur="onBlurRadio"
       />
     </div>
   </AntField>

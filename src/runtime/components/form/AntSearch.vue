@@ -1,8 +1,7 @@
 <script lang="ts" setup>
 import {computed, onMounted, ref} from 'vue';
-import AntBaseInput from './Elements/AntBaseInput.vue'
-import {Size} from '../../enums/Size.enum'
-import {FieldValidator} from '@antify/validate'
+import AntBaseInput from './Elements/AntBaseInput.vue';
+import {Size} from '../../enums/Size.enum';
 import {handleEnumValidation} from '../../handler';
 import {faSearch} from '@fortawesome/free-solid-svg-icons';
 import {BaseInputType} from './Elements/__types';
@@ -17,7 +16,6 @@ const props = withDefaults(defineProps<{
   size?: Size;
   disabled?: boolean;
   skeleton?: boolean;
-  validator?: FieldValidator;
   inputTimeout?: number;
   query?: string;
 }>(), {
@@ -53,24 +51,22 @@ onMounted(() => handleEnumValidation(props.size, Size, 'size'));
 
 <template>
   <AntField
-      :label="label"
-      :size="size"
-      :skeleton="skeleton"
-      :description="description"
-      :validator="validator"
-      data-e2e="search"
+    :label="label"
+    :size="size"
+    :skeleton="skeleton"
+    :description="description"
+    data-e2e="search"
   >
     <AntBaseInput
-        v-model:value="_value"
-        :type="BaseInputType.search"
-        :size="size"
-        :skeleton="skeleton"
-        :disabled="disabled"
-        :placeholder="placeholder"
-        :validator="validator"
-        :icon-left="faSearch"
-        nullable
-        v-bind="$attrs"
+      v-model:value="_value"
+      :type="BaseInputType.search"
+      :size="size"
+      :skeleton="skeleton"
+      :disabled="disabled"
+      :placeholder="placeholder"
+      :icon-left="faSearch"
+      nullable
+      v-bind="$attrs"
     />
   </AntField>
 </template>
