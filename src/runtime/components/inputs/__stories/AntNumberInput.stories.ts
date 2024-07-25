@@ -1,4 +1,4 @@
-import { type Meta, type StoryObj} from '@storybook/vue3';
+import {type Meta, type StoryObj} from '@storybook/vue3';
 import {Size} from '../../../enums/Size.enum';
 import AntNumberInput from '../AntNumberInput.vue';
 import {InputState} from '../../../enums/State.enum';

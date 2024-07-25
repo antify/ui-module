@@ -1,4 +1,4 @@
-import { type Meta, type StoryObj} from '@storybook/vue3';
+import {type Meta, type StoryObj} from '@storybook/vue3';
 import {Size} from '../../../enums/Size.enum';
 import AntSearch from '../AntSearch.vue';
 import AntFormGroup from '../../forms/AntFormGroup.vue';
@@ -105,7 +105,7 @@ export const summary: Story = {
         <AntFormGroupLabel>Label & Description</AntFormGroupLabel>
         <AntSearch v-model="value" label="Label" description="Lorem ipsum dolor sit amet"/>
       </AntFormGroup>
-		`,
+    `,
   }),
   args: {
     placeholder: 'Search',

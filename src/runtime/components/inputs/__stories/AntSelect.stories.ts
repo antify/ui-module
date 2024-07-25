@@ -1,4 +1,4 @@
-import { type Meta, type StoryObj} from '@storybook/vue3';
+import {type Meta, type StoryObj} from '@storybook/vue3';
 import {Size} from '../../../enums/Size.enum';
 import AntSelect from '../AntSelect.vue';
 import {computed, reactive} from 'vue';
@@ -187,7 +187,7 @@ export const ellipsisText: Story = {
 };
 export const summary: Story = {
   parameters: {
-    chromatic: { disableSnapshot: false },
+    chromatic: {disableSnapshot: false},
   },
   render: (args) => ({
     components: {AntSelect},

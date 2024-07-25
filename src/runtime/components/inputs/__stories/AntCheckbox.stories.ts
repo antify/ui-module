@@ -349,6 +349,6 @@ export const Summary: Story = {
           </AntCheckbox>
         </AntFormGroup>
       </AntFormGroup>
-		`
+    `
   })
 };

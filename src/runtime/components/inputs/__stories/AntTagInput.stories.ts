@@ -1,9 +1,9 @@
-import { AntTagInput } from '../index';
-import type { Meta, StoryObj } from '@storybook/vue3';
+import AntTagInput from '../AntTagInput.vue';
+import type {Meta, StoryObj} from '@storybook/vue3';
 import {reactive, type Ref} from 'vue';
-import { ref } from 'vue';
-import { InputState } from '../../../enums';
-import type { SelectOption } from '../__types';
+import {ref} from 'vue';
+import {InputState} from '../../../enums';
+import type {SelectOption} from '../__types';
 import {AntTagInputSize} from '../__types/AntTagInput.types';
 import {useFieldValidator} from '@antify/validate';
 import AntFormGroup from '../../forms/AntFormGroup.vue';
@@ -15,19 +15,19 @@ const meta: Meta<typeof AntTagInput> = {
   argTypes: {
     modelValue: {
       control: 'text',
-      table: { type: { summary: 'string|null' } },
+      table: {type: {summary: 'string|null'}},
     },
     state: {
-      control: { type: 'select' },
+      control: {type: 'select'},
       options: Object.values(InputState)
     },
     size: {
-      control: { type: 'select' },
+      control: {type: 'select'},
       options: Object.values(AntTagInputSize),
-      table: { defaultValue: { summary: AntTagInputSize.md } },
+      table: {defaultValue: {summary: AntTagInputSize.md}},
     },
     placeholder: {
-      table: { defaultValue: { summary: 'this.label' } },
+      table: {defaultValue: {summary: 'this.label'}},
     },
     createCallback: {
       control: 'none',
@@ -73,7 +73,7 @@ const options: SelectOption[] = [
 
 export const Docs: Story = {
   render: (args) => ({
-    components: { AntTagInput },
+    components: {AntTagInput},
     setup() {
       const value: Ref<string[]> = ref([]);
 
@@ -95,7 +95,7 @@ export const Docs: Story = {
 
 export const withValidator: Story = {
   render: (args) => ({
-    components: { AntTagInput },
+    components: {AntTagInput},
     setup() {
       const value: Ref<string[] | null> = ref(null);
       const validator = reactive(useFieldValidator((val) => val?.length <= 3 || 'Max 3 tags are allowed'));
@@ -109,14 +109,14 @@ export const withValidator: Story = {
     },
     template: `
       <div style="width: 360px">
-      <AntTagInput
-        v-model="value"
-        v-bind="args"
-        description="Choose max. 3 tags."
-        :state="args.state ? args.state : (validator.hasErrors() ? InputState.danger : undefined)"
-        :messages="Array.isArray(args.messages) ? args.messages : validator.getErrors()"
-        @validate="(val) => validator.validate(val)"
-      />
+        <AntTagInput
+          v-model="value"
+          v-bind="args"
+          description="Choose max. 3 tags."
+          :state="args.state ? args.state : (validator.hasErrors() ? InputState.danger : undefined)"
+          :messages="Array.isArray(args.messages) ? args.messages : validator.getErrors()"
+          @validate="(val) => validator.validate(val)"
+        />
       </div>
     `
   }),
@@ -132,7 +132,7 @@ export const AllowCreate: Story = {
     allowCreate: true,
     createCallback(item: string): Promise<SelectOption> {
       return new Promise((resolve) => {
-        resolve({ label: item, value: `${Math.random()}-${item}` });
+        resolve({label: item, value: `${Math.random()}-${item}`});
       });
     },
   }
@@ -140,7 +140,7 @@ export const AllowCreate: Story = {
 
 export const summary: Story = {
   render: (args) => ({
-    components: { AntTagInput, AntFormGroup, AntFormGroupLabel },
+    components: {AntTagInput, AntFormGroup, AntFormGroupLabel},
     setup() {
       const value: Ref<string[]> = ref(['1', '2']);
       const noValue: Ref<string[]> = ref([]);
@@ -157,59 +157,82 @@ export const summary: Story = {
       <AntFormGroup>
         <AntFormGroupLabel>States</AntFormGroupLabel>
         <AntFormGroup>
-            <AntFormGroup direction="row">
-              <AntTagInput v-bind="args" v-model="noValue" class="w-48" label="Label" description="Lorem ipsum dolor sit amet"/>
-              <AntTagInput v-bind="args" v-model="noValue" :state="InputState.info" class="w-48" label="Label" description="Lorem ipsum dolor sit amet"/>
-              <AntTagInput v-bind="args" v-model="noValue" :state="InputState.success" class="w-48" label="Label" description="Lorem ipsum dolor sit amet"/>
-              <AntTagInput v-bind="args" v-model="noValue" :state="InputState.warning" class="w-48" label="Label" description="Lorem ipsum dolor sit amet"/>
-              <AntTagInput v-bind="args" v-model="noValue" :state="InputState.danger" class="w-48" label="Label" description="Lorem ipsum dolor sit amet"/>
-            </AntFormGroup>
-            <AntFormGroup direction="row">
-              <AntTagInput v-bind="args" v-model="value" class="w-48" label="Label" description="Lorem ipsum dolor sit amet"/>
-              <AntTagInput v-bind="args" v-model="value" :state="InputState.info" class="w-48" label="Label" description="Lorem ipsum dolor sit amet"/>
-              <AntTagInput v-bind="args" v-model="value" :state="InputState.success" class="w-48" label="Label" description="Lorem ipsum dolor sit amet"/>
-              <AntTagInput v-bind="args" v-model="value" :state="InputState.warning" class="w-48" label="Label" description="Lorem ipsum dolor sit amet"/>
-              <AntTagInput v-bind="args" v-model="value" :state="InputState.danger" class="w-48" label="Label" description="Lorem ipsum dolor sit amet"/>
-            </AntFormGroup>
+          <AntFormGroup direction="row">
+            <AntTagInput v-bind="args" v-model="noValue" class="w-48" label="Label"
+                         description="Lorem ipsum dolor sit amet"/>
+            <AntTagInput v-bind="args" v-model="noValue" :state="InputState.info" class="w-48" label="Label"
+                         description="Lorem ipsum dolor sit amet"/>
+            <AntTagInput v-bind="args" v-model="noValue" :state="InputState.success" class="w-48" label="Label"
+                         description="Lorem ipsum dolor sit amet"/>
+            <AntTagInput v-bind="args" v-model="noValue" :state="InputState.warning" class="w-48" label="Label"
+                         description="Lorem ipsum dolor sit amet"/>
+            <AntTagInput v-bind="args" v-model="noValue" :state="InputState.danger" class="w-48" label="Label"
+                         description="Lorem ipsum dolor sit amet"/>
+          </AntFormGroup>
+          <AntFormGroup direction="row">
+            <AntTagInput v-bind="args" v-model="value" class="w-48" label="Label"
+                         description="Lorem ipsum dolor sit amet"/>
+            <AntTagInput v-bind="args" v-model="value" :state="InputState.info" class="w-48" label="Label"
+                         description="Lorem ipsum dolor sit amet"/>
+            <AntTagInput v-bind="args" v-model="value" :state="InputState.success" class="w-48" label="Label"
+                         description="Lorem ipsum dolor sit amet"/>
+            <AntTagInput v-bind="args" v-model="value" :state="InputState.warning" class="w-48" label="Label"
+                         description="Lorem ipsum dolor sit amet"/>
+            <AntTagInput v-bind="args" v-model="value" :state="InputState.danger" class="w-48" label="Label"
+                         description="Lorem ipsum dolor sit amet"/>
+          </AntFormGroup>
         </AntFormGroup>
         <AntFormGroupLabel>Sizes</AntFormGroupLabel>
         <AntFormGroup>
           <AntFormGroup direction="row">
-            <AntTagInput v-bind="args" v-model="noValue" :size="AntTagInputSize.lg" class="w-48" label="Label" description="Lorem ipsum dolor sit amet"/>
-            <AntTagInput v-bind="args" v-model="noValue" :size="AntTagInputSize.md" class="w-48" label="Label" description="Lorem ipsum dolor sit amet"/>
-            <AntTagInput v-bind="args" v-model="noValue" :size="AntTagInputSize.sm" class="w-48" label="Label" description="Lorem ipsum dolor sit amet"/>
+            <AntTagInput v-bind="args" v-model="noValue" :size="AntTagInputSize.lg" class="w-48" label="Label"
+                         description="Lorem ipsum dolor sit amet"/>
+            <AntTagInput v-bind="args" v-model="noValue" :size="AntTagInputSize.md" class="w-48" label="Label"
+                         description="Lorem ipsum dolor sit amet"/>
+            <AntTagInput v-bind="args" v-model="noValue" :size="AntTagInputSize.sm" class="w-48" label="Label"
+                         description="Lorem ipsum dolor sit amet"/>
           </AntFormGroup>
           <AntFormGroup direction="row">
-            <AntTagInput v-bind="args" v-model="value" :size="AntTagInputSize.lg" class="w-48" label="Label" description="Lorem ipsum dolor sit amet"/>
-            <AntTagInput v-bind="args" v-model="value" :size="AntTagInputSize.md" class="w-48" label="Label" description="Lorem ipsum dolor sit amet"/>
-            <AntTagInput v-bind="args" v-model="value" :size="AntTagInputSize.sm" class="w-48" label="Label" description="Lorem ipsum dolor sit amet"/>
+            <AntTagInput v-bind="args" v-model="value" :size="AntTagInputSize.lg" class="w-48" label="Label"
+                         description="Lorem ipsum dolor sit amet"/>
+            <AntTagInput v-bind="args" v-model="value" :size="AntTagInputSize.md" class="w-48" label="Label"
+                         description="Lorem ipsum dolor sit amet"/>
+            <AntTagInput v-bind="args" v-model="value" :size="AntTagInputSize.sm" class="w-48" label="Label"
+                         description="Lorem ipsum dolor sit amet"/>
           </AntFormGroup>
         </AntFormGroup>
         <AntFormGroup direction="row">
           <AntFormGroup>
             <AntFormGroupLabel>Disabled</AntFormGroupLabel>
-              <AntTagInput v-bind="args" v-model="noValue" class="w-48" label="Label" value="Value" description="Lorem ipsum dolor sit amet." disabled/>
-              <AntTagInput v-bind="args" v-model="value" class="w-48" label="Label" value="Value" description="Lorem ipsum dolor sit amet." disabled/>
+            <AntTagInput v-bind="args" v-model="noValue" class="w-48" label="Label" value="Value"
+                         description="Lorem ipsum dolor sit amet." disabled/>
+            <AntTagInput v-bind="args" v-model="value" class="w-48" label="Label" value="Value"
+                         description="Lorem ipsum dolor sit amet." disabled/>
           </AntFormGroup>
           <AntFormGroup>
             <AntFormGroupLabel>Readonly</AntFormGroupLabel>
-                <!--TODO:: Add readonly prop if it is implemented-->
-              <AntTagInput v-bind="args" v-model="noValue" class="w-48" label="Label" value="Value" description="Lorem ipsum dolor sit amet."/>
-              <AntTagInput v-bind="args" v-model="value" class="w-48" label="Label" value="Value" description="Lorem ipsum dolor sit amet."/>
+            <!--TODO:: Add readonly prop if it is implemented-->
+            <AntTagInput v-bind="args" v-model="noValue" class="w-48" label="Label" value="Value"
+                         description="Lorem ipsum dolor sit amet."/>
+            <AntTagInput v-bind="args" v-model="value" class="w-48" label="Label" value="Value"
+                         description="Lorem ipsum dolor sit amet."/>
           </AntFormGroup>
           <AntFormGroup>
             <AntFormGroupLabel>Skeleton</AntFormGroupLabel>
-            <AntTagInput v-bind="args" v-model="noValue" class="w-48" label="Label" value="Value" description="Lorem ipsum dolor sit amet." skeleton/>
+            <AntTagInput v-bind="args" v-model="noValue" class="w-48" label="Label" value="Value"
+                         description="Lorem ipsum dolor sit amet." skeleton/>
           </AntFormGroup>
         </AntFormGroup>
         <AntFormGroupLabel>Plain</AntFormGroupLabel>
-          <AntTagInput v-bind="args" v-model="noValue" class="w-48" value="value"/>
+        <AntTagInput v-bind="args" v-model="noValue" class="w-48" value="value"/>
         <AntFormGroupLabel>With label</AntFormGroupLabel>
-        <AntTagInput v-bind="args" v-model="noValue" class="w-48" label="Label" value="Value" />
+        <AntTagInput v-bind="args" v-model="noValue" class="w-48" label="Label" value="Value"/>
         <AntFormGroupLabel>With description</AntFormGroupLabel>
-        <AntTagInput v-bind="args" v-model="noValue" class="w-48" value="Value" description="Lorem ipsum dolor sit amet."/>
+        <AntTagInput v-bind="args" v-model="noValue" class="w-48" value="Value"
+                     description="Lorem ipsum dolor sit amet."/>
         <AntFormGroupLabel>With label + description</AntFormGroupLabel>
-        <AntTagInput v-bind="args" v-model="noValue" class="w-48" label="Label" value="Value" description="Lorem ipsum dolor sit amet."/>
+        <AntTagInput v-bind="args" v-model="noValue" class="w-48" label="Label" value="Value"
+                     description="Lorem ipsum dolor sit amet."/>
       </AntFormGroup>
     `
   }),

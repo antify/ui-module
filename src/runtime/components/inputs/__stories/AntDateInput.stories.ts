@@ -87,7 +87,7 @@ export const WithValidator: Story = {
 
 export const Summary: Story = {
   parameters: {
-    chromatic: { disableSnapshot: false },
+    chromatic: {disableSnapshot: false},
   },
   render: (args) => ({
     components: {AntDateInput, AntFormGroup, AntFormGroupLabel},
@@ -193,7 +193,7 @@ export const Summary: Story = {
           />
         </AntFormGroup>
       </AntFormGroup>
-		`,
+    `,
   }),
   args: {
     modelValue: null,

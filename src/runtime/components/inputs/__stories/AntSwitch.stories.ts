@@ -1,5 +1,5 @@
 import {type Meta, type StoryObj} from '@storybook/vue3';
-import {AntSwitch} from '../index';
+import AntSwitch from '../AntSwitch.vue';
 import {computed, reactive, ref} from 'vue';
 import {InputState} from '../../../enums';
 import {useFieldValidator} from '@antify/validate';
@@ -33,7 +33,7 @@ export const Docs: Story = {
       return {args};
     },
     template: `
-      <AntSwitch v-bind="args" />
+      <AntSwitch v-bind="args"/>
     `
   }),
   args: {
@@ -52,7 +52,7 @@ export const withValidator: Story = {
         set: (val) => args.modelValue = val
       });
 
-      const validator = reactive( useFieldValidator([
+      const validator = reactive(useFieldValidator([
         (val: boolean) => {
           return !val || 'Switch must be off';
         }
@@ -71,7 +71,7 @@ export const withValidator: Story = {
         Value must be false
       </AntSwitch>
 
-      <span class="text-sm text-gray-500">Reactive value: {{value}}</span>
+      <span class="text-sm text-gray-500">Reactive value: {{ value }}</span>
     `
   }),
   args: {
@@ -302,6 +302,6 @@ export const Summary: Story = {
           </AntSwitch>
         </AntFormGroup>
       </AntFormGroup>
-		`
+    `
   })
 };

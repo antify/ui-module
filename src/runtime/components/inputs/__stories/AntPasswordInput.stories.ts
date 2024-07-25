@@ -81,7 +81,7 @@ export const WithValidator: Story = {
 
 export const Summary: Story = {
   parameters: {
-    chromatic: { disableSnapshot: false },
+    chromatic: {disableSnapshot: false},
   },
   render: (args) => ({
     components: {AntPasswordInput, AntFormGroup, AntFormGroupLabel},

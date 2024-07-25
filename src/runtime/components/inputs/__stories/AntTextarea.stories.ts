@@ -120,7 +120,7 @@ export const limited: Story = {
 
 export const summary: Story = {
   parameters: {
-    chromatic: { disableSnapshot: false },
+    chromatic: {disableSnapshot: false},
   },
   render: (args, ctx) => ({
     // @ts-ignore
