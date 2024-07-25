@@ -1,8 +1,8 @@
 import {type Meta, type StoryObj} from '@storybook/vue3';
 import AntCard from '../AntCard.vue';
-import { Size } from '../../enums';
-import AntFormGroup from '../form/AntFormGroup.vue';
-import AntFormGroupLabel from '../form/AntFormGroupLabel.vue';
+import {Size} from '../../enums';
+import AntFormGroup from '../forms/AntFormGroup.vue';
+import AntFormGroupLabel from '../forms/AntFormGroupLabel.vue';
 
 const meta: Meta<typeof AntCard> = {
   title: 'Components/Card',
