@@ -1,7 +1,7 @@
 <script lang="ts" setup>
 import AntAccordionItem from './AntAccordionItem.vue';
 import {onMounted, ref} from 'vue';
-import {CollapseStrategy} from './__types/Accordion.types';
+import {CollapseStrategy} from './__types/AntAccordion.types';
 
 const props = withDefaults(defineProps<{
   items: {

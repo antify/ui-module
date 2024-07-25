@@ -1,9 +1,9 @@
 import AntTable from '../AntTable.vue';
-import { AntTableAlign, AntTableRowTypes, AntTableSize } from '../__types/TableHeader.type';
+import { AntTableAlign, AntTableRowTypes, AntTableSize } from '../__types/TableHeader.types';
 import { type Meta, type StoryObj } from '@storybook/vue3';
 import { ref } from 'vue';
 import {faker} from '@faker-js/faker';
-import {AntSwitch} from '../../form';
+import {AntSwitch} from '../../inputs';
 
 const meta: Meta<typeof AntTable> = {
   title: 'Components/Table',

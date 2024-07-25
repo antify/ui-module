@@ -1,6 +1,6 @@
 import AntTooltip from '../AntTooltip.vue';
-import AntFormGroup from '../form/AntFormGroup.vue';
-import AntFormGroupLabel from '../form/AntFormGroupLabel.vue';
+import AntFormGroup from '../forms/AntFormGroup.vue';
+import AntFormGroupLabel from '../forms/AntFormGroupLabel.vue';
 import {type Meta, type StoryObj} from '@storybook/vue3';
 import {Position} from '../../enums/Position.enum';
 import {InputState} from '../../enums';

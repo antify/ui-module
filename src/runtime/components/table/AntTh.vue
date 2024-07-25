@@ -1,6 +1,6 @@
 <script setup lang="ts">
 
-import {AntTableAlign, AntTableSize, AntTableSortDirection, type TableHeader} from './__types/TableHeader.type';
+import {AntTableAlign, AntTableSize, AntTableSortDirection, type TableHeader} from './__types/TableHeader.types';
 import {computed, ref, type Ref} from 'vue';
 import AntTableSortButton from './AntTableSortButton.vue';
 

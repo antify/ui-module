@@ -7,26 +7,26 @@ import {
 } from '@fortawesome/free-solid-svg-icons';
 import {computed} from 'vue';
 import {type RouteLocationRaw, useRoute} from 'vue-router';
-import {State} from './__types/AntTabItem.types';
+import {TabItemState} from './__types/AntTabItem.types';
 
 const props = withDefaults(defineProps<{
   label: string;
   active: boolean;
-  state?: State
+  state?: TabItemState
   showIcon?: boolean;
   icon?: IconDefinition;
   to?: RouteLocationRaw;
   expanded?: boolean;
 }>(), {
-  state: State.base,
+  state: TabItemState.base,
   showIcon: true,
 });
 const route = useRoute();
 
 const icons = {
-  [State.base]: null,
-  [State.danger]: faExclamationCircle,
-  [State.warning]: faExclamationTriangle,
+  [TabItemState.base]: null,
+  [TabItemState.danger]: faExclamationCircle,
+  [TabItemState.warning]: faExclamationTriangle,
 };
 const iconRight = computed<IconDefinition | null>(() => icons[props.state]);
 const _active = computed<boolean>(() => {
@@ -41,20 +41,20 @@ const _active = computed<boolean>(() => {
   return props.active;
 });
 const containerClasses = computed(() => {
-  const variants: Record<State, string> = {
-    [State.base]: 'hover:bg-neutral-100',
-    [State.warning]: 'hover:bg-warning-100',
-    [State.danger]: 'hover:bg-danger-100',
+  const variants: Record<TabItemState, string> = {
+    [TabItemState.base]: 'hover:bg-neutral-100',
+    [TabItemState.warning]: 'hover:bg-warning-100',
+    [TabItemState.danger]: 'hover:bg-danger-100',
   };
-  const activeVariants: Record<State, string> = {
-    [State.base]: 'text-primary-500 border-primary-500',
-    [State.warning]: 'text-warning-500 border-warning-500',
-    [State.danger]: 'text-danger-500 border-danger-500',
+  const activeVariants: Record<TabItemState, string> = {
+    [TabItemState.base]: 'text-primary-500 border-primary-500',
+    [TabItemState.warning]: 'text-warning-500 border-warning-500',
+    [TabItemState.danger]: 'text-danger-500 border-danger-500',
   };
-  const notActiveVariants: Record<State, string> = {
-    [State.base]: 'text-for-white-bg-font border-white',
-    [State.warning]: 'text-warning-500',
-    [State.danger]: 'text-danger-500',
+  const notActiveVariants: Record<TabItemState, string> = {
+    [TabItemState.base]: 'text-for-white-bg-font border-white',
+    [TabItemState.warning]: 'text-warning-500',
+    [TabItemState.danger]: 'text-danger-500',
   };
 
   return {
@@ -66,10 +66,10 @@ const containerClasses = computed(() => {
   };
 });
 const borderBoxClasses = computed(() => {
-  const variants: Record<State, string> = {
-    [State.base]: 'bg-primary-500',
-    [State.warning]: 'bg-warning-500',
-    [State.danger]: 'bg-danger-500',
+  const variants: Record<TabItemState, string> = {
+    [TabItemState.base]: 'bg-primary-500',
+    [TabItemState.warning]: 'bg-warning-500',
+    [TabItemState.danger]: 'bg-danger-500',
   };
 
   return {
@@ -79,9 +79,9 @@ const borderBoxClasses = computed(() => {
 });
 const iconColor = computed(() => {
   const variants = {
-    [State.base]: 'text-neutral-100-font',
-    [State.warning]: 'text-warning-500',
-    [State.danger]: 'text-danger-500',
+    [TabItemState.base]: 'text-neutral-100-font',
+    [TabItemState.warning]: 'text-warning-500',
+    [TabItemState.danger]: 'text-danger-500',
   };
 
   return variants[props.state];

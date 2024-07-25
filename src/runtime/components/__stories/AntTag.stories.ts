@@ -1,7 +1,6 @@
 import AntTag from '../AntTag.vue';
 import { type Meta, type StoryObj} from '@storybook/vue3';
-import {AntTagSize} from '../__types/AntTag.types';
-import {TagState} from '../../types/AntTag.type';
+import {AntTagSize, TagState} from '../__types/AntTag.types';
 import {faTag} from '@fortawesome/free-solid-svg-icons';
 
 const meta: Meta<typeof AntTag> = {

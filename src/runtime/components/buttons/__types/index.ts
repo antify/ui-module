@@ -1,1 +1,1 @@
-export * from './AntButton.type';
+export * from './AntButton.types';

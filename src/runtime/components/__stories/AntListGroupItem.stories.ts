@@ -1,7 +1,7 @@
 import AntListGroupItem from '../AntListGroupItem.vue';
 import { type Meta, type StoryObj} from '@storybook/vue3';
 import {faUser, faChevronRight} from '@fortawesome/free-solid-svg-icons';
-import {ListGroupItemState} from '../../types/AntListGroupItem.type';
+import {ListGroupItemState} from '../__types/AntListGroupItem.types';
 
 const meta: Meta<typeof AntListGroupItem> = {
     title: 'Components/List Group Item',

@@ -1,6 +1,6 @@
-import { type Meta, type StoryObj} from '@storybook/vue3';
+import {type Meta, type StoryObj} from '@storybook/vue3';
 import AntTabItem from '../AntTabItem.vue';
-import {State} from '../__types/AntTabItem.types';
+import {TabItemState} from '../__types/AntTabItem.types';
 
 const meta: Meta<typeof AntTabItem> = {
   title: 'Components/Tab Item',
@@ -15,7 +15,7 @@ const meta: Meta<typeof AntTabItem> = {
     },
     state: {
       control: {type: 'select'},
-      options: Object.values(State)
+      options: Object.values(TabItemState)
     },
   }
 };

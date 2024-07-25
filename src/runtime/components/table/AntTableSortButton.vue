@@ -1,7 +1,7 @@
 <script setup lang="ts">
 
 import {faAngleDown, faAngleUp, faMinus} from '@fortawesome/free-solid-svg-icons';
-import {AntTableSize, AntTableSortDirection} from './__types/TableHeader.type';
+import {AntTableSize, AntTableSortDirection} from './__types/TableHeader.types';
 import AntButton from '../buttons/AntButton.vue';
 import {computed} from 'vue';
 import {Size} from '../../enums/Size.enum';

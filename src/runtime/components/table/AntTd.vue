@@ -1,6 +1,6 @@
 <script setup lang="ts">
 
-import {AntTableAlign, AntTableRowTypes, AntTableSize, type TableHeader} from './__types/TableHeader.type';
+import {AntTableAlign, AntTableRowTypes, AntTableSize, type TableHeader} from './__types/TableHeader.types';
 import {computed} from 'vue';
 import type {RouteLocationRaw} from 'vue-router';
 

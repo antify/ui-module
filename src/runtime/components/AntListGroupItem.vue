@@ -1,7 +1,7 @@
 <script lang="ts" setup>
 import {computed, onMounted} from 'vue';
 import {type IconDefinition} from '@fortawesome/free-solid-svg-icons';
-import {ListGroupItemState} from '../types/AntListGroupItem.type';
+import {ListGroupItemState} from './__types/AntListGroupItem.types';
 import {handleEnumValidation} from '../handler';
 import {type RouteLocationRaw} from 'vue-router';
 import AntIcon from './AntIcon.vue';

@@ -1,6 +1,6 @@
 import AntButton from '../AntButton.vue';
-import AntFormGroupLabel from '../../form/AntFormGroupLabel.vue';
-import AntFormGroup from '../../form/AntFormGroup.vue';
+import AntFormGroupLabel from '../../forms/AntFormGroupLabel.vue';
+import AntFormGroup from '../../forms/AntFormGroup.vue';
 import {faCaretRight, faCaretLeft} from '@fortawesome/free-solid-svg-icons';
 import {type Meta, type StoryObj} from '@storybook/vue3';
 import {Size} from '../../../enums/Size.enum';

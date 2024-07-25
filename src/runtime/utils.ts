@@ -8,17 +8,17 @@ import {Fragment} from 'vue';
  * @param classes
  */
 export function classesToObjectSyntax(classes: string | undefined | Record<string, boolean>): Record<string, boolean> {
-	if (typeof classes === 'object') {
-		return classes;
-	}
+  if (typeof classes === 'object') {
+    return classes;
+  }
 
-	if (classes === undefined) {
-		return {};
-	}
+  if (classes === undefined) {
+    return {};
+  }
 
-	return {
-		[classes]: true,
-	};
+  return {
+    [classes]: true,
+  };
 }
 
 /**
@@ -28,13 +28,13 @@ export function classesToObjectSyntax(classes: string | undefined | Record<strin
  * @param className
  */
 export function enumToPlainText(value: object, className: string) {
-	let text = `enum ${className} {\n`;
+  let text = `enum ${className} {\n`;
 
-	Object.keys(value).forEach((key) => {
-		text += `    ${key} = '${value[key]}',\n`;
-	})
+  Object.keys(value).forEach((key) => {
+    text += `    ${key} = '${value[key]}',\n`;
+  });
 
-	return text + '}';
+  return text + '}';
 }
 
 /**
@@ -42,30 +42,30 @@ export function enumToPlainText(value: object, className: string) {
  * To get a slot in your component, call $slots['slotName'] or useSlots()['slotName'].
  */
 export function hasSlotContent(slot: Slot<any> | undefined): boolean {
-	if (!slot) {
-		return false
-	}
+  if (!slot) {
+    return false;
+  }
 
-	const isVnodeEmpty = (vnodes: Array<VNode>) => {
-		return vnodes.every((node: VNode) => {
-			if (node.type === Comment) {
-				return true
-			}
+  const isVnodeEmpty = (vnodes: Array<VNode>) => {
+    return vnodes.every((node: VNode) => {
+      if (node.type === Comment) {
+        return true;
+      }
 
-			if (node.type === Text && typeof node.children === 'string' && !node.children.trim()) {
-				return true
-			}
+      if (node.type === Text && typeof node.children === 'string' && !node.children.trim()) {
+        return true;
+      }
 
-			if (
-				node.type === Fragment
-				&& isVnodeEmpty(node.children as Array<VNode>)
-			) {
-				return true
-			}
+      if (
+        node.type === Fragment
+        && isVnodeEmpty(node.children as Array<VNode>)
+      ) {
+        return true;
+      }
 
-			return false
-		})
-	}
+      return false;
+    });
+  };
 
-	return !isVnodeEmpty(slot())
+  return !isVnodeEmpty(slot());
 }

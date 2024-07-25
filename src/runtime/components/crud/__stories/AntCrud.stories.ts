@@ -6,7 +6,7 @@ import AntCrudTableNav from '../AntCrudTableNav.vue';
 import AntTable from '../../table/AntTable.vue';
 import AntCrudTableFilter from '../AntCrudTableFilter.vue';
 import AntCrudDetail from '../AntCrudDetail.vue';
-import {AntTableRowTypes} from '../../table/__types/TableHeader.type';
+import {AntTableRowTypes} from '../../table/__types/TableHeader.types';
 
 const meta: Meta<typeof AntCrud> = {
   title: 'Crud/Crud',
@@ -58,7 +58,7 @@ export const Docs: Story = {
         if (showDetail === false) {
           selectedDataItem.value = null;
         }
-      })
+      });
 
       return {
         args,
@@ -134,4 +134,4 @@ export const Docs: Story = {
     `,
   }),
   args: {}
-}
+};

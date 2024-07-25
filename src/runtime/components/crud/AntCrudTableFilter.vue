@@ -1,6 +1,6 @@
 <script lang="ts" setup>
 // TODO:: This component works only with vue-router. Make it work in storybook.
-import AntSearch from '../form/AntSearch.vue';
+import AntSearch from '../inputs/AntSearch.vue';
 import AntCreateButton from '../buttons/AntCreateButton.vue';
 import AntDropdown from '../AntDropdown.vue';
 import {computed, ref, watch} from 'vue';

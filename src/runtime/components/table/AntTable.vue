@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import {AntTableSize, AntTableSortDirection, type TableHeader} from './__types/TableHeader.type';
+import {AntTableSize, AntTableSortDirection, type TableHeader} from './__types/TableHeader.types';
 import {computed, ref, type Ref, watch} from 'vue';
 import {useVModel} from '@vueuse/core';
 import {State} from '../../enums';
