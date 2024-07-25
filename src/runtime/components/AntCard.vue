@@ -1,26 +1,27 @@
 <script setup lang="ts">
-import {AntCardPaddingSize} from './__types/AntCard.types';
 import {computed} from 'vue';
+import {Size} from '../enums/Size.enum';
 
 const props = withDefaults(defineProps<{
-  padding?: AntCardPaddingSize
-  expanded?: boolean
+  size?: Size;
+  padding?: boolean;
+  expanded?: boolean;
 }>(), {
-  padding: AntCardPaddingSize.md,
+  size: Size.md,
+  padding: true,
   expanded: false
 });
 
-const cardClass = computed(() => {
-  return {
+const cardClass = computed(() => ({
     'inline-block': true,
     'w-full': props.expanded,
-    'p-2.5': props.padding === AntCardPaddingSize.lg,
-    'p-2': props.padding === AntCardPaddingSize.md,
-    'p-1.5': props.padding === AntCardPaddingSize.sm || props.padding === AntCardPaddingSize.xs,
-    'p-1': props.padding === AntCardPaddingSize.xs2,
-    'p-0': props.padding === AntCardPaddingSize.xs2,
-  };
-});
+    'p-0': !props.padding,
+    'p-2.5': props.size === Size.lg && props.padding,
+    'p-2': props.size === Size.md && props.padding,
+    'p-1.5': props.size === Size.sm || props.size === Size.xs && props.padding,
+    'p-1': props.size === Size.xs2 && props.padding,
+  })
+);
 </script>
 
 <template>

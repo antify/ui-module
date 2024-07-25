@@ -1,6 +1,6 @@
 import {type Meta, type StoryObj} from '@storybook/vue3';
 import AntCard from '../AntCard.vue';
-import {AntCardPaddingSize} from '../__types/AntCard.types';
+import { Size } from '../../enums';
 import AntFormGroup from '../form/AntFormGroup.vue';
 import AntFormGroupLabel from '../form/AntFormGroupLabel.vue';
 
@@ -9,9 +9,12 @@ const meta: Meta<typeof AntCard> = {
   component: AntCard,
   parameters: {controls: {sort: 'requiredFirst'}},
   argTypes: {
-    padding: {
+    size: {
       control: {type: 'select'},
-      options: Object.values(AntCardPaddingSize),
+      options: Object.values(Size)
+    },
+    padding: {
+      control: {type: 'boolean'},
     },
     expanded: {
       control: {type: 'boolean'},
@@ -27,7 +30,7 @@ export const Docs: Story = {
   render: (args) => ({
     components: {AntCard},
     setup() {
-      return {args, AntCardPaddingSize};
+      return {args, Size};
     },
     template: `
       <AntCard v-bind="args">
@@ -50,29 +53,39 @@ export const Summary: Story = {
   render: (args) => ({
     components: {AntCard, AntFormGroup, AntFormGroupLabel},
     setup() {
-      return {args, AntCardPaddingSize};
+      return {args, Size};
     },
     template: `
       <AntFormGroup direction="column">
-        <AntFormGroupLabel>Padding size</AntFormGroupLabel>
+        <AntFormGroupLabel>Size</AntFormGroupLabel>
         <AntFormGroup direction="row">
-          <AntCard v-bind="args"  :padding="AntCardPaddingSize.none" :expanded="true">
+          <AntCard v-bind="args" :size="Size.lg" :expanded="true">
             <div class="slot h-40">SLOT</div>
           </AntCard>
-          <AntCard v-bind="args"  :padding="AntCardPaddingSize.lg" :expanded="true">
+          <AntCard v-bind="args" :size="Size.md" :expanded="true">
             <div class="slot h-full">SLOT</div>
           </AntCard>
-          <AntCard v-bind="args"  :padding="AntCardPaddingSize.md" :expanded="true">
+          <AntCard v-bind="args" :size="Size.sm" :expanded="true">
             <div class="slot h-full">SLOT</div>
           </AntCard>
-          <AntCard v-bind="args"  :padding="AntCardPaddingSize.sm" :expanded="true">
+          <AntCard v-bind="args" :size="Size.xs" :expanded="true">
             <div class="slot h-full">SLOT</div>
           </AntCard>
-          <AntCard v-bind="args"  :padding="AntCardPaddingSize.xs" :expanded="true">
+          <AntCard v-bind="args" :size="Size.xs2" :expanded="true">
             <div class="slot h-full">SLOT</div>
           </AntCard>
-          <AntCard v-bind="args"  :padding="AntCardPaddingSize.xs2" :expanded="true">
-            <div class="slot h-full">SLOT</div>
+        </AntFormGroup>
+        <AntFormGroupLabel>Paddingles</AntFormGroupLabel>
+        <AntCard v-bind="args" :padding="false" class="w-48">
+          <div class="slot h-40">SLOT</div>
+        </AntCard>
+        <AntFormGroupLabel>Expanded</AntFormGroupLabel>
+        <AntFormGroup direction="row">
+          <AntCard v-bind="args" class="w-48">
+            <div class="slot h-40">SLOT</div>
+          </AntCard>
+          <AntCard v-bind="args" :expanded="true">
+            <div class="slot h-40">SLOT</div>
           </AntCard>
         </AntFormGroup>
       </AntFormGroup>`,
