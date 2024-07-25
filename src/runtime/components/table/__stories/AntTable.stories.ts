@@ -1,14 +1,14 @@
 import AntTable from '../AntTable.vue';
-import { AntTableAlign, AntTableRowTypes, AntTableSize } from '../__types/TableHeader.types';
-import { type Meta, type StoryObj } from '@storybook/vue3';
-import { ref } from 'vue';
+import {AntTableAlign, AntTableRowTypes, AntTableSize} from '../__types/TableHeader.types';
+import {type Meta, type StoryObj} from '@storybook/vue3';
+import {ref} from 'vue';
 import {faker} from '@faker-js/faker';
-import {AntSwitch} from '../../inputs';
+import AntSwitch from '../../inputs/AntSwitch.vue';
 
 const meta: Meta<typeof AntTable> = {
   title: 'Components/Table',
   component: AntTable,
-  parameters: { controls: { sort: 'requiredFirst' } },
+  parameters: {controls: {sort: 'requiredFirst'}},
   argTypes: {
     headers: {
       description: 'List of header definitions. <br>If this value get changed from outside, because the table size should change, the change will take 350 ms to have a more smooth transition.',
@@ -43,38 +43,38 @@ const meta: Meta<typeof AntTable> = {
     loading: {
       description: 'If true will display skeleton rows instead of an empty table if there is no data provided, otherwise it will display an overlay.'
     },
-		size: {
-			control: {type: 'select'},
-			options: Object.values(AntTableSize),
-			table: {defaultValue: {summary: AntTableSize.md}},
-		},
+    size: {
+      control: {type: 'select'},
+      options: Object.values(AntTableSize),
+      table: {defaultValue: {summary: AntTableSize.md}},
+    },
     // Slots
     afterCellContent: {
       description:
         'Slot to add custom elements to all cells. Gets {elem, header} as property.',
-      table: { type: { summary: 'HTML' } },
+      table: {type: {summary: 'HTML'}},
     },
     beforeCellContent: {
       description:
         'Slot to add custom elements to all cells. Gets {elem, header} as property.',
-      table: { type: { summary: 'HTML' } },
+      table: {type: {summary: 'HTML'}},
     },
     emptyState: {
       description: 'Place for custom empty states.',
-      table: { type: { summary: 'HTML' } },
+      table: {type: {summary: 'HTML'}},
     },
     headerContent: {
       description:
         'Overwrite for the default header items. Gets header as property.',
-      table: { type: { summary: 'HTML' } },
+      table: {type: {summary: 'HTML'}},
     },
     headerFirstCell: {
       description: 'Space to add cells to the header.',
-      table: { type: { summary: 'HTML' } },
+      table: {type: {summary: 'HTML'}},
     },
     headerLastCell: {
       description: 'Space to add cells to the header.',
-      table: { type: { summary: 'HTML' } },
+      table: {type: {summary: 'HTML'}},
     },
     rowFirstCell: {
       description: 'Space to add cells to the beginning of a row. Be aware that you have to add headerFirstCells as well otherwise the headers will not match up to your cells.'
@@ -82,12 +82,12 @@ const meta: Meta<typeof AntTable> = {
     rowLastCell: {
       description:
         'Space to add cells to all rows. Gets the current element as property.',
-      table: { type: { summary: 'HTML' } },
+      table: {type: {summary: 'HTML'}},
     },
     cellContent: {
       description: 'Is used if the ROW_TYPE = "SLOT". Gets the current element and the header element to identifier witch cell is currently displayed.',
       table: {
-        type: { summary: 'HTML' }
+        type: {summary: 'HTML'}
       }
     },
     showLightVersion: {
@@ -103,16 +103,16 @@ type Story = StoryObj<typeof AntTable>;
 const testData = [];
 
 for (let i = 0; i < 100; i++) {
-	const randomName = faker.person.firstName() + ' ' + faker.person.lastName();
-	const randomNumber = faker.number.int({min: 18, max: 60});
-	const randomEmail=faker.internet.email();
-	const randomBoolean = faker.datatype.boolean();
+  const randomName = faker.person.firstName() + ' ' + faker.person.lastName();
+  const randomNumber = faker.number.int({min: 18, max: 60});
+  const randomEmail = faker.internet.email();
+  const randomBoolean = faker.datatype.boolean();
 
   testData.push({
     name: randomName,
     age: randomNumber,
     email: randomEmail,
-		employeed: randomBoolean,
+    employeed: randomBoolean,
     linkLabel: 'Link here',
     link: '/',
   });
@@ -120,20 +120,20 @@ for (let i = 0; i < 100; i++) {
 
 export const Docs: Story = {
   render: (args) => ({
-    components: { AntTable, AntSwitch },
+    components: {AntTable, AntSwitch},
     setup() {
       const selected = ref();
 
-      return { args, selected };
+      return {args, selected};
     },
     template: `
       <div class="h-96 border border-dashed border-neutral-300">
         <AntTable v-bind="args" v-model="selected">
-					<template #cellContent="{element: entry, header}">
-						<div v-if="header.identifier === 'employeed'">
-							<AntSwitch :model-value="entry.employeed"/>
-						</div>
-					</template>
+          <template #cellContent="{element: entry, header}">
+            <div v-if="header.identifier === 'employeed'">
+              <AntSwitch :model-value="entry.employeed"/>
+            </div>
+          </template>
         </AntTable>
       </div>
     `,
@@ -147,25 +147,25 @@ export const Docs: Story = {
         sortable: true,
         lightVersion: true,
       },
-			{
-				title: 'Age',
-				identifier: 'age',
-				type: AntTableRowTypes.text,
-				align: AntTableAlign.right,
-				lightVersion: true,
-			},
-			{
+      {
+        title: 'Age',
+        identifier: 'age',
+        type: AntTableRowTypes.text,
+        align: AntTableAlign.right,
+        lightVersion: true,
+      },
+      {
         title: 'E-Mail',
         identifier: 'email',
         rowClassList: '',
         type: AntTableRowTypes.text,
       },
-			{
-				title: 'Employeed',
-				identifier: 'employeed',
-				rowClassList: '',
-				type: AntTableRowTypes.slot,
-			},
+      {
+        title: 'Employeed',
+        identifier: 'employeed',
+        rowClassList: '',
+        type: AntTableRowTypes.slot,
+      },
       {
         title: 'Link',
         identifier: 'linkLabel',
