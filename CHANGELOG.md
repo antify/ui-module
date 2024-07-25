@@ -2,6 +2,67 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.7.0](https://github.com/antify/ui-module/compare/v1.6.0...v1.7.0) (2024-07-25)
+
+
+### Features
+
+* add AntDateInput ([063d614](https://github.com/antify/ui-module/commit/063d61430a82b327be6a8d25378f9930c56f969a))
+* add AntPasswordInput ([d1acc9a](https://github.com/antify/ui-module/commit/d1acc9abc6df51ec68c27d1bfd4440c003dcaab5))
+* **AntIcon:** Add more icon sizes and use font size instead of height Close [#56](https://github.com/antify/ui-module/issues/56) ([b8940d3](https://github.com/antify/ui-module/commit/b8940d30a9eb6e8ced6058e55d7400412a93332f))
+* **AntIcon:** Add more icon sizes and use font size instead of height Close [#56](https://github.com/antify/ui-module/issues/56) ([4d49606](https://github.com/antify/ui-module/commit/4d49606b09054240502479facb2e1626909bc7db))
+* Implement AntCard component ([013adc0](https://github.com/antify/ui-module/commit/013adc0ce625bec6db6c47f827cdd2b023d7013b))
+
+
+### Bug Fixes
+
+* add args and format with eslint ([c21b5c7](https://github.com/antify/ui-module/commit/c21b5c73482b547abd4d13ccaa3ed1617c0a3a4f))
+* add different sizes for AntSpinner ([5c4c416](https://github.com/antify/ui-module/commit/5c4c416bcf6a5bc336165b73df04f61e546d5d30))
+* add different sizes for AntSpinner ([8ae0fc9](https://github.com/antify/ui-module/commit/8ae0fc98bbcc02a6523f5e3a132be2e37456ef59))
+* add sizes for AntKeycap ([b7d6e33](https://github.com/antify/ui-module/commit/b7d6e33a261b95a4ba12806788e2b29f577cb94d))
+* add sizes for AntKeyCap ([b1f9a24](https://github.com/antify/ui-module/commit/b1f9a24fb4eca0894ec9a0522180b95b88461bdc))
+* add two colors for AntTag and edit AntTag.types ([bf46044](https://github.com/antify/ui-module/commit/bf46044191f1009effb1f6644dfa0919684d8e25))
+* adjust color type ([7e8b760](https://github.com/antify/ui-module/commit/7e8b7602a363d648599f198427ea8a496cc03128))
+* adjust color type and change hover color ([ba3dde2](https://github.com/antify/ui-module/commit/ba3dde201c3efce535fb6a55314d8a28403f8d94))
+* adjust focus and outline color ([b8c9238](https://github.com/antify/ui-module/commit/b8c92383ae0fd17aa0235f9edce40b2214c596be))
+* adjust padding ([17b6c30](https://github.com/antify/ui-module/commit/17b6c30ceee91c02156876f45fc36c394dd45b08))
+* adjust paddings and gaps ([8b24d79](https://github.com/antify/ui-module/commit/8b24d793a9a0cc988d56ec34949b6f0d5e80a1e5))
+* adjust paddings,gaps,button text size and icon size ([bfd59b5](https://github.com/antify/ui-module/commit/bfd59b5132f852b27afa837216f72643e5474204))
+* adjust text and bg color ([7997f65](https://github.com/antify/ui-module/commit/7997f654d9b1524540b7474b019786be18a3cde3))
+* adjust text color ([3ac1958](https://github.com/antify/ui-module/commit/3ac1958fa8ed4366091b245e79cca57965fb0cce))
+* adjust text color ([1f259bf](https://github.com/antify/ui-module/commit/1f259bf547439c344f8db5cfa262231e24fb29e4))
+* allow chromatic snapshots for AntTextinput ([a67780c](https://github.com/antify/ui-module/commit/a67780c8d6eed5b184d7e302a890543ed7fae399))
+* **AntUnitInput:** Make validator story work and remove validator usage in unit input ([95466b4](https://github.com/antify/ui-module/commit/95466b4552093561dfe3057eae454a6b286cb052))
+* change color type with input color type ([2255cd9](https://github.com/antify/ui-module/commit/2255cd9f4052d7427a44c08ff310b527c668fac1))
+* change default size and add 1px padding left and right ([810ee34](https://github.com/antify/ui-module/commit/810ee34539b35879402d7a2dc7d76cb988c0c8b9))
+* Change error props logic and refactor some code ([326f2e4](https://github.com/antify/ui-module/commit/326f2e429f5829f0e3a39e993efa0e8dfe394fcc))
+* Change implementation of icon right to slot usage ([6cacdbe](https://github.com/antify/ui-module/commit/6cacdbe04ffe90dd1570da1216961ba6c59538ab))
+* change outline color, adjust focus and value text color ([05720d7](https://github.com/antify/ui-module/commit/05720d792a08fa1208177ff817b92e7e396c6903))
+* change outline color, adjust focus color ([190a7b9](https://github.com/antify/ui-module/commit/190a7b935729acb3e86ee5c8b6d40070e7823bc1))
+* change text color ([abc3fae](https://github.com/antify/ui-module/commit/abc3fae1b1a8fa176784dc4dfea2d5df6e1d7f55))
+* change the color from the buttons ([0e88757](https://github.com/antify/ui-module/commit/0e887577d36e4680551415e5b7efe1e831101343))
+* change the direction of the animations ([c4b2c0c](https://github.com/antify/ui-module/commit/c4b2c0cd8c83a787f90bab8432ae01e98421caf8))
+* change the way of validation, adjust the summary story ([d5fef36](https://github.com/antify/ui-module/commit/d5fef364a5dad0d2e5b8117382a8a35f1c565e36))
+* fix code review findings ([f1ca097](https://github.com/antify/ui-module/commit/f1ca09788572ae3b417986a01a8f2cf31a33d409))
+* fix code review findings ([5ddb6f5](https://github.com/antify/ui-module/commit/5ddb6f5c58adb2d056766ecf0974c9e60d6b5f9f))
+* fix height of the input field, add clock icon for type time ([97cf038](https://github.com/antify/ui-module/commit/97cf038645dfd9797429cb86faeb31eb6576b499))
+* Fix requested change ([f788905](https://github.com/antify/ui-module/commit/f7889055e6909601b6239239b391b6c7a77c6f4a))
+* fix review changes ([d4e957a](https://github.com/antify/ui-module/commit/d4e957adb3dc0222dee0c7ec4c292d49908145a5))
+* fix right paddings of the AntBaseInput ([5dd4d65](https://github.com/antify/ui-module/commit/5dd4d65869267e82155da2ae5585a908b5c9e859))
+* fix the denied components from chromatic ([9325792](https://github.com/antify/ui-module/commit/93257928f9177c2b7332b0ed051cce5d238a1b75))
+* Fix wrong import ([f8a989a](https://github.com/antify/ui-module/commit/f8a989a3adfa1c4312ec5504bfa8bf9af22d0430))
+* Fix wrong import and lint stories ([22257ca](https://github.com/antify/ui-module/commit/22257caef64e273751694f78c82f02d7fc45991b))
+* Fix wrong import and lint stories ([4716230](https://github.com/antify/ui-module/commit/4716230948c1cca62d9d59a659422aed08ca91da))
+* format with eslint ([b380561](https://github.com/antify/ui-module/commit/b3805619f8378e901461f96a66469b4377e9a130))
+* format with eslint ([953a221](https://github.com/antify/ui-module/commit/953a221b710cc6301ec3659aa9002f7e5189c384))
+* format with eslint and adjust storybook container ([fa68d66](https://github.com/antify/ui-module/commit/fa68d66fe25c77d53eaf2e72966526a1896f0aae))
+* icon right is already implemented, adjust icon color ([74e404d](https://github.com/antify/ui-module/commit/74e404dbe8204a4a2b19b3ca816838f52ab9c5da))
+* implement icon for the title which is to the left of it and is able to turn on and off ([3ce9235](https://github.com/antify/ui-module/commit/3ce9235f2f1647e367cc3278a0926569f39ab5d7))
+* implement new way of validation, add storys ([050e2e7](https://github.com/antify/ui-module/commit/050e2e7420414333bd91144774633e43faa732dc))
+* remove gaps, adjust html elements ([61f8033](https://github.com/antify/ui-module/commit/61f80339f4d2e4ad9c5b74a031b5876c9f85d727))
+* remove type password from AntTextInput ([6925205](https://github.com/antify/ui-module/commit/692520567303456c493656dd58f4ea0a32f6633a))
+* return the correct type of Size to show the checkboxes in storybook correctly ([59b7cfb](https://github.com/antify/ui-module/commit/59b7cfb02873d982dd473fdb9b0bf342165963be))
+
 ## [1.6.0](https://github.com/antify/ui-module/compare/v1.5.1...v1.6.0) (2024-05-06)
 
 
