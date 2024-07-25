@@ -3,7 +3,7 @@ import {computed, reactive, ref} from 'vue';
 import {Size} from '../../../enums';
 import {useFieldValidator} from '@antify/validate';
 import {InputState} from '../../../enums';
-import {AntSwitcher} from '../index';
+import AntSwitcher from '../AntSwitcher.vue';
 import AntFormGroup from '../../forms/AntFormGroup.vue';
 import AntFormGroupLabel from '../../forms/AntFormGroupLabel.vue';
 
