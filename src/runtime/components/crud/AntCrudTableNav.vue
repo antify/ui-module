@@ -7,9 +7,9 @@
 import {useRouter, useRoute} from 'vue-router';
 import AntPagination from '../AntPagination.vue';
 import {computed, ref, watch} from 'vue';
-import AntSelect from '../form/AntSelect.vue';
+import AntSelect from '../inputs/AntSelect.vue';
 import AntSkeleton from '../AntSkeleton.vue';
-import {type SelectOption} from '../form/__types';
+import {type SelectOption} from '../inputs/__types';
 
 const emit = defineEmits(['changeItemsPerPage', 'changePage']);
 const props = withDefaults(

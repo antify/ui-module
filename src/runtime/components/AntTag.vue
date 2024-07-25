@@ -1,9 +1,8 @@
 <script lang="ts" setup>
 import {computed, onMounted} from 'vue';
-import {TagState} from '../types/AntTag.type';
 import {handleEnumValidation} from '../handler';
 import {faCircleXmark, type IconDefinition} from '@fortawesome/free-solid-svg-icons';
-import {AntTagSize} from './__types/AntTag.types';
+import {AntTagSize, TagState} from './__types/AntTag.types';
 import AntIcon from './AntIcon.vue';
 import {IconSize} from './__types/AntIcon.types';
 

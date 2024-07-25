@@ -52,7 +52,7 @@ const props = withDefaults(defineProps<{
 	tooltipDelay: 800
 });
 
-const hasAction = computed(() => (props.skeleton || props.readonly || props.disabled));
+const hasInputState = computed(() => props.skeleton || props.readonly || props.disabled);
 const groupedClassList = computed(() => ({
 	'rounded-tl-md rounded-bl-md rounded-tr-none rounded-br-none -mr-px': props.grouped === Grouped.left,
 	'rounded-none -mx-px': props.grouped === Grouped.center,
@@ -109,7 +109,7 @@ const classes = computed(() => {
 	return {
 		'transition-all inline-flex items-center justify-center relative font-medium': true,
 		'focus:z-10': true,
-		'active:shadow-[inset_0_4px_4px_rgba(0,0,0,0.25)]': !hasAction.value,
+		'active:shadow-[inset_0_4px_4px_rgba(0,0,0,0.25)]': !hasInputState.value,
 		'p-1 text-xs gap-1': props.size === Size.xs2,
 		'p-1.5 text-xs gap-1.5': props.size === Size.xs,
 		'p-1.5 text-sm gap-1.5': props.size === Size.sm,
@@ -125,9 +125,9 @@ const classes = computed(() => {
 		...groupedClassList.value,
 		[variants[props.state]]: true,
 		[notFilledVariants[props.state]]: !props.filled,
-		[notFilledHoverVariants[props.state]]: !props.filled && !hasAction.value,
+		[notFilledHoverVariants[props.state]]: !props.filled && !hasInputState.value,
 		[filledVariants[props.state]]: props.filled,
-		[filledHoverVariants[props.state]]: props.filled && !hasAction.value,
+		[filledHoverVariants[props.state]]: props.filled && !hasInputState.value,
 	};
 });
 const iconColor = computed(() => {
@@ -208,7 +208,7 @@ onMounted(() => {
           :type="type"
           :to="to"
           :disabled="disabled || undefined"
-          :tabindex="noFocus || hasAction ? '-1' : '0'"
+          :tabindex="noFocus || hasInputState ? '-1' : '0'"
           @click="() => !props.readonly ? $emit('click') : null"
           @blur="() => !props.readonly ? $emit('blur') : null"
         >

@@ -3,7 +3,7 @@ import {
   InputState
 } from '../enums/State.enum';
 import {
-  State as TabItemState
+  TabItemState as TabItemState
 } from '../components/tabs/__types/AntTabItem.types';
 import {Direction} from '../enums/Direction.enum';
 import {Grouped} from '../enums/Grouped.enum';
@@ -13,7 +13,7 @@ import {
   AntTableRowTypes,
   AntTableAlign,
   AntTableSortDirection
-} from '../components/table/__types/TableHeader.type';
+} from '../components/table/__types/TableHeader.types';
 
 export const useUi = () => {
   return {

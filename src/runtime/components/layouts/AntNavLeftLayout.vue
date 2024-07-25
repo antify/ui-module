@@ -2,12 +2,12 @@
 import {computed, useSlots} from 'vue';
 import AntNavbar from '../navbar/AntNavbar.vue';
 import type {RouteLocationRaw} from 'vue-router';
-import type {NavbarItem} from '../navbar/__types/NavbarItem';
+import type {NavbarItemTypes} from '../navbar/__types/NavbarItem.types';
 
 defineProps<{
-  navbarItems: NavbarItem[];
+  navbarItems: NavbarItemTypes[];
   logoRoute?: RouteLocationRaw;
-}>()
+}>();
 
 const hasLogoImageSlot = computed(() => useSlots()['logo-image'] || false);
 </script>

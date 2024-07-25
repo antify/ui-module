@@ -1,8 +1,8 @@
-import { type Meta, type StoryObj} from '@storybook/vue3';
+import {type Meta, type StoryObj} from '@storybook/vue3';
 import AntTabs from '../AntTabs.vue';
 import {ref} from 'vue';
 import {faUserCircle} from '@fortawesome/free-regular-svg-icons';
-import {State} from '../__types/AntTabItem.types';
+import {TabItemState} from '../__types/AntTabItem.types';
 
 const meta: Meta<typeof AntTabs> = {
   title: 'Components/Tabs',
@@ -87,12 +87,12 @@ export const DifferentStates: Story = {
       {
         id: '3',
         label: 'Third tab',
-        state: State.warning,
+        state: TabItemState.warning,
       },
       {
         id: '4',
         label: 'Fourth tab',
-        state: State.danger,
+        state: TabItemState.danger,
       },
     ]
   }

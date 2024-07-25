@@ -1,7 +1,7 @@
 import AntAccordion from '../AntAccordion.vue';
 import AntAccordionItem from '../AntAccordionItem.vue';
 import { type Meta, type StoryObj } from '@storybook/vue3';
-import { CollapseStrategy } from '../__types/Accordion.types';
+import { CollapseStrategy } from '../__types/AntAccordion.types';
 
 const meta: Meta<typeof AntAccordion> = {
   title: 'Components/Accordion',

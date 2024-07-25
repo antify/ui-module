@@ -1,12 +1,12 @@
 <script setup lang="ts">
-import type {NavbarItem} from './__types/NavbarItem';
+import type {NavbarItemTypes} from './__types/NavbarItem.types';
 import {computed, ref} from 'vue';
 import AntIcon from '../AntIcon.vue';
 import {faChevronDown, faChevronUp} from '@fortawesome/free-solid-svg-icons';
 import AntTransitionCollapseHeight from '../transitions/AntTransitionCollapseHeight.vue';
 
 const props = defineProps<{
-  navbarItem: NavbarItem
+  navbarItem: NavbarItemTypes
 }>();
 
 const itemClasses = computed(() => ({
