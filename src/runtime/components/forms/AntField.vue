@@ -41,12 +41,19 @@ const fontSize = computed(() => {
 
   return Size.sm;
 });
+const fieldClasses = computed(() => ({
+  'w-full': props.expanded,
+  'gap-2.5': props.size === Size.lg,
+  'gap-2': props.size === Size.md,
+  'gap-1.5': props.size === Size.sm || props.size === Size.xs,
+  'gap-1': props.size === Size.xs2,
+}));
 </script>
 
 <template>
   <div
-    class="flex flex-col items-start gap-1.5"
-    :class="{'w-full': expanded}"
+    class="flex flex-col items-start"
+    :class="fieldClasses"
   >
     <AntInputLabel
       :label="label"
