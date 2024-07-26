@@ -11,25 +11,27 @@ import {hasSlotContent} from '../../utils';
 
 defineEmits(['click', 'blur']);
 const props = withDefaults(
-	defineProps<{
-		iconLeft?: IconDefinition;
-		iconRight?: IconDefinition;
-		size?: Size;
-		disabled?: boolean;
-		grouped?: Grouped;
-		state?: State;
-		skeleton?: boolean;
-		expanded?: boolean;
-		filled?: boolean;
-		hasPermission?: boolean;
-		tooltipPosition?: Position;
-		tooltipState?: InputState;
-		tooltipDelay?: number;
-	}>(), {
-		state: State.primary,
-		hasPermission: true,
-		filled: true
-	}
+  defineProps<{
+    iconLeft?: IconDefinition;
+    iconRight?: IconDefinition;
+    size?: Size;
+    disabled?: boolean;
+    grouped?: Grouped;
+    state?: State;
+    skeleton?: boolean;
+    expanded?: boolean;
+    filled?: boolean;
+    hasPermission?: boolean;
+    tooltipPosition?: Position;
+    tooltipState?: InputState;
+    tooltipDelay?: number;
+    submit?: boolean;
+  }>(), {
+    state: State.primary,
+    hasPermission: true,
+    filled: true,
+    submit: false
+  }
 );
 const slots = useSlots();
 const hasTooltip = computed(() => !props.skeleton && !props.disabled && props.hasPermission && hasSlotContent(slots['tooltipContent']));
@@ -50,6 +52,7 @@ const hasPermissionTooltip = computed(() => !props.skeleton && !props.disabled &
     :tooltip-position="tooltipPosition"
     :tooltip-state="hasPermissionTooltip ? InputState.info : tooltipState"
     :tooltip-delay="hasPermissionTooltip ? 300 : tooltipDelay"
+    :submit="submit"
     data-e2e="action-button"
     @click="$emit('click')"
     @blur="$emit('blur')"

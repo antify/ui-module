@@ -5,17 +5,17 @@ import {faFloppyDisk} from '@fortawesome/free-solid-svg-icons';
 
 defineEmits(['click', 'blur']);
 withDefaults(defineProps<{
-	iconVariant?: boolean;
-	size?: Size;
-	disabled?: boolean;
-	grouped?: Grouped;
-	skeleton?: boolean;
-	expanded?: boolean;
-	canSave?: boolean;
-	tooltipPosition?: Position;
+  iconVariant?: boolean;
+  size?: Size;
+  disabled?: boolean;
+  grouped?: Grouped;
+  skeleton?: boolean;
+  expanded?: boolean;
+  canSave?: boolean;
+  tooltipPosition?: Position;
 }>(), {
-	iconVariant: false,
-	canSave: true
+  iconVariant: false,
+  canSave: true
 });
 </script>
 
@@ -29,6 +29,7 @@ withDefaults(defineProps<{
     :grouped="grouped"
     :skeleton="skeleton"
     :expanded="expanded"
+    :submit="true"
     :has-permission="canSave"
     :tooltip-position="tooltipPosition"
     data-e2e="save-button"

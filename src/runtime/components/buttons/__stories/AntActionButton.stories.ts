@@ -8,10 +8,10 @@ const meta: Meta<typeof AntActionButton> = {
   component: AntActionButton,
   parameters: {controls: {sort: 'requiredFirst'}},
   argTypes: {
-		state: {
-			control: {type: 'select'},
-			options: Object.values(State),
-		},
+    state: {
+      control: {type: 'select'},
+      options: Object.values(State),
+    },
     size: {
       control: {type: 'select'},
       options: Object.values(Size)
@@ -20,13 +20,16 @@ const meta: Meta<typeof AntActionButton> = {
       control: {type: 'select'},
       options: Object.values(_Grouped),
     },
-		tooltipPosition: {
+    tooltipPosition: {
       control: {type: 'select'},
       options: Object.values(Position),
     },
-		tooltipState: {
+    tooltipState: {
       control: {type: 'select'},
       options: Object.values(InputState),
+    },
+    submit: {
+      description: 'Change the button type to type="submit"',
     },
   },
 };
@@ -41,15 +44,16 @@ export const Docs: Story = {
     setup() {
       return {args};
     },
-    template: `<AntActionButton v-bind="args">
-			<template #default>Action Button</template>
-			<template #tooltipContent>This is an action button</template>
-			<template #invalidPermissionTooltipContent>You have no permission <br>to click this button</template>
-		</AntActionButton>`,
+    template: `
+      <AntActionButton v-bind="args">
+        <template #default>Action Button</template>
+        <template #tooltipContent>This is an action button</template>
+        <template #invalidPermissionTooltipContent>You have no permission <br>to click this button</template>
+      </AntActionButton>`,
   }),
   args: {
-		tooltipPosition: Position.right
-	},
+    tooltipPosition: Position.right
+  },
 };
 
 export const Disabled: Story = {
@@ -85,11 +89,11 @@ export const Expanded: Story = {
 };
 
 export const WithoutPermission: Story = {
-	render: Docs.render,
-	args: {
-		...Docs.args,
-		hasPermission: false,
-	},
+  render: Docs.render,
+  args: {
+    ...Docs.args,
+    hasPermission: false,
+  },
 };
 
 // TODO:: write summary
