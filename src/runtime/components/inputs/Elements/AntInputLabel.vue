@@ -15,13 +15,19 @@ const props = withDefaults(defineProps<{
   size: Size.md,
 });
 
-const classes = computed(() => ({
+const fontClasses = computed(() => ({
   'relative font-medium w-fit text-for-white-bg-font': true,
   'text-2xs': props.size === Size.xs2,
   'text-xs': props.size === Size.xs,
   'text-sm': props.size === Size.sm,
   'text-md': props.size === Size.md,
   'text-lg': props.size === Size.lg
+}));
+const gapSize = computed(() => ({
+  'gap-2.5': props.size === Size.lg,
+  'gap-2': props.size === Size.md,
+  'gap-1.5': props.size === Size.sm || props.size === Size.xs,
+  'gap-1': props.size === Size.xs2,
 }));
 
 onMounted(() => {
@@ -31,11 +37,12 @@ onMounted(() => {
 
 <template>
   <label
-    class="flex flex-col gap-1.5 w-full"
+    class="flex flex-col w-full"
+    :class="gapSize"
   >
     <span
       v-if="label"
-      :class="classes"
+      :class="fontClasses"
     >
       <span
         :class="{'invisible': skeleton}"

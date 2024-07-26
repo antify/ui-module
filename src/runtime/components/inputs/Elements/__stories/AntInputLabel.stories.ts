@@ -45,7 +45,7 @@ export const WithContent: Story = {
         setup() {
             return {args};
         },
-        template: '<div class="p-4"><AntInputLabel v-bind="args"><AntBaseInput value="Example"></AntBaseInput></AntInputLabel></div>',
+        template: '<div class="p-4"><AntInputLabel v-bind="args"><AntBaseInput value="Example" :size="args.size"></AntBaseInput></AntInputLabel></div>',
     }),
     args: {
         ...Docs.args,
