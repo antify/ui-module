@@ -21,7 +21,7 @@ withDefaults(defineProps<{
 
 <template>
   <AntActionButton
-    :filled="false"
+    :filled="true"
     :state="State.primary"
     :size="size"
     :disabled="disabled"
