@@ -3,7 +3,7 @@ import AntSwitch from '../AntSwitch.vue';
 import {computed, reactive, ref} from 'vue';
 import {InputState} from '../../../enums';
 import {useFieldValidator} from '@antify/validate';
-import {AntSwitchSize} from '../__types/AntSwitch.types';
+import {Size} from '../../../enums/Size.enum';
 import AntFormGroup from '../../forms/AntFormGroup.vue';
 import AntFormGroupLabel from '../../forms/AntFormGroupLabel.vue';
 
@@ -17,7 +17,7 @@ const meta: Meta<typeof AntSwitch> = {
     },
     size: {
       control: {type: 'select'},
-      options: Object.values(AntSwitchSize),
+      options: Object.values(Size),
     },
   }
 };
@@ -89,7 +89,7 @@ export const Summary: Story = {
       const value = ref(true);
       const notValue = ref(false);
 
-      return {args, value, notValue, InputState, AntSwitchSize};
+      return {args, value, notValue, InputState, Size};
     },
     template: `
       <AntFormGroup>
@@ -174,7 +174,7 @@ export const Summary: Story = {
           <AntSwitch
             v-model="notValue"
             class="w-28"
-            :size="AntSwitchSize.md"
+            :size="Size.lg"
             label="Label"
             description="Lorem ipsum dolor sit amet"
           >Content
@@ -182,7 +182,7 @@ export const Summary: Story = {
           <AntSwitch
             v-model="value"
             class="w-28"
-            :size="AntSwitchSize.md"
+            :size="Size.lg"
             label="Label"
             description="Lorem ipsum dolor sit amet"
           >Content
@@ -190,7 +190,7 @@ export const Summary: Story = {
           <AntSwitch
             v-model="notValue"
             class="w-28"
-            :size="AntSwitchSize.sm"
+            :size="Size.md"
             label="Label"
             description="Lorem ipsum dolor sit amet"
           >Content
@@ -198,7 +198,55 @@ export const Summary: Story = {
           <AntSwitch
             v-model="value"
             class="w-28"
-            :size="AntSwitchSize.sm"
+            :size="Size.md"
+            label="Label"
+            description="Lorem ipsum dolor sit amet"
+          >Content
+          </AntSwitch>
+          <AntSwitch
+            v-model="notValue"
+            class="w-28"
+            :size="Size.sm"
+            label="Label"
+            description="Lorem ipsum dolor sit amet"
+          >Content
+          </AntSwitch>
+          <AntSwitch
+            v-model="value"
+            class="w-28"
+            :size="Size.sm"
+            label="Label"
+            description="Lorem ipsum dolor sit amet"
+          >Content
+          </AntSwitch>
+          <AntSwitch
+            v-model="notValue"
+            class="w-28"
+            :size="Size.xs"
+            label="Label"
+            description="Lorem ipsum dolor sit amet"
+          >Content
+          </AntSwitch>
+          <AntSwitch
+            v-model="value"
+            class="w-28"
+            :size="Size.xs"
+            label="Label"
+            description="Lorem ipsum dolor sit amet"
+          >Content
+          </AntSwitch>
+          <AntSwitch
+            v-model="notValue"
+            class="w-28"
+            :size="Size.xs2"
+            label="Label"
+            description="Lorem ipsum dolor sit amet"
+          >Content
+          </AntSwitch>
+          <AntSwitch
+            v-model="value"
+            class="w-28"
+            :size="Size.xs2"
             label="Label"
             description="Lorem ipsum dolor sit amet"
           >Content
