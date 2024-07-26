@@ -48,6 +48,12 @@ const fieldClasses = computed(() => ({
   'gap-1.5': props.size === Size.sm || props.size === Size.xs,
   'gap-1': props.size === Size.xs2,
 }));
+const descriptionClasses = computed(() => ({
+  'gap-2.5': props.size === Size.lg,
+  'gap-2': props.size === Size.md,
+  'gap-1.5': props.size === Size.sm || props.size === Size.xs,
+  'gap-1': props.size === Size.xs2,
+}));
 </script>
 
 <template>
@@ -70,6 +76,7 @@ const fieldClasses = computed(() => ({
     <div
       v-if="description || messages.length > 0 || (limiterMaxValue !== undefined && limiterValue !== undefined)"
       class="flex justify-between w-full"
+      :class="descriptionClasses"
     >
       <AntInputDescription
         v-if="description || messages.length > 0"
