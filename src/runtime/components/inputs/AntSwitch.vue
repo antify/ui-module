@@ -3,7 +3,6 @@ import AntField from '../forms/AntField.vue';
 import {computed, onMounted, watch} from 'vue';
 import AntSkeleton from '../AntSkeleton.vue';
 import {InputState, Size} from '../../enums';
-import {AntSwitchSize} from './__types/AntSwitch.types';
 import {hasSlotContent} from '../../utils';
 
 const emit = defineEmits(['update:modelValue', 'input', 'blur', 'validate']);
@@ -14,11 +13,11 @@ const props = withDefaults(defineProps<{
   skeleton?: boolean;
   readonly?: boolean;
   disabled?: boolean;
-  size?: AntSwitchSize;
+  size?: Size;
   state?: InputState
   messages?: string[]
 }>(), {
-  size: AntSwitchSize.md,
+  size: Size.md,
   state: InputState.base,
   messages: () => []
 });
@@ -35,10 +34,10 @@ const buttonClasses = computed(() => {
     'relative inline-flex flex-shrink-0': true,
     'focus:outline-none': true,
     'rounded-full ease-in-out duration-200': true,
-    'focus-within:ring-2': !hasInputState.value && props.size === AntSwitchSize.sm,
-    'focus-within:ring-4': !hasInputState.value && props.size === AntSwitchSize.md,
-    'h-4 w-[30px]': props.size === AntSwitchSize.sm,
-    'h-5 w-9': props.size === AntSwitchSize.md,
+    'focus-within:ring-4': !hasInputState.value && (props.size === Size.lg || props.size === Size.md),
+    'focus-within:ring-2': !hasInputState.value && (props.size === Size.sm || props.size === Size.xs || props.size === Size.xs2),
+    'h-5 w-9': props.size === Size.lg || props.size === Size.md || props.size === Size.sm,
+    'h-4 w-[30px]': props.size === Size.xs || props.size === Size.xs2,
     'bg-neutral-300': !_value.value,
     'invisible': props.skeleton,
     // Disabled
@@ -67,27 +66,40 @@ const buttonClasses = computed(() => {
 });
 const ballClasses = computed(() => ({
   'pointer-events-none inline-block rounded-full bg-neutral-100 shadow transform ring-0 transition ease-in-out duration-200': true,
-  'h-4 w-4 translate-y-0.5': props.size === AntSwitchSize.md,
-  'h-3.5 w-3.5  translate-y-[1px]': props.size === AntSwitchSize.sm,
-  'translate-x-[1.125rem]': _value.value && props.size === AntSwitchSize.md,
-  'translate-x-0.5': !_value.value && props.size === AntSwitchSize.md,
-  'translate-x-[.925rem]': _value.value && props.size === AntSwitchSize.sm,
-  'translate-x-[1px]': !_value.value && props.size === AntSwitchSize.sm,
+  'h-4 w-4 translate-y-0.5': props.size === Size.lg || props.size === Size.md || props.size === Size.sm,
+  'translate-x-[1.125rem]': _value.value && (props.size === Size.lg || props.size === Size.md || props.size === Size.sm),
+  'translate-x-0.5': !_value.value && (props.size === Size.lg || props.size === Size.md || props.size === Size.sm),
+  'h-3.5 w-3.5  translate-y-[1px]': props.size === Size.xs || props.size === Size.xs2,
+  'translate-x-[.925rem]': _value.value && (props.size === Size.xs || props.size === Size.xs2),
+  'translate-x-[1px]': !_value.value && (props.size === Size.xs || props.size === Size.xs2),
   'invisible': props.skeleton
 }));
 const valueClasses = computed(() => ({
   'text-for-white-bg-font': true,
-  'text-xs': props.size === AntSwitchSize.sm,
-  'text-sm': props.size === AntSwitchSize.md,
+  'text-sm': props.size === Size.lg || props.size === Size.md || props.size === Size.sm,
+  'text-xs': props.size === Size.xs || props.size === Size.xs2,
   'opacity-50 cursor-not-allowed': props.disabled,
   'cursor-pointer': !hasInputState.value,
 }));
 const fieldSize = computed(() => {
-  if (props.size === AntSwitchSize.md) {
+  if (props.size === Size.lg) {
+    return Size.lg;
+  }
+
+  if (props.size === Size.md) {
+    return Size.md;
+  }
+
+  if (props.size === Size.sm) {
     return Size.sm;
-  } else {
+  }
+
+  if (props.size === Size.xs) {
     return Size.xs;
   }
+
+  return Size.xs2;
+
 });
 
 /**
@@ -162,7 +174,7 @@ function onBlur(e: FocusEvent) {
       <div
         v-if="hasSlotContent($slots['default'])"
         class="relative flex items-center"
-        :class="props.size === AntSwitchSize.md ? 'h-5' : 'h-4'"
+        :class="props.size === Size.lg || props.size === Size.md ||props.size === Size.sm ? 'h-5' : 'h-4'"
       >
         <span :class="valueClasses">
           <slot />
