@@ -2,6 +2,24 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.7.2](https://github.com/antify/ui-module/compare/v1.7.1...v1.7.2) (2024-07-26)
+
+
+### Bug Fixes
+
+* Add gap sizes for the description and limiter ([#104](https://github.com/antify/ui-module/issues/104)) ([550f170](https://github.com/antify/ui-module/commit/550f170718c6826df9fec8ec4cc328b7adba84e7))
+* Add missing gap sizes ([#101](https://github.com/antify/ui-module/issues/101)) ([b242db4](https://github.com/antify/ui-module/commit/b242db4ac2d5a17786df844fe90bb02f726a4253))
+* Add missing gap sizes ([#99](https://github.com/antify/ui-module/issues/99)) ([66f8d49](https://github.com/antify/ui-module/commit/66f8d49d83f4fdaba5202b3f090b9de877afcd91))
+* Add missing sizes ([#92](https://github.com/antify/ui-module/issues/92)) ([aeb2637](https://github.com/antify/ui-module/commit/aeb26373071cdaed8825e6a6846d0b112125c07f))
+* Add missing sizes in summary ([#92](https://github.com/antify/ui-module/issues/92)) ([9e8d4f1](https://github.com/antify/ui-module/commit/9e8d4f169e3cc434d2af277851245f4c92aff06e))
+* Adjust template in "WithContent" story ([#101](https://github.com/antify/ui-module/issues/101)) ([c73c851](https://github.com/antify/ui-module/commit/c73c85196dbdb247e834d4ee73f471b0ae60bc1d))
+* **AntCrudDetailActions:** Use correct UI for back button ([b46a164](https://github.com/antify/ui-module/commit/b46a1645dd4ac07d28dec40fdea1d8fc240356ee))
+* **AntCrudDetailNav:** Add skeleton for delete button and prop to hide it ([#91](https://github.com/antify/ui-module/issues/91)) ([3b4ddf5](https://github.com/antify/ui-module/commit/3b4ddf5f9346bb86b4f9bb420a8238fcc4d0e0ef))
+* **AntTooltip:** buggy tooltip timeout behavior on fast hover multiple tooltips ([#53](https://github.com/antify/ui-module/issues/53)) ([5b69b77](https://github.com/antify/ui-module/commit/5b69b770799ae56f8ad542e82edf871d8f99b178))
+* Remove AntSwitchTypes ([#92](https://github.com/antify/ui-module/issues/92)) ([dc057db](https://github.com/antify/ui-module/commit/dc057dba362f0e4d95960717bc12d3c2727f6714))
+* Set type submit for submit buttons ([#40](https://github.com/antify/ui-module/issues/40)) ([6b13d2c](https://github.com/antify/ui-module/commit/6b13d2ceafd7b6349335b0490673b79cc1a0042e))
+* Use correct UI for Save and New button ([16d98b9](https://github.com/antify/ui-module/commit/16d98b95db6a9428ea3a2f96e4235c06a28a4c13))
+
 ### [1.7.1](https://github.com/antify/ui-module/compare/v1.7.0...v1.7.1) (2024-07-25)
 
 ## [1.7.0](https://github.com/antify/ui-module/compare/v1.6.0...v1.7.0) (2024-07-25)
