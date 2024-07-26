@@ -25,7 +25,7 @@ withDefaults(defineProps<{
       <slot name="buttons-left">
         <AntButton
           :outlined="false"
-          :filled="true"
+          :filled="false"
           :icon-left="faAngleLeft"
           :disabled="disabled"
           @click="$emit('back')"
