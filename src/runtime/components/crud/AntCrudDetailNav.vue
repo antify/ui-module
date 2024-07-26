@@ -13,9 +13,14 @@ withDefaults(defineProps<{
 	deleteButtonDisabled?: boolean
 	getEntityName: () => string
 	canDelete?: boolean
+  showDeleteButton?: boolean
+  skeleton?: boolean
 }>(), {
+  tabItems: () => [],
 	deleteButtonDisabled: false,
-	canDelete: true
+	canDelete: true,
+  showDeleteButton: true,
+  skeleton: false
 });
 
 const dialogOpen = ref(false);
@@ -37,7 +42,9 @@ const dialogOpen = ref(false);
         <slot name="before-delete-button" />
 
         <AntDeleteButton
+          v-if="showDeleteButton"
           :disabled="deleteButtonDisabled || !canDelete"
+          :skeleton="skeleton"
           filled
           :can-delete="canDelete"
           :invalid-permission-tooltip-position="Position.left"
