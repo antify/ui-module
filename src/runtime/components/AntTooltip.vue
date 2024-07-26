@@ -6,104 +6,110 @@ import {classesToObjectSyntax} from '../utils';
 import {hasSlotContent} from '../utils';
 
 const props = withDefaults(defineProps<{
-	position?: Position
-	tooltipClasses?: string | Record<string, boolean>
-	state?: InputState
-	expanded?: boolean
-	delay?: number
+  position?: Position
+  tooltipClasses?: string | Record<string, boolean>
+  state?: InputState
+  expanded?: boolean
+  delay?: number
 }>(), {
-	position: Position.left,
-	tooltipClasses: '',
-	state: InputState.base,
-	expanded: false,
-	delay: 800
+  position: Position.left,
+  tooltipClasses: '',
+  state: InputState.base,
+  expanded: false,
+  delay: 800
 });
 const visible = ref(false);
 const _tooltipClasses = computed(() => ({
-	'absolute w-max inline-flex': true,
-	// Position
-	'bottom-full pb-3.5': props.position === Position.top,
-	'top-full pt-3.5': props.position === Position.bottom,
-	'right-full pr-3.5': props.position === Position.left,
-	'left-full pl-3.5': props.position === Position.right,
-	...classesToObjectSyntax(props.tooltipClasses)
+  'absolute w-max inline-flex': true,
+  // Position
+  'bottom-full pb-3.5': props.position === Position.top,
+  'top-full pt-3.5': props.position === Position.bottom,
+  'right-full pr-3.5': props.position === Position.left,
+  'left-full pl-3.5': props.position === Position.right,
+  ...classesToObjectSyntax(props.tooltipClasses)
 }));
 const classes = computed(() => ({
-	'z-10 absolute flex': true,
-	'top-0 left-0 right-0 -m-[2px] justify-center': props.position === Position.bottom,
-	'bottom-0 left-0 right-0 -m-[2px] justify-center': props.position === Position.top,
-	'top-0 left-0 bottom-0 -ml-[2.2px] items-center': props.position === Position.right,
-	'top-0 right-0 bottom-0 -mr-[2.2px] items-center': props.position === Position.left,
+  'z-10 absolute flex': true,
+  'top-0 left-0 right-0 -m-[2px] justify-center': props.position === Position.bottom,
+  'bottom-0 left-0 right-0 -m-[2px] justify-center': props.position === Position.top,
+  'top-0 left-0 bottom-0 -ml-[2.2px] items-center': props.position === Position.right,
+  'top-0 right-0 bottom-0 -mr-[2.2px] items-center': props.position === Position.left,
 }));
 const itemContainerClasses = computed(() => ({
-	'relative flex items-center': true,
-	'justify-center': props.position === Position.bottom,
-	'justify-center rotate-180': props.position === Position.top,
-	'justify-center -rotate-90': props.position === Position.right,
-	'justify-center rotate-90': props.position === Position.left,
+  'relative flex items-center': true,
+  'justify-center': props.position === Position.bottom,
+  'justify-center rotate-180': props.position === Position.top,
+  'justify-center -rotate-90': props.position === Position.right,
+  'justify-center rotate-90': props.position === Position.left,
 }));
 const contentClasses = computed(() => {
-	const variants: Record<InputState, string> = {
-		[InputState.base]: 'text-for-white-bg-font bg-white border-neutral-300',
-		[InputState.danger]: 'text-danger-500-font bg-danger-500 border-danger-500',
-		[InputState.info]: 'text-info-500-font bg-info-500 border-info-500',
-		[InputState.success]: 'text-success-500-font bg-success-500 border-success-500',
-		[InputState.warning]: 'text-warning-500-font bg-warning-500 border-warning-500',
-	};
+  const variants: Record<InputState, string> = {
+    [InputState.base]: 'text-for-white-bg-font bg-white border-neutral-300',
+    [InputState.danger]: 'text-danger-500-font bg-danger-500 border-danger-500',
+    [InputState.info]: 'text-info-500-font bg-info-500 border-info-500',
+    [InputState.success]: 'text-success-500-font bg-success-500 border-success-500',
+    [InputState.warning]: 'text-warning-500-font bg-warning-500 border-warning-500',
+  };
 
-	return {[variants[props.state]]: true};
+  return {[variants[props.state]]: true};
 });
 const svgPathClasses = computed(() => {
-	const variants: Record<InputState, string> = {
-		[InputState.base]: 'fill-white stroke-white',
-		[InputState.danger]: 'fill-danger-500 stroke-danger-500',
-		[InputState.info]: 'fill-info-500 stroke-info-500',
-		[InputState.success]: 'fill-success-500 stroke-success-500',
-		[InputState.warning]: 'fill-warning-500 stroke-warning-500',
-	};
+  const variants: Record<InputState, string> = {
+    [InputState.base]: 'fill-white stroke-white',
+    [InputState.danger]: 'fill-danger-500 stroke-danger-500',
+    [InputState.info]: 'fill-info-500 stroke-info-500',
+    [InputState.success]: 'fill-success-500 stroke-success-500',
+    [InputState.warning]: 'fill-warning-500 stroke-warning-500',
+  };
 
-	return {[variants[props.state]]: true};
+  return {[variants[props.state]]: true};
 });
 const arrowSvgPathClasses = computed(() => {
-	const variants: Record<InputState, string> = {
-		[InputState.base]: 'stroke-neutral-300',
-		[InputState.danger]: 'stroke-danger-500',
-		[InputState.info]: 'stroke-info-500',
-		[InputState.success]: 'stroke-success-500',
-		[InputState.warning]: 'stroke-warning-500',
-	};
+  const variants: Record<InputState, string> = {
+    [InputState.base]: 'stroke-neutral-300',
+    [InputState.danger]: 'stroke-danger-500',
+    [InputState.info]: 'stroke-info-500',
+    [InputState.success]: 'stroke-success-500',
+    [InputState.warning]: 'stroke-warning-500',
+  };
 
-	return {[variants[props.state]]: true};
+  return {[variants[props.state]]: true};
 });
 const timeout = ref<number | undefined>();
 const clickLock = ref(false);
 const uuid = ref(getCurrentInstance()?.uid);
 
 onMounted(() => {
-	handleEnumValidation(props.position, Position, 'Position');
-	handleEnumValidation(props.state, InputState, 'state');
+  handleEnumValidation(props.position, Position, 'position');
+  handleEnumValidation(props.state, InputState, 'state');
 });
 
 function onMouseOver() {
-	if (visible.value || clickLock.value) {
-		return;
-	}
+  if (visible.value || clickLock.value) {
+    return;
+  }
 
-	timeout.value = setTimeout(() => visible.value = true, props.delay) as unknown as number;
+  /**
+   * To prevent buggy behavior when hovering over multiple tooltips in quick succession,
+   * we clear the timeout before setting a new one.
+   */
+  clearTimeout(timeout.value);
+
+  timeout.value = setTimeout(() => visible.value = true, props.delay) as unknown as number;
 }
 
 function onMouseLeave() {
-	clearTimeout(timeout.value);
+  clearTimeout(timeout.value);
 
-	visible.value = false;
-	clickLock.value = false;
+  visible.value = false;
+  clickLock.value = false;
 }
 
 function onClick() {
-	clearTimeout(timeout.value);
+  clearTimeout(timeout.value);
 
-	visible.value = false;
-	clickLock.value = true;
+  visible.value = false;
+  clickLock.value = true;
 }
 </script>
 

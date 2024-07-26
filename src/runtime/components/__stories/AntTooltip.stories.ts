@@ -123,6 +123,35 @@ export const WithoutContent: Story = {
 	args: {},
 };
 
+/**
+ * Test multiple tooltips in one page to make sure that
+ * each tooltips delay does not bug with others.
+ */
+export const Multiple: Story = {
+	render: (args) => ({
+		components: {AntTooltip},
+		setup() {
+			return {args};
+		},
+		template: `
+      <div class="p-12 flex flex-col justify-center items-center gap-1">
+        <div class="flex gap-1">
+          <div
+            v-for="row in 5"
+            class="flex flex-col gap-1"
+          >
+            <AntTooltip v-for="item of 5">
+              <div class="box">Hover me</div>
+
+              <template #content>Lorem</template>
+            </AntTooltip>
+          </div>
+        </div>
+      </div>
+		`,
+	})
+};
+
 export const Summary: Story = {
 	render: (args) => ({
 		components: {
