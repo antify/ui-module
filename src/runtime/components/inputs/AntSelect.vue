@@ -39,6 +39,7 @@ const props = withDefaults(
       size?: Size;
       state?: InputState;
       disabled?: boolean;
+      readonly?: boolean;
       skeleton?: boolean;
       nullable?: boolean;
       grouped?: Grouped;
@@ -51,6 +52,7 @@ const props = withDefaults(
       grouped: Grouped.none,
       size: Size.md,
       disabled: false,
+      readonly: false,
       skeleton: false,
       nullable: false,
       expanded: true,
@@ -65,6 +67,7 @@ const _modelValue = computed({
     emit('update:modelValue', val);
   },
 });
+const hasInputState = computed(() => props.skeleton || props.readonly || props.disabled);
 const valueLabel = computed(() => props.options.find(option => option.value === _modelValue.value)?.label || null);
 const inputClasses = computed(() => {
   const variants: Record<InputState, string> = {
@@ -84,8 +87,13 @@ const inputClasses = computed(() => {
     // Disabled
     'disabled:opacity-50 disabled:cursor-not-allowed': true,
     // Size
-    'focus:ring-2 p-1.5 gap-1.5 text-sm': props.size === Size.sm,
-    'focus:ring-4 p-2 gap-2 text-sm': props.size === Size.md,
+    'p-1 text-xs': props.size === Size.xs2,
+    'p-1.5 text-xs': props.size === Size.xs,
+    'p-1.5 text-sm': props.size === Size.sm,
+    'p-2 text-sm': props.size === Size.md,
+    'p-2.5 text-sm': props.size === Size.lg,
+    'focus:ring-2': !hasInputState.value && (props.size === Size.sm || props.size === Size.xs || props.size === Size.xs2),
+    'focus:ring-4': !hasInputState.value && (props.size === Size.lg || props.size === Size.md),
     // Grouped
     'rounded-tl-md rounded-bl-md rounded-tr-none rounded-br-none': props.grouped === Grouped.left,
     'rounded-tl-none rounded-bl-none rounded-tr-md rounded-br-md': props.grouped === Grouped.right,
@@ -184,7 +192,7 @@ function onClickOutside() {
 function onClickSelectInput(e: MouseEvent) {
   e.preventDefault();
 
-  if (props.disabled) {
+  if (props.disabled || props.readonly) {
     return;
   }
 
@@ -221,7 +229,7 @@ function onClickRemoveButton() {
       <div
         v-on-click-outside="onClickOutside"
         class="relative w-full"
-        :class="{'cursor-pointer': !skeleton}"
+        :class="{'cursor-pointer': !skeleton && !readonly}"
       >
         <AntSkeleton
           v-if="skeleton"
@@ -240,7 +248,7 @@ function onClickRemoveButton() {
         <div
           ref="inputRef"
           :class="inputClasses"
-          :tabindex="disabled ? undefined : 0"
+          :tabindex="disabled || readonly ? -1 : 0"
           v-bind="$attrs"
           @mousedown="onClickSelectInput"
           @click="inputRef?.focus()"

@@ -25,12 +25,14 @@ const props = withDefaults(defineProps<{
   size?: Size;
   state?: InputState;
   disabled?: boolean;
+  readonly?: boolean;
   skeleton?: boolean;
   wrapperClass?: string | Record<string, boolean>;
   messages?: string[];
 }>(), {
   state: InputState.base,
   disabled: false,
+  readonly: false,
   skeleton: false,
   size: Size.md,
   limiter: false,
@@ -70,6 +72,7 @@ onMounted(() => {
         :max="max"
         :skeleton="skeleton"
         :disabled="disabled"
+        :readonly="readonly"
         :placeholder="placeholder || label"
         :show-icon="false"
         v-bind="$attrs"

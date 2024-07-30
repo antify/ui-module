@@ -15,12 +15,14 @@ const props = withDefaults(defineProps<{
   description?: string;
   size?: Size;
   disabled?: boolean;
+  readonly?: boolean;
   skeleton?: boolean;
   inputTimeout?: number;
   query?: string;
 }>(), {
   disabled: false,
   skeleton: false,
+  readonly: false,
   size: Size.md,
   inputTimeout: 300,
   placeholder: 'Search'
@@ -63,6 +65,7 @@ onMounted(() => handleEnumValidation(props.size, Size, 'size'));
       :size="size"
       :skeleton="skeleton"
       :disabled="disabled"
+      :readonly="readonly"
       :placeholder="placeholder"
       :icon-left="faSearch"
       nullable

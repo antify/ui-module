@@ -21,6 +21,7 @@ const props = withDefaults(defineProps<{
   size?: Size;
   state?: InputState;
   disabled?: boolean;
+  readonly?: boolean;
   skeleton?: boolean;
   steps?: number;
   min?: number;
@@ -31,6 +32,7 @@ const props = withDefaults(defineProps<{
 }>(), {
   state: InputState.base,
   disabled: false,
+  readonly: false,
   skeleton: false,
   size: Size.md,
   steps: 1,
@@ -130,6 +132,7 @@ function onButtonBlur() {
         :min="min"
         :max="max"
         :disabled="disabled"
+        :readonly="readonly"
         :placeholder="placeholder || label"
         :show-icon="false"
         v-bind="$attrs"

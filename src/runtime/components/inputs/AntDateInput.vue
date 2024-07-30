@@ -22,12 +22,14 @@ const props = withDefaults(defineProps<{
   type?: AntDateInputTypes;
   state?: InputState;
   disabled?: boolean;
+  readonly?: boolean;
   skeleton?: boolean;
   messages?: string[];
 }>(), {
   state: InputState.base,
   type: AntDateInputTypes.date,
   disabled: false,
+  readonly: false,
   skeleton: false,
   size: Size.md,
   messages: () => []
@@ -58,7 +60,11 @@ onMounted(() => {
 });
 
 function onClickCalendar() {
-  inputRef.value?.showPicker();
+  if (!props.disabled && !props.readonly) {
+    inputRef.value?.showPicker();
+  } else {
+    return;
+  }
 }
 </script>
 
@@ -79,6 +85,7 @@ function onClickCalendar() {
       :size="size"
       :skeleton="skeleton"
       :disabled="disabled"
+      :readonly="readonly"
       :show-icon="false"
       v-bind="$attrs"
       @validate="val => $emit('validate', val)"
