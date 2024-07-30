@@ -10,7 +10,7 @@ defineEmits(['sortClick']);
 const props = withDefaults(
   defineProps<{
     sortDirection?: AntTableSortDirection
-    size: AntTableSize
+    size?: AntTableSize
   }>(), {
     sortDirection: AntTableSortDirection.neutral,
     size: AntTableSize.md

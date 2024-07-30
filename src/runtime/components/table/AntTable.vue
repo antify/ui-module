@@ -27,7 +27,7 @@ const props = withDefaults(
     loading?: boolean;
     selectableRows?: boolean;
     showLightVersion?: boolean;
-    size: AntTableSize
+    size?: AntTableSize
   }>(), {
     rowKey: 'id',
     loading: false,

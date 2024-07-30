@@ -5,10 +5,14 @@ import {computed, ref, type Ref} from 'vue';
 import AntTableSortButton from './AntTableSortButton.vue';
 
 defineEmits([ 'sort' ]);
-const props = defineProps<{
-  header: TableHeader
-	size: AntTableSize
-}>();
+const props = withDefaults(
+  defineProps<{
+    header: TableHeader
+    size?: AntTableSize
+  }>(), {
+    size: AntTableSize.md
+  }
+);
 
 const headerClasses = computed(() => ({
     [props.header.headerClassList || '']: true,
