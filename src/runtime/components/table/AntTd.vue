@@ -10,7 +10,7 @@ const props =
       element: Record<string, unknown>;
       header: TableHeader;
       align?: AntTableAlign
-      size: AntTableSize
+      size?: AntTableSize
     }>(), {
       align: AntTableAlign.left,
       size: AntTableSize.md
