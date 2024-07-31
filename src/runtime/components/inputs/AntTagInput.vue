@@ -253,7 +253,7 @@ onMounted(() => {
 <template>
   <AntField
     :label="label"
-    :size="Size.sm"
+    :size="size as unknown as Size"
     :skeleton="_skeleton"
     :description="description"
     :state="state"
