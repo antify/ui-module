@@ -2,7 +2,7 @@
 import AntRadio from './AntRadio.vue';
 import {useVModel} from '@vueuse/core';
 import {AntField} from './Elements';
-import {type AntRadioTypes, AntRadioSize} from './__types/AntRadio.types';
+import {type AntRadioTypes} from './__types/AntRadio.types';
 import {InputState, Size} from '../../enums';
 import {computed, onMounted, ref, watch} from 'vue';
 import {Direction} from '../../enums/Direction.enum';
@@ -19,7 +19,7 @@ const props = withDefaults(
     description?: string;
     direction?: Direction;
     state?: InputState;
-    size?: AntRadioSize;
+    size?: Size;
     skeleton?: boolean;
     disabled?: boolean;
     readonly?: boolean;
@@ -27,7 +27,7 @@ const props = withDefaults(
   }>(), {
     direction: Direction.column,
     state: InputState.base,
-    size: AntRadioSize.md,
+    size: Size.md,
     skeleton: false,
     disabled: false,
     readonly: false,
@@ -35,17 +35,28 @@ const props = withDefaults(
   });
 const _modelValue = useVModel(props, 'modelValue', emit);
 const containerClasses = computed(() => ({
-  'flex gap-2.5 justify-start': true,
+  'flex justify-start': true,
   'flex-row': props.direction === Direction.row,
   'flex-col': props.direction === Direction.column,
+  'gap-2.5': props.size === Size.lg,
+  'gap-2': props.size === Size.md,
+  'gap-1.5': props.size === Size.sm || props.size === Size.xs,
+  'gap-1': props.size === Size.xs2,
 }));
 const containerRef = ref<null | HTMLElement>(null);
 const fieldSize = computed(() => {
-  if (props.size === AntRadioSize.md) {
-    return Size.sm;
+  switch (props.size) {
+    case Size.lg:
+      return Size.lg;
+    case Size.md:
+      return Size.md;
+    case Size.sm:
+      return Size.sm;
+    case Size.xs:
+      return Size.xs;
+    default:
+      return Size.xs2;
   }
-
-  return Size.xs;
 });
 
 watch(_modelValue, (val) => {
