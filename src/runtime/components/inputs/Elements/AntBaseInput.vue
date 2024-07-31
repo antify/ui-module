@@ -205,9 +205,10 @@ function onClickClearIcon() {
       class="absolute h-full flex items-center justify-center z-20"
       :class="{
         'w-6': size === Size.xs2,
-        'w-7': size === Size.xs || size === Size.sm,
-        'w-8': size === Size.md,
-        'w-9': size === Size.lg,
+        'w-7': size === Size.sm,
+        'w-8': size === Size.xs,
+        'w-9': size === Size.md,
+        'w-10': size === Size.lg,
         'opacity-50': disabled,
       }"
     >
@@ -234,7 +235,7 @@ function onClickClearIcon() {
     <div
       v-if="(nullable && _modelValue !== null && _modelValue !== '') || (showIcon && icon) || hasSlotContent(slot['icon-right'])"
       class="absolute h-full flex items-center justify-center right-0 top-0 transition-all z-20"
-      :class="{'w-6': size === Size.xs2, 'w-7': size === Size.xs || size === Size.sm, 'w-8': size === Size.md, 'w-9': size === Size.lg}"
+      :class="{'w-6': size === Size.xs2, 'w-7': size === Size.xs2, 'w-8': size === Size.sm, 'w-9': size === Size.md, 'w-10': size === Size.lg}"
     >
       <slot name="icon-right">
         <AntIcon
