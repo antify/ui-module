@@ -67,7 +67,7 @@ const inputClasses = computed(() => {
     'h-5 w-5': props.size === Size.lg || props.size === Size.md || props.size === Size.sm,
     'h-4 w-4': props.size === Size.xs || props.size === Size.xs2,
     'cursor-not-allowed opacity-50': props.disabled,
-    [focusColorVariant[props.state]]: hasInputState.value,
+    [focusColorVariant[props.state]]: !hasInputState.value,
     [activeColorVariant[props.state]]: delayedValue.value,
     [inactiveColorVariant[props.state]]: !_modelValue.value,
   };
