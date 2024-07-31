@@ -283,7 +283,7 @@ onMounted(() => {
             :key="`tag-input-tag-${index}`"
             :size="AntTagSize.xs3"
             :state="state as unknown as TagState"
-            :dismiss="true"
+            :dismiss="!readonly"
             @close="removeTag(tag)"
           >
             {{ options.find((option: SelectOption) => option.value === tag)?.label }}
