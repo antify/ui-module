@@ -2,6 +2,30 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.7.3](https://github.com/antify/ui-module/compare/v1.7.2...v1.7.3) (2024-07-31)
+
+
+### Bug Fixes
+
+* Add missing sizes ([#96](https://github.com/antify/ui-module/issues/96)) ([e1d5b66](https://github.com/antify/ui-module/commit/e1d5b663c3f9ba6ff32e0a4aa81ac9e18eba65b6))
+* Add missing summary story ([#94](https://github.com/antify/ui-module/issues/94)) ([6557813](https://github.com/antify/ui-module/commit/655781390e8e1bc266f541ce668464bc2c02a4d9))
+* Add readonly prop for input fields ([#113](https://github.com/antify/ui-module/issues/113)) ([b8be264](https://github.com/antify/ui-module/commit/b8be264bdf40accce8825f7f29a716b180fd9687))
+* Adjust AntField size prop ([#125](https://github.com/antify/ui-module/issues/125)) ([c1027f2](https://github.com/antify/ui-module/commit/c1027f2a66268defa610b82f054bc400c3e9088b))
+* Adjust color of header and selected row ([#114](https://github.com/antify/ui-module/issues/114)) ([01e9094](https://github.com/antify/ui-module/commit/01e9094e9f30ab443232f9ed079e7f2a97265ccb))
+* Adjust div size for the icons ([#132](https://github.com/antify/ui-module/issues/132)) ([0399a04](https://github.com/antify/ui-module/commit/0399a04963dd3e3e5d92b85f339df0f874de06d5))
+* Disable dismiss button if readonly is true ([#130](https://github.com/antify/ui-module/issues/130)) ([0dfac20](https://github.com/antify/ui-module/commit/0dfac20c39bb1ac1e274c052498d0816f45dc5a7))
+* Fix clickable indicators ([#121](https://github.com/antify/ui-module/issues/121)) ([04e1784](https://github.com/antify/ui-module/commit/04e17845affbf511e50f706ee6d277a99df21caf))
+* Fix focus color ([#126](https://github.com/antify/ui-module/issues/126)) ([53e95e8](https://github.com/antify/ui-module/commit/53e95e8cb23f257463136bcb8ac67781290ff9a5))
+* Fix import ([#126](https://github.com/antify/ui-module/issues/126)) ([e29c893](https://github.com/antify/ui-module/commit/e29c8936a641da3b49ecb0f5e8feec70d846a572))
+* Fix requested changes ([#94](https://github.com/antify/ui-module/issues/94)) ([b79cdef](https://github.com/antify/ui-module/commit/b79cdef90ced96bfa6863ce1787e3b3238d96285))
+* Fix requested changes ([#96](https://github.com/antify/ui-module/issues/96)) ([004285e](https://github.com/antify/ui-module/commit/004285e155500ff421c3488a72b5a8b2d130b091))
+* Fix the sizes ([#124](https://github.com/antify/ui-module/issues/124)) ([98e868c](https://github.com/antify/ui-module/commit/98e868c5fe98144d960a0b63d3dbbdfc760cb94a))
+* Implement missing sizes ([#126](https://github.com/antify/ui-module/issues/126)) ([35aea05](https://github.com/antify/ui-module/commit/35aea055bbb28f8ed322b702aa4bfc62acd96b6c))
+* Move icon to the top ([#116](https://github.com/antify/ui-module/issues/116)) ([365e80b](https://github.com/antify/ui-module/commit/365e80bbb831b31b87eb83cad1decdf4db101de6))
+* Remove not required computed ([#126](https://github.com/antify/ui-module/issues/126)) ([772f1ff](https://github.com/antify/ui-module/commit/772f1ff052159f77d88818181fabd79b8a65c7e6))
+* Set fix height for the detail nav ([#111](https://github.com/antify/ui-module/issues/111)) ([66f4182](https://github.com/antify/ui-module/commit/66f41823ed60d02812b2b6c85fccbc186ac88ba9))
+* Size is not required anymore ([#107](https://github.com/antify/ui-module/issues/107)) ([850311d](https://github.com/antify/ui-module/commit/850311d059df3f1eba3955a17ebcfecc71d6e688))
+
 ### [1.7.2](https://github.com/antify/ui-module/compare/v1.7.1...v1.7.2) (2024-07-26)
 
 
