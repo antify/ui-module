@@ -17,11 +17,8 @@ const props = withDefaults(defineProps<{
 
 const fontClasses = computed(() => ({
   'relative font-medium w-fit text-for-white-bg-font': true,
-  'text-2xs': props.size === Size.xs2,
-  'text-xs': props.size === Size.xs,
-  'text-sm': props.size === Size.sm,
-  'text-md': props.size === Size.md,
-  'text-lg': props.size === Size.lg
+  'text-xs': props.size === Size.xs || props.size === Size.xs2,
+  'text-sm': props.size === Size.lg || props.size === Size.md || props.size === Size.sm,
 }));
 const gapSize = computed(() => ({
   'gap-2.5': props.size === Size.lg,

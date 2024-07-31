@@ -45,13 +45,13 @@ const fieldClasses = computed(() => ({
   'w-full': props.expanded,
   'gap-2.5': props.size === Size.lg,
   'gap-2': props.size === Size.md,
-  'gap-1.5': props.size === Size.sm || props.size === Size.xs,
+  'gap-1.5': (props.size === Size.sm || props.size === Size.xs),
   'gap-1': props.size === Size.xs2,
 }));
 const descriptionClasses = computed(() => ({
   'gap-2.5': props.size === Size.lg,
   'gap-2': props.size === Size.md,
-  'gap-1.5': props.size === Size.sm || props.size === Size.xs,
+  'gap-1.5': (props.size === Size.sm || props.size === Size.xs),
   'gap-1': props.size === Size.xs2,
 }));
 </script>
@@ -63,7 +63,7 @@ const descriptionClasses = computed(() => ({
   >
     <AntInputLabel
       :label="label"
-      :size="fontSize"
+      :size="size"
       :skeleton="skeleton"
       :for="labelFor"
       @click-content="$emit('clickLabel')"
