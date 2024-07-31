@@ -96,7 +96,7 @@ function rowClick(elem: Record<string, unknown>): void {
         class="min-w-full max-h-full relative"
         :class="{'h-full': data.length === 0 && !_loading}"
       >
-        <thead class="bg-neutral-100 sticky top-0 z-10">
+        <thead class="bg-neutral-200 sticky top-0 z-10">
           <tr>
             <slot name="headerFirstCell" />
 
@@ -129,7 +129,7 @@ function rowClick(elem: Record<string, unknown>): void {
             :key="`table-row-${elem[rowKey]}-${index}`"
             class="transition-all"
             :class="{
-              'bg-primary-300 text-primary-300-font': elem === selected,
+              'bg-primary-200 text-primary-200-font': elem === selected,
               'bg-white text-for-white-bg-font': elem !== selected && index % 2 === 0,
               'bg-neutral-100 text-neutral-100-font': elem !== selected && index % 2 !== 0,
               'cursor-pointer': selectableRows
