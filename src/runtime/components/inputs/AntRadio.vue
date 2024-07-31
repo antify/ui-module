@@ -76,20 +76,6 @@ const valueClass = computed(() => ({
   'text-sm': props.size === Size.lg || props.size === Size.md || props.size === Size.sm,
   'text-xs': props.size === Size.xs || props.size === Size.xs2,
 }));
-const fieldSize = computed(() => {
-  switch (props.size) {
-    case Size.lg:
-      return Size.lg;
-    case Size.md:
-      return Size.md;
-    case Size.sm:
-      return Size.sm;
-    case Size.xs:
-      return Size.xs;
-    default:
-      return Size.xs2;
-  }
-});
 const gapSize = computed(() => {
   switch (props.size) {
     case Size.lg:
@@ -161,7 +147,7 @@ onMounted(() => {
     :state="state"
     class="cursor-pointer"
     :skeleton="skeleton"
-    :size="fieldSize"
+    :size="size"
     :expanded="false"
     :messages="messages"
   >
