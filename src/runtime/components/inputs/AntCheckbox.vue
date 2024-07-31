@@ -8,7 +8,6 @@ import {handleEnumValidation} from '../../handler';
 import {faCheck} from '@fortawesome/free-solid-svg-icons';
 import AntIcon from '../AntIcon.vue';
 import {IconSize} from '../__types';
-import {AntCheckboxSize} from './__types/AntCheckbox.types';
 
 const emit = defineEmits(['update:modelValue', 'update:skeleton', 'validate', 'blur']);
 const props =
@@ -18,14 +17,14 @@ const props =
       label?: string;
       description?: string;
       state?: InputState;
-      size?: AntCheckboxSize,
+      size?: Size,
       skeleton?: boolean;
       disabled?: boolean;
       readonly?: boolean;
       messages?: string[];
     }>(), {
       state: InputState.base,
-      size: AntCheckboxSize.md,
+      size: Size.md,
       skeleton: false,
       disabled: false,
       readonly: false,
@@ -63,12 +62,12 @@ const inputClasses = computed(() => {
     'focus:ring-offset-0': true,
     'invisible': props.skeleton,
     'cursor-pointer': !hasInputState.value,
-    'focus:ring-2': props.size === AntCheckboxSize.sm && !hasInputState.value,
-    'focus:ring-4': props.size === AntCheckboxSize.md && !hasInputState.value,
-    'h-5 w-5': props.size === AntCheckboxSize.md,
-    'h-4 w-4': props.size === AntCheckboxSize.sm,
+    'focus:ring-2': !hasInputState.value && (props.size === Size.sm || props.size === Size.xs || props.size === Size.xs2),
+    'focus:ring-4': !hasInputState.value && (props.size === Size.lg || props.size === Size.md),
+    'h-5 w-5': props.size === Size.lg || props.size === Size.md || props.size === Size.sm,
+    'h-4 w-4': props.size === Size.xs || props.size === Size.xs2,
     'cursor-not-allowed opacity-50': props.disabled,
-    [focusColorVariant[props.state]]: hasInputState.value,
+    [focusColorVariant[props.state]]: !hasInputState.value,
     [activeColorVariant[props.state]]: delayedValue.value,
     [inactiveColorVariant[props.state]]: !_modelValue.value,
   };
@@ -77,15 +76,15 @@ const contentClasses = computed(() => ({
   'text-for-white-bg-font': true,
   'cursor-pointer': !hasInputState.value,
   'cursor-not-allowed opacity-50': props.disabled,
-  'text-sm': props.size === AntCheckboxSize.md,
-  'text-xs': props.size === AntCheckboxSize.sm
+  'text-sm': props.size === Size.lg || props.size === Size.md || props.size === Size.sm,
+  'text-xs': props.size === Size.xs || props.size === Size.xs2,
 }));
-const fieldSize = computed(() => {
-  if (props.size === AntCheckboxSize.md) {
-    return Size.sm;
+const itemSize = computed(() => {
+  if (props.size === Size.xs ||props.size === Size.xs2) {
+    return IconSize.xs;
+  } else {
+    return IconSize.sm;
   }
-
-  return Size.xs;
 });
 
 /**
@@ -116,7 +115,7 @@ function onBlur(e: FocusEvent) {
 }
 
 onMounted(() => {
-  handleEnumValidation(props.size, AntCheckboxSize, 'size');
+  handleEnumValidation(props.size, Size, 'size');
   handleEnumValidation(props.state, InputState, 'state');
 
   if (!props.skeleton && props.modelValue !== null) {
@@ -131,7 +130,7 @@ onMounted(() => {
     :description="description"
     :skeleton="skeleton"
     :state="state"
-    :size="fieldSize"
+    :size="size"
     :expanded="false"
     :messages="messages"
   >
@@ -150,7 +149,7 @@ onMounted(() => {
           v-if="_modelValue"
           :icon="faCheck"
           class="absolute !text-white pointer-events-none"
-          :size="size === AntCheckboxSize.md ? IconSize.sm : IconSize.xs"
+          :size="itemSize"
         />
 
         <AntSkeleton
@@ -162,7 +161,7 @@ onMounted(() => {
 
       <div
         class="relative flex items-center"
-        :class="props.size === AntCheckboxSize.md ? 'h-5' : 'h-4'"
+        :class="props.size === Size.md ? 'h-5' : 'h-4'"
       >
         <span :class="contentClasses">
           <slot />

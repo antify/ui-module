@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import {type AntCheckboxType, AntCheckboxSize} from './__types/AntCheckbox.types';
+import {type AntCheckboxType} from './__types/AntCheckbox.types';
 import {AntField} from './Elements';
 import {useVModel} from '@vueuse/core';
 import AntCheckbox from './AntCheckbox.vue';
@@ -16,7 +16,7 @@ const props = withDefaults(
     description?: string;
     direction?: Direction;
     state?: InputState;
-    size?: AntCheckboxSize,
+    size?: Size,
     skeleton?: boolean;
     readonly?: boolean;
     disabled?: boolean;
@@ -25,7 +25,7 @@ const props = withDefaults(
   {
     direction: Direction.column,
     state: InputState.base,
-    size: AntCheckboxSize.md,
+    size: Size.md,
     skeleton: false,
     readonly: false,
     disabled: false,
