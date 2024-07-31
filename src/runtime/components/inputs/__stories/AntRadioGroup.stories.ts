@@ -1,7 +1,6 @@
 import {ref} from 'vue';
 import AntRadioGroup from '../AntRadioGroup.vue';
-import {InputState} from '../../../enums';
-import {AntRadioSize} from '../__types/AntRadio.types';
+import {InputState, Size} from '../../../enums';
 import {type Meta, type StoryObj} from '@storybook/vue3';
 import {useFieldValidator} from '@antify/validate';
 import {Direction} from '../../../enums/Direction.enum';
@@ -54,7 +53,7 @@ const meta: Meta<typeof AntRadioGroup> = {
     },
     size: {
       control: {type: 'select'},
-      options: Object.values(AntRadioSize),
+      options: Object.values(Size),
     },
   },
 };
@@ -156,7 +155,7 @@ export const summary: Story = {
     components: {AntRadioGroup, AntFormGroupLabel, AntFormGroup},
     setup() {
       const value = ref<string>('radio-3');
-      return {args, value, InputState, AntRadioSize};
+      return {args, value, InputState, Size};
     },
     template: `
       <AntFormGroup>
@@ -205,9 +204,15 @@ export const summary: Story = {
 
         <AntFormGroupLabel>Size</AntFormGroupLabel>
         <AntFormGroup direction="row">
-          <AntRadioGroup v-bind="args" v-model="value" :size="AntRadioSize.md" label="Label"
+          <AntRadioGroup v-bind="args" v-model="value" :size="Size.lg" label="Label"
                          description="Lorem ipsum dolor sit amet"/>
-          <AntRadioGroup v-bind="args" v-model="value" :size="AntRadioSize.sm" label="Label"
+          <AntRadioGroup v-bind="args" v-model="value" :size="Size.md" label="Label"
+                         description="Lorem ipsum dolor sit amet"/>
+          <AntRadioGroup v-bind="args" v-model="value" :size="Size.sm" label="Label"
+                         description="Lorem ipsum dolor sit amet"/>
+          <AntRadioGroup v-bind="args" v-model="value" :size="Size.xs" label="Label"
+                         description="Lorem ipsum dolor sit amet"/>
+          <AntRadioGroup v-bind="args" v-model="value" :size="Size.xs2" label="Label"
                          description="Lorem ipsum dolor sit amet"/>
         </AntFormGroup>
 

@@ -3,7 +3,7 @@ import {AntField} from './Elements';
 import {InputState, Size} from '../../enums';
 import AntSkeleton from '../AntSkeleton.vue';
 import {computed, onMounted, watch} from 'vue';
-import {AntRadioSize, type AntRadioTypes} from './__types/AntRadio.types';
+import {type AntRadioTypes} from './__types/AntRadio.types';
 import {handleEnumValidation} from '../../handler';
 
 defineOptions({inheritAttrs: false});
@@ -16,13 +16,13 @@ const props = withDefaults(
     description?: string;
     skeleton?: boolean;
     state?: InputState;
-    size?: AntRadioSize
+    size?: Size;
     readonly?: boolean;
     disabled?: boolean;
     messages?: string[];
   }>(), {
     state: InputState.base,
-    size: AntRadioSize.md,
+    size: Size.md,
     readonly: false,
     disabled: false,
     messages: () => []
@@ -45,16 +45,16 @@ const inputClasses = computed(() => {
     'flex items-center justify-center rounded-full appearance-none': true,
     'cursor-pointer': !hasInputState.value,
     'rounded-full transition-colors ease-in-out duration-200 disabled:opacity-50': true,
-    'focus:ring-2': props.size === AntRadioSize.sm && !hasInputState.value,
-    'focus:ring-4': props.size === AntRadioSize.md && !hasInputState.value,
+    'focus:ring-2': !hasInputState.value && (props.size === Size.sm || props.size === Size.xs || props.size === Size.xs2),
+    'focus:ring-4': !hasInputState.value && (props.size === Size.lg || props.size === Size.md),
     'outline-neutral-300': props.state === InputState.base,
     'outline-primary-500': props.state === InputState.base && isActive.value,
     'outline-info-500': props.state === InputState.info,
     'outline-success-500': props.state === InputState.success,
     'outline-warning-500': props.state === InputState.warning,
     'outline-danger-500': props.state === InputState.danger,
-    'h-4 w-4 small': props.size === AntRadioSize.sm,
-    'h-5 w-5': props.size === AntRadioSize.md,
+    'h-4 w-4 small': props.size === Size.xs || props.size === Size.xs2,
+    'h-5 w-5': props.size === Size.lg || props.size === Size.md || props.size === Size.sm,
   };
 
   const focusColorVariant = {
@@ -73,30 +73,55 @@ const valueClass = computed(() => ({
   'relative w-fit full-height text-for-white-bg-font': true,
   'cursor-pointer': !hasInputState.value,
   'cursor-not-allowed opacity-50': props.disabled,
-  'text-sm': props.size === AntRadioSize.md,
-  'text-xs': props.size === AntRadioSize.sm
+  'text-sm': props.size === Size.lg || props.size === Size.md || props.size === Size.sm,
+  'text-xs': props.size === Size.xs || props.size === Size.xs2,
 }));
 const fieldSize = computed(() => {
-  if (props.size === AntRadioSize.md) {
-    return Size.sm;
-  } else {
-    return Size.xs;
-  }
-});
-const innerRadioColor = computed(() => {
-  switch (props.state) {
-    case InputState.info:
-      return 'bg-info-500';
-    case InputState.success:
-      return 'bg-success-500';
-    case InputState.warning:
-      return 'bg-warning-500';
-    case InputState.danger:
-      return 'bg-danger-500';
+  switch (props.size) {
+    case Size.lg:
+      return Size.lg;
+    case Size.md:
+      return Size.md;
+    case Size.sm:
+      return Size.sm;
+    case Size.xs:
+      return Size.xs;
     default:
-      return 'bg-primary-500';
+      return Size.xs2;
   }
 });
+const gapSize = computed(() => {
+  switch (props.size) {
+    case Size.lg:
+      return 'gap-2.5';
+    case Size.md:
+      return 'gap-2';
+    case Size.sm:
+      return 'gap-1.5';
+    case Size.xs:
+      return 'gap-1.5';
+    default:
+      return 'gap-1';
+  }
+});
+const valueSize = computed(() => {
+  if (props.size === Size.xs || props.size === Size.xs2) {
+    return 'h-4';
+  } else {
+    return 'h-5';
+  }
+});
+const innerRadioClass = computed(() => (
+  {
+    'bg-primary-500': props.state === InputState.base,
+    'bg-info-500': props.state === InputState.info,
+    'bg-success-500': props.state === InputState.success,
+    'bg-warning-500': props.state === InputState.warning,
+    'bg-danger-500': props.state === InputState.danger,
+    'h-3 w-3': props.size === Size.lg || props.size === Size.md || props.size === Size.sm,
+    'h-2 w-2': props.size === Size.xs || props.size === Size.xs2,
+  }
+));
 
 /**
  * Validate default value if given after delayed data fetching.
@@ -140,14 +165,17 @@ onMounted(() => {
     :expanded="false"
     :messages="messages"
   >
-    <div class="flex items-center gap-1.5">
+    <div
+      class="flex items-center"
+      :class="gapSize"
+    >
       <div class="relative full-height flex items-center">
         <div class="absolute flex items-center justify-center w-full h-full">
           <Transition name="fade-radio">
             <div
               v-if="isActive"
-              class="w-3 h-3 rounded-full transition-all"
-              :class="innerRadioColor"
+              class="rounded-full transition-all"
+              :class="innerRadioClass"
             />
           </Transition>
         </div>
@@ -171,7 +199,7 @@ onMounted(() => {
 
       <div
         class="relative flex items-center"
-        :class="props.size === AntRadioSize.md ? 'h-5' : 'h-4'"
+        :class="valueSize"
       >
         <span :class="valueClass">
           {{ value.label }}
