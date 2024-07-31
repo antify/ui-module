@@ -25,6 +25,7 @@ const props = withDefaults(
     size?: AntTagInputSize;
     state?: InputState;
     disabled?: boolean;
+    readonly?: boolean;
     skeleton?: boolean;
     name?: string;
     expanded?: boolean;
@@ -46,6 +47,9 @@ const props = withDefaults(
     allowCreate: false,
     allowDuplicates: false,
     openOnFocus: true,
+    readonly: false,
+    disabled: false,
+    skeleton: false,
     autoCloseAfterSelection: false,
     placeholder: 'Add new tag'
   }
@@ -54,13 +58,14 @@ const props = withDefaults(
 const _modelValue: Ref<(string | number)[] | null> = useVModel(props, 'modelValue', emit);
 const _skeleton = useVModel(props, 'skeleton', emit);
 const dropDownOpen = ref(false);
+const hasInputState = computed(() => props.skeleton || props.readonly || props.disabled);
 const focusedDropDownItem: Ref<string | number | null> = ref(null);
 const tagInput = ref('');
 const filteredOptions = ref(props.options);
 const inputRef: Ref<HTMLElement | null> = ref(null);
 const inputContainerClasses = computed(() => {
   const variants: Record<InputState, string> = {
-    [InputState.base]: 'outline-neutral-300 focus-within:outline-primary-500 focus-within:ring-primary-200 bg-white',
+    [InputState.base]: 'outline-neutral-300 focus-within:outline-neutral-300 focus-within:ring-primary-200 bg-white',
     [InputState.danger]: 'outline-danger-500 focus-within:outline-danger-500 focus-within:ring-danger-200 bg-danger-100',
     [InputState.info]: 'outline-info-500 focus-within:outline-info-500 focus-within:ring-info-200 bg-info-100',
     [InputState.success]: 'outline-success-500 focus-within:outline-success-500 focus-within:ring-success-200 bg-success-100',
@@ -73,16 +78,18 @@ const inputContainerClasses = computed(() => {
     'outline-offset-[-1px] outline-1 focus-within:outline-offset-[-1px] focus-within:outline-1': true,
     'opacity-50 cursor-not-allowed': props.disabled,
     [variants[props.state]]: true,
-    // Size
-    'focus-within:ring-2 p-1.5 text-sm': props.size === AntTagInputSize.sm,
-    'focus-within:ring-4 p-2 text-sm': props.size === AntTagInputSize.md,
-    'focus-within:ring-4 p-2.5 text-sm': props.size === AntTagInputSize.lg,
+    // AntTagInputSize
+    'p-1.5 text-sm': props.size === AntTagInputSize.sm,
+    'p-2 text-sm': props.size === AntTagInputSize.md,
+    'p-2.5 text-sm': props.size === AntTagInputSize.lg,
+    'focus-within:ring-2': !hasInputState.value && props.size === AntTagInputSize.sm,
+    'focus-within:ring-4': !hasInputState.value && (props.size === AntTagInputSize.lg || props.size === AntTagInputSize.md),
     // Grouping
     'rounded-tl-md rounded-bl-md rounded-tr-none rounded-br-none': props.grouped === Grouped.left,
     'rounded-none': props.grouped === Grouped.center,
     'rounded-tl-none rounded-bl-none rounded-tr-md rounded-br-md': props.grouped === Grouped.right,
     'rounded-md': props.grouped === Grouped.none,
-    'rounded-bl-none rounded-br-none': dropDownOpen.value && (!props.options || props.options.length > 0),
+    'rounded-bl-none rounded-br-none': dropDownOpen.value && (!props.options || props.options.length > 0) && !props.readonly,
     'invisible': props.skeleton,
   };
 });
@@ -178,7 +185,7 @@ function removeLastTag() {
 }
 
 function removeTag(tag: string | number) {
-  if (_modelValue.value && !props.disabled && !props.skeleton) {
+  if (_modelValue.value && !props.disabled && !props.skeleton && !props.readonly) {
     _modelValue.value.splice(_modelValue.value.findIndex((_value) => _value === tag), 1);
 
     filterDropDown();
@@ -297,6 +304,7 @@ onMounted(() => {
             :placeholder="placeholder"
             :class="inputClasses"
             :disabled="disabled"
+            :readonly="readonly"
             @focus="changeFocus"
             @input="filterDropDown"
             @keydown.delete="removeLastTag"
@@ -307,7 +315,7 @@ onMounted(() => {
       </div>
 
       <AntDropDown
-        v-if="filteredOptions && !disabled"
+        v-if="filteredOptions && !disabled && !readonly"
         ref="dropDownRef"
         v-model:focused="focusedDropDownItem"
         v-model:open="dropDownOpen"

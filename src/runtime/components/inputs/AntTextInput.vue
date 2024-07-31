@@ -20,6 +20,7 @@ const props = withDefaults(defineProps<{
   size?: Size;
   state?: InputState;
   disabled?: boolean;
+  readonly?: boolean;
   skeleton?: boolean;
   type?: TextInputType;
   limiter?: boolean;
@@ -28,6 +29,7 @@ const props = withDefaults(defineProps<{
 }>(), {
   state: InputState.base,
   disabled: false,
+  readonly: false,
   skeleton: false,
   size: Size.md,
   type: TextInputType.text,
@@ -63,6 +65,7 @@ onMounted(() => {
       :size="size"
       :skeleton="skeleton"
       :disabled="disabled"
+      :readonly="readonly"
       :placeholder="placeholder !== undefined ? placeholder : label"
       :show-icon="true"
       v-bind="$attrs"

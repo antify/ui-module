@@ -25,6 +25,7 @@ const props = withDefaults(defineProps<{
   size?: Size;
   state?: InputState;
   disabled?: boolean;
+  readonly?: boolean;
   skeleton?: boolean;
   grouped?: Grouped;
   wrapperClass?: string | Record<string, boolean>;
@@ -38,6 +39,7 @@ const props = withDefaults(defineProps<{
 }>(), {
   state: InputState.base,
   disabled: false,
+  readonly: false,
   size: Size.md,
   skeleton: false,
   grouped: Grouped.none,
@@ -46,6 +48,7 @@ const props = withDefaults(defineProps<{
   messages: () => []
 });
 const _modelValue = useVModel(props, 'modelValue', emit);
+const hasInputState = computed(() => props.skeleton || props.readonly || props.disabled);
 const icons = {
   [InputState.info]: faCircleInfo,
   [InputState.warning]: faExclamationTriangle,
@@ -69,11 +72,13 @@ const inputClasses = computed(() => {
     'disabled:opacity-50 disabled:cursor-not-allowed': props.disabled,
     [variants[props.state]]: true,
     // Size
-    'focus:ring-2 p-1 text-xs': props.size === Size.xs2,
-    'focus:ring-2 p-1.5 text-xs': props.size === Size.xs,
-    'focus:ring-2 p-1.5 text-sm': props.size === Size.sm,
-    'focus:ring-4 p-2 text-sm': props.size === Size.md,
-    'focus:ring-4 p-2.5 text-sm': props.size === Size.lg,
+    'p-1 text-xs': props.size === Size.xs2,
+    'p-1.5 text-xs': props.size === Size.xs,
+    'p-1.5 text-sm': props.size === Size.sm,
+    'p-2 text-sm': props.size === Size.md,
+    'p-2.5 text-sm': props.size === Size.lg,
+    'focus:ring-2': !hasInputState.value && (props.size === Size.sm || props.size === Size.xs || props.size === Size.xs2),
+    'focus:ring-4': !hasInputState.value && (props.size === Size.lg || props.size === Size.md),
     // Icon right
     'pr-6': props.size === Size.xs2 && props.showIcon && icon.value,
     'pr-7': props.size === Size.xs && props.showIcon && icon.value,
@@ -158,6 +163,7 @@ function onBlur(e: FocusEvent) {
         :class="inputClasses"
         :placeholder="placeholder !== undefined ? placeholder : label"
         :disabled="disabled || skeleton"
+        :readonly="readonly"
         v-bind="$attrs"
         @blur="onBlur"
       />

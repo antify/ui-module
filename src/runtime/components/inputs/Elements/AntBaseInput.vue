@@ -26,6 +26,7 @@ const props = withDefaults(defineProps<{
   size?: Size;
   state?: InputState;
   disabled?: boolean;
+  readonly?: boolean;
   placeholder?: string;
   skeleton?: boolean;
   type?: BaseInputType;
@@ -38,6 +39,7 @@ const props = withDefaults(defineProps<{
 }>(), {
   state: InputState.base,
   disabled: false,
+  readonly: false,
   size: Size.md,
   skeleton: false,
   type: BaseInputType.text,
@@ -48,6 +50,7 @@ const props = withDefaults(defineProps<{
   inputRef: null
 });
 const slot = useSlots();
+const hasInputState = computed(() => props.skeleton || props.readonly || props.disabled);
 const icons = {
   [InputState.info]: faCircleInfo,
   [InputState.warning]: faExclamationTriangle,
@@ -71,11 +74,14 @@ const inputClasses = computed(() => {
     'text-right': props.type === BaseInputType.number,
     [variants[props.state]]: true,
     // Size
-    'focus:ring-2 p-1 text-xs': props.size === Size.xs2,
-    'focus:ring-2 p-1.5 text-xs': props.size === Size.xs,
-    'focus:ring-2 p-1.5 text-sm': props.size === Size.sm,
-    'focus:ring-4 p-2 text-sm': props.size === Size.md,
-    'focus:ring-4 p-2.5 text-sm': props.size === Size.lg,
+    'p-1 text-xs': props.size === Size.xs2,
+    'p-1.5 text-xs': props.size === Size.xs,
+    'p-1.5 text-sm': props.size === Size.sm,
+    'p-2 text-sm': props.size === Size.md,
+    'p-2.5 text-sm': props.size === Size.lg,
+    'focus:ring-2': !hasInputState.value && (props.size === Size.sm || props.size === Size.xs || props.size === Size.xs2),
+    'focus:ring-4': !hasInputState.value && (props.size === Size.lg || props.size === Size.md),
+
     // Icon left
     'pl-6': props.size === Size.xs2 && props.iconLeft,
     'pl-7': props.size === Size.sm && props.iconLeft || props.size === Size.xs && props.iconLeft,
@@ -197,7 +203,13 @@ function onClickClearIcon() {
     <div
       v-if="iconLeft"
       class="absolute h-full flex items-center justify-center z-20"
-      :class="{'w-6': size === Size.xs2, 'w-7': size === Size.xs || size === Size.sm, 'w-8': size === Size.md, 'w-9': size === Size.lg}"
+      :class="{
+        'w-6': size === Size.xs2,
+        'w-7': size === Size.xs || size === Size.sm,
+        'w-8': size === Size.md,
+        'w-9': size === Size.lg,
+        'opacity-50': disabled,
+      }"
     >
       <AntIcon
         :icon="iconLeft"
@@ -213,6 +225,8 @@ function onClickClearIcon() {
       :type="type"
       :placeholder="placeholder"
       :disabled="disabled || skeleton"
+      :readonly="readonly"
+      :tabindex="hasInputState ? -1 : 0"
       v-bind="$attrs"
       @blur="onBlur"
     >
