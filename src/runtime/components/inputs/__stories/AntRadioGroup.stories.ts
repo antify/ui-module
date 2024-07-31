@@ -151,6 +151,9 @@ export const WithValidator: Story = {
 };
 
 export const summary: Story = {
+  parameters: {
+    chromatic: {disableSnapshot: false},
+  },
   render: (args) => ({
     components: {AntRadioGroup, AntFormGroupLabel, AntFormGroup},
     setup() {
