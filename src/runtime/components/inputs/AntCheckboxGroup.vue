@@ -90,7 +90,7 @@ onMounted(() => {
     :description="description"
     :skeleton="skeleton"
     :state="state"
-    :size="size as unknown as Size"
+    :size="size"
     :messages="messages"
     label-for="noop"
   >

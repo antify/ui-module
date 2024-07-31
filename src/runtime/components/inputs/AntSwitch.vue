@@ -136,7 +136,7 @@ function onBlur(e: FocusEvent) {
 <template>
   <AntField
     :label="label"
-    :size="fieldSize"
+    :size="size"
     :description="description"
     :skeleton="skeleton"
     :state="state"
