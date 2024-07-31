@@ -117,6 +117,7 @@ function onButtonBlur() {
         :size="size"
         :skeleton="skeleton"
         :disabled="isPrevButtonDisabled"
+        :readonly="readonly"
         @click="subtract"
         @blur="onButtonBlur"
       />
@@ -147,6 +148,7 @@ function onButtonBlur() {
         :size="size"
         :skeleton="skeleton"
         :disabled="isNextButtonDisabled"
+        :readonly="readonly"
         @click="add"
         @blur="onButtonBlur"
       />
