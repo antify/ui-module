@@ -3,7 +3,6 @@ import {computed, ref} from 'vue';
 import {type Meta, type StoryObj} from '@storybook/vue3';
 import {InputState, Size} from '../../../enums';
 import {useFieldValidator} from '@antify/validate';
-import {AntCheckboxSize} from '../__types/AntCheckbox.types';
 import AntFormGroup from '../../forms/AntFormGroup.vue';
 import AntFormGroupLabel from '../../forms/AntFormGroupLabel.vue';
 
@@ -18,7 +17,7 @@ const meta: Meta<typeof AntCheckbox> = {
     },
     size: {
       control: {type: 'select'},
-      options: Object.values(AntCheckboxSize),
+      options: Object.values(Size),
     },
   },
 };
@@ -104,7 +103,7 @@ export const Summary: Story = {
         offValue,
         onValue,
         InputState,
-        AntCheckboxSize
+        Size
       };
     },
     template: `
@@ -202,28 +201,70 @@ export const Summary: Story = {
           <AntCheckbox
             v-model="offValue"
             class="w-28"
-            :size="AntCheckboxSize.md"
+            :size="Size.lg"
             label="Label"
             description="Lorem ipsum dolor sit amet"
           />
           <AntCheckbox
             v-model="onValue"
             class="w-28"
-            :size="AntCheckboxSize.md"
+            :size="Size.lg"
             label="Label"
             description="Lorem ipsum dolor sit amet"
           />
           <AntCheckbox
             v-model="offValue"
             class="w-28"
-            :size="AntCheckboxSize.sm"
+            :size="Size.md"
             label="Label"
             description="Lorem ipsum dolor sit amet"
           />
           <AntCheckbox
             v-model="onValue"
             class="w-28"
-            :size="AntCheckboxSize.sm"
+            :size="Size.md"
+            label="Label"
+            description="Lorem ipsum dolor sit amet"
+          />
+          <AntCheckbox
+            v-model="offValue"
+            class="w-28"
+            :size="Size.sm"
+            label="Label"
+            description="Lorem ipsum dolor sit amet"
+          />
+          <AntCheckbox
+            v-model="onValue"
+            class="w-28"
+            :size="Size.sm"
+            label="Label"
+            description="Lorem ipsum dolor sit amet"
+          />
+          <AntCheckbox
+            v-model="offValue"
+            class="w-28"
+            :size="Size.xs"
+            label="Label"
+            description="Lorem ipsum dolor sit amet"
+          />
+          <AntCheckbox
+            v-model="onValue"
+            class="w-28"
+            :size="Size.xs"
+            label="Label"
+            description="Lorem ipsum dolor sit amet"
+          />
+          <AntCheckbox
+            v-model="offValue"
+            class="w-28"
+            :size="Size.xs2"
+            label="Label"
+            description="Lorem ipsum dolor sit amet"
+          />
+          <AntCheckbox
+            v-model="onValue"
+            class="w-28"
+            :size="Size.xs"
             label="Label"
             description="Lorem ipsum dolor sit amet"
           />

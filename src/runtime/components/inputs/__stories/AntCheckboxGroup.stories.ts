@@ -1,10 +1,9 @@
 import {type Meta, type StoryObj} from '@storybook/vue3';
 import AntCheckboxGroup from '../AntCheckboxGroup.vue';
 import {reactive} from 'vue';
-import {InputState} from '../../../enums';
+import {InputState, Size} from '../../../enums';
 import {Direction} from '../../../enums/Direction.enum';
 import {useFieldValidator} from '@antify/validate';
-import {AntCheckboxSize} from '../__types/AntCheckbox.types';
 
 const meta: Meta<typeof AntCheckboxGroup> = {
   title: 'Inputs/Checkbox Group',
@@ -23,7 +22,7 @@ const meta: Meta<typeof AntCheckboxGroup> = {
     },
     size: {
       control: {type: 'select'},
-      options: Object.values(AntCheckboxSize),
+      options: Object.values(Size),
     },
     direction: {
       control: {type: 'select'},
