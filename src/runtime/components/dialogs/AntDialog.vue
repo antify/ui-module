@@ -101,7 +101,7 @@ function confirmDialog() {
             </slot>
           </div>
 
-          <div class="bg-white p-2 grow flex items-center gap-2 text-sm text-for-white-bg-font">
+          <div class="bg-white p-2 grow flex items-start gap-2 text-sm text-for-white-bg-font">
             <slot name="icon">
               <AntIcon
                 v-if="icons[state]"
