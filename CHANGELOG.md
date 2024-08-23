@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.8.5](https://github.com/antify/ui-module/compare/v1.8.4...v1.8.5) (2024-08-23)
+
+
+### Bug Fixes
+
+* export missing AntCard ([b13834a](https://github.com/antify/ui-module/commit/b13834a84c7d02c9aabc606e79bd00115560e6d3))
+
 ### [1.8.4](https://github.com/antify/ui-module/compare/v1.8.3...v1.8.4) (2024-08-23)
 
 ### [1.8.3](https://github.com/antify/ui-module/compare/v1.8.2...v1.8.3) (2024-08-23)
