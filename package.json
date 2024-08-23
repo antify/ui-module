@@ -26,7 +26,6 @@
   },
   "dependencies": {
     "@antify/ui": "^1.0.1",
-    "@antify/validate": "1.14.0",
     "@fortawesome/vue-fontawesome": "^3.0.8",
     "@nuxt/kit": "^3.9.3",
     "@vueuse/core": "^10.7.2",
