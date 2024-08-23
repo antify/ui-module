@@ -1,7 +1,13 @@
 # Changelog
 
-All notable changes to this project will be documented in this file.
-See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
+All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
+
+## [1.8.0](https://github.com/antify/ui-module/compare/v1.7.3...v1.8.0) (2024-08-23)
+
+
+### Features
+
+* outsource components to @antify/ui package ([3ce3d36](https://github.com/antify/ui-module/commit/3ce3d3655c126233fa881e23b7df3d2b8e0faf4d))
 
 ### [1.7.3](https://github.com/antify/ui-module/compare/v1.7.2...v1.7.3) (2024-07-31)
 
