@@ -19,8 +19,10 @@ const navbarItems = [
       <img src="~/assets/logo.svg" class="w-full"/>
     </template>
 
-    <NuxtPage/>
-  </AntNavLeftLayout>
+    <AntContent class="h-full">
+      <NuxtPage/>
+    </AntContent>
 
-  <AntToaster/>
+    <AntToaster :toasts="$uiModule.toaster.getToasts()"/>
+  </AntNavLeftLayout>
 </template>

@@ -1,74 +1,65 @@
 # Ui module
 
-The antify ui module is a nuxt component library for applications based on tailwindcss.
+Nuxt integration for @antify/ui package.
 
-Compared to other component libraries, antify ui ships a fixed defined ux.
-It also provides a set of helper functions to easly implement that ux.
+# Installation
 
-The predefined ux defines, for example, what should happen if a requested 
-entry is not found.
+Install package
 
-The ux definitions you can find in the repo's wiki.
+```
+pnpm i @antify/ui-module
+```
+
+Add it to your nuxt.config.ts
+
+```ts
+defineNuxtConfig({
+  modules: [
+    '@antify/ui-module'
+  ]
+})
+```
+
+# Usage
+
+Do not install the `@antify/ui` package or use imports directly from it.
+This module expose all components, types and helper form ui package through #ui-module
+virtual alias.
+
+It also expose all components to vue globally. You have not to import them in your components.
+
+```vue
+<script lang="ts" setup>
+  import {InputState} from '#ui-module';
+</script>
+
+<template>
+  <AntButton :state="InputState.info" />
+</template>
+```
+
+# Plugins
+
+# Composables
+
+
 
 # Development
 
 - Run `pnpm run dev:prepare` to generate type stubs.
 - Use `pnpm run dev` to start [playground](playground) in development mode.
 
-# Storybook
-## Start
-```
-pnpm storybook
-```
-
-## Build
-```
-pnpm build-storybook
-```
-
-## Update Chromatic Build
-```
-pnpm chromatic
-```
-
-## Useful links:
-
-- Chromatic docu: https://www.chromatic.com/docs/
-- Storybook docu: https://storybook.js.org/docs/vue/get-started/introduction
-
 # Additional
 
 ## SSR
+
 SSR is not included in the UX definition, because applications does not require SSR.
 To keep the UX as simple as possible, we decided to not support SSR.
 
-# Known issues
+Therefore, make sure you disabled ssr in your nuxt config.
 
-## Using this module as pnpm linked dependency
-
-Pnpm link does not work for local development, because the tailwindcss module can not 
-get installed outside of this project. An error "Cannot find module 'tailwindcss'" will be thrown.
-
-Use file link instead: 
-```
-"peerDependecies": {
-  "@antify/ui-module": "file:../ui-module"
-}
-```
-
-Keep in mind to reinstall the module after every change.
-
-Also add the following to your `nuxt.config.ts`:
-```
-/**
- * Allow using packages outside the project dir with "link:../../example-package".
- * Without strict, vite would throw 403 error.
- */
-vite: {
-  server: {
-    fs: {
-      strict: false,
-    }
-  }
-}
+```ts
+defineNuxtConfig({
+  ssr: false
+})
 ```

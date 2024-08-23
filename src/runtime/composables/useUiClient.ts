@@ -2,31 +2,30 @@
  * Set of helper functions for client side
  */
 import type {FetchResponse, FetchError} from 'ofetch';
-import {type LocationQuery, type RouteLocationRaw} from 'vue-router';
-import {useNuxtApp, navigateTo, createError} from '#imports';
-import {ref, type Ref} from 'vue';
+import {type LocationQuery, type RouteLocationRaw} from '#vue-router';
+import {useNuxtApp, navigateTo, createError, ref, type Ref} from '#imports';
 import {watchOnce} from '@vueuse/core';
 
 export async function handleNotFoundResponse(response: FetchResponse, fallbackUrl: RouteLocationRaw) {
   if (response._data?.notFound) {
-    useNuxtApp().$uiModule.toaster.toastError('Entity not found. Maybe an other user deleted it.')
+    useNuxtApp().$uiModule.toaster.toastError('Entity not found. Maybe an other user deleted it.');
 
-    await navigateTo(fallbackUrl)
+    await navigateTo(fallbackUrl);
   }
 }
 
 export function handleResponseError(error: Ref<FetchError | null>) {
   if (error.value) {
-    throw createError({...error.value?.data, statusCode: 500, fatal: true})
+    throw createError({...error.value?.data, statusCode: 500, fatal: true});
   }
 }
 
 function isFormDisabled(status: Ref | Ref[]): boolean {
   if (Array.isArray(status)) {
-    return status.some((status) => isFormDisabled(status))
+    return status.some((status) => isFormDisabled(status));
   }
 
-  return status.value === 'pending'
+  return status.value === 'pending';
 }
 
 /**
@@ -38,9 +37,9 @@ function isFormDisabled(status: Ref | Ref[]): boolean {
  * @param pending
  */
 function createSkeleton(pending: Ref<boolean>): Ref<boolean> {
-  const skeleton = ref(true)
-  const initialTimestamp = Date.now()
-  const minShowTime = 500
+  const skeleton = ref(true);
+  const initialTimestamp = Date.now();
+  const minShowTime = 500;
 
   watchOnce(pending, () => {
     const timeShowed = (Date.now() - (initialTimestamp || Date.now()));
@@ -53,25 +52,25 @@ function createSkeleton(pending: Ref<boolean>): Ref<boolean> {
         skeleton.value = false;
       }, restTimeToShow);
     }
-  })
+  });
 
-  return skeleton
+  return skeleton;
 }
 
 /**
  * Detect if the given queryToWatch changed.
  */
-function queryChanged(from: LocationQuery, to: LocationQuery, queryToWatch: string | string[]) : boolean {
-  const _queryToWatch = Array.isArray(queryToWatch) ? queryToWatch : [queryToWatch]
+function queryChanged(from: LocationQuery, to: LocationQuery, queryToWatch: string | string[]): boolean {
+  const _queryToWatch = Array.isArray(queryToWatch) ? queryToWatch : [queryToWatch];
   const changes = Object.keys(to).reduce((acc, key) => {
     if (to[key] !== from[key]) {
       acc[key] = to[key];
     }
 
     return acc;
-  }, {})
+  }, {});
 
-  return _queryToWatch.some((key) => changes[key] !== undefined)
+  return _queryToWatch.some((key) => changes[key] !== undefined);
 }
 
 // function createFlickerProtectRef<T extends Ref>(refToProtect: T): T {
@@ -101,5 +100,5 @@ export const useUiClient = () => {
       queryChanged
       // createFlickerProtectRef
     }
-  }
-}
+  };
+};
