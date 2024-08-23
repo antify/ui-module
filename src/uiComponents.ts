@@ -48,6 +48,7 @@ export const uiComponents = [
   'AntAccordion',
   'AntAccordionItem',
   'AntAlert',
+  'AntCard',
   'AntContent',
   'AntDropdown',
   'AntIcon',

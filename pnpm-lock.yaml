@@ -6,8 +6,8 @@ settings:
 
 dependencies:
   '@antify/ui':
-    specifier: ^1.0.2
-    version: 1.0.2(@fortawesome/fontawesome-svg-core@6.5.1)(@tiptap/core@2.2.4)(tailwindcss@3.4.10)(vue-router@4.3.0)(vue@3.4.38)
+    specifier: ^1.0.4
+    version: 1.0.4(@fortawesome/fontawesome-svg-core@6.5.1)(@tiptap/core@2.2.4)(tailwindcss@3.4.10)(vue-router@4.3.0)(vue@3.4.38)
   '@fortawesome/vue-fontawesome':
     specifier: ^3.0.8
     version: 3.0.8(@fortawesome/fontawesome-svg-core@6.5.1)(vue@3.4.38)
@@ -88,8 +88,8 @@ packages:
     resolution: {integrity: sha512-gFPqTG7otEJ8uP6wrhDv6mqwGWYZKNvAcCq6u9hOj0c+IKCEsY4L1oC9trPq2SaWIzAfHvqfBDxF591JkMf+kg==}
     dev: true
 
-  /@antify/ui@1.0.2(@fortawesome/fontawesome-svg-core@6.5.1)(@tiptap/core@2.2.4)(tailwindcss@3.4.10)(vue-router@4.3.0)(vue@3.4.38):
-    resolution: {integrity: sha512-AAh7LdSajClqsNgzgw9dU36sHUQu811swilgsMQTbz27sd3U+Zofn6QMd2zOwDsh9AWgv4dJiZ9veEWlHi/kFg==}
+  /@antify/ui@1.0.4(@fortawesome/fontawesome-svg-core@6.5.1)(@tiptap/core@2.2.4)(tailwindcss@3.4.10)(vue-router@4.3.0)(vue@3.4.38):
+    resolution: {integrity: sha512-YWevw4I1kLOyAkwZ8TqAN18rOQgf+CCR3Zh1xETcvsRJsnwKC+m6Tcbuikv+Mb7zN60gbFef8U7N/xx78tT/pQ==}
     peerDependencies:
       tailwindcss: ^3.4.10
       vue: ^3.4.29
