@@ -16,9 +16,11 @@ import {
   useRouter,
   useRoute,
   computed,
-  reactive
+  reactive,
+  ref
 } from '#imports';
-import {InputState} from '@antify/ui'
+import {InputState} from '@antify/ui';
+import {watchOnce} from '@vueuse/core';
 
 async function handleNotFoundResponse(response: FetchResponse, fallbackUrl: RouteLocationRaw) {
   if (response._data?.notFound) {
@@ -56,6 +58,36 @@ function queryChanged(from: LocationQuery, to: LocationQuery, queryToWatch: stri
   }, {});
 
   return _queryToWatch.some((key) => changes[key] !== undefined);
+}
+
+/**
+ * Creates a skeleton ref with flicker protection by prevent switching to fast from true to false.
+ *
+ * Important, it only watches the pending ref once, because a skeleton should be shown only one time
+ * on initial loading.
+ *
+ * @param pending
+ * @deprecated - Flicker protection is implemented in @antify/ui directly. Do not handle it from outside anymore.
+ */
+function createSkeleton(pending: Ref<boolean>): Ref<boolean> {
+  const skeleton = ref(true);
+  const initialTimestamp = Date.now();
+  const minShowTime = 500;
+
+  watchOnce(pending, () => {
+    const timeShowed = (Date.now() - (initialTimestamp || Date.now()));
+    const restTimeToShow = minShowTime - timeShowed > 0 ? minShowTime - timeShowed : 0;
+
+    if (restTimeToShow === 0) {
+      skeleton.value = false;
+    } else {
+      setTimeout(() => {
+        skeleton.value = false;
+      }, restTimeToShow);
+    }
+  });
+
+  return skeleton;
 }
 
 export type CrudRoutingOptions = {
@@ -201,7 +233,8 @@ export const useUiClient = () => {
       isFormDisabled,
       queryChanged,
       useCrudRouting,
-      useFormField
+      useFormField,
+      createSkeleton
     }
   };
 };
