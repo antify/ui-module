@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.9.0](https://github.com/antify/ui-module/compare/v1.8.5...v1.9.0) (2024-10-02)
+
+
+### Features
+
+* make tailwind config changeable from nuxt config ([66cc2ed](https://github.com/antify/ui-module/commit/66cc2ed548b45c57825db9f8ee72dff5d7a3e775))
+
 ### [1.8.5](https://github.com/antify/ui-module/compare/v1.8.4...v1.8.5) (2024-08-23)
 
 
