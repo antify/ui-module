@@ -1,14 +1,7 @@
 {
   "extends": "./playground/.nuxt/tsconfig.json",
-  "include": [
-    "src/**/*.ts",
-    "src/**/*.d.ts",
-    "src/**/*.tsx",
-    "src/**/*.vue"
-  ],
-  "declaration": false,
-  "declarationMap": false,
-  "experimental": {
-    "typescriptBundlerResolution": true
-  }
+  "exclude": [
+    "dist",
+    "playground"
+  ]
 }
