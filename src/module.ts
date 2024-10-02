@@ -1,23 +1,27 @@
-import tailwindConfig from './runtime/tailwind.config';
+import tailwindConfig from './runtime/tailwindConfig';
 import {
   defineNuxtModule,
   createResolver,
   addPlugin,
   addImportsDir,
-  addComponent
+  addComponent,
 } from '@nuxt/kit';
-import type {NuxtModule} from 'nuxt/schema';
 import {uiComponents} from './uiComponents';
+import {defu} from 'defu';
 
 const moduleKey = 'uiModule';
 
-type ModuleOptions = {};
+type ModuleOptions = {
+  tailwindcss?: {
+    content?: string[]
+  }
+};
 
-// TODO:: Write Paginator component
-// TODO:: Import all ui components (missing AntTextInput etc.)
-const module: NuxtModule<ModuleOptions> = defineNuxtModule<ModuleOptions>({
+export type * from './runtime/types';
+
+export default defineNuxtModule<ModuleOptions>({
   meta: {
-    name: 'ui-module',
+    name: '@antify/ui-module',
     configKey: moduleKey
   },
   defaults: {},
@@ -44,17 +48,10 @@ const module: NuxtModule<ModuleOptions> = defineNuxtModule<ModuleOptions>({
       });
     });
 
-    nuxt.options.postcss.plugins.tailwindcss = tailwindConfig;
+    nuxt.options.postcss.plugins.tailwindcss = defu(tailwindConfig, options.tailwindcss);
+
     // TODO:: replace with tailwind.css coming from tailwind package
     nuxt.options.css.push(resolve(runtimeDir, 'assets/tailwind.css'));
     nuxt.options.runtimeConfig.public[moduleKey] = options;
   }
 });
-
-/**
- * Export it like this, because otherwise following error get thrown:
- * The inferred type of 'default' cannot be named without a reference to '..'.
- * This is likely not portable. A type annotation is necessary.
- * @see: https://github.com/microsoft/TypeScript/issues/47663#issuecomment-1904420622
- */
-export default module;

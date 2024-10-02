@@ -8,7 +8,7 @@ tailwindConfig.content = [
   './playground/components/**/*.{vue,js,ts,jsx,tsx}',
   './playground/pages/**/*.{vue,js,ts,jsx,tsx}',
   './playground/layouts/**/*.{vue,js,ts,jsx,tsx}',
-  '../ui-module/src/**/*.{vue,js,ts,jsx,tsx}',
+  // '../ui-module/src/**/*.{vue,js,ts,jsx,tsx}',
 
   // For project dev
   './app.vue',
@@ -18,7 +18,7 @@ tailwindConfig.content = [
 
   // If this config is used in a project
   './node_modules/@antify/*/dist/**/*.{js,vue,ts}',
-  './node_modules/@antify/*/src/**/*.{js,vue,ts}',
+  // './node_modules/@antify/*/src/**/*.{js,vue,ts}',
 ];
 
 export default tailwindConfig;
