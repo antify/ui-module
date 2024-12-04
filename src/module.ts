@@ -8,13 +8,12 @@ import {
 } from '@nuxt/kit';
 import {uiComponents} from './uiComponents';
 import {defu} from 'defu';
+type TailwindConfig = import('tailwindcss').Config;
 
 const moduleKey = 'uiModule';
 
 type ModuleOptions = {
-  tailwindcss?: {
-    content?: string[]
-  }
+  tailwindcss?: TailwindConfig
 };
 
 export type * from './runtime/types';
