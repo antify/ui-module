@@ -5,7 +5,7 @@ import {InputState} from "#ui-module";
 <template>
   <AntFormGroup>
     <AntFormGroupLabel>Playground</AntFormGroupLabel>
-    <pre>{{ InputState }}</pre>
+    <pre class="bg-customColor-200 p-4 rounded">{{ InputState }}</pre>
     <AntButton @click="$uiModule.toaster.toastSuccess('Toasted')">Toast success message</AntButton>
   </AntFormGroup>
 </template>
