@@ -2,6 +2,15 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [2.0.0](https://github.com/antify/ui-module/compare/v1.10.0...v2.0.0) (2024-12-05)
+
+
+### ⚠ BREAKING CHANGES
+
+* Rename all *-neutral-* classes to *-base-*
+
+* bump @antify/ui to 2.0.0 ([04d5b2a](https://github.com/antify/ui-module/commit/04d5b2a75748d3c89c383caffe03864784d91c92))
+
 ## [1.10.0](https://github.com/antify/ui-module/compare/v1.9.4...v1.10.0) (2024-12-05)
 
 
