@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.10.0](https://github.com/antify/ui-module/compare/v1.9.4...v1.10.0) (2024-12-05)
+
+
+### Features
+
+* Extend tailwind module options [#138](https://github.com/antify/ui-module/issues/138) ([72f7600](https://github.com/antify/ui-module/commit/72f76002d2f5c53a9d71ecc676e45f7758f32c0c))
+
 ### [1.9.4](https://github.com/antify/ui-module/compare/v1.9.3...v1.9.4) (2024-12-03)
 
 ### [1.9.3](https://github.com/antify/ui-module/compare/v1.9.2...v1.9.3) (2024-12-03)
