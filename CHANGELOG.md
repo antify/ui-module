@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [2.1.0](https://github.com/antify/ui-module/compare/v2.0.2...v2.1.0) (2025-01-27)
+
+
+### Features
+
+* bump @antify/ui to 2.2.0 ([1e24d32](https://github.com/antify/ui-module/commit/1e24d325dd6503d202e14c6bc6ac3a63d6f6af12))
+
 ### [2.0.2](https://github.com/antify/ui-module/compare/v2.0.1...v2.0.2) (2025-01-15)
 
 ### [2.0.1](https://github.com/antify/ui-module/compare/v2.0.0...v2.0.1) (2025-01-15)
