@@ -41,7 +41,12 @@ export default defineNuxtModule<ModuleOptions>({
     const antifyCSSPath = require.resolve('@antify/ui/styles');
 
     nuxt.options.css.push(antifyCSSPath);
-    nuxt.options.css.push(resolve(runtimeDir, options.tailwindCSSPath));
+
+    if (options.tailwindCSSPath) {
+      const tailwindCSSPath = resolve(nuxt.options.rootDir, options.tailwindCSSPath);
+      nuxt.options.css.push(tailwindCSSPath);
+    }
+
     nuxt.options.runtimeConfig.public[moduleKey] = options;
   }
 });

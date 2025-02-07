@@ -4,7 +4,7 @@ export default defineNuxtConfig({
   ssr: false,
 
   uiModule: {
-    tailwindCSSPath: '/assets/css/tailwind.css',
+    tailwindCSSPath: './assets/css/tailwind.css',
   },
 
   imports: {
