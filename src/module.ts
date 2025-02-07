@@ -1,19 +1,10 @@
-import tailwindConfig from './runtime/tailwindConfig';
-import {
-  defineNuxtModule,
-  createResolver,
-  addPlugin,
-  addImportsDir,
-  addComponent,
-} from '@nuxt/kit';
+import {addComponent, addImportsDir, addPlugin, createResolver, defineNuxtModule,} from '@nuxt/kit';
 import {uiComponents} from './uiComponents';
-import {defu} from 'defu';
-type TailwindConfig = import('tailwindcss').Config;
 
 const moduleKey = 'uiModule';
 
 type ModuleOptions = {
-  tailwindcss?: TailwindConfig
+  tailwindCSSPath: string;
 };
 
 export type * from './runtime/types';
@@ -47,10 +38,10 @@ export default defineNuxtModule<ModuleOptions>({
       });
     });
 
-    nuxt.options.postcss.plugins.tailwindcss = defu(tailwindConfig, options.tailwindcss);
+    const antifyCSSPath = require.resolve('@antify/ui/styles');
 
-    // TODO:: replace with tailwind.css coming from tailwind package
-    nuxt.options.css.push(resolve(runtimeDir, 'assets/tailwind.css'));
+    nuxt.options.css.push(antifyCSSPath);
+    nuxt.options.css.push(resolve(runtimeDir, options.tailwindCSSPath));
     nuxt.options.runtimeConfig.public[moduleKey] = options;
   }
 });

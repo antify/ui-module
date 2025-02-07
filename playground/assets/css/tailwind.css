@@ -1,0 +1,9 @@
+/* Tailwind-specific stylings can be placed here */
+@import 'tailwindcss';
+
+@theme inline {
+  /* Overwrite existing previous definitions */
+  --color-base-200: var(--color-red-200);
+  /* Extend previous definitions with new ones */
+  --color-custom-color: var(--color-base-100);
+}
