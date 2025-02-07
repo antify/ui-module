@@ -1,5 +1,6 @@
 import {addComponent, addImportsDir, addPlugin, createResolver, defineNuxtModule,} from '@nuxt/kit';
 import {uiComponents} from './uiComponents';
+import tailwindcss from '@tailwindcss/vite';
 
 const moduleKey = 'uiModule';
 
@@ -38,10 +39,16 @@ export default defineNuxtModule<ModuleOptions>({
       });
     });
 
-    const antifyCSSPath = require.resolve('@antify/ui/styles');
+    // Automatically include the vite plugin for Tailwind 4.X in the nuxt.config
+    nuxt.hook('vite:extendConfig', (viteInlineConfig) => {
+      viteInlineConfig.plugins.push(tailwindcss());
+    });
 
+    // Include base @antify/ui styles
+    const antifyCSSPath = require.resolve('@antify/ui/styles');
     nuxt.options.css.push(antifyCSSPath);
 
+    // Include optional additional tailwind-related styles through config
     if (options.tailwindCSSPath) {
       const tailwindCSSPath = resolve(nuxt.options.rootDir, options.tailwindCSSPath);
       nuxt.options.css.push(tailwindCSSPath);

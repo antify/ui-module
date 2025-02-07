@@ -1,5 +1,3 @@
-import tailwindcss from '@tailwindcss/vite';
-
 export default defineNuxtConfig({
   ssr: false,
 
@@ -16,11 +14,6 @@ export default defineNuxtConfig({
   ],
 
   css: ['~/assets/css/main.css'],
-  vite: {
-    plugins: [
-      tailwindcss()
-    ],
-  },
 
   compatibilityDate: '2024-09-06'
 });
