@@ -5,7 +5,7 @@ import tailwindcss from '@tailwindcss/vite';
 const moduleKey = 'uiModule';
 
 type ModuleOptions = {
-  tailwindCSSPath: string;
+  tailwindCSSPath?: string;
 };
 
 export type * from './runtime/types';
