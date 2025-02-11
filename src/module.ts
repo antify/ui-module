@@ -1,19 +1,11 @@
-import tailwindConfig from './runtime/tailwindConfig';
-import {
-  defineNuxtModule,
-  createResolver,
-  addPlugin,
-  addImportsDir,
-  addComponent,
-} from '@nuxt/kit';
+import {addComponent, addImportsDir, addPlugin, createResolver, defineNuxtModule,} from '@nuxt/kit';
 import {uiComponents} from './uiComponents';
-import {defu} from 'defu';
-type TailwindConfig = import('tailwindcss').Config;
+import tailwindcss from '@tailwindcss/vite';
 
 const moduleKey = 'uiModule';
 
 type ModuleOptions = {
-  tailwindcss?: TailwindConfig
+  tailwindCSSPath?: string;
 };
 
 export type * from './runtime/types';
@@ -47,10 +39,21 @@ export default defineNuxtModule<ModuleOptions>({
       });
     });
 
-    nuxt.options.postcss.plugins.tailwindcss = defu(tailwindConfig, options.tailwindcss);
+    // Automatically include the vite plugin for Tailwind 4.X in the nuxt.config
+    nuxt.hook('vite:extendConfig', (viteInlineConfig) => {
+      viteInlineConfig.plugins.push(tailwindcss());
+    });
 
-    // TODO:: replace with tailwind.css coming from tailwind package
-    nuxt.options.css.push(resolve(runtimeDir, 'assets/tailwind.css'));
+    // Include base @antify/ui styles
+    const antifyCSSPath = require.resolve('@antify/ui/styles');
+    nuxt.options.css.push(antifyCSSPath);
+
+    // Include optional additional tailwind-related styles through config
+    if (options.tailwindCSSPath) {
+      const tailwindCSSPath = resolve(nuxt.options.rootDir, options.tailwindCSSPath);
+      nuxt.options.css.push(tailwindCSSPath);
+    }
+
     nuxt.options.runtimeConfig.public[moduleKey] = options;
   }
 });

@@ -1,7 +1,9 @@
-import defaultColors from "tailwindcss/colors";
-
 export default defineNuxtConfig({
   ssr: false,
+
+  uiModule: {
+    tailwindCSSPath: './assets/css/tailwind.css',
+  },
 
   imports: {
     autoImport: false
@@ -11,22 +13,7 @@ export default defineNuxtConfig({
     '../src/module'
   ],
 
-
-  uiModule: {
-    tailwindcss: {
-      content: [
-        "./node_modules/@blue-panda-dev/pvs-ui/dist/!**!/!*.vue",
-      ],
-      theme: {
-        extend: {
-          colors: {
-            ...defaultColors,
-            customColor: defaultColors.orange,
-          },
-        }
-      },
-    },
-  },
+  css: ['~/assets/css/main.css'],
 
   compatibilityDate: '2024-09-06'
 });
