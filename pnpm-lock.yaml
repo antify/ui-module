@@ -12,17 +12,23 @@ importers:
   .:
     dependencies:
       '@antify/ui':
-        specifier: file:../ui
-        version: file:../ui(@fortawesome/fontawesome-svg-core@6.6.0)(@tiptap/core@2.11.5(@tiptap/pm@2.11.5))(tailwindcss@4.0.3)(vite@5.4.3(@types/node@22.5.4)(lightningcss@1.29.1)(terser@5.31.6))(vue-router@4.4.3(vue@3.5.3(typescript@5.5.4)))(vue@3.5.3(typescript@5.5.4))
+        specifier: ^2.2.6
+        version: 2.2.6(@fortawesome/fontawesome-svg-core@6.6.0)(@tiptap/core@2.11.5(@tiptap/pm@2.11.5))(tailwindcss@4.0.3)(vite@5.4.3(@types/node@22.5.4)(lightningcss@1.29.1)(terser@5.31.6))(vue-router@4.4.3(vue@3.5.3(typescript@5.5.4)))(vue@3.5.3(typescript@5.5.4))
       '@fortawesome/vue-fontawesome':
         specifier: ^3.0.8
         version: 3.0.8(@fortawesome/fontawesome-svg-core@6.6.0)(vue@3.5.3(typescript@5.5.4))
       '@nuxt/kit':
         specifier: ^3.13.1
         version: 3.13.1(magicast@0.3.5)(rollup@4.21.2)
+      '@tailwindcss/vite':
+        specifier: ^4.0.3
+        version: 4.0.3(vite@5.4.3(@types/node@22.5.4)(lightningcss@1.29.1)(terser@5.31.6))
       '@vueuse/core':
         specifier: ^10.7.2
         version: 10.11.1(vue@3.5.3(typescript@5.5.4))
+      tailwindcss:
+        specifier: ^4.0.3
+        version: 4.0.3
       vue:
         specifier: ^3.4.29
         version: 3.5.3(typescript@5.5.4)
@@ -75,8 +81,8 @@ packages:
   '@antfu/utils@0.7.10':
     resolution: {integrity: sha512-+562v9k4aI80m1+VuMHehNJWLOFjBnXn3tdOitzD0il5b7smkSBal4+a3oKiQTbrwMmN/TBUMDvbdoWDehgOww==}
 
-  '@antify/ui@file:../ui':
-    resolution: {directory: ../ui, type: directory}
+  '@antify/ui@2.2.6':
+    resolution: {integrity: sha512-oPXlwsA87vbxbUwUdtk/QwjMUaFEIxWmWDTnER+U0xXYm/GnVbvrXKPvOyLrUVBvBHO1Uy6PmtuqjrIWjN+vtQ==}
     peerDependencies:
       tailwindcss: ^4.0.3
       vue: ^3.4.29
@@ -5017,7 +5023,7 @@ snapshots:
 
   '@antfu/utils@0.7.10': {}
 
-  '@antify/ui@file:../ui(@fortawesome/fontawesome-svg-core@6.6.0)(@tiptap/core@2.11.5(@tiptap/pm@2.11.5))(tailwindcss@4.0.3)(vite@5.4.3(@types/node@22.5.4)(lightningcss@1.29.1)(terser@5.31.6))(vue-router@4.4.3(vue@3.5.3(typescript@5.5.4)))(vue@3.5.3(typescript@5.5.4))':
+  '@antify/ui@2.2.6(@fortawesome/fontawesome-svg-core@6.6.0)(@tiptap/core@2.11.5(@tiptap/pm@2.11.5))(tailwindcss@4.0.3)(vite@5.4.3(@types/node@22.5.4)(lightningcss@1.29.1)(terser@5.31.6))(vue-router@4.4.3(vue@3.5.3(typescript@5.5.4)))(vue@3.5.3(typescript@5.5.4))':
     dependencies:
       '@floating-ui/vue': 1.1.6(vue@3.5.3(typescript@5.5.4))
       '@fortawesome/free-regular-svg-icons': 6.7.2

@@ -30,7 +30,7 @@
     "tailwindcss": "^4.0.3"
   },
   "dependencies": {
-    "@antify/ui": "file:../ui",
+    "@antify/ui": "^2.2.6",
     "@fortawesome/vue-fontawesome": "^3.0.8",
     "@nuxt/kit": "^3.13.1",
     "@vueuse/core": "^10.7.2",
