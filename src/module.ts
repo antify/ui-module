@@ -45,8 +45,7 @@ export default defineNuxtModule<ModuleOptions>({
     });
 
     // Include base @antify/ui styles
-    const antifyCSSPath = require.resolve('@antify/ui/styles');
-    nuxt.options.css.push(antifyCSSPath);
+    nuxt.options.css.push(resolve(runtimeDir, 'assets/antify.css'));
 
     // Include optional additional tailwind-related styles through config
     if (options.tailwindCSSPath) {
