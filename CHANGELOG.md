@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### 2.3.11 (2025-03-27)
+
+
+### Bug Fixes
+
+* Fix missing AntImageInput export ([acb5c2a](https://github.com/antify/ui-module/commit/acb5c2aef0bbe5cd58b3ecc685ccacbb1d5d06eb))
+
 ### 2.3.10 (2025-03-27)
 
 ### [2.3.9](https://github.com/antify/ui-module/compare/v2.3.8...v2.3.9) (2025-03-27)
