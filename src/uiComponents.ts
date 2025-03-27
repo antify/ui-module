@@ -39,6 +39,7 @@ export const uiComponents = [
   'AntTextarea',
   'AntTextInput',
   'AntUnitInput',
+  'AntImageInput',
   'AntNavLeftLayout',
   'AntNavbar',
   'AntNavbarItem',
