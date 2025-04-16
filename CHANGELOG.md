@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### 2.3.16 (2025-04-16)
+
+
+### Bug Fixes
+
+* Update pnpm-lock ([14d3bbe](https://github.com/antify/ui-module/commit/14d3bbef4ad2b198ee8e6240de4c7c634a48d51b))
+
 ### 2.3.15 (2025-04-08)
 
 ### 2.3.14 (2025-04-04)
