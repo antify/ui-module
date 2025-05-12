@@ -1,13 +1,15 @@
 <script setup lang="ts">
-import {faHome} from '@fortawesome/free-solid-svg-icons';
+import {
+  faHome,
+} from '@fortawesome/free-solid-svg-icons';
 
 const navbarItems = [
   {
     label: 'Home',
     icon: faHome,
-    to: '/'
-  }
-]
+    to: '/',
+  },
+];
 </script>
 
 <template>
@@ -16,13 +18,16 @@ const navbarItems = [
     logo-route="/"
   >
     <template #logo-image>
-      <img src="~/assets/logo.svg" class="w-full"/>
+      <img
+        src="~/assets/logo.svg"
+        class="w-full"
+      >
     </template>
 
     <AntContent class="h-full">
-      <NuxtPage/>
+      <NuxtPage />
     </AntContent>
 
-    <AntToaster :toasts="$uiModule.toaster.getToasts()"/>
+    <AntToaster :toasts="$uiModule.toaster.getToasts()" />
   </AntNavLeftLayout>
 </template>

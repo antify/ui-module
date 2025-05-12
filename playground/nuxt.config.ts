@@ -6,14 +6,16 @@ export default defineNuxtConfig({
   },
 
   imports: {
-    autoImport: false
+    autoImport: false,
   },
 
   modules: [
-    '../src/module'
+    '../src/module',
   ],
 
-  css: ['~/assets/css/main.css'],
+  css: [
+    '~/assets/css/main.css',
+  ],
 
-  compatibilityDate: '2024-09-06'
+  compatibilityDate: '2024-09-06',
 });

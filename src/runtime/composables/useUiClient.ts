@@ -1,12 +1,14 @@
 /**
  * Set of helper functions for client side
  */
-import type {FetchResponse, FetchError} from 'ofetch';
+import type {
+  FetchResponse, FetchError,
+} from 'ofetch';
 import {
   type LocationQuery,
   type RouteLocationRaw,
   type LocationQueryRaw,
-  type RouteParams
+  type RouteParams,
 } from '#vue-router';
 import {
   useNuxtApp,
@@ -17,14 +19,34 @@ import {
   useRoute,
   computed,
   reactive,
-  ref
+  ref,
 } from '#imports';
-import {InputState} from '@antify/ui';
-import {watchOnce} from '@vueuse/core';
+import {
+  InputState,
+} from '@antify/ui';
+import {
+  watchOnce,
+} from '@vueuse/core';
+import {
+  useI18n,
+} from 'vue-i18n';
+const {
+  t,
+} = useI18n({
+  useScope: 'local',
+  messages: {
+    de: {
+      notFound: 'Eintrag nicht gefunden. Eventuell wurde er bereits gelöscht.',
+    },
+    en: {
+      notFound: 'Entity not found. Maybe an other user deleted it.',
+    },
+  },
+});
 
 async function handleNotFoundResponse(response: FetchResponse, fallbackUrl: RouteLocationRaw) {
   if (response._data?.notFound) {
-    useNuxtApp().$uiModule.toaster.toastError('Entity not found. Maybe an other user deleted it.');
+    useNuxtApp().$uiModule.toaster.toastError(t('notFound'));
 
     await navigateTo(fallbackUrl);
   }
@@ -32,7 +54,11 @@ async function handleNotFoundResponse(response: FetchResponse, fallbackUrl: Rout
 
 function handleResponseError(error: Ref<FetchError | null>) {
   if (error.value) {
-    throw createError({...error.value?.data, statusCode: 500, fatal: true});
+    throw createError({
+      ...error.value?.data,
+      statusCode: 500,
+      fatal: true,
+    });
   }
 }
 
@@ -48,7 +74,9 @@ function isFormDisabled(status: Ref | Ref[]): boolean {
  * Detect if the given queryToWatch changed.
  */
 function queryChanged(from: LocationQuery, to: LocationQuery, queryToWatch: string | string[]): boolean {
-  const _queryToWatch = Array.isArray(queryToWatch) ? queryToWatch : [queryToWatch];
+  const _queryToWatch = Array.isArray(queryToWatch) ? queryToWatch : [
+    queryToWatch,
+  ];
   const changes = Object.keys(to).reduce((acc, key) => {
     if (to[key] !== from[key]) {
       acc[key] = to[key];
@@ -91,13 +119,13 @@ function createSkeleton(pending: Ref<boolean>): Ref<boolean> {
 }
 
 export type CrudRoutingOptions = {
-  detailRouteName: string
-  listingRouteName: string
-  getDetailRouteParams?: () => RouteParams,
-  getListingRouteParams?: () => RouteParams,
-  entityIdentifier?: string
-  createEntityIdentifier?: string
-}
+  detailRouteName: string;
+  listingRouteName: string;
+  getDetailRouteParams?: () => RouteParams;
+  getListingRouteParams?: () => RouteParams;
+  entityIdentifier?: string;
+  createEntityIdentifier?: string;
+};
 
 const useCrudRouting = (
   detailRouteName: string,
@@ -105,7 +133,7 @@ const useCrudRouting = (
   getDetailRouteParams: () => RouteParams = () => ({}),
   getListingRouteParams: () => RouteParams = () => ({}),
   entityIdentifier: string = 'entityId',
-  createEntityIdentifier: string = 'create'
+  createEntityIdentifier: string = 'create',
 ) => {
   const route = useRoute();
   const router = useRouter();
@@ -118,41 +146,39 @@ const useCrudRouting = (
   return {
     isListingPage: computed<boolean>(() => route.name === listingRouteName),
     isDetailPage,
-    isUpdatePage: computed<boolean>(() =>
-      isDetailPage.value &&
+    isUpdatePage: computed<boolean>(() => isDetailPage.value &&
       route.params[entityIdentifier] !== createEntityIdentifier),
-    isCreatePage: computed<boolean>(() =>
-      isDetailPage.value &&
+    isCreatePage: computed<boolean>(() => isDetailPage.value &&
       route.params[entityIdentifier] === createEntityIdentifier),
     getDetailRoute(entityId: string | string[], query: LocationQueryRaw = route.query) {
       return {
         name: detailRouteName,
         params: {
           ...getDetailRouteParams(),
-          [entityIdentifier]: entityId
+          [entityIdentifier]: entityId,
         },
-        query
+        query,
       };
     },
     getDetailSubRoute(
       entityId: string | string[],
       subRouteNameExtension: string,
-      query: LocationQueryRaw = route.query
+      query: LocationQueryRaw = route.query,
     ) {
       return {
         name: `${detailRouteName}-${subRouteNameExtension}`,
         params: {
           ...getDetailRouteParams(),
-          [entityIdentifier]: entityId
+          [entityIdentifier]: entityId,
         },
-        query
+        query,
       };
     },
     getListingRoute(query: LocationQueryRaw = route.query) {
       return {
         name: listingRouteName,
         params: getListingRouteParams(),
-        query
+        query,
       };
     },
     getEntityId() {
@@ -171,13 +197,13 @@ const useCrudRouting = (
     },
     goToDetailPage(
       entityId: string | string[] = 'create',
-      query = route.query
+      query = route.query,
     ) {
       return router.push(this.getDetailRoute(entityId, query));
     },
     goToDetailSubPage(subRouteNameExtension: string, query: LocationQueryRaw = route.query) {
       return router.push(this.getDetailSubRoute(subRouteNameExtension, query));
-    }
+    },
   };
 };
 
@@ -185,7 +211,7 @@ export type FormFieldType = {
   errors: string[];
   state: InputState;
   validate: () => Promise<void>;
-}
+};
 
 /**
  * Yup validation throws an error if the value expect not the given schema.
@@ -209,7 +235,7 @@ export function useFormField(validationFn: () => Promise<void>) {
         _reactive.errors = e?.errors || [];
         _reactive.state = InputState.danger;
       }
-    }
+    },
   });
 
   return _reactive;
@@ -218,23 +244,21 @@ export function useFormField(validationFn: () => Promise<void>) {
 type GroupedForm = Record<string, FormFieldType[]>;
 
 export function useGroupedForm<T extends GroupedForm>(form: T) {
-  return {
-
-  }
+  return {};
 }
 
 export const useUiClient = () => {
   return {
     handler: {
       handleNotFoundResponse,
-      handleResponseError
+      handleResponseError,
     },
     utils: {
       isFormDisabled,
       queryChanged,
       useCrudRouting,
       useFormField,
-      createSkeleton
-    }
+      createSkeleton,
+    },
   };
 };

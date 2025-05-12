@@ -1,5 +1,9 @@
-import {addComponent, addImportsDir, addPlugin, createResolver, defineNuxtModule,} from '@nuxt/kit';
-import {uiComponents} from './uiComponents';
+import {
+  addComponent, addImportsDir, addPlugin, createResolver, defineNuxtModule, addComponentsDir,
+} from '@nuxt/kit';
+import {
+  uiComponents,
+} from './uiComponents';
 import tailwindcss from '@tailwindcss/vite';
 
 const moduleKey = 'uiModule';
@@ -13,17 +17,25 @@ export type * from './runtime/types';
 export default defineNuxtModule<ModuleOptions>({
   meta: {
     name: '@antify/ui-module',
-    configKey: moduleKey
+    configKey: moduleKey,
   },
   defaults: {},
   async setup(options, nuxt) {
-    const {resolve} = createResolver(import.meta.url);
+    const {
+      resolve,
+    } = createResolver(import.meta.url);
     const runtimeDir = resolve('./runtime');
 
     nuxt.options.build.transpile.push(runtimeDir);
 
     addPlugin(resolve(runtimeDir, 'plugins/ui-module'));
     addImportsDir(resolve(runtimeDir, 'composables'));
+
+    addComponentsDir({
+      path: resolve(runtimeDir, 'components'),
+      pathPrefix: false,
+      global: true,
+    });
 
     nuxt.options.alias['#ui-module'] = '@antify/ui';
 
@@ -35,7 +47,7 @@ export default defineNuxtModule<ModuleOptions>({
       addComponent({
         name,
         export: name,
-        filePath: '@antify/ui/components'
+        filePath: '@antify/ui/components',
       });
     });
 
@@ -54,5 +66,5 @@ export default defineNuxtModule<ModuleOptions>({
     }
 
     nuxt.options.runtimeConfig.public[moduleKey] = options;
-  }
+  },
 });

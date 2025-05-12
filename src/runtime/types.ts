@@ -1,4 +1,4 @@
 export {
   type CrudRoutingOptions,
-  type FormFieldType
+  type FormFieldType,
 } from './composables/useUiClient';
