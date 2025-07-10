@@ -23,10 +23,11 @@
     "dev": "nuxi dev playground",
     "dev:build": "nuxi build playground",
     "dev:prepare": "nuxi prepare playground",
-    "release": "standard-version && git push --follow-tags && pnpm publish --access public"
+    "release": "standard-version && git push --follow-tags && pnpm publish --access public",
+    "lint": "eslint ."
   },
   "dependencies": {
-    "@antify/ui": "3.1.14",
+    "@antify/ui": "^3.1.16",
     "@fortawesome/vue-fontawesome": "^3.0.8",
     "@nuxt/kit": "^3.13.1",
     "@tailwindcss/vite": "4.0.7",
