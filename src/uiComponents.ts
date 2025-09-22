@@ -3,6 +3,7 @@ export const uiComponents = [
   'AntButton',
   'AntColorInput',
   'AntCreateButton',
+  'AntDatePicker',
   'AntDeleteButton',
   'AntDuplicateButton',
   'AntEditButton',
