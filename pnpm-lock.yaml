@@ -9,8 +9,8 @@ importers:
   .:
     dependencies:
       '@antify/ui':
-        specifier: 3.3.0
-        version: 3.3.0(@fortawesome/fontawesome-svg-core@7.0.1)(@tiptap/core@2.26.1(@tiptap/pm@2.26.1))(tailwindcss@4.0.7)(vue-router@4.5.1(vue@3.5.21(typescript@5.9.2)))(vue@3.5.21(typescript@5.9.2))
+        specifier: 3.3.1
+        version: 3.3.1(@fortawesome/fontawesome-svg-core@7.0.1)(@tiptap/core@2.26.1(@tiptap/pm@2.26.1))(tailwindcss@4.0.7)(vue-router@4.5.1(vue@3.5.21(typescript@5.9.2)))(vue@3.5.21(typescript@5.9.2))
       '@fortawesome/vue-fontawesome':
         specifier: ^3.0.8
         version: 3.1.2(@fortawesome/fontawesome-svg-core@7.0.1)(vue@3.5.21(typescript@5.9.2))
@@ -40,14 +40,14 @@ importers:
         specifier: ^0.4.0
         version: 0.4.0(eslint@8.57.1)(typescript@5.9.2)
       '@nuxt/eslint-plugin':
-        specifier: ^1.9.0
-        version: 1.9.0(eslint@8.57.1)(typescript@5.9.2)
+        specifier: ^0.7.6
+        version: 0.7.6(eslint@8.57.1)(typescript@5.9.2)
       '@nuxt/module-builder':
         specifier: latest
         version: 1.0.2(@nuxt/cli@3.28.0(magicast@0.3.5))(@vue/compiler-core@3.5.21)(esbuild@0.25.9)(typescript@5.9.2)(vue@3.5.21(typescript@5.9.2))
       '@stylistic/eslint-plugin':
-        specifier: ^5.3.1
-        version: 5.3.1(eslint@8.57.1)
+        specifier: ^2.13.0
+        version: 2.13.0(eslint@8.57.1)(typescript@5.9.2)
       autoprefixer:
         specifier: ^10.4.16
         version: 10.4.21(postcss@8.5.6)
@@ -61,8 +61,8 @@ importers:
         specifier: ^9.1.5
         version: 9.1.5(eslint@8.57.1)(storybook@9.1.5(@testing-library/dom@10.4.1)(vite@6.3.6(jiti@2.5.1)(lightningcss@1.30.1)(terser@5.44.0)(yaml@2.8.1)))(typescript@5.9.2)
       eslint-plugin-vue:
-        specifier: ^10.4.0
-        version: 10.4.0(@typescript-eslint/parser@8.43.0(eslint@8.57.1)(typescript@5.9.2))(eslint@8.57.1)(vue-eslint-parser@9.4.3(eslint@8.57.1))
+        specifier: ^9.32.0
+        version: 9.33.0(eslint@8.57.1)
       globals:
         specifier: ^16.4.0
         version: 16.4.0
@@ -111,8 +111,8 @@ packages:
   '@adobe/css-tools@4.4.4':
     resolution: {integrity: sha512-Elp+iwUx5rN5+Y8xLt5/GRoG20WGoDCQ/1Fb+1LiGtvwbDavuSk0jhD/eZdckHAuzcDzccnkv+rEjyWfRx18gg==}
 
-  '@antify/ui@3.3.0':
-    resolution: {integrity: sha512-Fyb24g22SzLnuIDHWfzKNl35pK+tLNQee9ZUCQROy1hA8jhwdoOR7aMzIXsmSof3YtR8/+utQKIWphjYDXwVfg==}
+  '@antify/ui@3.3.1':
+    resolution: {integrity: sha512-2sG0no4knWKDaFDVtQwHwl34Ng4uhVaTJTZV6QFrPljycix6oJhSyKgaVB26rjOWixkI4QanLv+XWz56kLU7YA==}
     engines: {node: ^22.14.0, pnpm: '>=10.10.0'}
     peerDependencies:
       tailwindcss: 4.0.7
@@ -579,6 +579,11 @@ packages:
 
   '@nuxt/eslint-plugin@0.4.0':
     resolution: {integrity: sha512-PjNlf99AaSmIu/qwyXTwkEX+xl+RvvfRBvbU/FVDKxwVHH+lNmNM5qlRFf/5PUPAfaEEYUhXqkd/l1DI8hu4Ww==}
+    peerDependencies:
+      eslint: ^8.57.0 || ^9.0.0
+
+  '@nuxt/eslint-plugin@0.7.6':
+    resolution: {integrity: sha512-x06lBR7sbsSP+H3zepVhgP7mSX6LTyluj2mj4HwMCQUXQo/7pW5mmOGnN3QU9PRxKNG2qz5Zhxb/w3NSjkyV3g==}
     peerDependencies:
       eslint: ^8.57.0 || ^9.0.0
 
@@ -4859,7 +4864,7 @@ snapshots:
 
   '@adobe/css-tools@4.4.4': {}
 
-  '@antify/ui@3.3.0(@fortawesome/fontawesome-svg-core@7.0.1)(@tiptap/core@2.26.1(@tiptap/pm@2.26.1))(tailwindcss@4.0.7)(vue-router@4.5.1(vue@3.5.21(typescript@5.9.2)))(vue@3.5.21(typescript@5.9.2))':
+  '@antify/ui@3.3.1(@fortawesome/fontawesome-svg-core@7.0.1)(@tiptap/core@2.26.1(@tiptap/pm@2.26.1))(tailwindcss@4.0.7)(vue-router@4.5.1(vue@3.5.21(typescript@5.9.2)))(vue@3.5.21(typescript@5.9.2))':
     dependencies:
       '@floating-ui/vue': 1.1.9(vue@3.5.21(typescript@5.9.2))
       '@fortawesome/free-regular-svg-icons': 6.7.2
@@ -5439,6 +5444,15 @@ snapshots:
     dependencies:
       '@typescript-eslint/types': 7.18.0
       '@typescript-eslint/utils': 7.18.0(eslint@8.57.1)(typescript@5.9.2)
+      eslint: 8.57.1
+    transitivePeerDependencies:
+      - supports-color
+      - typescript
+
+  '@nuxt/eslint-plugin@0.7.6(eslint@8.57.1)(typescript@5.9.2)':
+    dependencies:
+      '@typescript-eslint/types': 8.43.0
+      '@typescript-eslint/utils': 8.43.0(eslint@8.57.1)(typescript@5.9.2)
       eslint: 8.57.1
     transitivePeerDependencies:
       - supports-color
