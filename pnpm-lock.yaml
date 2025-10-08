@@ -9,8 +9,8 @@ importers:
   .:
     dependencies:
       '@antify/ui':
-        specifier: 3.3.2
-        version: 3.3.2(@fortawesome/fontawesome-svg-core@7.0.1)(@tiptap/core@2.26.1(@tiptap/pm@2.26.1))(tailwindcss@4.0.7)(vue-router@4.5.1(vue@3.5.21(typescript@5.9.2)))(vue@3.5.21(typescript@5.9.2))
+        specifier: 4.0.0
+        version: 4.0.0(@fortawesome/fontawesome-svg-core@7.0.1)(@tiptap/core@2.26.1(@tiptap/pm@2.26.1))(tailwindcss@4.0.7)(vue-router@4.5.1(vue@3.5.21(typescript@5.9.2)))(vue@3.5.21(typescript@5.9.2))
       '@fortawesome/vue-fontawesome':
         specifier: ^3.0.8
         version: 3.1.2(@fortawesome/fontawesome-svg-core@7.0.1)(vue@3.5.21(typescript@5.9.2))
@@ -111,8 +111,8 @@ packages:
   '@adobe/css-tools@4.4.4':
     resolution: {integrity: sha512-Elp+iwUx5rN5+Y8xLt5/GRoG20WGoDCQ/1Fb+1LiGtvwbDavuSk0jhD/eZdckHAuzcDzccnkv+rEjyWfRx18gg==}
 
-  '@antify/ui@3.3.2':
-    resolution: {integrity: sha512-bHDBC0OMwNil/lF0O09bLbzRFVLQPqXl5HmjW0ouaaePMUofDWl2F8+LBXjh/Ue7bnMwtRhsn1dSdNsHCxpy1Q==}
+  '@antify/ui@4.0.0':
+    resolution: {integrity: sha512-yFxYMoxdcpKKVQksHMmtIX6RGL4q9a59xMkuBSXyJYxPbRwBn356v16NieQ5Qmf87E92MryhGuuPpSq8w+boaw==}
     engines: {node: ^22.14.0, pnpm: '>=10.10.0'}
     peerDependencies:
       tailwindcss: 4.0.7
@@ -4864,7 +4864,7 @@ snapshots:
 
   '@adobe/css-tools@4.4.4': {}
 
-  '@antify/ui@3.3.2(@fortawesome/fontawesome-svg-core@7.0.1)(@tiptap/core@2.26.1(@tiptap/pm@2.26.1))(tailwindcss@4.0.7)(vue-router@4.5.1(vue@3.5.21(typescript@5.9.2)))(vue@3.5.21(typescript@5.9.2))':
+  '@antify/ui@4.0.0(@fortawesome/fontawesome-svg-core@7.0.1)(@tiptap/core@2.26.1(@tiptap/pm@2.26.1))(tailwindcss@4.0.7)(vue-router@4.5.1(vue@3.5.21(typescript@5.9.2)))(vue@3.5.21(typescript@5.9.2))':
     dependencies:
       '@floating-ui/vue': 1.1.9(vue@3.5.21(typescript@5.9.2))
       '@fortawesome/free-regular-svg-icons': 6.7.2
