@@ -1,7 +1,7 @@
 {
   "name": "@antify/ui-module",
   "private": false,
-  "version": "2.13.32",
+  "version": "2.13.33",
   "license": "MIT",
   "sideEffects": false,
   "type": "module",
